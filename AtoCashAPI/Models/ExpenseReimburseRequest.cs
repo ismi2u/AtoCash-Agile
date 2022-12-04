@@ -40,15 +40,15 @@ namespace AtoCashAPI.Models
         public DateTime? ExpReimReqDate { get; set; }
 
         [Required]
-        public bool IsBusinessAreaReq { get; set; }
+        public bool IsStoreReq { get; set; }
 
         [ForeignKey("DepartmentId")]
         public virtual Department? Department { get; set; }
         public int? DepartmentId { get; set; }
 
-        [ForeignKey("BusinessAreaId")]
-        public virtual BusinessArea? BusinessArea { get; set; }
-        public int? BusinessAreaId { get; set; }
+        [ForeignKey("StoreId")]
+        public virtual Store? Store { get; set; }
+        public int? StoreId { get; set; }
 
         [ForeignKey("ProjectId")]
         public virtual Project? Project { get; set; }
@@ -94,15 +94,15 @@ namespace AtoCashAPI.Models
         public Double? TotalClaimAmount { get; set; }
         public DateTime? ExpReimReqDate { get; set; }
 
-        public bool IsBusinessAreaReq { get; set; }
+        public bool IsStoreReq { get; set; }
        
 
        
 
         public string? DepartmentName { get; set; }
         public int? DepartmentId { get; set; }
-        public int? BusinessAreaId { get; set; }
-        public string? BusinessArea { get; set; }
+        public int? StoreId { get; set; }
+        public string? Store { get; set; }
         public string? ProjectName { get; set; }
         public int? ProjectId { get; set; }
 

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AtoCashAPI.Models
 {
-    public class BusinessArea
+    public class Store
     {
 
         [Key]
@@ -15,10 +15,10 @@ namespace AtoCashAPI.Models
         public int? Id { get; set; }
         [Required]
         [Column(TypeName = "varchar(150)")]
-        public string? BusinessAreaCode { get; set; }
+        public string? StoreCode { get; set; }
         [Required]
         [Column(TypeName = "varchar(250)")]
-        public string? BusinessAreaName { get; set; }
+        public string? StoreName { get; set; }
 
    
         [Required]
@@ -33,26 +33,26 @@ namespace AtoCashAPI.Models
         public int? StatusTypeId { get; set; }
 
 
-        public string? GetBusinessArea()
+        public string? GetStore()
         {
             var NameParts = new List<string>();
 
-            NameParts.Add(BusinessAreaCode ?? "");
-            NameParts.Add(BusinessAreaName ?? "");
+            NameParts.Add(StoreCode ?? "");
+            NameParts.Add(StoreName ?? "");
 
             return String.Join(":", NameParts.Where(s => !String.IsNullOrEmpty(s)));
 
         }
     }
 
-    public class BusinessAreaDTO
+    public class StoreDTO
     {
 
         public int? Id { get; set; }
 
-        public string? BusinessAreaCode { get; set; }
+        public string? StoreCode { get; set; }
 
-        public string? BusinessAreaName { get; set; }
+        public string? StoreName { get; set; }
 
 
         public int? CostCenterId { get; set; }
@@ -65,13 +65,13 @@ namespace AtoCashAPI.Models
 
     }
 
-    public class BusinessAreaVM
+    public class StoreVM
     {
 
         public int? Id { get; set; }
 
-        public string? BusinessAreaCode { get; set; }
-        public string? BusinessAreaName { get; set; }
+        public string? StoreCode { get; set; }
+        public string? StoreName { get; set; }
 
     }
 }

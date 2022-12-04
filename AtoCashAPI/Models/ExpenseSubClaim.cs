@@ -89,11 +89,11 @@ namespace AtoCashAPI.Models
         public string? Description { get; set; }
 
         [Required]
-        public bool IsBusinessAreaReq { get; set; }
+        public bool IsStoreReq { get; set; }
 
-        [ForeignKey("BusinessAreaId")]
-        public virtual BusinessArea? BusinessArea { get; set; }
-        public int? BusinessAreaId { get; set; }
+        [ForeignKey("StoreId")]
+        public virtual Store? Store { get; set; }
+        public int? StoreId { get; set; }
 
         [ForeignKey("DepartmentId")]
         public virtual Department? Department { get; set; }
@@ -158,7 +158,7 @@ namespace AtoCashAPI.Models
 
         public string? Description { get; set; }
 
-        public bool IsBusinessAreaReq { get; set; }
+        public bool IsStoreReq { get; set; }
         //Foreign Key Relationsions
 
         public int? CurrencyTypeId { get; set; }
@@ -170,8 +170,8 @@ namespace AtoCashAPI.Models
         public string? GeneralLedger { get; set; }
 
 
-        public int? BusinessAreaId { get; set; }
-        public string? BusinessArea { get; set; }
+        public int? StoreId { get; set; }
+        public string? Store { get; set; }
 
         public string? DepartmentName { get; set; }
         public int? DepartmentId { get; set; }

@@ -35,9 +35,9 @@ namespace AtoCashAPI.Models
         public virtual CurrencyType? CurrencyType { get; set; }
         public int? CurrencyTypeId { get; set; }
 
-        [ForeignKey("BusinessAreaId")]
-        public virtual BusinessArea? BusinessArea { get; set; }
-        public int? BusinessAreaId { get; set; }
+        [ForeignKey("StoreId")]
+        public virtual Store? Store { get; set; }
+        public int? StoreId { get; set; }
 
 
         [ForeignKey("DepartmentId")]
@@ -90,8 +90,8 @@ namespace AtoCashAPI.Models
 
         public DateTime? CashReqDate { get; set; }
 
-        public string? BusinessArea { get; set; }
-        public string? BusinessAreaId { get; set; }
+        public string? Store { get; set; }
+        public string? StoreId { get; set; }
         public string? Department { get; set; }
         public int? DepartmentId { get; set; }
         public string? Project { get; set; }

@@ -25,8 +25,8 @@ namespace AtoCashAPI.Models
 
         [Required]
         [ForeignKey("ProjManagerId")]
-        public virtual Employee? ProjManager { get; set; }
-        public int? ProjManagerId { get; set; }
+        public virtual Employee? ProjectManager { get; set; }
+        public int? ProjectManagerId { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(250)")]
@@ -45,7 +45,7 @@ namespace AtoCashAPI.Models
         public string? ProjectName { get; set; }
         public int? CostCenterId { get; set; }
         public string? CostCenter { get; set; }
-        public int? ProjManagerId { get; set; }
+        public int? ProjectManagerId { get; set; }
         public string? ProjectManager { get; set; }
         public string? ProjectDesc { get; set; }
         public int? StatusTypeId { get; set; }

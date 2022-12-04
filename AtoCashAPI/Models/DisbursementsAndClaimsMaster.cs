@@ -35,11 +35,11 @@ namespace AtoCashAPI.Models
         public int? RequestTypeId { get; set; }
 
 
-        [ForeignKey("BusinessAreaId")]
-        public virtual BusinessArea? BusinessArea { get; set; }
-        public int? BusinessAreaId { get; set; }
+        [ForeignKey("StoreId")]
+        public virtual Store? Store { get; set; }
+        public int? StoreId { get; set; }
 
-        public bool IsBusinessAreaReq { get; set; }
+        public bool IsStoreReq { get; set; }
 
         [ForeignKey("DepartmentId")]
         public virtual Department? Department { get; set; }
@@ -113,7 +113,7 @@ namespace AtoCashAPI.Models
         public string? EmployeeName { get; set; }
         public string? EmployeeCode{ get; set; }
         public string? Department { get; set; }
-        public string? BusinessArea { get; set; }
+        public string? Store { get; set; }
         public string? Project { get; set; }
         public DateTime? RequestDate { get; set; }
         public Double? ClaimAmount { get; set; }
@@ -121,7 +121,7 @@ namespace AtoCashAPI.Models
         public double? AmountToBank { get; set; }
         public string? Status { get; set; }
         public  bool IsCashAdvanceRequest { get; set; }
-        public List<PostSubClaimItems> SubClaimItems { get; set; }
+        public List<PostSubClaimItems>? SubClaimItems { get; set; }
        
     }
 
@@ -157,15 +157,15 @@ namespace AtoCashAPI.Models
         public int? PettyCashRequestId { get; set; }
         public int? ExpenseReimburseReqId { get; set; }
 
-        public bool IsBusinessAreaReq { get; set; }
+        public bool IsStoreReq { get; set; }
         public int? RequestTypeId { get; set; }
         public string? RequestType { get; set; }
 
         public int? DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
 
-        public int? BusinessAreaId { get; set; }
-        public string? BusinessArea{ get; set; }
+        public int? StoreId { get; set; }
+        public string? Store{ get; set; }
 
         public int? ProjectId { get; set; }
         public string? ProjectName { get; set; }

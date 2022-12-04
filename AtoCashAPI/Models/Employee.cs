@@ -85,6 +85,10 @@ namespace AtoCashAPI.Models
         public int? StatusTypeId { get; set; }
 
 
+        [Required]
+        [ForeignKey("CurrencyTypeId")]
+        public virtual CurrencyType? CurrencyType { get; set; }
+        public int? CurrencyTypeId { get; set; }
 
         public string? GetFullName()
         {
@@ -168,14 +172,14 @@ namespace AtoCashAPI.Models
         public int? ApprovalGroupId { get; set; }
         public string? ApprovalGroup { get; set; }
 
-        public int? BusinessAreaApprovalGroupId { get; set; }
-        public string? BusinessAreaApprovalGroup { get; set; }
+        public int? StoreApprovalGroupId { get; set; }
+        public string? StoreApprovalGroup { get; set; }
 
-        public int? BusinessAreaRoleId { get; set; }
-        public string? BusinessAreaRoleName{ get; set; }
+        public int? StoreRoleId { get; set; }
+        public string? StoreRoleName{ get; set; }
 
-        public int? BusinessAreaId { get; set; }
-        public string? BusinessArea { get; set; }
+        public int? StoreId { get; set; }
+        public string? Store { get; set; }
 
         public int? CurrencyTypeId { get; set; }
         public int? StatusTypeId { get; set; }
@@ -213,8 +217,8 @@ namespace AtoCashAPI.Models
         public int? DepartmentId { get; set; }
         public int? JobRoleId { get; set; }
         public int? ApprovalGroupId { get; set; }
-        public int? BusinessAreaApprovalGroupId { get; set; }
-        public int? BusinessAreaId { get; set; }
+        public int? StoreApprovalGroupId { get; set; }
+        public int? StoreId { get; set; }
         public int? StatusTypeId { get; set; }
     }
 }

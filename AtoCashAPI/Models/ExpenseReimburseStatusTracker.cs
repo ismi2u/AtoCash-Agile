@@ -37,13 +37,13 @@ namespace AtoCashAPI.Models
         [Required]
         public DateTime? ExpReimReqDate { get; set; }
         [Required]
-        public bool IsBusinessAreaReq { get; set; }
+        public bool IsStoreReq { get; set; }
 
         /// 
 
-        [ForeignKey("BusinessAreaId")]
-        public virtual BusinessArea? BusinessArea { get; set; }
-        public int? BusinessAreaId { get; set; }
+        [ForeignKey("StoreId")]
+        public virtual Store? Store { get; set; }
+        public int? StoreId { get; set; }
 
         [ForeignKey("DepartmentId")]
         public virtual Department? Department { get; set; }
@@ -79,13 +79,13 @@ namespace AtoCashAPI.Models
 
 
         [ForeignKey("BAApprovalGroupId")]
-        public virtual ApprovalGroup? BusinessAreaApprovalGroup { get; set; }
+        public virtual ApprovalGroup? StoreApprovalGroup { get; set; }
         public int? BAApprovalGroupId { get; set; }
 
 
-        [ForeignKey("BusinessAreaRoleId")]
-        public virtual BusinessAreaRole? BusinessAreaRole { get; set; }
-        public int? BusinessAreaRoleId { get; set; }
+        [ForeignKey("StoreRoleId")]
+        public virtual StoreRole? StoreRole { get; set; }
+        public int? StoreRoleId { get; set; }
 
         //Approver ApprovalLevel
         [Required]
@@ -120,10 +120,10 @@ namespace AtoCashAPI.Models
         public Double? TotalClaimAmount { get; set; }
         public DateTime? ExpReimReqDate { get; set; }
 
-        public int? BusinessAreaId { get; set; }
-        public string? BusinessArea{ get; set; }
+        public int? StoreId { get; set; }
+        public string? Store{ get; set; }
 
-        public bool IsBusinessAreaReq { get; set; }
+        public bool IsStoreReq { get; set; }
         public int? DepartmentId { get; set; }
         public string? Department { get; set; }
         public int? ProjectId { get; set; }

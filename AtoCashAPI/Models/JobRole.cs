@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AtoCashAPI.Models
 {
-    public class StoreRole
+    public class JobRole
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -22,28 +22,16 @@ namespace AtoCashAPI.Models
         [Required]
         public Double? MaxPettyCashAllowed { get; set; }
 
-
-        public string? GetStoreRole()
-        {
-            var NameParts = new List<string>();
-
-            NameParts.Add(JobRoleCode ?? "");
-            NameParts.Add(JobRoleName ?? "");
-            
-            return String.Join(":", NameParts.Where(s => !String.IsNullOrEmpty(s)));
-
-        }
-
     }
 
-    public class StoreRoleDTO
+    public class JobRoleDTO
     {
 
         public int? Id { get; set; }
 
-        public string? BARoleCode { get; set; }
+        public string? JobRoleCode { get; set; }
 
-        public string? BARoleName { get; set; }
+        public string? JobRoleName { get; set; }
 
         public Double? MaxPettyCashAllowed { get; set; }
 
@@ -51,7 +39,9 @@ namespace AtoCashAPI.Models
 
 
 
-    public class StoreRoleVM
+
+
+    public class JobRoleVM
     {
 
         public int? Id { get; set; }

@@ -22,7 +22,7 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("RoleId")]
         public virtual DepartmentRole? JobRole { get; set; }
-        public int? RoleId { get; set; }
+        public int? JobRoleId { get; set; }
 
         [Required]
         [ForeignKey("ApprovalLevelId")]
@@ -36,8 +36,8 @@ namespace AtoCashAPI.Models
 
         public string? ApprovalGroup { get; set; }
         public int? ApprovalGroupId { get; set; }
-        public string? Role { get; set; }
-        public int? RoleId { get; set; }
+        public string? JobRole { get; set; }
+        public int? JobRoleId { get; set; }
 
         public int? ApprovalLevel { get; set; }
         public int? ApprovalLevelId { get; set; }
