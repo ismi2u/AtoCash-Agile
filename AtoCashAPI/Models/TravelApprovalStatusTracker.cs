@@ -31,7 +31,7 @@ namespace AtoCashAPI.Models
 
         //Approver Department
         [ForeignKey("DepartmentId")]
-        public virtual Department? Department { get; set; }
+        public virtual BusinessDefinition? Department { get; set; }
         public int? DepartmentId { get; set; }
 
         //Approver Project (either Department or Project => Can't be both)

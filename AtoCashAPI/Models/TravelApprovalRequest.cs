@@ -40,7 +40,7 @@ namespace AtoCashAPI.Models
         /// </summary>
 
         [ForeignKey("DepartmentId")]
-        public virtual Department? Department { get; set; }
+        public virtual BusinessDefinition? Department { get; set; }
         public int? DepartmentId { get; set; }
 
         [ForeignKey("ProjectId")]

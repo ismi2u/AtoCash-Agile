@@ -36,17 +36,17 @@ namespace AtoCashAPI.Models
 
         [Required]
         public DateTime? ExpReimReqDate { get; set; }
-        [Required]
-        public bool IsStoreReq { get; set; }
+        //[Required]
+        //public bool IsStoreReq { get; set; }
 
-        /// 
+        ///// 
 
-        [ForeignKey("StoreId")]
-        public virtual Store? Store { get; set; }
-        public int? StoreId { get; set; }
+        //[ForeignKey("StoreId")]
+        //public virtual Store? Store { get; set; }
+        //public int? StoreId { get; set; }
 
         [ForeignKey("DepartmentId")]
-        public virtual Department? Department { get; set; }
+        public virtual BusinessDefinition? Department { get; set; }
         public int? DepartmentId { get; set; }
 
 
@@ -83,9 +83,9 @@ namespace AtoCashAPI.Models
         public int? BAApprovalGroupId { get; set; }
 
 
-        [ForeignKey("StoreRoleId")]
-        public virtual StoreRole? StoreRole { get; set; }
-        public int? StoreRoleId { get; set; }
+        //[ForeignKey("StoreRoleId")]
+        //public virtual StoreRole? StoreRole { get; set; }
+        //public int? StoreRoleId { get; set; }
 
         //Approver ApprovalLevel
         [Required]

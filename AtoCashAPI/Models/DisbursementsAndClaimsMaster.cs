@@ -35,14 +35,14 @@ namespace AtoCashAPI.Models
         public int? RequestTypeId { get; set; }
 
 
-        [ForeignKey("StoreId")]
-        public virtual Store? Store { get; set; }
-        public int? StoreId { get; set; }
+        //[ForeignKey("StoreId")]
+        //public virtual Store? Store { get; set; }
+        //public int? StoreId { get; set; }
 
         public bool IsStoreReq { get; set; }
 
         [ForeignKey("DepartmentId")]
-        public virtual Department? Department { get; set; }
+        public virtual BusinessDefinition? Department { get; set; }
         public int? DepartmentId { get; set; }
 
 

@@ -139,7 +139,7 @@ namespace AtoCashAPI.Controllers
         public async Task<ActionResult> AddEmployeesToProject(AddEmployeesToProjectId model)
         {
 
-            int projId = model.ProjectId;
+            int? projId = model.ProjectId;
             var project = _context.Projects.Find(projId);
 
            if(projId == 0 || project == null)

@@ -23,10 +23,16 @@ namespace AtoCashAPI.Data
             base.OnModelCreating(builder);
 
         }
+
+     
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeExtendedInfo> EmployeeExtendedInfos { get; set; }
+
+        public DbSet<BusinessDefinition> BusinessDefinitions { get; set; }
+        public DbSet<BusinessUnit> BusinessUnits { get; set; }
+
         public DbSet<CostCenter> CostCenters { get; set; }
-        public DbSet<Department> Departments { get; set; }
+
         public DbSet<ApprovalGroup> ApprovalGroups { get; set; }
         public DbSet<ApprovalRoleMap> ApprovalRoleMaps { get; set; }
         public DbSet<JobRole> JobRoles { get; set; }
@@ -49,7 +55,9 @@ namespace AtoCashAPI.Data
 
         public DbSet<ExpenseSubClaim> ExpenseSubClaims { get; set; }
 
-        public DbSet<Store> Stores { get; set; }
+     
+
+
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<SubProject> SubProjects { get; set; }

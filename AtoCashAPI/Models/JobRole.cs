@@ -22,6 +22,21 @@ namespace AtoCashAPI.Models
         [Required]
         public Double? MaxPettyCashAllowed { get; set; }
 
+
+        public string? GetJobRole()
+        {
+            var NameParts = new List<string>();
+
+            NameParts.Add(JobRoleCode ?? "");
+            NameParts.Add(JobRoleName ?? "");
+
+
+            //return String.Join(" ", FirstName, MiddleName, LastName);
+
+            return String.Join(" ", NameParts.Where(s => !String.IsNullOrEmpty(s)));
+
+        }
+
     }
 
     public class JobRoleDTO

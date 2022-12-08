@@ -19,7 +19,6 @@ namespace AtoCashAPI.Models
         public int? EmployeeId { get; set; }
 
         [Required]
-        
         public Double? PettyClaimAmount { get; set; }
 
         [Required]
@@ -35,14 +34,14 @@ namespace AtoCashAPI.Models
         public virtual CurrencyType? CurrencyType { get; set; }
         public int? CurrencyTypeId { get; set; }
 
-        [ForeignKey("StoreId")]
-        public virtual Store? Store { get; set; }
-        public int? StoreId { get; set; }
+        //[ForeignKey("StoreId")]
+        //public virtual Store? Store { get; set; }
+        //public int? StoreId { get; set; }
 
 
-        [ForeignKey("DepartmentId")]
-        public virtual Department? Department { get; set; }
-        public int? DepartmentId { get; set; }
+        [ForeignKey("BusinessUnitId")]
+        public virtual BusinessDefinition? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
 
         [ForeignKey("ProjectId")]
         public virtual Project? Project { get; set; }
@@ -90,12 +89,17 @@ namespace AtoCashAPI.Models
 
         public DateTime? CashReqDate { get; set; }
 
-        public string? Store { get; set; }
-        public string? StoreId { get; set; }
-        public string? Department { get; set; }
-        public int? DepartmentId { get; set; }
+        public string? JobRole { get; set; }
+        public string? JobRoleId { get; set; }
+
+        public int? BusinessUnitId { get; set; }
+        public string? BusinessUnit { get; set; }
+
+
         public string? Project { get; set; }
         public int? ProjectId { get; set; }
+
+        public string? ProjectRole { get; set; }
 
         public string? SubProject { get; set; }
         public int? SubProjectId { get; set; }
@@ -106,6 +110,8 @@ namespace AtoCashAPI.Models
         public string? ApprovalStatusType { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
 
+        public int? CostCenterId { get; set; }
+        public string? CostCentre { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
 
