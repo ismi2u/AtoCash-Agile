@@ -15,7 +15,6 @@ namespace AtoCashAPI.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int? Id { get; set; }
 
-        [Key]
         [Required]
         [Column(TypeName = "varchar(250)")]
         public string? LocationName { get; set; }

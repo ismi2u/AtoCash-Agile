@@ -160,12 +160,12 @@ namespace AtoCashAPI.Controllers
       [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> DeleteCostCenter(int id)
         {
-            var dept = _context.Departments.Where(d => d.CostCenterId == id).FirstOrDefault();
+            var dept = _context.BusinessUnits.Where(d => d.CostCenterId == id).FirstOrDefault();
             var proj = _context.Projects.Where(p => p.CostCenterId == id).FirstOrDefault();
 
             if (dept != null)
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "Cost-Centre in use for Department" });
+                return Conflict(new RespStatus { Status = "Failure", Message = "Cost-Centre in use for Business Unit(s)" });
             }
             if (proj != null)
             {

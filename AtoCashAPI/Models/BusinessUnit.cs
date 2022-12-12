@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace AtoCashAPI.Models
 {
@@ -14,7 +15,7 @@ namespace AtoCashAPI.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int? Id { get; set; }
 
-        [Key]
+
         [Required]
         [Column(TypeName = "varchar(250)")]
         public string? BusinessUnitCode { get; set; }

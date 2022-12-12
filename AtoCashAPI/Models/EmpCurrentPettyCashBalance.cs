@@ -19,9 +19,12 @@ namespace AtoCashAPI.Models
         public int? EmployeeId { get; set; }
 
         [Required]
-        
+        public Double? MaxPettyCashLimit { get; set; }
+
+        [Required]
         public Double? CurBalance { get; set; }
-        
+
+
         [Required]
         public Double? CashOnHand { get; set; }
 

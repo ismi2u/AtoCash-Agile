@@ -324,16 +324,16 @@ namespace AtoCashAPI.Controllers.BasicControls
                 await _context.SaveChangesAsync();
 
 
-                ////Add PettyCash Balance
-                //Double empPettyCashAmountEligible = _context.JobRoles.Find(employee.JobRoleId).MaxPettyCashAllowed;
-                //_context.EmpCurrentPettyCashBalances.Add(new EmpCurrentPettyCashBalance()
-                //{
+                //Add PettyCash Balance
+                _context.EmpCurrentPettyCashBalances.Add(new EmpCurrentPettyCashBalance()
+                {
 
-                //    EmployeeId = employee.Id,
-                //    CurBalance = empPettyCashAmountEligible,
-                //    CashOnHand = 0,
-                //    UpdatedOn = DateTime.Now
-                //});
+                    EmployeeId = employee.Id,
+                    MaxPettyCashLimit = 0,
+                    CurBalance = 0,
+                    CashOnHand = 0,
+                    UpdatedOn = DateTime.Now
+                });
 
                 await _context.SaveChangesAsync();
             }

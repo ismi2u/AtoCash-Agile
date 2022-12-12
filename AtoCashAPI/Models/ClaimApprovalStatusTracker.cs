@@ -25,9 +25,9 @@ namespace AtoCashAPI.Models
         public int? PettyCashRequestId { get; set; }
 
         //Approver Department
-        [ForeignKey("DepartmentId")]
-        public virtual BusinessDefinition? Department { get; set; }
-        public int? DepartmentId { get; set; }
+        [ForeignKey("BusinessUnitId")]
+        public virtual BusinessUnit? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
 
         //Approver Project (either Department or Project => Can't be both)
         [ForeignKey("ProjManagerId")]
@@ -53,9 +53,9 @@ namespace AtoCashAPI.Models
 
         //Approver Role
         [Required]
-        [ForeignKey("RoleId")]
-        public virtual DepartmentRole? DepartmentRole { get; set; }
-        public int? DepartmentRoleId { get; set; }
+        [ForeignKey("JobRoleId")]
+        public virtual JobRole? JobRole { get; set; }
+        public int? JobRoleId { get; set; }
 
         //Approver ApprovalLevel
         [Required]
@@ -89,8 +89,8 @@ namespace AtoCashAPI.Models
 
         public int? PettyCashRequestId { get; set; }
 
-        public int? DepartmentId { get; set; }
-        public string? DepartmentName { get; set; }
+        public string? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
 
         public int? ProjectId { get; set; }
         public string? ProjectName { get; set; }

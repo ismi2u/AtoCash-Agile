@@ -20,8 +20,8 @@ namespace AtoCashAPI.Models
         public int? ApprovalGroupId { get; set; }
 
         [Required]
-        [ForeignKey("RoleId")]
-        public virtual DepartmentRole? JobRole { get; set; }
+        [ForeignKey("JobRoleId")]
+        public virtual JobRole? JobRole { get; set; }
         public int? JobRoleId { get; set; }
 
         [Required]

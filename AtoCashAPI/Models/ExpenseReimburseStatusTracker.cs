@@ -73,21 +73,11 @@ namespace AtoCashAPI.Models
 
         //Approver Role
         [Required]
-        [ForeignKey("DepartmentRoleId")]
-        public virtual DepartmentRole? DepartmentRole { get; set; }
-        public int? DepartmentRoleId { get; set; }
+        [ForeignKey("JobRoleId")]
+        public virtual JobRole? JobRole { get; set; }
+        public int? JobRoleId { get; set; }
 
 
-        [ForeignKey("BAApprovalGroupId")]
-        public virtual ApprovalGroup? StoreApprovalGroup { get; set; }
-        public int? BAApprovalGroupId { get; set; }
-
-
-        //[ForeignKey("StoreRoleId")]
-        //public virtual StoreRole? StoreRole { get; set; }
-        //public int? StoreRoleId { get; set; }
-
-        //Approver ApprovalLevel
         [Required]
         [ForeignKey("ApprovalLevelId")]
         public virtual ApprovalLevel? ApprovalLevel { get; set; }

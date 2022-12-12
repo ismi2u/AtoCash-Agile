@@ -37,4 +37,9 @@
     <ProjectReference Include="..\EmailService\EmailService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Images\" />
+    <Folder Include="Reportdocs\" />
+  </ItemGroup>
+
 </Project>
