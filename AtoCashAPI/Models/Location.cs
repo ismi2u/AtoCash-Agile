@@ -41,4 +41,27 @@ namespace AtoCashAPI.Models
         public virtual StatusType? StatusType { get; set; }
         public int? StatusTypeId { get; set; }
     }
+
+
+
+    public class LocationVM
+    {
+        public int? Id { get; set; }
+
+        public string? LocationName{ get; set; }
+    }
+
+
+    public class LocationDTO
+    {
+        public int? Id { get; set; }
+        public string? LocationName { get; set; }
+        public string? City { get; set; }
+        public Decimal? Lattitude { get; set; }
+        public Decimal? Longitude { get; set; }
+        public string? LocationDesc { get; set; }
+        public int? StatusTypeId { get; set; }
+
+        public string? StatusType{ get; set; }
+    }
 }

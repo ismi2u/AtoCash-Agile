@@ -60,7 +60,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 pettyCashRequestDTO.PettyClaimAmount = pettyCashRequest.PettyClaimAmount;
                 pettyCashRequestDTO.PettyClaimRequestDesc = pettyCashRequest.PettyClaimRequestDesc;
                 pettyCashRequestDTO.CashReqDate = pettyCashRequest.CashReqDate;
-                pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBussUnitName() : null;
+                pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBusinessUnitName() : null;
                 pettyCashRequestDTO.CostCentre = pettyCashRequest.CostCenterId != null ? _context.CostCenters.Find(pettyCashRequest.CostCenterId).GetCostCentre() : null;
                 pettyCashRequestDTO.ProjectId = pettyCashRequest.ProjectId;
                 pettyCashRequestDTO.Project = pettyCashRequest.ProjectId != null ? _context.Projects.Find(pettyCashRequest.ProjectId).ProjectName : null;
@@ -104,7 +104,7 @@ namespace AtoCashAPI.Controllers.PettyCash
             pettyCashRequestDTO.PettyClaimAmount = pettyCashRequest.PettyClaimAmount;
             pettyCashRequestDTO.PettyClaimRequestDesc = pettyCashRequest.PettyClaimRequestDesc;
             pettyCashRequestDTO.CashReqDate = pettyCashRequest.CashReqDate;
-            pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBussUnitName() : null;
+            pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBusinessUnitName() : null;
             pettyCashRequestDTO.CostCentre = pettyCashRequest.CostCenterId != null ? _context.CostCenters.Find(pettyCashRequest.CostCenterId).GetCostCentre() : null;
             pettyCashRequestDTO.ProjectId = pettyCashRequest.ProjectId;
             pettyCashRequestDTO.Project = pettyCashRequest.ProjectId != null ? _context.Projects.Find(pettyCashRequest.ProjectId).ProjectName : null;
@@ -154,7 +154,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 var reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == pettyCashRequest.BusinessUnitId).FirstOrDefault();
                 pettyCashRequestDTO.JobRole = reqEmpExtInfo != null ?  _context.JobRoles.Find(reqEmpExtInfo.JobRoleId).GetJobRole() : "";
 
-                pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBussUnitName() : null;
+                pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBusinessUnitName() : null;
                 pettyCashRequestDTO.CostCentre = pettyCashRequest.CostCenterId != null ? _context.CostCenters.Find(pettyCashRequest.CostCenterId).GetCostCentre() : null;
                 pettyCashRequestDTO.ProjectId = pettyCashRequest.ProjectId;
                 pettyCashRequestDTO.Project = pettyCashRequest.ProjectId != null ? _context.Projects.Find(pettyCashRequest.ProjectId).ProjectName : null;

@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 
 namespace AtoCashAPI.Models
 {
-}
 
-  // public class CashbalVsAdvancedVM
-  //  {
-       // public Double? CurCashBal { get; set; }
-       // public Double? MaxCashAllowed { get; set; }
-   // }
+
+   public class CashbalVsAdvancedVM
+    {
+        public double CurCashBal { get; set; }
+        public double MaxCashAllowed { get; set; }
+    }
+
+    
+}
