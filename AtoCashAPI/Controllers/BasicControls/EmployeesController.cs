@@ -15,7 +15,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
+    //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
     public class EmployeesController : ControllerBase
     {
         private readonly AtoCashDbContext _context;
@@ -27,7 +27,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
         // GET: api/Employees
         [HttpGet]
-        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
+        //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
         public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
         {
             List<EmployeeDTO> ListEmployeeDTO = new();
@@ -79,7 +79,7 @@ namespace AtoCashAPI.Controllers.BasicControls
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
+        //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
         public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
@@ -128,7 +128,7 @@ namespace AtoCashAPI.Controllers.BasicControls
         }
         [HttpGet]
         [ActionName("EmployeesForDropdown")]
-        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
+        //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
         public async Task<ActionResult<IEnumerable<EmployeeVM>>> GetEmployeesForDropDown()
         {
             List<EmployeeVM> ListEmployeeVM = new();
@@ -155,7 +155,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
         [HttpGet("{id}")]
         [ActionName("GetReporteesUnderManager")]
-        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
+        //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
         public async Task<ActionResult<IEnumerable<EmployeeVM>>> GetReporteesUnderManager(int id)
         {
 
@@ -187,7 +187,7 @@ namespace AtoCashAPI.Controllers.BasicControls
         // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> PutEmployee(int id, EmployeeDTO employeeDto)
         {
             if (id != employeeDto.Id)
@@ -276,7 +276,7 @@ namespace AtoCashAPI.Controllers.BasicControls
         // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<ActionResult<Employee>> PostEmployee(EmployeeDTO employeeDto)
         {
 
@@ -347,7 +347,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var employee = await _context.Employees.FindAsync(id);

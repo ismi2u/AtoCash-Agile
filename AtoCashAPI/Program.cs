@@ -75,6 +75,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseRouting();
 
 app.UseAuthentication(); //add before MVC
 app.UseAuthorization();
@@ -93,7 +94,10 @@ app.UseStaticFiles(new StaticFileOptions
 });
 app.UseHttpsRedirection();
 app.UseCors("myCorsPolicy");
-app.UseRouting();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();

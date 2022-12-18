@@ -18,7 +18,7 @@ namespace AtoCashAPI.Controllers.PettyCash
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
+    //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
 
     public class PettyCashRequestsController : ControllerBase
     {
