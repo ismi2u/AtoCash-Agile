@@ -336,19 +336,20 @@ namespace AtoCashAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BusinessDefinitions",
+                name: "BusinessTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    BusDefinitionName = table.Column<string>(type: "varchar(250)", nullable: false),
+                    BusinessTypeName = table.Column<string>(type: "varchar(150)", nullable: false),
+                    BusinessTypeDesc = table.Column<string>(type: "varchar(250)", nullable: false),
                     StatusTypeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BusinessDefinitions", x => x.Id);
+                    table.PrimaryKey("PK_BusinessTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BusinessDefinitions_StatusTypes_StatusTypeId",
+                        name: "FK_BusinessTypes_StatusTypes_StatusTypeId",
                         column: x => x.StatusTypeId,
                         principalTable: "StatusTypes",
                         principalColumn: "Id",
@@ -442,7 +443,7 @@ namespace AtoCashAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "Locations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -456,9 +457,9 @@ namespace AtoCashAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.Id);
+                    table.PrimaryKey("PK_Locations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Location_StatusTypes_StatusTypeId",
+                        name: "FK_Locations_StatusTypes_StatusTypeId",
                         column: x => x.StatusTypeId,
                         principalTable: "StatusTypes",
                         principalColumn: "Id",
@@ -561,7 +562,7 @@ namespace AtoCashAPI.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    BusinessUnitCode = table.Column<string>(type: "varchar(250)", nullable: false),
+                    BusinessTypeId = table.Column<int>(type: "integer", nullable: false),
                     BusinessUnitName = table.Column<string>(type: "varchar(250)", nullable: false),
                     CostCenterId = table.Column<int>(type: "integer", nullable: false),
                     BusinessDesc = table.Column<string>(type: "varchar(250)", nullable: false),
@@ -572,15 +573,21 @@ namespace AtoCashAPI.Migrations
                 {
                     table.PrimaryKey("PK_BusinessUnits", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_BusinessUnits_BusinessTypes_BusinessTypeId",
+                        column: x => x.BusinessTypeId,
+                        principalTable: "BusinessTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_BusinessUnits_CostCenters_CostCenterId",
                         column: x => x.CostCenterId,
                         principalTable: "CostCenters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BusinessUnits_Location_LocationId",
+                        name: "FK_BusinessUnits_Locations_LocationId",
                         column: x => x.LocationId,
-                        principalTable: "Location",
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -660,7 +667,6 @@ namespace AtoCashAPI.Migrations
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: false),
                     JobRoleId = table.Column<int>(type: "integer", nullable: false),
                     ApprovalGroupId = table.Column<int>(type: "integer", nullable: true),
-                    ApprovalLevelId = table.Column<int>(type: "integer", nullable: false),
                     StatusTypeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -671,12 +677,6 @@ namespace AtoCashAPI.Migrations
                         column: x => x.ApprovalGroupId,
                         principalTable: "ApprovalGroups",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_EmployeeExtendedInfos_ApprovalLevels_ApprovalLevelId",
-                        column: x => x.ApprovalLevelId,
-                        principalTable: "ApprovalLevels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EmployeeExtendedInfos_BusinessUnits_BusinessUnitId",
                         column: x => x.BusinessUnitId,
@@ -783,7 +783,7 @@ namespace AtoCashAPI.Migrations
                     TotalClaimAmount = table.Column<double>(type: "double precision", nullable: false),
                     ExpReimReqDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsStoreReq = table.Column<bool>(type: "boolean", nullable: false),
-                    DepartmentId = table.Column<int>(type: "integer", nullable: true),
+                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
                     WorkTaskId = table.Column<int>(type: "integer", nullable: true),
@@ -802,9 +802,9 @@ namespace AtoCashAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ExpenseReimburseRequests_BusinessDefinitions_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "BusinessDefinitions",
+                        name: "FK_ExpenseReimburseRequests_BusinessUnits_BusinessUnitId",
+                        column: x => x.BusinessUnitId,
+                        principalTable: "BusinessUnits",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ExpenseReimburseRequests_CostCenters_CostCenterId",
@@ -870,9 +870,9 @@ namespace AtoCashAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PettyCashRequests_BusinessDefinitions_BusinessUnitId",
+                        name: "FK_PettyCashRequests_BusinessUnits_BusinessUnitId",
                         column: x => x.BusinessUnitId,
-                        principalTable: "BusinessDefinitions",
+                        principalTable: "BusinessUnits",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PettyCashRequests_CostCenters_CostCenterId",
@@ -919,7 +919,7 @@ namespace AtoCashAPI.Migrations
                     TravelEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TravelPurpose = table.Column<string>(type: "varchar(150)", nullable: false),
                     ReqRaisedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DepartmentId = table.Column<int>(type: "integer", nullable: true),
+                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
                     WorkTaskId = table.Column<int>(type: "integer", nullable: true),
@@ -938,9 +938,9 @@ namespace AtoCashAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TravelApprovalRequests_BusinessDefinitions_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "BusinessDefinitions",
+                        name: "FK_TravelApprovalRequests_BusinessUnits_BusinessUnitId",
+                        column: x => x.BusinessUnitId,
+                        principalTable: "BusinessUnits",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TravelApprovalRequests_CostCenters_CostCenterId",
@@ -982,7 +982,7 @@ namespace AtoCashAPI.Migrations
                     CurrencyTypeId = table.Column<int>(type: "integer", nullable: false),
                     TotalClaimAmount = table.Column<double>(type: "double precision", nullable: false),
                     ExpReimReqDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DepartmentId = table.Column<int>(type: "integer", nullable: true),
+                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjManagerId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
@@ -1015,9 +1015,9 @@ namespace AtoCashAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ExpenseReimburseStatusTrackers_BusinessDefinitions_Departme~",
-                        column: x => x.DepartmentId,
-                        principalTable: "BusinessDefinitions",
+                        name: "FK_ExpenseReimburseStatusTrackers_BusinessUnits_BusinessUnitId",
+                        column: x => x.BusinessUnitId,
+                        principalTable: "BusinessUnits",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ExpenseReimburseStatusTrackers_CurrencyTypes_CurrencyTypeId",
@@ -1090,7 +1090,7 @@ namespace AtoCashAPI.Migrations
                     Location = table.Column<string>(type: "varchar(100)", nullable: false),
                     Description = table.Column<string>(type: "varchar(250)", nullable: false),
                     IsStoreReq = table.Column<bool>(type: "boolean", nullable: false),
-                    DepartmentId = table.Column<int>(type: "integer", nullable: true),
+                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
                     WorkTaskId = table.Column<int>(type: "integer", nullable: true),
@@ -1100,9 +1100,9 @@ namespace AtoCashAPI.Migrations
                 {
                     table.PrimaryKey("PK_ExpenseSubClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExpenseSubClaims_BusinessDefinitions_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "BusinessDefinitions",
+                        name: "FK_ExpenseSubClaims_BusinessUnits_BusinessUnitId",
+                        column: x => x.BusinessUnitId,
+                        principalTable: "BusinessUnits",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ExpenseSubClaims_CostCenters_CostCenterId",
@@ -1334,7 +1334,7 @@ namespace AtoCashAPI.Migrations
                     TravelApprovalRequestId = table.Column<int>(type: "integer", nullable: false),
                     TravelStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     TravelEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    DepartmentId = table.Column<int>(type: "integer", nullable: true),
+                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjManagerId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
@@ -1363,9 +1363,9 @@ namespace AtoCashAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TravelApprovalStatusTrackers_BusinessDefinitions_Department~",
-                        column: x => x.DepartmentId,
-                        principalTable: "BusinessDefinitions",
+                        name: "FK_TravelApprovalStatusTrackers_BusinessUnits_BusinessUnitId",
+                        column: x => x.BusinessUnitId,
+                        principalTable: "BusinessUnits",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TravelApprovalStatusTrackers_Employees_EmployeeId",
@@ -1465,9 +1465,14 @@ namespace AtoCashAPI.Migrations
                 column: "StatusTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BusinessDefinitions_StatusTypeId",
-                table: "BusinessDefinitions",
+                name: "IX_BusinessTypes_StatusTypeId",
+                table: "BusinessTypes",
                 column: "StatusTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BusinessUnits_BusinessTypeId",
+                table: "BusinessUnits",
+                column: "BusinessTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BusinessUnits_CostCenterId",
@@ -1610,11 +1615,6 @@ namespace AtoCashAPI.Migrations
                 column: "ApprovalGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeExtendedInfos_ApprovalLevelId",
-                table: "EmployeeExtendedInfos",
-                column: "ApprovalLevelId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeExtendedInfos_BusinessUnitId",
                 table: "EmployeeExtendedInfos",
                 column: "BusinessUnitId");
@@ -1665,6 +1665,11 @@ namespace AtoCashAPI.Migrations
                 column: "ApprovalStatusTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExpenseReimburseRequests_BusinessUnitId",
+                table: "ExpenseReimburseRequests",
+                column: "BusinessUnitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ExpenseReimburseRequests_CostCenterId",
                 table: "ExpenseReimburseRequests",
                 column: "CostCenterId");
@@ -1673,11 +1678,6 @@ namespace AtoCashAPI.Migrations
                 name: "IX_ExpenseReimburseRequests_CurrencyTypeId",
                 table: "ExpenseReimburseRequests",
                 column: "CurrencyTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExpenseReimburseRequests_DepartmentId",
-                table: "ExpenseReimburseRequests",
-                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExpenseReimburseRequests_EmployeeId",
@@ -1715,14 +1715,14 @@ namespace AtoCashAPI.Migrations
                 column: "ApprovalStatusTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExpenseReimburseStatusTrackers_BusinessUnitId",
+                table: "ExpenseReimburseStatusTrackers",
+                column: "BusinessUnitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ExpenseReimburseStatusTrackers_CurrencyTypeId",
                 table: "ExpenseReimburseStatusTrackers",
                 column: "CurrencyTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExpenseReimburseStatusTrackers_DepartmentId",
-                table: "ExpenseReimburseStatusTrackers",
-                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExpenseReimburseStatusTrackers_EmployeeId",
@@ -1760,14 +1760,14 @@ namespace AtoCashAPI.Migrations
                 column: "WorkTaskId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExpenseSubClaims_BusinessUnitId",
+                table: "ExpenseSubClaims",
+                column: "BusinessUnitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ExpenseSubClaims_CostCenterId",
                 table: "ExpenseSubClaims",
                 column: "CostCenterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExpenseSubClaims_DepartmentId",
-                table: "ExpenseSubClaims",
-                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExpenseSubClaims_EmployeeId",
@@ -1825,8 +1825,8 @@ namespace AtoCashAPI.Migrations
                 column: "StatusTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Location_StatusTypeId",
-                table: "Location",
+                name: "IX_Locations_StatusTypeId",
+                table: "Locations",
                 column: "StatusTypeId");
 
             migrationBuilder.CreateIndex(
@@ -1905,14 +1905,14 @@ namespace AtoCashAPI.Migrations
                 column: "ApprovalStatusTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TravelApprovalRequests_BusinessUnitId",
+                table: "TravelApprovalRequests",
+                column: "BusinessUnitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TravelApprovalRequests_CostCenterId",
                 table: "TravelApprovalRequests",
                 column: "CostCenterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TravelApprovalRequests_DepartmentId",
-                table: "TravelApprovalRequests",
-                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TravelApprovalRequests_EmployeeId",
@@ -1945,9 +1945,9 @@ namespace AtoCashAPI.Migrations
                 column: "ApprovalStatusTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TravelApprovalStatusTrackers_DepartmentId",
+                name: "IX_TravelApprovalStatusTrackers_BusinessUnitId",
                 table: "TravelApprovalStatusTrackers",
-                column: "DepartmentId");
+                column: "BusinessUnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TravelApprovalStatusTrackers_EmployeeId",
@@ -2053,9 +2053,6 @@ namespace AtoCashAPI.Migrations
                 name: "RequestTypes");
 
             migrationBuilder.DropTable(
-                name: "BusinessUnits");
-
-            migrationBuilder.DropTable(
                 name: "ApprovalGroups");
 
             migrationBuilder.DropTable(
@@ -2074,9 +2071,6 @@ namespace AtoCashAPI.Migrations
                 name: "TravelApprovalRequests");
 
             migrationBuilder.DropTable(
-                name: "Location");
-
-            migrationBuilder.DropTable(
                 name: "ExpenseCategories");
 
             migrationBuilder.DropTable(
@@ -2086,10 +2080,16 @@ namespace AtoCashAPI.Migrations
                 name: "ApprovalStatusTypes");
 
             migrationBuilder.DropTable(
-                name: "BusinessDefinitions");
+                name: "BusinessUnits");
 
             migrationBuilder.DropTable(
                 name: "WorkTasks");
+
+            migrationBuilder.DropTable(
+                name: "BusinessTypes");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "SubProjects");

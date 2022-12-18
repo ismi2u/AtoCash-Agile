@@ -14,7 +14,7 @@ namespace AtoCashAPI.Controllers
 {
     [Route("api/[controller]/[Action]")]
     [ApiController]
-//  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
+  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
     public class LocationsController : ControllerBase
     {
         private readonly AtoCashDbContext _context;
@@ -104,7 +104,7 @@ namespace AtoCashAPI.Controllers
         // PUT: api/Locations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-    //  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+      [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> PutLocation(int id, LocationDTO LocationDTO)
         {
             if (id != LocationDTO.Id)
@@ -149,7 +149,7 @@ namespace AtoCashAPI.Controllers
 
         // POST: api/Locations
         [HttpPost]
-    //  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+      [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<ActionResult<Location>> PostLocation(LocationDTO LocationDTO)
         {
             var location = _context.Locations.Where(c => c.LocationName == LocationDTO.LocationName).FirstOrDefault();
@@ -182,7 +182,7 @@ namespace AtoCashAPI.Controllers
 
         // DELETE: api/Locations/5
         [HttpDelete("{id}")]
-    //  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+      [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> DeleteLocation(int id)
         {
             var bussUnit = _context.BusinessUnits.Where(d => d.LocationId == id).FirstOrDefault();
