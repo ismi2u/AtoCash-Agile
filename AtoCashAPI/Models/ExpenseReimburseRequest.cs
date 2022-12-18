@@ -42,9 +42,9 @@ namespace AtoCashAPI.Models
         [Required]
         public bool IsStoreReq { get; set; }
 
-        [ForeignKey("DepartmentId")]
-        public virtual BusinessDefinition? Department { get; set; }
-        public int? DepartmentId { get; set; }
+        [ForeignKey("BusinessUnitId")]
+        public virtual BusinessUnit? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
 
         //[ForeignKey("StoreId")]
         //public virtual Store? Store { get; set; }

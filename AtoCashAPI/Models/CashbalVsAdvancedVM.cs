@@ -12,8 +12,8 @@ namespace AtoCashAPI.Models
 
    public class CashbalVsAdvancedVM
     {
-        public double CurCashBal { get; set; }
-        public double MaxCashAllowed { get; set; }
+        public double? CurCashBal { get; set; }
+        public double? MaxCashAllowed { get; set; }
     }
 
     

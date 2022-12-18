@@ -160,26 +160,6 @@ namespace AtoCashAPI.Models
 
         public string? EmploymentType { get; set; }
 
-        public int? DepartmentId { get; set; }
-
-        public string? Department { get; set; }
-
-
-        public int? JobRoleId { get; set; }
-        public string? JobRole { get; set; }
-
-
-        public int? ApprovalGroupId { get; set; }
-        public string? ApprovalGroup { get; set; }
-
-        public int? StoreApprovalGroupId { get; set; }
-        public string? StoreApprovalGroup { get; set; }
-
-        public int? StoreRoleId { get; set; }
-        public string? StoreRoleName{ get; set; }
-
-        public int? StoreId { get; set; }
-        public string? Store { get; set; }
 
         public int? CurrencyTypeId { get; set; }
         public int? StatusTypeId { get; set; }

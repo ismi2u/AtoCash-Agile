@@ -28,7 +28,7 @@ namespace AtoCashAPI.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeExtendedInfo> EmployeeExtendedInfos { get; set; }
 
-        public DbSet<BusinessDefinition> BusinessDefinitions { get; set; }
+        public DbSet<BusinessType> BusinessTypes { get; set; }
         public DbSet<BusinessUnit> BusinessUnits { get; set; }
         public DbSet<Location> Locations { get; set; }
 

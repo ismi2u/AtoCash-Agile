@@ -29,12 +29,9 @@ namespace AtoCashAPI.Models
 
         public DateTime? TravelEndDate { get; set; }
 
-        //Approver Department
-        [ForeignKey("DepartmentId")]
-        public virtual BusinessDefinition? Department { get; set; }
-        public int? DepartmentId { get; set; }
-
-        //Approver Project (either Department or Project => Can't be both)
+        [ForeignKey("BusinessUnitId")]
+        public virtual BusinessUnit? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
 
 
         [ForeignKey("ProjManagerId")]

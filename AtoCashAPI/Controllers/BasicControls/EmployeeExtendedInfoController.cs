@@ -36,9 +36,9 @@ namespace AtoCashAPI.Controllers.BasicControls
 
                 empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
                 empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
+                empExtendedInfoDTO.BusinessUnitId= employeeExtendedInfo.BusinessUnitId;
                 empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
                 empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
-                empExtendedInfoDTO.ApprovalLevelId = employeeExtendedInfo.ApprovalLevelId;
                 empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
 
                 ListEmployeeExtendedInfoDTOs.Add(empExtendedInfoDTO);
@@ -51,7 +51,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
         // GET: api/EmployeeExtendedInfo/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<EmployeeExtendedInfoDTO>> GetEmployeeExtendedInfo(int? id)
+        public async Task<ActionResult<EmployeeExtendedInfoDTO>> GetEmployeeExtendedInfoById(int? id)
         {
 
             var employeeExtendedInfo = await _context.EmployeeExtendedInfos.FindAsync(id);
@@ -65,11 +65,11 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
             empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
+            empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
             empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
             empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
-            empExtendedInfoDTO.ApprovalLevelId = employeeExtendedInfo.ApprovalLevelId;
             empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
-
+            empExtendedInfoDTO.StatusType = _context.StatusTypes.Find(employeeExtendedInfo.StatusTypeId).Status;
 
             return empExtendedInfoDTO;
         }
@@ -90,10 +90,11 @@ namespace AtoCashAPI.Controllers.BasicControls
 
                 empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
                 empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
+                empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
                 empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
                 empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
-                empExtendedInfoDTO.ApprovalLevelId = employeeExtendedInfo.ApprovalLevelId;
                 empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
+                empExtendedInfoDTO.StatusType = _context.StatusTypes.Find(employeeExtendedInfo.StatusTypeId).Status;
 
                 ListEmployeeExtendedInfoDTOs.Add(empExtendedInfoDTO);
 
@@ -123,10 +124,10 @@ namespace AtoCashAPI.Controllers.BasicControls
             {
                 try
                 {
+                    empExtendedInfo.BusinessUnitId = empExtendedInfo.BusinessUnitId;
                     empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
                     empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
                     empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
-                    empExtendedInfo.ApprovalLevelId = employeeExtendedInfoDTO.ApprovalLevelId;
                     empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
 
                     await _context.SaveChangesAsync();
@@ -149,10 +150,10 @@ namespace AtoCashAPI.Controllers.BasicControls
             {
                 EmployeeExtendedInfo empExtendedInfo = new EmployeeExtendedInfo();
 
+                empExtendedInfo.BusinessUnitId = empExtendedInfo.BusinessUnitId;
                 empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
                 empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
                 empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
-                empExtendedInfo.ApprovalLevelId = employeeExtendedInfoDTO.ApprovalLevelId;
                 empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
 
                 await _context.SaveChangesAsync();
@@ -171,15 +172,22 @@ namespace AtoCashAPI.Controllers.BasicControls
         {
             var employeeExtendedInfo = await _context.EmployeeExtendedInfos.FindAsync(id);
 
+            var empId = employeeExtendedInfo.EmployeeId;
+
             if (employeeExtendedInfo == null)
             {
                 return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id is invalid!" });
             }
 
-        
-            bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(t => t.EmployeeId == id).Any();
-            bool blnUsedInCashAdvReq = _context.PettyCashRequests.Where(t => t.EmployeeId == id).Any();
-            bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(t => t.EmployeeId == id).Any();
+
+
+
+            bool blnUsedInTravelReq = false; // remove this after travelrequest is fixed below
+            bool blnUsedInExpeReimReq = false; // remove this after ExpReimburse is fixed below
+
+            // bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+            bool blnUsedInCashAdvReq = _context.PettyCashRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+           // bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)
             {

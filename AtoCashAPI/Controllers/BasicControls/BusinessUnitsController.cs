@@ -32,12 +32,12 @@ namespace AtoCashAPI.Controllers
             List<BusinessUnitVM> ListBusinessUnitsVM = new();
 
             var BusinessUnits = await _context.BusinessUnits.Where(c => c.StatusTypeId == (int)EStatusType.Active).ToListAsync();
-            foreach (BusinessUnit bizUnit in BusinessUnits)
+            foreach (BusinessUnit businessUnit in BusinessUnits)
             {
                 BusinessUnitVM BusinessUnitsVM = new()
                 {
-                    Id = bizUnit.Id,
-                    BusinessUnit = bizUnit.BusinessUnitType = ":" + bizUnit.BusinessUnitName
+                    Id = businessUnit.Id,
+                    BusinessUnitName = businessUnit.BusinessUnitName
                 };
 
                 ListBusinessUnitsVM.Add(BusinessUnitsVM);
@@ -48,26 +48,26 @@ namespace AtoCashAPI.Controllers
         }
         // GET: api/BusinessUnits
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BusinessUnitDTO>>> GetBusinessUnitss()
+        public async Task<ActionResult<IEnumerable<BusinessUnitDTO>>> GetBusinessUnits()
         {
             List<BusinessUnitDTO> ListBusinessUnitsDTO = new();
 
-            var BusinessUnitss = await _context.BusinessUnits.ToListAsync();
+            var ListBusinessUnits = await _context.BusinessUnits.ToListAsync();
 
-            foreach (BusinessUnit BusinessUnits in BusinessUnitss)
+            foreach (BusinessUnit businessUnit in ListBusinessUnits)
             {
                 BusinessUnitDTO BusinessUnitsDTO = new()
                 {
-                    Id = BusinessUnits.Id,
-                    BusinessUnitType = BusinessUnits.BusinessUnitType,
-                    BusinessUnitName = BusinessUnits.BusinessUnitName,
-                    CostCenterId = BusinessUnits.CostCenterId,
-                    CostCenter = _context.CostCenters.Find(BusinessUnits.CostCenterId).GetCostCentre(),
-                    BusinessDesc = BusinessUnits.BusinessDesc,
-                    LocationId = BusinessUnits.LocationId,
-                    Location = _context.Locations.Find(BusinessUnits.LocationId).LocationName,
-                    StatusTypeId = BusinessUnits.StatusTypeId,
-                    StatusType = _context.StatusTypes.Find(BusinessUnits.StatusTypeId).Status
+                    Id = businessUnit.Id,
+                    BusinessType = _context.BusinessTypes.Find(businessUnit.BusinessTypeId).BusinessTypeName,
+                    BusinessUnitName = businessUnit.BusinessUnitName,
+                    CostCenterId = businessUnit.CostCenterId,
+                    CostCenter = _context.CostCenters.Find(businessUnit.CostCenterId).GetCostCentre(),
+                    BusinessDesc = businessUnit.BusinessDesc,
+                    LocationId = businessUnit.LocationId,
+                    Location = _context.Locations.Find(businessUnit.LocationId).LocationName,
+                    StatusTypeId = businessUnit.StatusTypeId,
+                    StatusType = _context.StatusTypes.Find(businessUnit.StatusTypeId).Status
                 };
 
                 ListBusinessUnitsDTO.Add(BusinessUnitsDTO);
@@ -78,27 +78,27 @@ namespace AtoCashAPI.Controllers
 
         // GET: api/BusinessUnits/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BusinessUnitDTO>> GetBusinessUnits(int id)
+        public async Task<ActionResult<BusinessUnitDTO>> GetBusinessUnit(int id)
         {
-            var BusinessUnits = await _context.BusinessUnits.FindAsync(id);
+            var businessUnit = await _context.BusinessUnits.FindAsync(id);
 
-            if (BusinessUnits == null)
+            if (businessUnit == null)
             {
                 return Conflict(new RespStatus { Status = "Failure", Message = "General Ledger Account No is Invalid!" });
             }
 
             BusinessUnitDTO BusinessUnitsDTO = new()
             {
-                Id = BusinessUnits.Id,
-                BusinessUnitType = BusinessUnits.BusinessUnitType,
-                BusinessUnitName = BusinessUnits.BusinessUnitName,
-                CostCenterId = BusinessUnits.CostCenterId,
-                CostCenter = _context.CostCenters.Find(BusinessUnits.CostCenterId).GetCostCentre(),
-                BusinessDesc = BusinessUnits.BusinessDesc,
-                LocationId = BusinessUnits.LocationId,
-                Location = _context.Locations.Find(BusinessUnits.LocationId).LocationName,
-                StatusTypeId = BusinessUnits.StatusTypeId,
-                StatusType = _context.StatusTypes.Find(BusinessUnits.StatusTypeId).Status
+                Id = businessUnit.Id,
+                BusinessType = _context.BusinessTypes.Find(businessUnit.BusinessTypeId).BusinessTypeName,
+                BusinessUnitName = businessUnit.BusinessUnitName,
+                CostCenterId = businessUnit.CostCenterId,
+                CostCenter = _context.CostCenters.Find(businessUnit.CostCenterId).GetCostCentre(),
+                BusinessDesc = businessUnit.BusinessDesc,
+                LocationId = businessUnit.LocationId,
+                Location = _context.Locations.Find(businessUnit.LocationId).LocationName,
+                StatusTypeId = businessUnit.StatusTypeId,
+                StatusType = _context.StatusTypes.Find(businessUnit.StatusTypeId).Status
             };
 
             return BusinessUnitsDTO;
@@ -118,7 +118,7 @@ namespace AtoCashAPI.Controllers
 
             if(UpdBusinessUnit != null)
             {
-                UpdBusinessUnit.BusinessUnitType = BusinessUnitsDTO.BusinessUnitType;
+                UpdBusinessUnit.BusinessTypeId = BusinessUnitsDTO.BusinessTypeId;
                 UpdBusinessUnit.BusinessUnitName = BusinessUnitsDTO.BusinessUnitName;
                 UpdBusinessUnit.CostCenterId = BusinessUnitsDTO.CostCenterId;
                 UpdBusinessUnit.BusinessDesc = BusinessUnitsDTO.BusinessDesc;
@@ -145,7 +145,7 @@ namespace AtoCashAPI.Controllers
     //  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<ActionResult<BusinessUnit>> PostBusinessUnits(BusinessUnitDTO BusinessUnitsDTO)
         {
-            var BusinessUnits = _context.BusinessUnits.Where(e => e.BusinessUnitType == BusinessUnitsDTO.BusinessUnitType && e.BusinessUnitName == BusinessUnitsDTO.BusinessUnitName).FirstOrDefault();
+            var BusinessUnits = _context.BusinessUnits.Where(e => e.BusinessUnitName == BusinessUnitsDTO.BusinessUnitName && e.BusinessTypeId == BusinessUnitsDTO.BusinessTypeId).FirstOrDefault();
 
             if (BusinessUnits != null)
             {
@@ -154,8 +154,8 @@ namespace AtoCashAPI.Controllers
 
             BusinessUnit newBusinessUnit = new();
 
-            newBusinessUnit.BusinessUnitType = BusinessUnitsDTO.BusinessUnitType;
             newBusinessUnit.BusinessUnitName = BusinessUnitsDTO.BusinessUnitName;
+            newBusinessUnit.BusinessTypeId = BusinessUnitsDTO.BusinessTypeId;
             newBusinessUnit.CostCenterId = BusinessUnitsDTO.CostCenterId;
             newBusinessUnit.BusinessDesc = BusinessUnitsDTO.BusinessDesc;
             newBusinessUnit.LocationId = BusinessUnitsDTO.LocationId;

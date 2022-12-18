@@ -17,8 +17,9 @@ namespace AtoCashAPI.Models
 
 
         [Required]
-        [Column(TypeName = "varchar(250)")]
-        public string? BusinessUnitType { get; set; }
+        [ForeignKey("BusinessTypeId")]
+        public virtual BusinessType? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
 
 
         [Required]
@@ -50,7 +51,6 @@ namespace AtoCashAPI.Models
         {
             var NameParts = new List<string>();
 
-            NameParts.Add(BusinessUnitType ?? "");
             NameParts.Add(BusinessUnitName ?? "");
 
             //return String.Join(" ", FirstName, MiddleName, LastName);
@@ -65,7 +65,8 @@ namespace AtoCashAPI.Models
     public class BusinessUnitDTO
     {
         public int? Id { get; set; }
-        public string? BusinessUnitType { get; set; }
+        public int? BusinessTypeId { get; set; }
+        public string? BusinessType { get; set; }
         public string? BusinessUnitName { get; set; }
         public int? CostCenterId { get; set; }
         public string? CostCenter { get; set; }
@@ -81,7 +82,7 @@ namespace AtoCashAPI.Models
     public class BusinessUnitVM
     {
         public int? Id { get; set; }
-        public string? BusinessUnit{ get; set; }
+        public string? BusinessUnitName { get; set; }
      
     }
 }
