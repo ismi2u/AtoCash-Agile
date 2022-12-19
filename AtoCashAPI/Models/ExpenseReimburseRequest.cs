@@ -13,7 +13,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
 
    
@@ -83,7 +83,7 @@ namespace AtoCashAPI.Models
 
     public class ExpenseReimburseRequestDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? ExpenseReportTitle { get; set; }
         public int? EmployeeId { get; set; }

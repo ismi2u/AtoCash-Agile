@@ -11,7 +11,7 @@ namespace AtoCashAPI.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public int? Level { get; set; }
@@ -22,7 +22,7 @@ namespace AtoCashAPI.Models
 
     public class ApprovalLevelDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? Level { get; set; }
         public string? LevelDesc { get; set; }
     }

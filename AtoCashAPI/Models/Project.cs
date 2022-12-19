@@ -12,7 +12,7 @@ namespace AtoCashAPI.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(100)")]
@@ -21,12 +21,12 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("CostCenterId")]
         public virtual CostCenter? CostCenter { get; set; }
-        public int? CostCenterId { get; set; }
+        public int CostCenterId { get; set; }
 
         [Required]
         [ForeignKey("ProjManagerId")]
         public virtual Employee? ProjectManager { get; set; }
-        public int? ProjectManagerId { get; set; }
+        public int ProjectManagerId { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(250)")]
@@ -36,28 +36,28 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("StatusTypeId")]
         public virtual StatusType? StatusType { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
 
     }
 
     public class ProjectDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? ProjectName { get; set; }
-        public int? CostCenterId { get; set; }
+        public int CostCenterId { get; set; }
         public string? CostCenter { get; set; }
-        public int? ProjectManagerId { get; set; }
+        public int ProjectManagerId { get; set; }
         public string? ProjectManager { get; set; }
         public string? ProjectDesc { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
         public string? StatusType { get; set; }
 
     }
 
     public class ProjectVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? ProjectName { get; set; }
 
     }

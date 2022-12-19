@@ -14,7 +14,7 @@ namespace AtoCashAPI.Controllers
 {
     [Route("api/[controller]/[Action]")]
     [ApiController]
-  //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
+  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
     public class BusinessUnitsController : ControllerBase
     {
         private readonly AtoCashDbContext _context;
@@ -106,7 +106,7 @@ namespace AtoCashAPI.Controllers
 
         // PUT: api/BusinessUnits/5
         [HttpPut("{id}")]
-      //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> PutBusinessUnits(int id, BusinessUnitDTO BusinessUnitsDTO)
         {
             if (id != BusinessUnitsDTO.Id)
@@ -142,7 +142,7 @@ namespace AtoCashAPI.Controllers
 
         // POST: api/BusinessUnits
         [HttpPost]
-      //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<ActionResult<BusinessUnit>> PostBusinessUnits(BusinessUnitDTO BusinessUnitsDTO)
         {
             var BusinessUnits = _context.BusinessUnits.Where(e => e.BusinessUnitName == BusinessUnitsDTO.BusinessUnitName && e.BusinessTypeId == BusinessUnitsDTO.BusinessTypeId).FirstOrDefault();
@@ -170,7 +170,7 @@ namespace AtoCashAPI.Controllers
 
         // DELETE: api/BusinessUnits/5
         [HttpDelete("{id}")]
-      //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> DeleteBusinessUnits(int id)
         {
 

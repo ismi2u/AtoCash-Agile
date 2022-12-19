@@ -8,7 +8,7 @@ namespace AtoCashAPI.Models
     public class TravelRequestSearchModel
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? EmpId { get; set; }
 
         public string? EmployeeName { get; set; }

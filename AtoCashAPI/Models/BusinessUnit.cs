@@ -13,7 +13,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
 
         [Required]
@@ -45,7 +45,7 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("StatusTypeId")]
         public virtual StatusType? StatusType { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
         public string? GetBusinessUnitName()
         {
@@ -64,7 +64,7 @@ namespace AtoCashAPI.Models
 
     public class BusinessUnitDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? BusinessTypeId { get; set; }
         public string? BusinessType { get; set; }
         public string? BusinessUnitName { get; set; }
@@ -73,7 +73,7 @@ namespace AtoCashAPI.Models
         public string? BusinessDesc { get; set; }
         public int? LocationId { get; set; }
         public string? Location { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
         public string? StatusType { get; set; }
     }
@@ -81,7 +81,7 @@ namespace AtoCashAPI.Models
 
     public class BusinessUnitVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? BusinessUnitName { get; set; }
      
     }

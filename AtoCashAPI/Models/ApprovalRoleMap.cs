@@ -12,7 +12,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [ForeignKey("ApprovalGroupId")]
@@ -32,7 +32,7 @@ namespace AtoCashAPI.Models
 
     public class ApprovalRoleMapDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? ApprovalGroup { get; set; }
         public int? ApprovalGroupId { get; set; }

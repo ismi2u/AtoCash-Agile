@@ -13,7 +13,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string? UniqueFileName { get; set; }
@@ -26,7 +26,7 @@ namespace AtoCashAPI.Models
     public class FileDocumentDTO
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         //public string? GeneratedFileName { get; set; }
 

@@ -10,7 +10,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public float VATPercentage{ get; set; }
     }

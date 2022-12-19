@@ -12,7 +12,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         [Required]
         [Column(TypeName = "varchar(150)")]
         public string? BankName { get; set; }
@@ -23,19 +23,19 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("StatusTypeId")]
         public virtual StatusType? StatusType { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
     }
 
     public class BankDTO
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? BankName { get; set; }
 
         public string? BankDesc { get; set; }
 
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
         public string? StatusType { get; set; }
 
@@ -44,7 +44,7 @@ namespace AtoCashAPI.Models
     public class BankVM
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? BankName { get; set; }
 

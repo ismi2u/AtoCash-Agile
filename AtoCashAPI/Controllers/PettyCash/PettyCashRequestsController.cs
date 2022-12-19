@@ -18,7 +18,7 @@ namespace AtoCashAPI.Controllers.PettyCash
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
+      [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
 
     public class PettyCashRequestsController : ControllerBase
     {
@@ -54,7 +54,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 PettyCashRequestDTO pettyCashRequestDTO = new();
 
                 pettyCashRequestDTO.Id = pettyCashRequest.Id;
-                pettyCashRequestDTO.EmployeeName = _context.Employees.Find(pettyCashRequest.EmployeeId ?? 0).GetFullName();
+                pettyCashRequestDTO.EmployeeName = _context.Employees.Find(pettyCashRequest.EmployeeId).GetFullName();
                 pettyCashRequestDTO.CurrencyTypeId = pettyCashRequest.CurrencyTypeId;
                 pettyCashRequestDTO.CurrencyType = pettyCashRequest.CurrencyType != null ? _context.CurrencyTypes.Find(pettyCashRequest.CurrencyType).CurrencyName : null;
                 pettyCashRequestDTO.PettyClaimAmount = pettyCashRequest.PettyClaimAmount;
@@ -286,7 +286,7 @@ namespace AtoCashAPI.Controllers.PettyCash
 
                 //check employee allowed limit to Cash Advance, if limit exceeded return with an conflict message.
                 var empExtInfo =  _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == pettyCashRequest.BusinessUnitId).FirstOrDefault();
-                int reqJobRoleId = empExtInfo.JobRoleId ?? 0;
+                int reqJobRoleId = empExtInfo.JobRoleId;
                 double maxAllowed = _context.JobRoles.Find(reqJobRoleId).MaxPettyCashAllowed ?? 0 ;
                 if (maxAllowed >= oldBal + prevAmt - NewAmt && oldBal + prevAmt - NewAmt > 0)
                 {
@@ -342,7 +342,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                     var approver = await _context.Employees.FindAsync(claim.EmployeeId);
                     var approverMailAddress = approver !=null ? approver.Email : "";
                     string subject = "(Modified) Pettycash Request Approval " + pettyCashRequestDto.Id.ToString();
-                    Employee? emp = await _context.Employees.FindAsync(pettyCashRequestDto.EmployeeId ?? 0);
+                    Employee? emp = await _context.Employees.FindAsync(pettyCashRequestDto.EmployeeId);
                     var pettycashreq = _context.PettyCashRequests.Find(pettyCashRequestDto.Id);
 
                     _logger.LogInformation(approver.GetFullName() + "Email Start");
@@ -527,7 +527,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 return empCurPettyBalance.CurBalance;
             }
            
-            AddEmpCurrentPettyCashBalanceForEmployee(pettyCashRequest.EmployeeId ?? 0);
+            AddEmpCurrentPettyCashBalanceForEmployee(pettyCashRequest.EmployeeId);
 
 
             return 0;
@@ -578,7 +578,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                     return 1;
                 }
                 ////
-                int? empid = pettyCashRequestDto.EmployeeId;
+                int empid = pettyCashRequestDto.EmployeeId;
                 Double? empReqAmount = pettyCashRequestDto.PettyClaimAmount;
                 //int empApprGroupId = _context.Employees.Find(empid).ApprovalGroupId;
                 double? maxCashAllowedForRole = _context.EmpCurrentPettyCashBalances.Find(pettyCashRequestDto.EmployeeId).MaxPettyCashLimit;
@@ -791,7 +791,7 @@ namespace AtoCashAPI.Controllers.PettyCash
             {
 
                 int? reqBussUnitId = pettyCashRequestDto.BusinessUnitId;
-                int? reqEmpid = pettyCashRequestDto.EmployeeId;
+                int reqEmpid = pettyCashRequestDto.EmployeeId;
                 Employee? reqEmp = await _context.Employees.FindAsync(reqEmpid);
                 EmployeeExtendedInfo empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == pettyCashRequestDto.EmployeeId && e.BusinessUnitId == reqBussUnitId).FirstOrDefault();
 

@@ -14,7 +14,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
 
         [Required]
@@ -76,7 +76,7 @@ namespace AtoCashAPI.Models
     public class TravelApprovalRequestDTO
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public int? EmployeeId { get; set; }
         public string? EmployeeName { get; set; }

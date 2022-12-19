@@ -12,7 +12,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(100)")]
@@ -25,7 +25,7 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("StatusTypeId")]
         public virtual StatusType? StatusType { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
 
     }
@@ -34,18 +34,18 @@ namespace AtoCashAPI.Models
     public class GeneralLedgerDTO
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? GeneralLedgerAccountNo { get; set; }
         public string? GeneralLedgerAccountName { get; set; }
         public string? StatusType { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
     }
 
 
     public class GeneralLedgerVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? GeneralLedgerAccountNo { get; set; }
 
     }

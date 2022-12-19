@@ -32,14 +32,14 @@ builder.Services.AddAuthentication(options =>
     opts.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false, // setting it to false, as we dont know the users connecting to this server
-        ValidateAudience = true,
+        ValidateAudience = false,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
 
 
-        ValidIssuer = "https://localhost:5001",
-        ValidAudience = "https://localhost:5001",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("1S0jME6cXE9jMuBrYGq121yxmsqEphemne0WGAu6Nb6ihg63t5DJv1fbU1BlyOGvC5iIXlxqIFti6MwdrvSVplq75Hx8FICRqItV"))
+        ValidIssuer = "https://localhost:5000",
+        ValidAudience = "https://localhost:5000",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("MySecretKey12323232"))
     };
 });
 

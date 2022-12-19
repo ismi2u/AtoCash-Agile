@@ -11,7 +11,7 @@ namespace AtoCashAPI.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
         [Required]
         [Column(TypeName = "varchar(20)")]
         public string? EmpJobTypeCode { get; set; }
@@ -24,7 +24,7 @@ namespace AtoCashAPI.Models
     public class EmploymentTypeDTO
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? EmpJobTypeCode { get; set; }
         public string? EmpJobTypeDesc { get; set; }
 

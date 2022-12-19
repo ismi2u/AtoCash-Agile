@@ -11,7 +11,7 @@ namespace AtoCashAPI.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(120)")]
@@ -27,13 +27,13 @@ namespace AtoCashAPI.Models
 
     public class ApprovalGroupVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? ApprovalGroupCode { get; set; }
     }
 
     public class ApprovalGroupDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? ApprovalGroupCode { get; set; }
         public string? ApprovalGroupDesc { get; set; }

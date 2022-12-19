@@ -13,7 +13,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
 
         [Required]
@@ -121,7 +121,7 @@ namespace AtoCashAPI.Models
     public class ExpenseSubClaimDTO
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string? EmployeeName { get; set; }
         public int? EmployeeId { get; set; }

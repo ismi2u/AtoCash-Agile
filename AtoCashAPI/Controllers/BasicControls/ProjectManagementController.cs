@@ -14,7 +14,7 @@ namespace AtoCashAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-  //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
+  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
     public class ProjectManagementController : ControllerBase
     {
         private readonly AtoCashDbContext _context;
@@ -139,7 +139,7 @@ namespace AtoCashAPI.Controllers
         public async Task<ActionResult> AddEmployeesToProject(AddEmployeesToProjectId model)
         {
 
-            int? projId = model.ProjectId;
+            int projId = model.ProjectId;
             var project = _context.Projects.Find(projId);
 
            if(projId == 0 || project == null)
@@ -169,7 +169,7 @@ namespace AtoCashAPI.Controllers
 
         // PUT: api/ProjectManagement/5
         [HttpPut("{id}")]
-      //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> PutProjectManagement(int id, ProjectManagementDTO projectManagementDto)
         {
             if (id != projectManagementDto.Id)
@@ -201,7 +201,7 @@ namespace AtoCashAPI.Controllers
 
         // POST: api/ProjectManagement
         [HttpPost]
-      //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<ActionResult<ProjectManagement>> PostProjectManagement(ProjectManagementDTO projectManagementDTO)
         {
 
@@ -228,7 +228,7 @@ namespace AtoCashAPI.Controllers
 
         // DELETE: api/ProjectManagement/5
         [HttpDelete("{id}")]
-      //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> DeleteProjectManagement(int id)
         {
             var projectManagement = await _context.ProjectManagements.FindAsync(id);

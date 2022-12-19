@@ -150,7 +150,7 @@ namespace AtoCashAPI.Controllers.BasicControls
             {
                 EmployeeExtendedInfo empExtendedInfo = new EmployeeExtendedInfo();
 
-                empExtendedInfo.BusinessUnitId = empExtendedInfo.BusinessUnitId;
+                empExtendedInfo.BusinessUnitId = employeeExtendedInfoDTO.BusinessUnitId;
                 empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
                 empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
                 empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;

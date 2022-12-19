@@ -12,7 +12,7 @@ namespace AtoCashAPI.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [ForeignKey("SubProjectId")]
@@ -31,7 +31,7 @@ namespace AtoCashAPI.Models
 
     public class WorkTaskDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? SubProjectId { get; set; }
         public string? SubProject { get; set; }
         public string? TaskName { get; set; }
@@ -41,7 +41,7 @@ namespace AtoCashAPI.Models
 
     public class WorkTaskVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? TaskName { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [ForeignKey("ProjectId")]
@@ -30,7 +30,7 @@ namespace AtoCashAPI.Models
 
     public class SubProjectDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int? ProjectId { get; set; }
         public string? ProjectName { get; set; }
         public string? SubProjectName { get; set; }
@@ -40,7 +40,7 @@ namespace AtoCashAPI.Models
 
     public class SubProjectVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? SubProjectName { get; set; }
     }
 }

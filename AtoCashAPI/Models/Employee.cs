@@ -13,7 +13,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(200)")]
@@ -82,7 +82,7 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("StatusTypeId")]
         public virtual StatusType? StatusType { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
 
         [Required]
@@ -108,7 +108,7 @@ namespace AtoCashAPI.Models
 
     public class EmployeeDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
 
         public string? FirstName { get; set; }
@@ -162,7 +162,7 @@ namespace AtoCashAPI.Models
 
 
         public int? CurrencyTypeId { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
         public string? StatusType { get; set; }
 
 
@@ -171,7 +171,7 @@ namespace AtoCashAPI.Models
 
     public class EmployeeVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? FullName { get; set; }
         public string? Email { get; set; }
 
@@ -199,6 +199,6 @@ namespace AtoCashAPI.Models
         public int? ApprovalGroupId { get; set; }
         public int? StoreApprovalGroupId { get; set; }
         public int? StoreId { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
     }
 }

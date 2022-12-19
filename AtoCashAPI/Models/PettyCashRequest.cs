@@ -11,12 +11,12 @@ namespace AtoCashAPI.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [ForeignKey("EmployeeId")]
         public virtual Employee? Employee { get; set; }
-        public int? EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
 
         [Required]
         public Double? PettyClaimAmount { get; set; }
@@ -57,12 +57,12 @@ namespace AtoCashAPI.Models
 
         [ForeignKey("CostCenterId")]
         public virtual CostCenter? CostCenter { get; set; }
-        public int? CostCenterId { get; set; }
+        public int CostCenterId { get; set; }
 
         [Required]
         [ForeignKey("ApprovalStatusTypeId")]
         public virtual ApprovalStatusType? ApprovalStatusType { get; set; }
-        public int? ApprovalStatusTypeId { get; set; }
+        public int ApprovalStatusTypeId { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
 
@@ -76,10 +76,10 @@ namespace AtoCashAPI.Models
     public class PettyCashRequestDTO
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? EmployeeName { get; set; }
 
-        public int? EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
 
         public string? CurrencyType { get; set; }
         public int? CurrencyTypeId { get; set; }
@@ -90,7 +90,7 @@ namespace AtoCashAPI.Models
         public DateTime? CashReqDate { get; set; }
 
         public string? JobRole { get; set; }
-        public string? JobRoleId { get; set; }
+        public string JobRoleId { get; set; }
 
         public int? BusinessUnitId { get; set; }
         public string? BusinessUnit { get; set; }
@@ -108,9 +108,9 @@ namespace AtoCashAPI.Models
         public int? WorkTaskId { get; set; }
 
         public string? ApprovalStatusType { get; set; }
-        public int? ApprovalStatusTypeId { get; set; }
+        public int ApprovalStatusTypeId { get; set; }
 
-        public int? CostCenterId { get; set; }
+        public int CostCenterId { get; set; }
         public string? CostCentre { get; set; }
 
         public DateTime? ApprovedDate { get; set; }

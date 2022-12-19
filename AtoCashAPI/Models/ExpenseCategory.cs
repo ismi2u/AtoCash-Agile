@@ -12,7 +12,7 @@ namespace AtoCashAPI.Models
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(150)")]
@@ -30,7 +30,7 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("StatusTypeId")]
         public virtual StatusType? StatusType { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
     }
 
@@ -38,20 +38,20 @@ namespace AtoCashAPI.Models
     public class ExpenseCategoryDTO
     {
 
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? ExpenseCategoryName { get; set; }
         public string? ExpenseCategoryDesc { get; set; }
 
         public bool IsBusinessCategory { get; set; }
         public string? StatusType { get; set; }
-        public int? StatusTypeId { get; set; }
+        public int StatusTypeId { get; set; }
 
     }
 
 
     public class ExpenseCategoryVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string? ExpenseCategoryName { get; set; }
 
     }
