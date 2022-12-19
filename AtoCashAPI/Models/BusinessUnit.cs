@@ -64,7 +64,7 @@ namespace AtoCashAPI.Models
 
     public class BusinessUnitDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int? BusinessTypeId { get; set; }
         public string? BusinessType { get; set; }
         public string? BusinessUnitName { get; set; }

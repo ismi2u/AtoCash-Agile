@@ -62,7 +62,7 @@ namespace AtoCashAPI.Controllers
                     Id = Location.Id,
                     LocationName = Location.LocationName,
                     City = Location.City,
-                    Lattitude = Location.Lattitude,
+                    Latitude = Location.Latitude,
                     Longitude = Location.Longitude,
                     LocationDesc = Location.LocationDesc,
                     StatusTypeId = Location.StatusTypeId,
@@ -91,7 +91,7 @@ namespace AtoCashAPI.Controllers
                 Id = Location.Id,
                 LocationName = Location.LocationName,
                 City = Location.City,
-                Lattitude = Location.Lattitude,
+                Latitude = Location.Latitude,
                 Longitude = Location.Longitude,
                 LocationDesc = Location.LocationDesc,
                 StatusTypeId = Location.StatusTypeId,
@@ -118,7 +118,7 @@ namespace AtoCashAPI.Controllers
             {
                 location.LocationName = LocationDTO.LocationName;
                 location.City = LocationDTO.City;
-                location.Lattitude = LocationDTO.Lattitude;
+                location.Latitude = LocationDTO.Latitude;
                 location.Longitude = LocationDTO.Longitude;
                 location.LocationDesc = LocationDTO.LocationDesc;
                 location.StatusTypeId = LocationDTO.StatusTypeId;
@@ -161,7 +161,7 @@ namespace AtoCashAPI.Controllers
 
             Newlocation.LocationName = LocationDTO.LocationName;
             Newlocation.City = LocationDTO.City;
-            Newlocation.Lattitude = LocationDTO.Lattitude;
+            Newlocation.Latitude = LocationDTO.Latitude;
             Newlocation.Longitude = LocationDTO.Longitude;
             Newlocation.LocationDesc = LocationDTO.LocationDesc;
             Newlocation.StatusTypeId = LocationDTO.StatusTypeId;

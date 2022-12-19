@@ -25,7 +25,7 @@ namespace AtoCashAPI.Models
 
 
         [Precision(18, 6)]
-        public Decimal? Lattitude { get; set; }
+        public Decimal? Latitude { get; set; }
 
 
         [Precision(18, 6)]
@@ -57,7 +57,7 @@ namespace AtoCashAPI.Models
         public int Id { get; set; }
         public string? LocationName { get; set; }
         public string? City { get; set; }
-        public Decimal? Lattitude { get; set; }
+        public Decimal? Latitude { get; set; }
         public Decimal? Longitude { get; set; }
         public string? LocationDesc { get; set; }
         public int StatusTypeId { get; set; }

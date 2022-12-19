@@ -450,7 +450,7 @@ namespace AtoCashAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     LocationName = table.Column<string>(type: "varchar(250)", nullable: false),
                     City = table.Column<string>(type: "varchar(250)", nullable: false),
-                    Lattitude = table.Column<decimal>(type: "numeric(18,6)", precision: 18, scale: 6, nullable: true),
+                    Latitude = table.Column<decimal>(type: "numeric(18,6)", precision: 18, scale: 6, nullable: true),
                     Longitude = table.Column<decimal>(type: "numeric(18,6)", precision: 18, scale: 6, nullable: true),
                     LocationDesc = table.Column<string>(type: "varchar(400)", nullable: false),
                     StatusTypeId = table.Column<int>(type: "integer", nullable: false)

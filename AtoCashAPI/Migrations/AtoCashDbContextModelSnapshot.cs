@@ -1156,7 +1156,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(250)");
 
-                    b.Property<decimal?>("Lattitude")
+                    b.Property<decimal?>("Latitude")
                         .HasPrecision(18, 6)
                         .HasColumnType("numeric(18,6)");
 

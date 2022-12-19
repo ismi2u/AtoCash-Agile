@@ -30,64 +30,84 @@ namespace AtoCashAPI.Controllers
         {
             List<ApprovalRoleMapDTO> ListApprovalRoleMapDTO = new List<ApprovalRoleMapDTO>();
 
-            //var approvalRoleMaps = await _context.ApprovalRoleMaps.ToListAsync();
+            var approvalRoleMaps = await _context.ApprovalRoleMaps.ToListAsync();
 
-            //foreach (ApprovalRoleMap approvalRoleMap in approvalRoleMaps)
-            //{
-            //    ApprovalRoleMapDTO approvalRoleMapDTO = new();
-
-
-            //    approvalRoleMapDTO.Id = approvalRoleMap.Id;
-            //    approvalRoleMapDTO.ApprovalGroupId = approvalRoleMap.ApprovalGroupId;
-            //    approvalRoleMapDTO.ApprovalGroup = _context.ApprovalGroups.Find(approvalRoleMap.ApprovalGroupId).ApprovalGroupCode;
-            //    approvalRoleMapDTO.JobRoleId = approvalRoleMap.JobRoleId;
-            //    approvalRoleMapDTO.JobRole = _context.JobRoles.Find(approvalRoleMap.JobRoleId).JobRoleCode;
-            //    approvalRoleMapDTO.ApprovalLevelId = approvalRoleMap.ApprovalLevelId;
-            //    approvalRoleMapDTO.ApprovalLevel = _context.ApprovalLevels.Find(approvalRoleMap.ApprovalLevelId).Level;
+            foreach (ApprovalRoleMap approvalRoleMap in approvalRoleMaps)
+            {
+                ApprovalRoleMapDTO approvalRoleMapDTO = new();
 
 
-            ////    int empCount = _context.Employees.Where(e => (e.ApprovalGroupId == approvalRoleMap.ApprovalGroupId || e.StoreApprovalGroupId == approvalRoleMap.ApprovalGroupId) && (e.JobRoleId == approvalRoleMap.JobRoleId || e.StoreRoleId == approvalRoleMap.JobRoleId)).Count();
-            // //   var employeeAssigned = _context.Employees.Where(e => (e.ApprovalGroupId == approvalRoleMap.ApprovalGroupId || e.StoreApprovalGroupId == approvalRoleMap.ApprovalGroupId) && (e.JobRoleId == approvalRoleMap.JobRoleId || e.StoreRoleId == approvalRoleMap.JobRoleId)).FirstOrDefault();
-
-            //    string empName = string.Empty;
-            ////    int ApprvLevel = _context.ApprovalLevels.Find(approvalRoleMap.ApprovalLevelId).Level;
-            //    if (ApprvLevel != 1)
-            //    {
-            //        if (employeeAssigned != null)
-            //        {
-            //            empName = employeeAssigned.GetFullName();
-            //        }
-            //        else
-            //        {
-            //            empName = "Un-Assigned";
-            //        }
-            //    }
-            //    else
-            //    {
-
-            //        if (empCount > 1)
-            //        {
-            //            if (employeeAssigned != null)
-            //            {
-            //                empName = "Assigned to =" + empCount;
-            //            }
-
-            //        }
-            //        else if(empCount == 1)
-            //        {
-            //            empName = employeeAssigned.GetFullName();
-            //        }
-            //         else
-            //        {
-            //            empName = "Un-Assigned";
-            //        }
-            //    }
-            //    approvalRoleMapDTO.EmployeeName = empName;
+                approvalRoleMapDTO.Id = approvalRoleMap.Id;
+                approvalRoleMapDTO.ApprovalGroupId = approvalRoleMap.ApprovalGroupId;
+                approvalRoleMapDTO.ApprovalGroup = _context.ApprovalGroups.Find(approvalRoleMap.ApprovalGroupId).ApprovalGroupCode;
+                approvalRoleMapDTO.JobRoleId = approvalRoleMap.JobRoleId;
+                approvalRoleMapDTO.JobRole = _context.JobRoles.Find(approvalRoleMap.JobRoleId).JobRoleCode;
+                approvalRoleMapDTO.ApprovalLevelId = approvalRoleMap.ApprovalLevelId;
+                approvalRoleMapDTO.ApprovalLevel = _context.ApprovalLevels.Find(approvalRoleMap.ApprovalLevelId).Level;
 
 
-            //    ListApprovalRoleMapDTO.Add(approvalRoleMapDTO);
+              var ListEmployeeIds =  _context.EmployeeExtendedInfos.Where(e => (e.ApprovalGroupId == approvalRoleMap.ApprovalGroupId) && (e.JobRoleId == approvalRoleMap.JobRoleId)).Select(s=> s.EmployeeId).Distinct().ToArray();
 
-            //}
+                //    int empCount = _context.Employees.Where(e => (e.ApprovalGroupId == approvalRoleMap.ApprovalGroupId || e.StoreApprovalGroupId == approvalRoleMap.ApprovalGroupId) && (e.JobRoleId == approvalRoleMap.JobRoleId || e.StoreRoleId == approvalRoleMap.JobRoleId)).Count();
+                //   var employeeAssigned = _context.Employees.Where(e => (e.ApprovalGroupId == approvalRoleMap.ApprovalGroupId || e.StoreApprovalGroupId == approvalRoleMap.ApprovalGroupId) && (e.JobRoleId == approvalRoleMap.JobRoleId || e.StoreRoleId == approvalRoleMap.JobRoleId)).FirstOrDefault();
+
+
+                approvalRoleMapDTO.CountOfEmployees = ListEmployeeIds.Count();
+
+                var listEmployeesNames = string.Empty;
+
+                foreach(int empId in ListEmployeeIds)
+                {
+                    listEmployeesNames = listEmployeesNames + "; " + _context.Employees.Find(empId).GetFullName();
+                }
+
+                approvalRoleMapDTO.AllAssignedEmployees = listEmployeesNames;
+
+
+                string empName = string.Empty;
+                int ApprvLevel = _context.ApprovalLevels.Find(approvalRoleMap.ApprovalLevelId).Level ?? 0;
+                if (ApprvLevel != 1)
+                {
+                    if (ListEmployeeIds.Count() > 1)
+                    {
+
+                        empName = "Assigned to =" + ListEmployeeIds.Count();
+                       
+
+                    }
+                    else if (ListEmployeeIds.Count() == 1)
+                    {
+                        empName = _context.Employees.Find(ListEmployeeIds[0]).GetFullName();
+                    }
+                    else
+                    {
+                        empName = "Un-Assigned";
+                    }
+                }
+                else
+                {
+
+                    if (ListEmployeeIds.Count() > 1)
+                    {
+                       
+                            empName = "Assigned to =" + ListEmployeeIds.Count();
+
+                    }
+                    else if (ListEmployeeIds.Count() == 1)
+                    {
+                        empName = _context.Employees.Find(ListEmployeeIds[0]).GetFullName();
+                    }
+                    else
+                    {
+                        empName = "Un-Assigned";
+                    }
+                }
+                approvalRoleMapDTO.EmployeeName = empName;
+
+
+                ListApprovalRoleMapDTO.Add(approvalRoleMapDTO);
+
+            }
 
             return ListApprovalRoleMapDTO;
         }

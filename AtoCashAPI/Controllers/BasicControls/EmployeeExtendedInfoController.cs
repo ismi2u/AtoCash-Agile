@@ -124,11 +124,13 @@ namespace AtoCashAPI.Controllers.BasicControls
             {
                 try
                 {
-                    empExtendedInfo.BusinessUnitId = empExtendedInfo.BusinessUnitId;
+                    empExtendedInfo.BusinessUnitId = employeeExtendedInfoDTO.BusinessUnitId;
                     empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
                     empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
                     empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
                     empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
+
+                    _context.EmployeeExtendedInfos.Update(empExtendedInfo);
 
                     await _context.SaveChangesAsync();
                 }
@@ -155,6 +157,8 @@ namespace AtoCashAPI.Controllers.BasicControls
                 empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
                 empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
                 empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
+
+                _context.EmployeeExtendedInfos.Add(empExtendedInfo);
 
                 await _context.SaveChangesAsync();
             }

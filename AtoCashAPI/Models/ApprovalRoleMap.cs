@@ -43,5 +43,9 @@ namespace AtoCashAPI.Models
         public int? ApprovalLevelId { get; set; }
 
         public string? EmployeeName { get; set; }
+
+        public int CountOfEmployees { get; set; }
+        public string AllAssignedEmployees { get; set; }
+
     }
 }
