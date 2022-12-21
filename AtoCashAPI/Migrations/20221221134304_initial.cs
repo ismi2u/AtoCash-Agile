@@ -630,7 +630,7 @@ namespace AtoCashAPI.Migrations
                     ProjectName = table.Column<string>(type: "varchar(100)", nullable: false),
                     CostCenterId = table.Column<int>(type: "integer", nullable: false),
                     ProjManagerId = table.Column<int>(type: "integer", nullable: false),
-                    ProjectManagerId = table.Column<int>(type: "integer", nullable: true),
+                    ProjectManagerId = table.Column<int>(type: "integer", nullable: false),
                     ProjectDesc = table.Column<string>(type: "varchar(250)", nullable: false),
                     StatusTypeId = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -666,7 +666,7 @@ namespace AtoCashAPI.Migrations
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: false),
                     JobRoleId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovalGroupId = table.Column<int>(type: "integer", nullable: true),
+                    ApprovalGroupId = table.Column<int>(type: "integer", nullable: false),
                     StatusTypeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -676,7 +676,8 @@ namespace AtoCashAPI.Migrations
                         name: "FK_EmployeeExtendedInfos_ApprovalGroups_ApprovalGroupId",
                         column: x => x.ApprovalGroupId,
                         principalTable: "ApprovalGroups",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EmployeeExtendedInfos_BusinessUnits_BusinessUnitId",
                         column: x => x.BusinessUnitId,
@@ -855,7 +856,7 @@ namespace AtoCashAPI.Migrations
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
                     WorkTaskId = table.Column<int>(type: "integer", nullable: true),
-                    CostCenterId = table.Column<int>(type: "integer", nullable: true),
+                    CostCenterId = table.Column<int>(type: "integer", nullable: false),
                     ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
                     ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Comments = table.Column<string>(type: "varchar(250)", nullable: false)
@@ -878,7 +879,8 @@ namespace AtoCashAPI.Migrations
                         name: "FK_PettyCashRequests_CostCenters_CostCenterId",
                         column: x => x.CostCenterId,
                         principalTable: "CostCenters",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PettyCashRequests_CurrencyTypes_CurrencyTypeId",
                         column: x => x.CurrencyTypeId,

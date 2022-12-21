@@ -12,7 +12,7 @@ using AtoCashAPI.Authentication;
 
 namespace AtoCashAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
       [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
     public class ApprovalRoleMapsController : ControllerBase

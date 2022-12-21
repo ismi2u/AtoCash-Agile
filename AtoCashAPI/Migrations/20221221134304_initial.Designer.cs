@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20221218063410_initial")]
+    [Migration("20221221134304_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,11 +93,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ApprovalGroup", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApprovalGroupCode")
                         .IsRequired()
@@ -114,11 +114,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ApprovalLevel", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("Level")
                         .IsRequired()
@@ -134,11 +134,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ApprovalRoleMap", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ApprovalGroupId")
                         .IsRequired()
@@ -165,11 +165,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ApprovalStatusType", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -185,11 +185,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.Bank", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BankDesc")
                         .IsRequired()
@@ -199,8 +199,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -212,11 +211,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.BusinessType", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BusinessTypeDesc")
                         .IsRequired()
@@ -226,8 +225,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -239,11 +237,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.BusinessUnit", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BusinessDesc")
                         .IsRequired()
@@ -265,8 +263,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -284,11 +281,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ClaimApprovalStatusTracker", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ApprovalGroupId")
                         .IsRequired()
@@ -366,11 +363,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.CostCenter", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CostCenterCode")
                         .IsRequired()
@@ -380,8 +377,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(250)");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -393,11 +389,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.CurrencyType", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -411,8 +407,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -424,11 +419,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.DisbursementsAndClaimsMaster", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AdditionalData")
                         .HasColumnType("varchar(150)");
@@ -529,11 +524,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.EmpCurrentPettyCashBalance", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<double?>("CashOnHand")
                         .IsRequired()
@@ -564,11 +559,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.Employee", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BankAccount")
                         .IsRequired()
@@ -634,8 +629,7 @@ namespace AtoCashAPI.Migrations
                     b.Property<string>("PassportNo")
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.Property<string>("TaxNumber")
@@ -656,29 +650,25 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.EmployeeExtendedInfo", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ApprovalGroupId")
+                    b.Property<int>("ApprovalGroupId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("BusinessUnitId")
-                        .IsRequired()
+                    b.Property<int>("BusinessUnitId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("EmployeeId")
-                        .IsRequired()
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("JobRoleId")
-                        .IsRequired()
+                    b.Property<int>("JobRoleId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -698,11 +688,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.EmploymentType", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("EmpJobTypeCode")
                         .IsRequired()
@@ -719,11 +709,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ExpenseCategory", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ExpenseCategoryDesc")
                         .IsRequired()
@@ -736,8 +726,7 @@ namespace AtoCashAPI.Migrations
                     b.Property<bool>("IsBusinessCategory")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -749,11 +738,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ExpenseReimburseRequest", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ApprovalStatusTypeId")
                         .IsRequired()
@@ -827,11 +816,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ExpenseReimburseStatusTracker", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ApprovalGroupId")
                         .HasColumnType("integer");
@@ -921,11 +910,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ExpenseSubClaim", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("BusinessUnitId")
                         .HasColumnType("integer");
@@ -1036,11 +1025,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ExpenseType", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ExpenseCategoryId")
                         .IsRequired()
@@ -1058,8 +1047,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -1075,11 +1063,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.FileDocument", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ActualFileName")
                         .IsRequired()
@@ -1096,11 +1084,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.GeneralLedger", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("GeneralLedgerAccountName")
                         .IsRequired()
@@ -1110,8 +1098,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -1123,11 +1110,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.JobRole", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("JobRoleCode")
                         .IsRequired()
@@ -1148,11 +1135,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.Location", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -1174,8 +1161,7 @@ namespace AtoCashAPI.Migrations
                         .HasPrecision(18, 6)
                         .HasColumnType("numeric(18,6)");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -1187,14 +1173,13 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.PettyCashRequest", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ApprovalStatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("ApprovalStatusTypeId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("ApprovedDate")
@@ -1211,15 +1196,14 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(250)");
 
-                    b.Property<int?>("CostCenterId")
+                    b.Property<int>("CostCenterId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("CurrencyTypeId")
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<int?>("EmployeeId")
-                        .IsRequired()
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
 
                     b.Property<double?>("PettyClaimAmount")
@@ -1262,14 +1246,13 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.Project", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CostCenterId")
-                        .IsRequired()
+                    b.Property<int>("CostCenterId")
                         .HasColumnType("integer");
 
                     b.Property<int>("ProjManagerId")
@@ -1279,15 +1262,14 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(250)");
 
-                    b.Property<int?>("ProjectManagerId")
+                    b.Property<int>("ProjectManagerId")
                         .HasColumnType("integer");
 
                     b.Property<string>("ProjectName")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int?>("StatusTypeId")
-                        .IsRequired()
+                    b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -1303,18 +1285,16 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.ProjectManagement", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("EmployeeId")
-                        .IsRequired()
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProjectId")
-                        .IsRequired()
+                    b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -1328,11 +1308,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.RequestType", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("RequestName")
                         .IsRequired()
@@ -1349,11 +1329,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.StatusType", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -1366,11 +1346,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.SubProject", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ProjectId")
                         .IsRequired()
@@ -1393,11 +1373,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.TravelApprovalRequest", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ApprovalStatusTypeId")
                         .IsRequired()
@@ -1467,11 +1447,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.TravelApprovalStatusTracker", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ApprovalGroupId")
                         .IsRequired()
@@ -1555,11 +1535,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.VATRate", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<float>("VATPercentage")
                         .HasColumnType("real");
@@ -1571,11 +1551,11 @@ namespace AtoCashAPI.Migrations
 
             modelBuilder.Entity("AtoCashAPI.Models.WorkTask", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("SubProjectId")
                         .IsRequired()
@@ -2032,7 +2012,9 @@ namespace AtoCashAPI.Migrations
                 {
                     b.HasOne("AtoCashAPI.Models.ApprovalGroup", "ApprovalGroup")
                         .WithMany()
-                        .HasForeignKey("ApprovalGroupId");
+                        .HasForeignKey("ApprovalGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AtoCashAPI.Models.BusinessUnit", "BusinessUnit")
                         .WithMany()
@@ -2354,7 +2336,9 @@ namespace AtoCashAPI.Migrations
 
                     b.HasOne("AtoCashAPI.Models.CostCenter", "CostCenter")
                         .WithMany()
-                        .HasForeignKey("CostCenterId");
+                        .HasForeignKey("CostCenterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AtoCashAPI.Models.CurrencyType", "CurrencyType")
                         .WithMany()
