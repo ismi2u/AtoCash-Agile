@@ -77,7 +77,10 @@ namespace AtoCashAPI.Controllers
         {
             List<BusinessUnitVM> ListBusinessUnitsVM = new();
 
-            var ListEmployeeExtendedInfo = await _context.EmployeeExtendedInfos.Where(c => c.BusinessUnitId == bizIdAndEmpID.BusinessTypeId && c.EmployeeId == bizIdAndEmpID.EmpId && c.StatusTypeId == (int)EStatusType.Active).ToListAsync();
+           
+
+            var ListEmployeeExtendedInfo = await _context.EmployeeExtendedInfos.Where(c => c.BusinessTypeId == bizIdAndEmpID.BusinessTypeId && c.EmployeeId == bizIdAndEmpID.EmpId && c.StatusTypeId == (int)EStatusType.Active).ToListAsync();
+
             foreach (EmployeeExtendedInfo employeeExtendedInfo in ListEmployeeExtendedInfo)
             {
                 BusinessUnitVM BusinessUnitsVM = new()
