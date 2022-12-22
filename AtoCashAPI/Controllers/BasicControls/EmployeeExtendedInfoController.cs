@@ -277,7 +277,7 @@ namespace AtoCashAPI.Controllers.BasicControls
         private string RemoveStringMaxLimits(string MaxLimitsInStrings, double limitAmount)
         {
 
-            string strLimitAmount = string.Format("{0:N2}%", Math.Truncate(limitAmount * 100) / 100);
+            string strLimitAmount = string.Format("{0:N2}", Math.Truncate(limitAmount * 100) / 100);
 
             List<string> ListOfMaxlimits= MaxLimitsInStrings.Split(";").ToList();
             ListOfMaxlimits = ListOfMaxlimits.Where(l => l != strLimitAmount).ToList();
@@ -288,9 +288,15 @@ namespace AtoCashAPI.Controllers.BasicControls
 
         private string AddStringMaxLimits(string MaxLimitsInStrings, double limitAmount)
         {
-            string strLimitAmount = string.Format("{0:N2}%", Math.Truncate(limitAmount * 100) / 100);
+            string strLimitAmount = string.Format("{0:N2}", Math.Truncate(limitAmount * 100) / 100);
 
-            List<string> ListOfMaxlimits = MaxLimitsInStrings.Split(";").ToList();
+            List<string> ListOfMaxlimits = new List<string>();
+
+            if (MaxLimitsInStrings != null )
+            {
+                ListOfMaxlimits = MaxLimitsInStrings.Split(";").ToList();
+            }
+           
             ListOfMaxlimits.Add(strLimitAmount);
             return string.Join(";", ListOfMaxlimits);
         }

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20221222163816_second")]
-    partial class second
+    [Migration("20221222173643_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -531,7 +531,6 @@ namespace AtoCashAPI.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AllPettyCashLimits")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double?>("CashOnHand")

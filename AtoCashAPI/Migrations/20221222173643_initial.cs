@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AtoCashAPI.Migrations
 {
-    public partial class second : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -606,7 +606,7 @@ namespace AtoCashAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
                     MaxPettyCashLimit = table.Column<double>(type: "double precision", nullable: false),
-                    AllPettyCashLimits = table.Column<string>(type: "text", nullable: false),
+                    AllPettyCashLimits = table.Column<string>(type: "text", nullable: true),
                     CurBalance = table.Column<double>(type: "double precision", nullable: false),
                     CashOnHand = table.Column<double>(type: "double precision", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)

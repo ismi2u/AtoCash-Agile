@@ -529,7 +529,6 @@ namespace AtoCashAPI.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AllPettyCashLimits")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double?>("CashOnHand")
