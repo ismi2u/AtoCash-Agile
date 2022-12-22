@@ -37,7 +37,7 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("BusinessTypeId")]
         public virtual BusinessType? BusinessType { get; set; }
-        public int BusinessTypeId { get; set; }
+        public int? BusinessTypeId { get; set; }
 
         [ForeignKey("BusinessUnitId")]
         public virtual BusinessUnit? BusinessUnit { get; set; }
@@ -91,6 +91,9 @@ namespace AtoCashAPI.Models
 
         public string? JobRole { get; set; }
         public int JobRoleId { get; set; }
+
+        public int? BusinessTypeId { get; set; }
+        public string? BusinessType { get; set; }
 
         public int? BusinessUnitId { get; set; }
         public string? BusinessUnit { get; set; }

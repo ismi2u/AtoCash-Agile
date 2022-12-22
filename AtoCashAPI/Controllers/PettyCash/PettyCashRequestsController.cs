@@ -875,7 +875,9 @@ namespace AtoCashAPI.Controllers.PettyCash
                     ProjectId = null,
                     SubProjectId = pettyCashRequestDto.SubProjectId,
                     WorkTaskId = pettyCashRequestDto.WorkTaskId,
+                    BusinessTypeId = pettyCashRequestDto.BusinessTypeId,
                     BusinessUnitId = pettyCashRequestDto.BusinessUnitId,
+                    CostCenterId = _context.BusinessUnits.Find(pettyCashRequestDto.BusinessUnitId).CostCenterId ?? 0,
                     CurrencyTypeId = pettyCashRequestDto.CurrencyTypeId,
                     ApprovalStatusTypeId = (int)EApprovalStatus.Pending,
                     Comments = "Cash Advance Request in Process!"
