@@ -52,6 +52,8 @@ namespace AtoCashAPI.Models
         public int EmployeeId { get; set; }
 
         public string? Employee{ get; set; }
+        public int BusinessTypeId { get; set; }
+        public string? BusinessType { get; set; }
         public int BusinessUnitId { get; set; }
         public string? BusinessUnit { get; set; }
         public int JobRoleId { get; set; }
