@@ -528,6 +528,10 @@ namespace AtoCashAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AllPettyCashLimits")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<double?>("CashOnHand")
                         .IsRequired()
                         .HasColumnType("double precision");
@@ -654,19 +658,22 @@ namespace AtoCashAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ApprovalGroupId")
+                    b.Property<int?>("ApprovalGroupId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("BusinessTypeId")
+                    b.Property<int?>("BusinessTypeId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<int>("BusinessUnitId")
+                    b.Property<int?>("BusinessUnitId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("JobRoleId")
+                    b.Property<int?>("JobRoleId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int>("StatusTypeId")
@@ -2020,9 +2027,7 @@ namespace AtoCashAPI.Migrations
                 {
                     b.HasOne("AtoCashAPI.Models.ApprovalGroup", "ApprovalGroup")
                         .WithMany()
-                        .HasForeignKey("ApprovalGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApprovalGroupId");
 
                     b.HasOne("AtoCashAPI.Models.BusinessType", "BusinessType")
                         .WithMany()

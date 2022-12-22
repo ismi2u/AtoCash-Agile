@@ -330,6 +330,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
                     EmployeeId = employee.Id,
                     MaxPettyCashLimit = 0,
+                    AllPettyCashLimits = "",
                     CurBalance = 0,
                     CashOnHand = 0,
                     UpdatedOn = DateTime.Now

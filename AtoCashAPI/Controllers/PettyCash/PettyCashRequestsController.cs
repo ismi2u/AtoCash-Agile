@@ -286,7 +286,7 @@ namespace AtoCashAPI.Controllers.PettyCash
 
                 //check employee allowed limit to Cash Advance, if limit exceeded return with an conflict message.
                 var empExtInfo =  _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == pettyCashRequest.BusinessUnitId).FirstOrDefault();
-                int reqJobRoleId = empExtInfo.JobRoleId;
+                int reqJobRoleId = empExtInfo.JobRoleId ?? 0;
                 double maxAllowed = _context.JobRoles.Find(reqJobRoleId).MaxPettyCashAllowed ?? 0 ;
                 if (maxAllowed >= oldBal + prevAmt - NewAmt && oldBal + prevAmt - NewAmt > 0)
                 {

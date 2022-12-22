@@ -22,6 +22,10 @@ namespace AtoCashAPI.Models
         public Double? MaxPettyCashLimit { get; set; }
 
         [Required]
+        public string? AllPettyCashLimits { get; set; }
+
+
+        [Required]
         public Double? CurBalance { get; set; }
 
 

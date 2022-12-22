@@ -36,10 +36,15 @@ namespace AtoCashAPI.Controllers.BasicControls
 
                 empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
                 empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
+                empExtendedInfoDTO.Employee= _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
                 empExtendedInfoDTO.BusinessUnitId= employeeExtendedInfo.BusinessUnitId;
+                empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
                 empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
+                empExtendedInfoDTO.JobRole = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).GetJobRole();
                 empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
+                empExtendedInfoDTO.ApprovalGroup= _context.ApprovalGroups.Find(employeeExtendedInfo.ApprovalGroupId).ApprovalGroupCode;
                 empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
+                empExtendedInfoDTO.StatusType=_context.StatusTypes.Find( employeeExtendedInfo.StatusTypeId).Status;
 
                 ListEmployeeExtendedInfoDTOs.Add(empExtendedInfoDTO);
 
@@ -65,9 +70,13 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
             empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
+            empExtendedInfoDTO.Employee = _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
             empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
+            empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
             empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
+            empExtendedInfoDTO.JobRole = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).GetJobRole();
             empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
+            empExtendedInfoDTO.ApprovalGroup = _context.ApprovalGroups.Find(employeeExtendedInfo.ApprovalGroupId).ApprovalGroupCode;
             empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
             empExtendedInfoDTO.StatusType = _context.StatusTypes.Find(employeeExtendedInfo.StatusTypeId).Status;
 
@@ -90,9 +99,13 @@ namespace AtoCashAPI.Controllers.BasicControls
 
                 empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
                 empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
+                empExtendedInfoDTO.Employee = _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
                 empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
+                empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
                 empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
+                empExtendedInfoDTO.JobRole = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).GetJobRole();
                 empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
+                empExtendedInfoDTO.ApprovalGroup = _context.ApprovalGroups.Find(employeeExtendedInfo.ApprovalGroupId).ApprovalGroupCode;
                 empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
                 empExtendedInfoDTO.StatusType = _context.StatusTypes.Find(employeeExtendedInfo.StatusTypeId).Status;
 
@@ -124,11 +137,25 @@ namespace AtoCashAPI.Controllers.BasicControls
             {
                 try
                 {
+                    empExtendedInfo.BusinessTypeId = employeeExtendedInfoDTO.BusinessTypeId;
                     empExtendedInfo.BusinessUnitId = employeeExtendedInfoDTO.BusinessUnitId;
                     empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
                     empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
                     empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
                     empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
+
+                    EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
+
+                    double oldJobRoleLimit = _context.JobRoles.Find(empExtendedInfo.JobRoleId).MaxPettyCashAllowed ?? 0;
+                    double NewJobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxPettyCashAllowed ?? 0;
+
+                    string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
+
+                    currentEmpPettyCashBalance.AllPettyCashLimits = RemoveStringMaxLimits(strPettyCashLimits, oldJobRoleLimit); //REMOVE OLD LIMIT
+                    currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, NewJobRoleLimit); // ADD NEW LIMIT
+                    currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
+
+                    _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
 
                     _context.EmployeeExtendedInfos.Update(empExtendedInfo);
 
@@ -158,6 +185,17 @@ namespace AtoCashAPI.Controllers.BasicControls
                 empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
                 empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
                 empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
+
+
+                EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b=> b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
+
+                string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
+                double JobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxPettyCashAllowed ?? 0;
+               
+                currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, JobRoleLimit);
+                currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
+
+                _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
 
                 _context.EmployeeExtendedInfos.Add(empExtendedInfo);
 
@@ -201,8 +239,20 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
+
+
+                EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b => b.EmployeeId == employeeExtendedInfo.EmployeeId).FirstOrDefault();
+
+                double JobRoleLimit = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).MaxPettyCashAllowed ?? 0;
+                string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
+
+                currentEmpPettyCashBalance.AllPettyCashLimits = RemoveStringMaxLimits(strPettyCashLimits, JobRoleLimit); //REMOVE OLD LIMIT
+                currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
+
+                _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
+
+
                 _context.EmployeeExtendedInfos.Remove(employeeExtendedInfo);
-                var empPettyCashBal = _context.EmpCurrentPettyCashBalances.Where(e => e.EmployeeId == id).FirstOrDefault();
                 await _context.SaveChangesAsync();
                 await AtoCashDbContextTransaction.CommitAsync();
             }
@@ -210,6 +260,39 @@ namespace AtoCashAPI.Controllers.BasicControls
             return Ok(new RespStatus { Status = "Success", Message = "EmployeeExtendedInfo Deleted!" });
         }
 
-    
+
+
+
+        private double GetMaxFromStringDoubles(string DoublesInStrings)
+        {
+            double maximumLimit = 0;
+
+            double[] Limits = DoublesInStrings.Split(';').Select(double.Parse).ToArray();
+            maximumLimit = Limits.Max();
+
+            return maximumLimit;
+        }
+
+
+        private string RemoveStringMaxLimits(string MaxLimitsInStrings, double limitAmount)
+        {
+
+            string strLimitAmount = string.Format("{0:N2}%", Math.Truncate(limitAmount * 100) / 100);
+
+            List<string> ListOfMaxlimits= MaxLimitsInStrings.Split(";").ToList();
+            ListOfMaxlimits = ListOfMaxlimits.Where(l => l != strLimitAmount).ToList();
+
+            return string.Join(";", ListOfMaxlimits);
+        }
+
+
+        private string AddStringMaxLimits(string MaxLimitsInStrings, double limitAmount)
+        {
+            string strLimitAmount = string.Format("{0:N2}%", Math.Truncate(limitAmount * 100) / 100);
+
+            List<string> ListOfMaxlimits = MaxLimitsInStrings.Split(";").ToList();
+            ListOfMaxlimits.Add(strLimitAmount);
+            return string.Join(";", ListOfMaxlimits);
+        }
     }
 }

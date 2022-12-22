@@ -29,17 +29,17 @@ INSERT INTO public."Employees" (
 	VALUES (6, 'Walid', NULL, 'E-4166', 'E-4166', '2345468765',  'AD1400080001001234567890', '3453456547532343', '2343244', NULL, NULL, 'Saudi', '2022-09-14 11:42:55.352', '2022-09-27 11:41:50.017', 'male', 'atocash.walid@gmail.com', '23423445',1, 1,1,1);
 
 INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (1, 1, 0, 0, 0, '2022-09-28 11:35:13.909336');
+	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (1, 1, 0, '', 0, 0, '2022-09-28 11:35:13.909336');
 INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "CurBalance", "CashOnHand", "UpdatedOn")VALUES (2, 2, 0, 0, 0, '2022-09-28 11:35:13.909336');
+	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn")VALUES (2, 2, 0,'', 0, 0, '2022-09-28 11:35:13.909336');
 INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (3, 3, 0, 0, 0, '2022-09-28 11:37:05.395571');
+	"Id", "EmployeeId", "MaxPettyCashLimit","AllPettyCashLimits",  "CurBalance", "CashOnHand", "UpdatedOn") VALUES (3, 3, 0, '',0, 0, '2022-09-28 11:37:05.395571');
 INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (4, 4, 0, 0, 0, '2022-09-28 11:39:19.125081');
+	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (4, 4, 0,'', 0, 0, '2022-09-28 11:39:19.125081');
 INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (5, 5, 0, 0, 0, '2022-09-28 11:41:37.616992');
+	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (5, 5, 0,'', 0, 0, '2022-09-28 11:41:37.616992');
 INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (6, 6, 0, 0, 0, '2022-09-28 11:44:55.218718');
+	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (6, 6, 0,'', 0, 0, '2022-09-28 11:44:55.218718');
 
 
 ---

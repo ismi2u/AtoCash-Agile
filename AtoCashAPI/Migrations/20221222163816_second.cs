@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AtoCashAPI.Migrations
 {
-    public partial class initial : Migration
+    public partial class second : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -606,6 +606,7 @@ namespace AtoCashAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
                     MaxPettyCashLimit = table.Column<double>(type: "double precision", nullable: false),
+                    AllPettyCashLimits = table.Column<string>(type: "text", nullable: false),
                     CurBalance = table.Column<double>(type: "double precision", nullable: false),
                     CashOnHand = table.Column<double>(type: "double precision", nullable: false),
                     UpdatedOn = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -664,9 +665,10 @@ namespace AtoCashAPI.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
+                    BusinessTypeId = table.Column<int>(type: "integer", nullable: false),
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: false),
                     JobRoleId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovalGroupId = table.Column<int>(type: "integer", nullable: false),
+                    ApprovalGroupId = table.Column<int>(type: "integer", nullable: true),
                     StatusTypeId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -676,6 +678,11 @@ namespace AtoCashAPI.Migrations
                         name: "FK_EmployeeExtendedInfos_ApprovalGroups_ApprovalGroupId",
                         column: x => x.ApprovalGroupId,
                         principalTable: "ApprovalGroups",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_EmployeeExtendedInfos_BusinessTypes_BusinessTypeId",
+                        column: x => x.BusinessTypeId,
+                        principalTable: "BusinessTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -852,6 +859,7 @@ namespace AtoCashAPI.Migrations
                     PettyClaimRequestDesc = table.Column<string>(type: "varchar(150)", nullable: false),
                     CashReqDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CurrencyTypeId = table.Column<int>(type: "integer", nullable: false),
+                    BusinessTypeId = table.Column<int>(type: "integer", nullable: false),
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
@@ -868,6 +876,12 @@ namespace AtoCashAPI.Migrations
                         name: "FK_PettyCashRequests_ApprovalStatusTypes_ApprovalStatusTypeId",
                         column: x => x.ApprovalStatusTypeId,
                         principalTable: "ApprovalStatusTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PettyCashRequests_BusinessTypes_BusinessTypeId",
+                        column: x => x.BusinessTypeId,
+                        principalTable: "BusinessTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -1617,6 +1631,11 @@ namespace AtoCashAPI.Migrations
                 column: "ApprovalGroupId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployeeExtendedInfos_BusinessTypeId",
+                table: "EmployeeExtendedInfos",
+                column: "BusinessTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeExtendedInfos_BusinessUnitId",
                 table: "EmployeeExtendedInfos",
                 column: "BusinessUnitId");
@@ -1835,6 +1854,11 @@ namespace AtoCashAPI.Migrations
                 name: "IX_PettyCashRequests_ApprovalStatusTypeId",
                 table: "PettyCashRequests",
                 column: "ApprovalStatusTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PettyCashRequests_BusinessTypeId",
+                table: "PettyCashRequests",
+                column: "BusinessTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PettyCashRequests_BusinessUnitId",
