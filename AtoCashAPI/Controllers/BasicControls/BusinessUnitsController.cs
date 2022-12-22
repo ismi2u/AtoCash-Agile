@@ -46,6 +46,52 @@ namespace AtoCashAPI.Controllers
             return ListBusinessUnitsVM;
 
         }
+
+
+        [HttpGet("{id}")]
+        [ActionName("BusinessUnitsByBusinessTypeIdForDropdown")]
+        public async Task<ActionResult<IEnumerable<BusinessUnitVM>>> GetBusinessUnitsByBusinessTypeForDropdown(int id)
+        {
+            List<BusinessUnitVM> ListBusinessUnitsVM = new();
+
+            var BusinessUnits = await _context.BusinessUnits.Where(c => c.BusinessTypeId == id &&  c.StatusTypeId == (int)EStatusType.Active).ToListAsync();
+            foreach (BusinessUnit businessUnit in BusinessUnits)
+            {
+                BusinessUnitVM BusinessUnitsVM = new()
+                {
+                    Id = businessUnit.Id,
+                    BusinessUnitName = businessUnit.BusinessUnitName
+                };
+
+                ListBusinessUnitsVM.Add(BusinessUnitsVM);
+            }
+
+            return ListBusinessUnitsVM;
+
+        }
+
+
+        [HttpGet("{id}")]
+        [ActionName("BusinessUnitsByBizTypeIdAndEmpIdForDropdown")]
+        public async Task<ActionResult<IEnumerable<BusinessUnitVM>>> GetBusinessUnitsByBizTypeIdAndEmpIdForDropdown(BusinessTypeIdAndEmpId bizIdAndEmpID )
+        {
+            List<BusinessUnitVM> ListBusinessUnitsVM = new();
+
+            var ListEmployeeExtendedInfo = await _context.EmployeeExtendedInfos.Where(c => c.BusinessUnitId == bizIdAndEmpID.BusinessTypeId && c.EmployeeId == bizIdAndEmpID.EmpId && c.StatusTypeId == (int)EStatusType.Active).ToListAsync();
+            foreach (EmployeeExtendedInfo employeeExtendedInfo in ListEmployeeExtendedInfo)
+            {
+                BusinessUnitVM BusinessUnitsVM = new()
+                {
+                    Id = employeeExtendedInfo.BusinessUnitId,
+                    BusinessUnitName = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName()
+                };
+
+                ListBusinessUnitsVM.Add(BusinessUnitsVM);
+            }
+
+            return ListBusinessUnitsVM;
+
+        }
         // GET: api/BusinessUnits
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BusinessUnitDTO>>> GetBusinessUnits()

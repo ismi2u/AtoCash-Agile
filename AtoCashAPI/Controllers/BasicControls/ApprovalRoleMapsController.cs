@@ -146,7 +146,6 @@ namespace AtoCashAPI.Controllers
 
             var approvalRoleMap = await _context.ApprovalRoleMaps.FindAsync(id);
 
-            approvalRoleMap.Id = approvalRoleMapDto.Id;
             approvalRoleMap.ApprovalGroupId = approvalRoleMapDto.ApprovalGroupId;
             approvalRoleMap.JobRoleId = approvalRoleMapDto.JobRoleId;
             approvalRoleMap.ApprovalLevelId = approvalRoleMapDto.ApprovalLevelId;
@@ -188,10 +187,10 @@ namespace AtoCashAPI.Controllers
             var approvalgroup = _context.ApprovalRoleMaps.Where(a => a.ApprovalGroupId == approvalRoleMapDto.ApprovalGroupId).ToList();
             int maxApprLevel = 0;
 
-            //if (approvalgroup.Count >0)
-            //{
-            //     maxApprLevel = _context.ApprovalRoleMaps.Where(a => a.ApprovalGroupId == approvalRoleMapDto.ApprovalGroupId).OrderByDescending(a => a.ApprovalLevelId).First().ApprovalLevelId;
-            //}
+            if (approvalgroup.Count > 0)
+            {
+                maxApprLevel = _context.ApprovalRoleMaps.Where(a => a.ApprovalGroupId == approvalRoleMapDto.ApprovalGroupId).OrderByDescending(a => a.ApprovalLevelId).First().ApprovalLevelId ?? 0;
+            }
 
             if (approvalRoleMapDto.ApprovalLevelId != maxApprLevel + 1)
             {
@@ -216,7 +215,7 @@ namespace AtoCashAPI.Controllers
             _context.ApprovalRoleMaps.Add(approvalRoleMap);
             await _context.SaveChangesAsync();
 
-            return Ok(new RespStatus { Status = "Success", Message = "Approval To Role... Mapped!" });
+            return Ok(new RespStatus { Status = "Success", Message = "JobRole Mapped with Approval Level!" });
         }
 
         // DELETE: api/ApprovalRoleMaps/5

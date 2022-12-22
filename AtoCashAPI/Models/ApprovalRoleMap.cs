@@ -32,7 +32,7 @@ namespace AtoCashAPI.Models
 
     public class ApprovalRoleMapDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string? ApprovalGroup { get; set; }
         public int? ApprovalGroupId { get; set; }
@@ -44,8 +44,10 @@ namespace AtoCashAPI.Models
 
         public string? EmployeeName { get; set; }
 
-        public int CountOfEmployees { get; set; }
-        public string AllAssignedEmployees { get; set; }
+        public int? CountOfEmployees { get; set; }
+        public string? AllAssignedEmployees { get; set; }
 
     }
+
+
 }

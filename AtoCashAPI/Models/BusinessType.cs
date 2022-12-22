@@ -50,4 +50,11 @@ namespace AtoCashAPI.Models
 
 
     }
+
+    public class BusinessTypeIdAndEmpId
+    {
+        public int? BusinessTypeId { get; set; }
+        public int? EmpId { get; set; }
+
+    }
 }
