@@ -90,7 +90,7 @@ namespace AtoCashAPI.Models
         public DateTime? CashReqDate { get; set; }
 
         public string? JobRole { get; set; }
-        public string JobRoleId { get; set; }
+        public int JobRoleId { get; set; }
 
         public int? BusinessUnitId { get; set; }
         public string? BusinessUnit { get; set; }

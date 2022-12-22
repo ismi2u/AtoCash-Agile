@@ -291,7 +291,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 if (maxAllowed >= oldBal + prevAmt - NewAmt && oldBal + prevAmt - NewAmt > 0)
                 {
                     empPettyCashBal.CurBalance = oldBal + prevAmt - NewAmt;
-                    empPettyCashBal.UpdatedOn = DateTime.Now;
+                    empPettyCashBal.UpdatedOn = DateTime.UtcNow;
                     _context.EmpCurrentPettyCashBalances.Update(empPettyCashBal);
                 }
                 else
@@ -307,7 +307,7 @@ namespace AtoCashAPI.Controllers.PettyCash
 
             pettyCashRequest.PettyClaimAmount = pettyCashRequestDto.PettyClaimAmount;
             pettyCashRequest.PettyClaimRequestDesc = pettyCashRequestDto.PettyClaimRequestDesc;
-            pettyCashRequest.CashReqDate = DateTime.Now;
+            pettyCashRequest.CashReqDate = DateTime.UtcNow;
 
             _context.PettyCashRequests.Update(pettyCashRequest);
 
@@ -384,7 +384,7 @@ namespace AtoCashAPI.Controllers.PettyCash
             disburseMasterRecord.ProjectId = newProjId;
             disburseMasterRecord.SubProjectId = newSubProjId;
             disburseMasterRecord.WorkTaskId = newWorkTaskId;
-            disburseMasterRecord.RecordDate = DateTime.Now;
+            disburseMasterRecord.RecordDate = DateTime.UtcNow;
             disburseMasterRecord.ClaimAmount = pettyCashRequestDto.PettyClaimAmount;
 
 
@@ -494,7 +494,7 @@ namespace AtoCashAPI.Controllers.PettyCash
             //update the EmpPettyCashBalance to credit back the deducted amount
             EmpCurrentPettyCashBalance empPettyCashBal = _context.EmpCurrentPettyCashBalances.Where(e => e.EmployeeId == pettyCashRequest.EmployeeId).FirstOrDefault();
             empPettyCashBal.CurBalance += pettyCashRequest.PettyClaimAmount;
-            empPettyCashBal.UpdatedOn = DateTime.Now;
+            empPettyCashBal.UpdatedOn = DateTime.UtcNow;
             _context.EmpCurrentPettyCashBalances.Update(empPettyCashBal);
 
             _context.PettyCashRequests.Remove(pettyCashRequest);
@@ -592,7 +592,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 curPettyCashBal.Id = curPettyCashBal.Id;
                 curPettyCashBal.CurBalance = empCurAvailBal - empReqAmount <= maxCashAllowedForRole ? empCurAvailBal - empReqAmount : maxCashAllowedForRole;
                 curPettyCashBal.EmployeeId = empid;
-                curPettyCashBal.UpdatedOn = DateTime.Now;
+                curPettyCashBal.UpdatedOn = DateTime.UtcNow;
                 _context.Update(curPettyCashBal);
 
                 try
@@ -612,7 +612,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 {
                     EmployeeId = empid,
                     PettyClaimAmount = empReqAmount,
-                    CashReqDate = DateTime.Now,
+                    CashReqDate = DateTime.UtcNow,
                     BusinessUnitId = null,
                     ProjectId = pettyCashRequestDto.ProjectId,
                     SubProjectId = pettyCashRequestDto.SubProjectId,
@@ -666,8 +666,8 @@ namespace AtoCashAPI.Controllers.PettyCash
                         // get the next ProjectManager approval.
                         ApprovalGroupId = null,
                         ApprovalLevelId = 2, //empApprLevel or 2 default approval level is 2 for Project based request
-                        ReqDate = DateTime.Now,
-                        FinalApprovedDate = DateTime.Now,
+                        ReqDate = DateTime.UtcNow,
+                        FinalApprovedDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Approved, //1-Initiating, 2-Pending, 3-InReview, 4-Approved, 5-Rejected
                         Comments = "Self Approved Request!"
                     };
@@ -694,7 +694,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                         // get the next ProjectManager approval.
                         ApprovalGroupId = null,
                         ApprovalLevelId = 2, // default approval level is 2 for Project based request
-                        ReqDate = DateTime.Now,
+                        ReqDate = DateTime.UtcNow,
                         FinalApprovedDate = null,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Pending, //1-Initiating, 2-Pending, 3-InReview, 4-Approved, 5-Rejected
                         Comments = "Awaiting Approver Action"
@@ -753,7 +753,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 disbursementsAndClaimsMaster.ProjectId = pettyCashRequestDto.ProjectId;
                 disbursementsAndClaimsMaster.SubProjectId = pettyCashRequestDto.SubProjectId;
                 disbursementsAndClaimsMaster.WorkTaskId = pettyCashRequestDto.WorkTaskId;
-                disbursementsAndClaimsMaster.RecordDate = DateTime.Now;
+                disbursementsAndClaimsMaster.RecordDate = DateTime.UtcNow;
                 disbursementsAndClaimsMaster.CurrencyTypeId = pettyCashRequestDto.CurrencyTypeId;
                 disbursementsAndClaimsMaster.ClaimAmount = pettyCashRequestDto.PettyClaimAmount;
                 disbursementsAndClaimsMaster.AmountToWallet = 0;
@@ -793,10 +793,10 @@ namespace AtoCashAPI.Controllers.PettyCash
                 int? reqBussUnitId = pettyCashRequestDto.BusinessUnitId;
                 int reqEmpid = pettyCashRequestDto.EmployeeId;
                 Employee? reqEmp = await _context.Employees.FindAsync(reqEmpid);
-                EmployeeExtendedInfo empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == pettyCashRequestDto.EmployeeId && e.BusinessUnitId == reqBussUnitId).FirstOrDefault();
+                EmployeeExtendedInfo reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == pettyCashRequestDto.EmployeeId && e.BusinessUnitId == reqBussUnitId).FirstOrDefault();
 
-                int? reqJobRoleId = empExtInfo.JobRoleId;
-                int? reqApprGroupId = empExtInfo.ApprovalGroupId;
+                int? reqJobRoleId = reqEmpExtInfo.JobRoleId;
+                int? reqApprGroupId = reqEmpExtInfo.ApprovalGroupId;
 
                 //if Approval Role Map list is null
 
@@ -849,7 +849,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                     empcurPettyCashBal.CurBalance = empCurAvailBal - empReqAmount;
                 }
 
-                empcurPettyCashBal.UpdatedOn = DateTime.Now;
+                empcurPettyCashBal.UpdatedOn = DateTime.UtcNow;
                 _context.Update(empcurPettyCashBal);
                 try
                 {
@@ -870,7 +870,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 {
                     EmployeeId = reqEmpid,
                     PettyClaimAmount = empReqAmount,
-                    CashReqDate = DateTime.Now,
+                    CashReqDate = DateTime.UtcNow,
                     PettyClaimRequestDesc = pettyCashRequestDto.PettyClaimRequestDesc,
                     ProjectId = null,
                     SubProjectId = pettyCashRequestDto.SubProjectId,
@@ -934,8 +934,8 @@ namespace AtoCashAPI.Controllers.PettyCash
                         JobRoleId = reqJobRoleId,
                         ApprovalGroupId = reqApprGroupId,
                         ApprovalLevelId = reqApprLevel,
-                        ReqDate = DateTime.Now,
-                        FinalApprovedDate = DateTime.Now,
+                        ReqDate = DateTime.UtcNow,
+                        FinalApprovedDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Approved,
                         Comments = "Self Approved Request!"
                         //1-Initiating, 2-Pending, 3-InReview, 4-Approved, 5-Rejected
@@ -995,7 +995,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                             JobRoleId = jobRole_id,
                             ApprovalGroupId = reqApprGroupId,
                             ApprovalLevelId = ApprMap.ApprovalLevelId,
-                            ReqDate = DateTime.Now,
+                            ReqDate = DateTime.UtcNow,
                             FinalApprovedDate = null,
                             ApprovalStatusTypeId = isFirstApprover ? (int)EApprovalStatus.Pending : (int)EApprovalStatus.Initiating,
                             Comments = "Awaiting Approver Action"
@@ -1062,7 +1062,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 disbursementsAndClaimsMaster.ProjectId = null;
                 disbursementsAndClaimsMaster.SubProjectId = null;
                 disbursementsAndClaimsMaster.WorkTaskId = null;
-                disbursementsAndClaimsMaster.RecordDate = DateTime.Now;
+                disbursementsAndClaimsMaster.RecordDate = DateTime.UtcNow;
                 disbursementsAndClaimsMaster.CurrencyTypeId = pettyCashRequestDto.CurrencyTypeId;
                 disbursementsAndClaimsMaster.ClaimAmount = empReqAmount;
                 disbursementsAndClaimsMaster.AmountToCredit = isSelfApprovedRequest ? empReqAmount : 0;
@@ -1102,7 +1102,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 {
                     EmployeeId = id,
                     CurBalance = empPettyCashAmountEligible,
-                    UpdatedOn = DateTime.Now
+                    UpdatedOn = DateTime.UtcNow
                 });
 
                 _context.SaveChangesAsync();

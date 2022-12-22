@@ -195,6 +195,10 @@ namespace AtoCashAPI.Controllers.BasicControls
                 currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, JobRoleLimit);
                 currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
 
+                //this is problematics needs resolution
+                currentEmpPettyCashBalance.CurBalance = currentEmpPettyCashBalance.CurBalance == 0 ? JobRoleLimit : currentEmpPettyCashBalance.CurBalance ;
+                currentEmpPettyCashBalance.UpdatedOn = DateTime.UtcNow;
+
                 _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
 
                 _context.EmployeeExtendedInfos.Add(empExtendedInfo);

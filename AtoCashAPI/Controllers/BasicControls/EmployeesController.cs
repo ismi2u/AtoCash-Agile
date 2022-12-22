@@ -333,7 +333,7 @@ namespace AtoCashAPI.Controllers.BasicControls
                     AllPettyCashLimits = String.Empty,
                     CurBalance = 0,
                     CashOnHand = 0,
-                    UpdatedOn = DateTime.Now
+                    UpdatedOn = DateTime.UtcNow
                 });
 
                 await _context.SaveChangesAsync();
