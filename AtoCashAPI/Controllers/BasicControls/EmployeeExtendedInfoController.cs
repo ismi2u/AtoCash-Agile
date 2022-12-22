@@ -37,6 +37,8 @@ namespace AtoCashAPI.Controllers.BasicControls
                 empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
                 empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
                 empExtendedInfoDTO.Employee= _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
+                empExtendedInfoDTO.BusinessTypeId = employeeExtendedInfo.BusinessTypeId;
+                empExtendedInfoDTO.BusinessType = _context.BusinessTypes.Find(employeeExtendedInfo.BusinessTypeId).BusinessTypeName;
                 empExtendedInfoDTO.BusinessUnitId= employeeExtendedInfo.BusinessUnitId;
                 empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
                 empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
@@ -71,6 +73,8 @@ namespace AtoCashAPI.Controllers.BasicControls
             empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
             empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
             empExtendedInfoDTO.Employee = _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
+            empExtendedInfoDTO.BusinessTypeId = employeeExtendedInfo.BusinessTypeId;
+            empExtendedInfoDTO.BusinessType = _context.BusinessTypes.Find(employeeExtendedInfo.BusinessTypeId).BusinessTypeName;
             empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
             empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
             empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
@@ -100,6 +104,8 @@ namespace AtoCashAPI.Controllers.BasicControls
                 empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
                 empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
                 empExtendedInfoDTO.Employee = _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
+                empExtendedInfoDTO.BusinessTypeId = employeeExtendedInfo.BusinessTypeId;
+                empExtendedInfoDTO.BusinessType = _context.BusinessTypes.Find(employeeExtendedInfo.BusinessTypeId).BusinessTypeName;
                 empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
                 empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
                 empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
@@ -296,7 +302,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             List<string> ListOfMaxlimits = new List<string>();
 
-            if (MaxLimitsInStrings != null )
+            if (!String.IsNullOrEmpty(MaxLimitsInStrings))
             {
                 ListOfMaxlimits = MaxLimitsInStrings.Split(";").ToList();
             }
