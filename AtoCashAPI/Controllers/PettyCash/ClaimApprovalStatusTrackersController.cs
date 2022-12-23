@@ -185,7 +185,7 @@ namespace AtoCashAPI.Controllers
                             isNextApproverAvailable = false;
                         }
 
-                        int qApprovalStatusTypeId = isNextApproverAvailable ? (int)EApprovalStatus.Initiating : (int)EApprovalStatus.Pending;
+                        int qApprovalStatusTypeId = isNextApproverAvailable ? (int)EApprovalStatus.Intitated : (int)EApprovalStatus.Pending;
 
                         //update the next level approver Track request to PENDING (from Initiating) 
                         //if claimitem is not null change the status

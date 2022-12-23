@@ -1002,7 +1002,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                             ApprovalLevelId = ApprMap.ApprovalLevelId,
                             ReqDate = DateTime.UtcNow,
                             FinalApprovedDate = null,
-                            ApprovalStatusTypeId = isFirstApprover ? (int)EApprovalStatus.Pending : (int)EApprovalStatus.Initiating,
+                            ApprovalStatusTypeId = isFirstApprover ? (int)EApprovalStatus.Pending : (int)EApprovalStatus.Intitated,
                             Comments = "Awaiting Approver Action"
                             //1-Initiating, 2-Pending, 3-InReview, 4-Approved, 5-Rejected
                         };
