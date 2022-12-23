@@ -590,8 +590,10 @@ namespace AtoCashAPI.Controllers.PettyCash
                 ////
                 int empid = pettyCashRequestDto.EmployeeId;
                 Double? empReqAmount = pettyCashRequestDto.PettyClaimAmount;
-                //int empApprGroupId = _context.Employees.Find(empid).ApprovalGroupId;
-                double? maxCashAllowedForRole = _context.EmpCurrentPettyCashBalances.Find(pettyCashRequestDto.EmployeeId).MaxPettyCashLimit;
+
+                EmpCurrentPettyCashBalance empcurPettyCashBal = _context.EmpCurrentPettyCashBalances.Where(x => x.EmployeeId == empid).FirstOrDefault();
+
+                double? maxCashAllowedForRole = empcurPettyCashBal.MaxPettyCashLimit;//int empApprGroupId = _context.Employees.Find(empid).ApprovalGroupId;
 
                 if (pettyCashRequestDto.PettyClaimAmount > maxCashAllowedForRole)
                 {
@@ -626,6 +628,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                     BusinessTypeId = null, //project
                     BusinessUnitId = null, //project
                     ProjectId = pettyCashRequestDto.ProjectId,
+                    CostCenterId = _context.Projects.Find(pettyCashRequestDto.ProjectId).CostCenterId,
                     SubProjectId = pettyCashRequestDto.SubProjectId,
                     WorkTaskId = pettyCashRequestDto.WorkTaskId,
                     PettyClaimRequestDesc = pettyCashRequestDto.PettyClaimRequestDesc,
@@ -699,6 +702,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                         BlendedRequestId = pettyCashRequestDto.Id,
                         BusinessTypeId = null, //project
                         BusinessUnitId = null, //project
+                        RequestTypeId = (int)ERequestType.CashAdvance,
                         ProjManagerId = projManagerid,
                         ProjectId = pettyCashRequestDto.ProjectId,
                         SubProjectId = pettyCashRequestDto.SubProjectId,
@@ -715,7 +719,14 @@ namespace AtoCashAPI.Controllers.PettyCash
 
 
                     _context.ClaimApprovalStatusTrackers.Add(claimAppStatusTrack);
-                    await _context.SaveChangesAsync();
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Project: PettyCashRequests");
+                    }
                     #endregion
 
 
@@ -789,7 +800,7 @@ namespace AtoCashAPI.Controllers.PettyCash
                 _logger.LogInformation("Project: Disbursement table insert Completed");
                 await AtoCashDbContextTransaction.CommitAsync();
             }
-            return 1;
+            return 0;
         }
 
         /// <summary>

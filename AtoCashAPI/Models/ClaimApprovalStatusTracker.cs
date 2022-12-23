@@ -55,17 +55,15 @@ namespace AtoCashAPI.Models
         public virtual WorkTask? WorkTask { get; set; }
         public int? WorkTaskId { get; set; }
 
-        [Required]
         public int? ApprovalGroupId { get; set; }
 
         //Approver Role
-        [Required]
         [ForeignKey("JobRoleId")]
         public virtual JobRole? JobRole { get; set; }
         public int? JobRoleId { get; set; }
 
         //Approver ApprovalLevel
-        [Required]
+
         [ForeignKey("ApprovalLevelId")]
         public virtual ApprovalLevel? ApprovalLevel { get; set; }
         public int? ApprovalLevelId { get; set; }

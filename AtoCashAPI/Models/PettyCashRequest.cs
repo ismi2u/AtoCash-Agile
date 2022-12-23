@@ -34,7 +34,7 @@ namespace AtoCashAPI.Models
         public virtual CurrencyType? CurrencyType { get; set; }
         public int? CurrencyTypeId { get; set; }
 
-        [Required]
+
         [ForeignKey("BusinessTypeId")]
         public virtual BusinessType? BusinessType { get; set; }
         public int? BusinessTypeId { get; set; }

@@ -24,7 +24,7 @@ namespace AtoCashAPI.Models
         public int CostCenterId { get; set; }
 
         [Required]
-        [ForeignKey("ProjManagerId")]
+        [ForeignKey("ProjectManagerId")]
         public virtual Employee? ProjectManager { get; set; }
         public int ProjectManagerId { get; set; }
 

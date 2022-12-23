@@ -105,12 +105,15 @@ namespace AtoCashAPI.Models
 
         public string? EmployeeName { get; set; }
         public string? EmployeeCode{ get; set; }
+        public string? BusinessType{ get; set; }
         public string? BusinessUnit { get; set; }
         public string? Project { get; set; }
         public DateTime? RequestDate { get; set; }
         public Double? ClaimAmount { get; set; }
         public double? AmountToWallet { get; set; }
         public double? AmountToBank { get; set; }
+
+        public string? Action { get; set; }
         public string? Status { get; set; }
         public  bool IsCashAdvanceRequest { get; set; }
         public List<PostSubClaimItems>? SubClaimItems { get; set; }
@@ -146,14 +149,17 @@ namespace AtoCashAPI.Models
         public int? EmployeeId { get; set; }
 
         public string? EmployeeName { get; set; }
-        public int? PettyCashRequestId { get; set; }
-        public int? ExpenseReimburseReqId { get; set; }
+        public int? BlendedRequestId { get; set; }
 
         public int? RequestTypeId { get; set; }
         public string? RequestType { get; set; }
 
+        public int? BusinessTypeId { get; set; }
+        public string? BusinessType { get; set; }
+
+
         public int? BusinessUnitId { get; set; }
-        public string? BusinessUnitName { get; set; }
+        public string? BusinessUnit{ get; set; }
 
  
         public int? ProjectId { get; set; }
