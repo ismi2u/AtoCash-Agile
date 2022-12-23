@@ -297,6 +297,13 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
+                    b.Property<int?>("BlendedRequestId")
+                        .IsRequired()
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("BusinessTypeId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("BusinessUnitId")
                         .HasColumnType("integer");
 
@@ -315,9 +322,6 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<int?>("PettyCashRequestId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("ProjManagerId")
                         .HasColumnType("integer");
 
@@ -327,6 +331,10 @@ namespace AtoCashAPI.Migrations
                     b.Property<DateTime?>("ReqDate")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("RequestTypeId")
+                        .IsRequired()
+                        .HasColumnType("integer");
 
                     b.Property<int?>("SubProjectId")
                         .HasColumnType("integer");
@@ -340,17 +348,19 @@ namespace AtoCashAPI.Migrations
 
                     b.HasIndex("ApprovalStatusTypeId");
 
+                    b.HasIndex("BusinessTypeId");
+
                     b.HasIndex("BusinessUnitId");
 
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("JobRoleId");
 
-                    b.HasIndex("PettyCashRequestId");
-
                     b.HasIndex("ProjManagerId");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("RequestTypeId");
 
                     b.HasIndex("SubProjectId");
 
@@ -436,6 +446,13 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
+                    b.Property<int?>("BlendedRequestId")
+                        .IsRequired()
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("BusinessTypeId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("BusinessUnitId")
                         .HasColumnType("integer");
 
@@ -455,14 +472,8 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ExpenseReimburseReqId")
-                        .HasColumnType("integer");
-
                     b.Property<bool?>("IsSettledAmountCredited")
                         .HasColumnType("boolean");
-
-                    b.Property<int?>("PettyCashRequestId")
-                        .HasColumnType("integer");
 
                     b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
@@ -497,6 +508,8 @@ namespace AtoCashAPI.Migrations
 
                     b.HasIndex("ApprovalStatusId");
 
+                    b.HasIndex("BusinessTypeId");
+
                     b.HasIndex("BusinessUnitId");
 
                     b.HasIndex("CostCenterId");
@@ -504,10 +517,6 @@ namespace AtoCashAPI.Migrations
                     b.HasIndex("CurrencyTypeId");
 
                     b.HasIndex("EmployeeId");
-
-                    b.HasIndex("ExpenseReimburseReqId");
-
-                    b.HasIndex("PettyCashRequestId");
 
                     b.HasIndex("ProjectId");
 
@@ -1194,7 +1203,8 @@ namespace AtoCashAPI.Migrations
                     b.Property<DateTime?>("ApprovedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("BusinessTypeId")
+                    b.Property<int?>("BusinessTypeId")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("BusinessUnitId")
@@ -1820,6 +1830,10 @@ namespace AtoCashAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AtoCashAPI.Models.BusinessType", "BusinessType")
+                        .WithMany()
+                        .HasForeignKey("BusinessTypeId");
+
                     b.HasOne("AtoCashAPI.Models.BusinessUnit", "BusinessUnit")
                         .WithMany()
                         .HasForeignKey("BusinessUnitId");
@@ -1836,10 +1850,6 @@ namespace AtoCashAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AtoCashAPI.Models.PettyCashRequest", "PettyCashRequest")
-                        .WithMany()
-                        .HasForeignKey("PettyCashRequestId");
-
                     b.HasOne("AtoCashAPI.Models.Employee", "ProjManager")
                         .WithMany()
                         .HasForeignKey("ProjManagerId");
@@ -1847,6 +1857,12 @@ namespace AtoCashAPI.Migrations
                     b.HasOne("AtoCashAPI.Models.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId");
+
+                    b.HasOne("AtoCashAPI.Models.RequestType", "RequestType")
+                        .WithMany()
+                        .HasForeignKey("RequestTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AtoCashAPI.Models.SubProject", "SubProject")
                         .WithMany()
@@ -1860,17 +1876,19 @@ namespace AtoCashAPI.Migrations
 
                     b.Navigation("ApprovalStatusType");
 
+                    b.Navigation("BusinessType");
+
                     b.Navigation("BusinessUnit");
 
                     b.Navigation("Employee");
 
                     b.Navigation("JobRole");
 
-                    b.Navigation("PettyCashRequest");
-
                     b.Navigation("ProjManager");
 
                     b.Navigation("Project");
+
+                    b.Navigation("RequestType");
 
                     b.Navigation("SubProject");
 
@@ -1907,6 +1925,10 @@ namespace AtoCashAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AtoCashAPI.Models.BusinessType", "BusinessType")
+                        .WithMany()
+                        .HasForeignKey("BusinessTypeId");
+
                     b.HasOne("AtoCashAPI.Models.BusinessUnit", "BusinessUnit")
                         .WithMany()
                         .HasForeignKey("BusinessUnitId");
@@ -1929,14 +1951,6 @@ namespace AtoCashAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AtoCashAPI.Models.ExpenseReimburseRequest", "ExpenseReimburseRequest")
-                        .WithMany()
-                        .HasForeignKey("ExpenseReimburseReqId");
-
-                    b.HasOne("AtoCashAPI.Models.PettyCashRequest", "PettyCashRequest")
-                        .WithMany()
-                        .HasForeignKey("PettyCashRequestId");
-
                     b.HasOne("AtoCashAPI.Models.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId");
@@ -1957,6 +1971,8 @@ namespace AtoCashAPI.Migrations
 
                     b.Navigation("ApprovalStatusType");
 
+                    b.Navigation("BusinessType");
+
                     b.Navigation("BusinessUnit");
 
                     b.Navigation("CostCenter");
@@ -1964,10 +1980,6 @@ namespace AtoCashAPI.Migrations
                     b.Navigation("CurrencyType");
 
                     b.Navigation("Employee");
-
-                    b.Navigation("ExpenseReimburseRequest");
-
-                    b.Navigation("PettyCashRequest");
 
                     b.Navigation("Project");
 

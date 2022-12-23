@@ -46,7 +46,9 @@ namespace AtoCashAPI.Controllers
                     Id = claimApprovalStatusTracker.Id,
                     EmployeeId = claimApprovalStatusTracker.EmployeeId,
                     EmployeeName = _context.Employees.Find(claimApprovalStatusTracker.EmployeeId).GetFullName(),
-                    PettyCashRequestId = claimApprovalStatusTracker.PettyCashRequestId,
+                    BlendedRequestId = claimApprovalStatusTracker.BlendedRequestId,
+                    BusinessTypeId = claimApprovalStatusTracker.BusinessTypeId,
+                    BusinessType = claimApprovalStatusTracker.BusinessTypeId != null ? _context.BusinessTypes.Find(claimApprovalStatusTracker.BusinessTypeId).BusinessTypeName : null,
                     BusinessUnitId = claimApprovalStatusTracker.BusinessUnitId,
                     BusinessUnit = claimApprovalStatusTracker.BusinessUnitId != null ? _context.BusinessUnits.Find(claimApprovalStatusTracker.BusinessUnitId).GetBusinessUnitName() : null,
                     ProjectId = claimApprovalStatusTracker.ProjectId,
@@ -87,7 +89,9 @@ namespace AtoCashAPI.Controllers
                 Id = claimApprovalStatusTracker.Id,
                 EmployeeId = claimApprovalStatusTracker.EmployeeId,
                 EmployeeName = _context.Employees.Find(claimApprovalStatusTracker.EmployeeId).GetFullName(),
-                PettyCashRequestId = claimApprovalStatusTracker.PettyCashRequestId,
+                BlendedRequestId = claimApprovalStatusTracker.BlendedRequestId,
+                BusinessTypeId = claimApprovalStatusTracker.BusinessTypeId,
+                BusinessType = claimApprovalStatusTracker.BusinessTypeId != null ? _context.BusinessTypes.Find(claimApprovalStatusTracker.BusinessTypeId).BusinessTypeName : null,
                 BusinessUnitId = claimApprovalStatusTracker.BusinessUnitId,
                 BusinessUnit = claimApprovalStatusTracker.BusinessUnitId != null ? _context.BusinessUnits.Find(claimApprovalStatusTracker.BusinessUnitId).GetBusinessUnitName() : null,
                 ProjectId = claimApprovalStatusTracker.ProjectId,
@@ -161,7 +165,7 @@ namespace AtoCashAPI.Controllers
                     if (claimApprovalStatusTrackerDto.ApprovalStatusTypeId == (int)EApprovalStatus.Approved)
                     {
                         //Get the next approval level (get its ID)
-                        int qPettyCashRequestId = claimApprovalStatusTrackerDto.PettyCashRequestId ?? 0;
+                        int qPettyCashRequestId = claimApprovalStatusTrackerDto.BlendedRequestId ?? 0;
 
                         isNextApproverAvailable = true;
 
@@ -189,7 +193,7 @@ namespace AtoCashAPI.Controllers
                         {
 
 
-                            claimitem = _context.ClaimApprovalStatusTrackers.Where(c => c.PettyCashRequestId == qPettyCashRequestId &&
+                            claimitem = _context.ClaimApprovalStatusTrackers.Where(c => c.BlendedRequestId == qPettyCashRequestId &&
                                 c.ApprovalStatusTypeId == qApprovalStatusTypeId &&
                                  c.ApprovalGroupId == empApprGroupId &&
                                 c.ApprovalLevelId == qApprovalLevelId).FirstOrDefault();
@@ -203,7 +207,7 @@ namespace AtoCashAPI.Controllers
                         else
                         {
                             //final approver hence update PettyCashRequest
-                            claimitem = _context.ClaimApprovalStatusTrackers.Where(c => c.PettyCashRequestId == qPettyCashRequestId &&
+                            claimitem = _context.ClaimApprovalStatusTrackers.Where(c => c.BlendedRequestId == qPettyCashRequestId &&
                                c.ApprovalStatusTypeId == qApprovalStatusTypeId &&
                                 c.ApprovalGroupId == empApprGroupId &&
                                c.ApprovalLevelId == qApprovalLevelId).FirstOrDefault();
@@ -220,7 +224,7 @@ namespace AtoCashAPI.Controllers
 
 
                             //DisbursementAndClaimsMaster update the record to Approved (ApprovalStatusId
-                            int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.PettyCashRequestId == claimitem.PettyCashRequestId).FirstOrDefault().Id;
+                            int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.BlendedRequestId).FirstOrDefault().Id;
                             var disbAndClaimItem = await _context.DisbursementsAndClaimsMasters.FindAsync(disbAndClaimItemId);
 
                             disbAndClaimItem.ClaimAmount = pettyCashRequest.PettyClaimAmount;
@@ -261,9 +265,9 @@ namespace AtoCashAPI.Controllers
                                 str.Close();
 
                                 var approverMailAddress = approver.Email;
-                                string subject = "Pettycash Request Approval " + claimApprovalStatusTracker.PettyCashRequestId.ToString();
+                                string subject = "Pettycash Request Approval " + claimApprovalStatusTracker.BlendedRequestId.ToString();
                                 Employee emp = await _context.Employees.FindAsync(claimApprovalStatusTracker.EmployeeId);
-                                var pettycashreq = _context.PettyCashRequests.Find(claimApprovalStatusTracker.PettyCashRequestId);
+                                var pettycashreq = _context.PettyCashRequests.Find(claimApprovalStatusTracker.BlendedRequestId);
 
                                 var builder = new MimeKit.BodyBuilder();
 
@@ -289,12 +293,12 @@ namespace AtoCashAPI.Controllers
 
 
                     int pendingApprovals = _context.ClaimApprovalStatusTrackers
-                              .Where(t => t.PettyCashRequestId == claimApprovalStatusTrackerDto.PettyCashRequestId &&
+                              .Where(t => t.BlendedRequestId == claimApprovalStatusTrackerDto.BlendedRequestId &&
                               t.ApprovalStatusTypeId == (int)EApprovalStatus.Pending).Count();
 
                     if (pendingApprovals == 0)
                     {
-                        var pettyCashReq = _context.PettyCashRequests.Where(p => p.Id == claimApprovalStatusTrackerDto.PettyCashRequestId).FirstOrDefault();
+                        var pettyCashReq = _context.PettyCashRequests.Where(p => p.Id == claimApprovalStatusTrackerDto.BlendedRequestId).FirstOrDefault();
                         pettyCashReq.ApprovalStatusTypeId = claimApprovalStatusTrackerDto.ApprovalStatusTypeId ?? 0;
                         pettyCashReq.ApprovedDate = DateTime.Now;
                         pettyCashReq.Comments = bRejectMessage ? claimApprovalStatusTrackerDto.Comments : "Approved";
@@ -307,7 +311,7 @@ namespace AtoCashAPI.Controllers
                     //update the pettycash request table to reflect the rejection
                     if (bRejectMessage)
                     {
-                        var pettyCashReq = _context.PettyCashRequests.Where(p => p.Id == claimApprovalStatusTrackerDto.PettyCashRequestId).FirstOrDefault();
+                        var pettyCashReq = _context.PettyCashRequests.Where(p => p.Id == claimApprovalStatusTrackerDto.BlendedRequestId).FirstOrDefault();
                         pettyCashReq.ApprovalStatusTypeId = claimApprovalStatusTrackerDto.ApprovalStatusTypeId ??0;
                         pettyCashReq.ApprovedDate = DateTime.Now;
                         pettyCashReq.Comments = bRejectMessage ? claimApprovalStatusTrackerDto.Comments : "Approved";
@@ -320,7 +324,7 @@ namespace AtoCashAPI.Controllers
                         _context.EmpCurrentPettyCashBalances.Update(empPettyCashBal);
 
 
-                        var disbursementsAndClaimsMaster = _context.DisbursementsAndClaimsMasters.Where(d => d.PettyCashRequestId == pettyCashReq.Id).FirstOrDefault();
+                        var disbursementsAndClaimsMaster = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == pettyCashReq.Id).FirstOrDefault();
                         disbursementsAndClaimsMaster.ApprovalStatusId = (int)EApprovalStatus.Rejected;
                         disbursementsAndClaimsMaster.ClaimAmount = pettyCashReq.PettyClaimAmount;
                         disbursementsAndClaimsMaster.AmountToWallet = 0;
@@ -336,13 +340,13 @@ namespace AtoCashAPI.Controllers
                 else
                 {
                     //final approver hence update PettyCashRequest
-                    claimitem = _context.ClaimApprovalStatusTrackers.Where(c => c.PettyCashRequestId == claimApprovalStatusTracker.PettyCashRequestId &&
+                    claimitem = _context.ClaimApprovalStatusTrackers.Where(c => c.BlendedRequestId == claimApprovalStatusTracker.BlendedRequestId &&
                                 c.ApprovalStatusTypeId == (int)EApprovalStatus.Pending).FirstOrDefault();
                     claimApprovalStatusTracker.ApprovalStatusTypeId = claimApprovalStatusTrackerDto.ApprovalStatusTypeId;
 
 
                     //Update Pettycashrequest table to update the record to Approved as the final approver has approved it.
-                    var pettyCashReq = await _context.PettyCashRequests.FindAsync(claimitem.PettyCashRequestId);
+                    var pettyCashReq = await _context.PettyCashRequests.FindAsync(claimitem.BlendedRequestId);
                     int? pettyCashReqId = pettyCashReq.Id;
 
                     //update the EmpPettyCashBalance to credit back the deducted amount
@@ -361,7 +365,7 @@ namespace AtoCashAPI.Controllers
 
 
                     //DisbursementAndClaimsMaster update the record to Approved (ApprovalStatusId
-                    int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.PettyCashRequestId == claimitem.PettyCashRequestId).FirstOrDefault().Id;
+                    int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.BlendedRequestId).FirstOrDefault().Id;
                     var disbAndClaimItem = await _context.DisbursementsAndClaimsMasters.FindAsync(disbAndClaimItemId);
 
                     disbAndClaimItem.ApprovalStatusId = bRejectMessage ? (int)EApprovalStatus.Rejected : (int)EApprovalStatus.Approved;
@@ -414,7 +418,7 @@ namespace AtoCashAPI.Controllers
             {
                 Id = claimApprovalStatusTrackerDto.Id,
                 EmployeeId = claimApprovalStatusTrackerDto.EmployeeId,
-                PettyCashRequestId = claimApprovalStatusTrackerDto.PettyCashRequestId,
+                BlendedRequestId = claimApprovalStatusTrackerDto.BlendedRequestId,
                 BusinessUnitId = claimApprovalStatusTrackerDto.BusinessUnitId,
                 ProjectId = claimApprovalStatusTrackerDto.ProjectId,
                 JobRoleId = claimApprovalStatusTrackerDto.JobRoleId,
@@ -487,13 +491,17 @@ namespace AtoCashAPI.Controllers
             foreach (ClaimApprovalStatusTracker claimApprovalStatusTracker in ListClaimApprovalStatusTrackers)
             {
 
-                var pettyCashReq = _context.PettyCashRequests.Find(claimApprovalStatusTracker.PettyCashRequestId);
+                var pettyCashReq = _context.PettyCashRequests.Find(claimApprovalStatusTracker.BlendedRequestId);
                 ClaimApprovalStatusTrackerDTO claimApprovalStatusTrackerDTO = new()
                 {
                     Id = claimApprovalStatusTracker.Id,
                     EmployeeId = claimApprovalStatusTracker.EmployeeId,
                     EmployeeName = _context.Employees.Find(claimApprovalStatusTracker.EmployeeId).GetFullName(),
-                    PettyCashRequestId = claimApprovalStatusTracker.PettyCashRequestId,
+                    RequestTypeId = claimApprovalStatusTracker.RequestTypeId,
+                    RequestType = _context.RequestTypes.Find(claimApprovalStatusTracker.RequestTypeId).RequestName,
+                    BusinessTypeId = claimApprovalStatusTracker.BusinessTypeId,
+                    BusinessType = claimApprovalStatusTracker.BusinessTypeId != null ? _context.BusinessTypes.Find(claimApprovalStatusTracker.BusinessTypeId).BusinessTypeName : null,
+                    BlendedRequestId = claimApprovalStatusTracker.BlendedRequestId,
                     BusinessUnitId = claimApprovalStatusTracker.BusinessUnitId,
                     BusinessUnit= claimApprovalStatusTracker.BusinessUnitId != null ? _context.BusinessUnits.Find(claimApprovalStatusTracker.BusinessUnitId).GetBusinessUnitName() : null,
                     ProjectId = claimApprovalStatusTracker.ProjectId,
@@ -555,13 +563,17 @@ namespace AtoCashAPI.Controllers
             foreach (ClaimApprovalStatusTracker claimApprovalStatusTracker in ListClaimApprovalStatusTrackers)
             {
 
-                var pettyCashReq = _context.PettyCashRequests.Find(claimApprovalStatusTracker.PettyCashRequestId);
+                var pettyCashReq = _context.PettyCashRequests.Find(claimApprovalStatusTracker.BlendedRequestId);
                 ClaimApprovalStatusTrackerDTO claimApprovalStatusTrackerDTO = new()
                 {
                     Id = claimApprovalStatusTracker.Id,
                     EmployeeId = claimApprovalStatusTracker.EmployeeId,
                     EmployeeName = _context.Employees.Find(claimApprovalStatusTracker.EmployeeId).GetFullName(),
-                    PettyCashRequestId = claimApprovalStatusTracker.PettyCashRequestId,
+                    RequestTypeId = claimApprovalStatusTracker.RequestTypeId,
+                    RequestType = _context.RequestTypes.Find(claimApprovalStatusTracker.RequestTypeId).RequestName,
+                    BusinessTypeId = claimApprovalStatusTracker.BusinessTypeId,
+                    BusinessType = claimApprovalStatusTracker.BusinessTypeId != null ? _context.BusinessTypes.Find(claimApprovalStatusTracker.BusinessTypeId).BusinessTypeName : null,
+                    BlendedRequestId = claimApprovalStatusTracker.BlendedRequestId,
                     BusinessUnitId = claimApprovalStatusTracker.BusinessUnitId,
                     BusinessUnit = claimApprovalStatusTracker.BusinessUnitId != null ? _context.BusinessUnits.Find(claimApprovalStatusTracker.BusinessUnitId).GetBusinessUnitName() : null,
                     ProjectId = claimApprovalStatusTracker.ProjectId,
@@ -603,7 +615,7 @@ namespace AtoCashAPI.Controllers
 
 
 
-            var claimRequestTracks = _context.ClaimApprovalStatusTrackers.Where(c => c.PettyCashRequestId == id).OrderBy(x => x.JobRoleId).ToList();
+            var claimRequestTracks = _context.ClaimApprovalStatusTrackers.Where(c => c.BlendedRequestId == id).OrderBy(x => x.JobRoleId).ToList();
 
             if (claimRequestTracks == null)
             {

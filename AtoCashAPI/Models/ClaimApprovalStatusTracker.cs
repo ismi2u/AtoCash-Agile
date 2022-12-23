@@ -19,17 +19,24 @@ namespace AtoCashAPI.Models
         public int? EmployeeId { get; set; }
 
 
+        [ForeignKey("BusinessTypeId")]
+        public virtual BusinessType? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
 
-        [ForeignKey("PettyCashRequestId")]
-        public virtual PettyCashRequest? PettyCashRequest { get; set; }
-        public int? PettyCashRequestId { get; set; }
 
-        //Approver Department
         [ForeignKey("BusinessUnitId")]
         public virtual BusinessUnit? BusinessUnit { get; set; }
         public int? BusinessUnitId { get; set; }
 
-        //Approver Project (either Department or Project => Can't be both)
+        [Required]
+        public int? BlendedRequestId { get; set; }
+
+        [Required]
+        [ForeignKey("RequestTypeId")]
+        public virtual RequestType? RequestType { get; set; }
+        public int? RequestTypeId { get; set; }
+
+
         [ForeignKey("ProjManagerId")]
         public virtual Employee? ProjManager { get; set; }
         public int? ProjManagerId { get; set; }
@@ -87,7 +94,13 @@ namespace AtoCashAPI.Models
         public int? EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
 
-        public int? PettyCashRequestId { get; set; }
+        public int? BlendedRequestId { get; set; }
+
+        public int? RequestTypeId { get; set; }
+        public string? RequestType { get; set; }
+
+        public string? BusinessType{ get; set; }
+        public int? BusinessTypeId { get; set; }
 
         public string? BusinessUnit { get; set; }
         public int? BusinessUnitId { get; set; }

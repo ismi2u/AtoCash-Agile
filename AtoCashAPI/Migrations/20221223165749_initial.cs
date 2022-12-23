@@ -780,6 +780,182 @@ namespace AtoCashAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ClaimApprovalStatusTrackers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EmployeeId = table.Column<int>(type: "integer", nullable: false),
+                    BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
+                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
+                    BlendedRequestId = table.Column<int>(type: "integer", nullable: false),
+                    RequestTypeId = table.Column<int>(type: "integer", nullable: false),
+                    ProjManagerId = table.Column<int>(type: "integer", nullable: true),
+                    ProjectId = table.Column<int>(type: "integer", nullable: true),
+                    SubProjectId = table.Column<int>(type: "integer", nullable: true),
+                    WorkTaskId = table.Column<int>(type: "integer", nullable: true),
+                    ApprovalGroupId = table.Column<int>(type: "integer", nullable: false),
+                    JobRoleId = table.Column<int>(type: "integer", nullable: false),
+                    ApprovalLevelId = table.Column<int>(type: "integer", nullable: false),
+                    ReqDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    FinalApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
+                    Comments = table.Column<string>(type: "varchar(250)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClaimApprovalStatusTrackers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_ApprovalLevels_ApprovalLevelId",
+                        column: x => x.ApprovalLevelId,
+                        principalTable: "ApprovalLevels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_ApprovalStatusTypes_ApprovalSta~",
+                        column: x => x.ApprovalStatusTypeId,
+                        principalTable: "ApprovalStatusTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_BusinessTypes_BusinessTypeId",
+                        column: x => x.BusinessTypeId,
+                        principalTable: "BusinessTypes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_BusinessUnits_BusinessUnitId",
+                        column: x => x.BusinessUnitId,
+                        principalTable: "BusinessUnits",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_Employees_ProjManagerId",
+                        column: x => x.ProjManagerId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_JobRoles_JobRoleId",
+                        column: x => x.JobRoleId,
+                        principalTable: "JobRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_RequestTypes_RequestTypeId",
+                        column: x => x.RequestTypeId,
+                        principalTable: "RequestTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_SubProjects_SubProjectId",
+                        column: x => x.SubProjectId,
+                        principalTable: "SubProjects",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ClaimApprovalStatusTrackers_WorkTasks_WorkTaskId",
+                        column: x => x.WorkTaskId,
+                        principalTable: "WorkTasks",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DisbursementsAndClaimsMasters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EmployeeId = table.Column<int>(type: "integer", nullable: false),
+                    BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
+                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
+                    BlendedRequestId = table.Column<int>(type: "integer", nullable: false),
+                    RequestTypeId = table.Column<int>(type: "integer", nullable: false),
+                    ProjectId = table.Column<int>(type: "integer", nullable: true),
+                    SubProjectId = table.Column<int>(type: "integer", nullable: true),
+                    WorkTaskId = table.Column<int>(type: "integer", nullable: true),
+                    RecordDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CurrencyTypeId = table.Column<int>(type: "integer", nullable: false),
+                    ClaimAmount = table.Column<double>(type: "double precision", nullable: false),
+                    AmountToWallet = table.Column<double>(type: "double precision", nullable: true),
+                    AmountToCredit = table.Column<double>(type: "double precision", nullable: true),
+                    IsSettledAmountCredited = table.Column<bool>(type: "boolean", nullable: true),
+                    SettledDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    SettlementComment = table.Column<string>(type: "varchar(250)", nullable: true),
+                    SettlementAccount = table.Column<string>(type: "varchar(150)", nullable: true),
+                    SettlementBankCard = table.Column<string>(type: "varchar(150)", nullable: true),
+                    AdditionalData = table.Column<string>(type: "varchar(150)", nullable: true),
+                    CostCenterId = table.Column<int>(type: "integer", nullable: false),
+                    ApprovalStatusId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DisbursementsAndClaimsMasters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_ApprovalStatusTypes_ApprovalS~",
+                        column: x => x.ApprovalStatusId,
+                        principalTable: "ApprovalStatusTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_BusinessTypes_BusinessTypeId",
+                        column: x => x.BusinessTypeId,
+                        principalTable: "BusinessTypes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_BusinessUnits_BusinessUnitId",
+                        column: x => x.BusinessUnitId,
+                        principalTable: "BusinessUnits",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_CostCenters_CostCenterId",
+                        column: x => x.CostCenterId,
+                        principalTable: "CostCenters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_CurrencyTypes_CurrencyTypeId",
+                        column: x => x.CurrencyTypeId,
+                        principalTable: "CurrencyTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_RequestTypes_RequestTypeId",
+                        column: x => x.RequestTypeId,
+                        principalTable: "RequestTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_SubProjects_SubProjectId",
+                        column: x => x.SubProjectId,
+                        principalTable: "SubProjects",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DisbursementsAndClaimsMasters_WorkTasks_WorkTaskId",
+                        column: x => x.WorkTaskId,
+                        principalTable: "WorkTasks",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ExpenseReimburseRequests",
                 columns: table => new
                 {
@@ -1168,179 +1344,6 @@ namespace AtoCashAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClaimApprovalStatusTrackers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    EmployeeId = table.Column<int>(type: "integer", nullable: false),
-                    PettyCashRequestId = table.Column<int>(type: "integer", nullable: true),
-                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
-                    ProjManagerId = table.Column<int>(type: "integer", nullable: true),
-                    ProjectId = table.Column<int>(type: "integer", nullable: true),
-                    SubProjectId = table.Column<int>(type: "integer", nullable: true),
-                    WorkTaskId = table.Column<int>(type: "integer", nullable: true),
-                    ApprovalGroupId = table.Column<int>(type: "integer", nullable: false),
-                    JobRoleId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovalLevelId = table.Column<int>(type: "integer", nullable: false),
-                    ReqDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    FinalApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
-                    Comments = table.Column<string>(type: "varchar(250)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClaimApprovalStatusTrackers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_ApprovalLevels_ApprovalLevelId",
-                        column: x => x.ApprovalLevelId,
-                        principalTable: "ApprovalLevels",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_ApprovalStatusTypes_ApprovalSta~",
-                        column: x => x.ApprovalStatusTypeId,
-                        principalTable: "ApprovalStatusTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_BusinessUnits_BusinessUnitId",
-                        column: x => x.BusinessUnitId,
-                        principalTable: "BusinessUnits",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_Employees_ProjManagerId",
-                        column: x => x.ProjManagerId,
-                        principalTable: "Employees",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_JobRoles_JobRoleId",
-                        column: x => x.JobRoleId,
-                        principalTable: "JobRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_PettyCashRequests_PettyCashRequ~",
-                        column: x => x.PettyCashRequestId,
-                        principalTable: "PettyCashRequests",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_SubProjects_SubProjectId",
-                        column: x => x.SubProjectId,
-                        principalTable: "SubProjects",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ClaimApprovalStatusTrackers_WorkTasks_WorkTaskId",
-                        column: x => x.WorkTaskId,
-                        principalTable: "WorkTasks",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DisbursementsAndClaimsMasters",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    EmployeeId = table.Column<int>(type: "integer", nullable: false),
-                    PettyCashRequestId = table.Column<int>(type: "integer", nullable: true),
-                    ExpenseReimburseReqId = table.Column<int>(type: "integer", nullable: true),
-                    RequestTypeId = table.Column<int>(type: "integer", nullable: false),
-                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
-                    ProjectId = table.Column<int>(type: "integer", nullable: true),
-                    SubProjectId = table.Column<int>(type: "integer", nullable: true),
-                    WorkTaskId = table.Column<int>(type: "integer", nullable: true),
-                    RecordDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CurrencyTypeId = table.Column<int>(type: "integer", nullable: false),
-                    ClaimAmount = table.Column<double>(type: "double precision", nullable: false),
-                    AmountToWallet = table.Column<double>(type: "double precision", nullable: true),
-                    AmountToCredit = table.Column<double>(type: "double precision", nullable: true),
-                    IsSettledAmountCredited = table.Column<bool>(type: "boolean", nullable: true),
-                    SettledDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    SettlementComment = table.Column<string>(type: "varchar(250)", nullable: true),
-                    SettlementAccount = table.Column<string>(type: "varchar(150)", nullable: true),
-                    SettlementBankCard = table.Column<string>(type: "varchar(150)", nullable: true),
-                    AdditionalData = table.Column<string>(type: "varchar(150)", nullable: true),
-                    CostCenterId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovalStatusId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DisbursementsAndClaimsMasters", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_ApprovalStatusTypes_ApprovalS~",
-                        column: x => x.ApprovalStatusId,
-                        principalTable: "ApprovalStatusTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_BusinessUnits_BusinessUnitId",
-                        column: x => x.BusinessUnitId,
-                        principalTable: "BusinessUnits",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_CostCenters_CostCenterId",
-                        column: x => x.CostCenterId,
-                        principalTable: "CostCenters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_CurrencyTypes_CurrencyTypeId",
-                        column: x => x.CurrencyTypeId,
-                        principalTable: "CurrencyTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_ExpenseReimburseRequests_Expe~",
-                        column: x => x.ExpenseReimburseReqId,
-                        principalTable: "ExpenseReimburseRequests",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_PettyCashRequests_PettyCashRe~",
-                        column: x => x.PettyCashRequestId,
-                        principalTable: "PettyCashRequests",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_RequestTypes_RequestTypeId",
-                        column: x => x.RequestTypeId,
-                        principalTable: "RequestTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_SubProjects_SubProjectId",
-                        column: x => x.SubProjectId,
-                        principalTable: "SubProjects",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_DisbursementsAndClaimsMasters_WorkTasks_WorkTaskId",
-                        column: x => x.WorkTaskId,
-                        principalTable: "WorkTasks",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TravelApprovalStatusTrackers",
                 columns: table => new
                 {
@@ -1516,6 +1519,11 @@ namespace AtoCashAPI.Migrations
                 column: "ApprovalStatusTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClaimApprovalStatusTrackers_BusinessTypeId",
+                table: "ClaimApprovalStatusTrackers",
+                column: "BusinessTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClaimApprovalStatusTrackers_BusinessUnitId",
                 table: "ClaimApprovalStatusTrackers",
                 column: "BusinessUnitId");
@@ -1531,11 +1539,6 @@ namespace AtoCashAPI.Migrations
                 column: "JobRoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClaimApprovalStatusTrackers_PettyCashRequestId",
-                table: "ClaimApprovalStatusTrackers",
-                column: "PettyCashRequestId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ClaimApprovalStatusTrackers_ProjectId",
                 table: "ClaimApprovalStatusTrackers",
                 column: "ProjectId");
@@ -1544,6 +1547,11 @@ namespace AtoCashAPI.Migrations
                 name: "IX_ClaimApprovalStatusTrackers_ProjManagerId",
                 table: "ClaimApprovalStatusTrackers",
                 column: "ProjManagerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClaimApprovalStatusTrackers_RequestTypeId",
+                table: "ClaimApprovalStatusTrackers",
+                column: "RequestTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ClaimApprovalStatusTrackers_SubProjectId",
@@ -1571,6 +1579,11 @@ namespace AtoCashAPI.Migrations
                 column: "ApprovalStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DisbursementsAndClaimsMasters_BusinessTypeId",
+                table: "DisbursementsAndClaimsMasters",
+                column: "BusinessTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DisbursementsAndClaimsMasters_BusinessUnitId",
                 table: "DisbursementsAndClaimsMasters",
                 column: "BusinessUnitId");
@@ -1589,16 +1602,6 @@ namespace AtoCashAPI.Migrations
                 name: "IX_DisbursementsAndClaimsMasters_EmployeeId",
                 table: "DisbursementsAndClaimsMasters",
                 column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DisbursementsAndClaimsMasters_ExpenseReimburseReqId",
-                table: "DisbursementsAndClaimsMasters",
-                column: "ExpenseReimburseReqId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DisbursementsAndClaimsMasters_PettyCashRequestId",
-                table: "DisbursementsAndClaimsMasters",
-                column: "PettyCashRequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DisbursementsAndClaimsMasters_ProjectId",
@@ -2058,6 +2061,9 @@ namespace AtoCashAPI.Migrations
                 name: "FileDocuments");
 
             migrationBuilder.DropTable(
+                name: "PettyCashRequests");
+
+            migrationBuilder.DropTable(
                 name: "ProjectManagements");
 
             migrationBuilder.DropTable(
@@ -2071,9 +2077,6 @@ namespace AtoCashAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "PettyCashRequests");
 
             migrationBuilder.DropTable(
                 name: "RequestTypes");

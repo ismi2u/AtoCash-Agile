@@ -18,16 +18,17 @@ namespace AtoCashAPI.Models
         public virtual Employee? Employee { get; set; }
         public int? EmployeeId { get; set; }
 
-
-        [ForeignKey("PettyCashRequestId")]
-        public virtual PettyCashRequest? PettyCashRequest { get; set; }
-
-        public int? PettyCashRequestId { get; set; }
+        [ForeignKey("BusinessTypeId")]
+        public virtual BusinessType? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
 
 
-        [ForeignKey("ExpenseReimburseReqId")]
-        public virtual ExpenseReimburseRequest? ExpenseReimburseRequest { get; set; }
-        public int? ExpenseReimburseReqId { get; set; }
+        [ForeignKey("BusinessUnitId")]
+        public virtual BusinessUnit? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
+
+        [Required]
+        public int? BlendedRequestId { get; set; }
 
         [Required]
         [ForeignKey("RequestTypeId")]
@@ -35,22 +36,20 @@ namespace AtoCashAPI.Models
         public int? RequestTypeId { get; set; }
 
 
-         [ForeignKey("BusinessUnitId")]
-        public virtual BusinessUnit? BusinessUnit { get; set; }
-        public int? BusinessUnitId { get; set; }
-
-
         [ForeignKey("ProjectId")]
         public virtual Project? Project { get; set; }
         public int? ProjectId { get; set; }
+
 
         [ForeignKey("SubProjectId")]
         public virtual SubProject? SubProject { get; set; }
         public int? SubProjectId { get; set; }
 
+
         [ForeignKey("WorkTaskId")]
         public virtual WorkTask? WorkTask { get; set; }
         public int? WorkTaskId { get; set; }
+
 
         [Required]
         public DateTime? RecordDate { get; set; }
