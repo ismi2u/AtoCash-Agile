@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20221223165749_initial")]
+    [Migration("20221223221931_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -288,11 +288,9 @@ namespace AtoCashAPI.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ApprovalGroupId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("ApprovalLevelId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("ApprovalStatusTypeId")
@@ -321,7 +319,6 @@ namespace AtoCashAPI.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("JobRoleId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("ProjManagerId")
@@ -1206,7 +1203,6 @@ namespace AtoCashAPI.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("BusinessTypeId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("BusinessUnitId")
@@ -1281,9 +1277,6 @@ namespace AtoCashAPI.Migrations
                     b.Property<int>("CostCenterId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProjManagerId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ProjectDesc")
                         .IsRequired()
                         .HasColumnType("varchar(250)");
@@ -1302,7 +1295,7 @@ namespace AtoCashAPI.Migrations
 
                     b.HasIndex("CostCenterId");
 
-                    b.HasIndex("ProjManagerId");
+                    b.HasIndex("ProjectManagerId");
 
                     b.HasIndex("StatusTypeId");
 
@@ -1822,9 +1815,7 @@ namespace AtoCashAPI.Migrations
                 {
                     b.HasOne("AtoCashAPI.Models.ApprovalLevel", "ApprovalLevel")
                         .WithMany()
-                        .HasForeignKey("ApprovalLevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApprovalLevelId");
 
                     b.HasOne("AtoCashAPI.Models.ApprovalStatusType", "ApprovalStatusType")
                         .WithMany()
@@ -1848,9 +1839,7 @@ namespace AtoCashAPI.Migrations
 
                     b.HasOne("AtoCashAPI.Models.JobRole", "JobRole")
                         .WithMany()
-                        .HasForeignKey("JobRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JobRoleId");
 
                     b.HasOne("AtoCashAPI.Models.Employee", "ProjManager")
                         .WithMany()
@@ -2366,9 +2355,7 @@ namespace AtoCashAPI.Migrations
 
                     b.HasOne("AtoCashAPI.Models.BusinessType", "BusinessType")
                         .WithMany()
-                        .HasForeignKey("BusinessTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BusinessTypeId");
 
                     b.HasOne("AtoCashAPI.Models.BusinessUnit", "BusinessUnit")
                         .WithMany()
@@ -2433,7 +2420,7 @@ namespace AtoCashAPI.Migrations
 
                     b.HasOne("AtoCashAPI.Models.Employee", "ProjectManager")
                         .WithMany()
-                        .HasForeignKey("ProjManagerId")
+                        .HasForeignKey("ProjectManagerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
