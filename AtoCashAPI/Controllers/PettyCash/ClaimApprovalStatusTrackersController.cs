@@ -480,7 +480,7 @@ namespace AtoCashAPI.Controllers
             }
             //for Project based approval status trackers
             ListClaimApprovalStatusTrackers.AddRange(_context.ClaimApprovalStatusTrackers.Where(r => r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending
-                                                                                                         && r.ProjManagerId == null).ToList());
+                                                                                                         && r.ProjManagerId != null).ToList());
 
             List<ClaimApprovalStatusTrackerDTO> ListClaimApprovalStatusTrackerDTO = new();
 
