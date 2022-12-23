@@ -792,7 +792,7 @@ namespace AtoCashAPI.Controllers.PettyCash
 
                 int? reqBussUnitId = pettyCashRequestDto.BusinessUnitId;
                 int reqEmpid = pettyCashRequestDto.EmployeeId;
-                Employee? reqEmp = await _context.Employees.FindAsync(reqEmpid);
+                Employee? reqEmp = _context.Employees.Find(reqEmpid);
                 EmployeeExtendedInfo reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == pettyCashRequestDto.EmployeeId && e.BusinessUnitId == reqBussUnitId).FirstOrDefault();
 
                 int? reqJobRoleId = reqEmpExtInfo.JobRoleId;

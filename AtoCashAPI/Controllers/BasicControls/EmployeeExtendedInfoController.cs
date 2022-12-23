@@ -36,17 +36,17 @@ namespace AtoCashAPI.Controllers.BasicControls
 
                 empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
                 empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
-                empExtendedInfoDTO.Employee= _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
+                empExtendedInfoDTO.Employee = _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
                 empExtendedInfoDTO.BusinessTypeId = employeeExtendedInfo.BusinessTypeId;
                 empExtendedInfoDTO.BusinessType = _context.BusinessTypes.Find(employeeExtendedInfo.BusinessTypeId).BusinessTypeName;
-                empExtendedInfoDTO.BusinessUnitId= employeeExtendedInfo.BusinessUnitId;
+                empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
                 empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
                 empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
                 empExtendedInfoDTO.JobRole = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).GetJobRole();
                 empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
-                empExtendedInfoDTO.ApprovalGroup= _context.ApprovalGroups.Find(employeeExtendedInfo.ApprovalGroupId).ApprovalGroupCode;
+                empExtendedInfoDTO.ApprovalGroup = _context.ApprovalGroups.Find(employeeExtendedInfo.ApprovalGroupId).ApprovalGroupCode;
                 empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
-                empExtendedInfoDTO.StatusType=_context.StatusTypes.Find( employeeExtendedInfo.StatusTypeId).Status;
+                empExtendedInfoDTO.StatusType = _context.StatusTypes.Find(employeeExtendedInfo.StatusTypeId).Status;
 
                 ListEmployeeExtendedInfoDTOs.Add(empExtendedInfoDTO);
 
@@ -93,8 +93,8 @@ namespace AtoCashAPI.Controllers.BasicControls
         public async Task<ActionResult<IEnumerable<EmployeeExtendedInfoDTO>>> GetEmployeeExtendedInfoByEmployeeId(int? id)
         {
 
-            var ListExtendedInfoForEmployee =  _context.EmployeeExtendedInfos.Where(e=> e.EmployeeId == id).ToList();
-     
+            var ListExtendedInfoForEmployee = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id).ToList();
+
             List<EmployeeExtendedInfoDTO> ListEmployeeExtendedInfoDTOs = new();
 
             foreach (EmployeeExtendedInfo employeeExtendedInfo in ListExtendedInfoForEmployee)
@@ -132,17 +132,67 @@ namespace AtoCashAPI.Controllers.BasicControls
                 return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id is invalid" });
             }
 
-
-            var empExtendedInfo = await _context.EmployeeExtendedInfos.FindAsync(id);
-
-            if (empExtendedInfo == null)
+            using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id object is null" });
+
+                var empExtendedInfo = await _context.EmployeeExtendedInfos.FindAsync(id);
+
+                if (empExtendedInfo == null)
+                {
+                    return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id object is null" });
+                }
+                else
+                {
+                    try
+                    {
+                        empExtendedInfo.BusinessTypeId = employeeExtendedInfoDTO.BusinessTypeId;
+                        empExtendedInfo.BusinessUnitId = employeeExtendedInfoDTO.BusinessUnitId;
+                        empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
+                        empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
+                        empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
+                        empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
+
+                        EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
+
+                        double oldJobRoleLimit = _context.JobRoles.Find(empExtendedInfo.JobRoleId).MaxPettyCashAllowed ?? 0;
+                        double NewJobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxPettyCashAllowed ?? 0;
+
+                        string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
+
+                        currentEmpPettyCashBalance.AllPettyCashLimits = RemoveStringMaxLimits(strPettyCashLimits, oldJobRoleLimit); //REMOVE OLD LIMIT
+                        currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, NewJobRoleLimit); // ADD NEW LIMIT
+                        currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
+
+                        _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
+
+                        _context.EmployeeExtendedInfos.Update(empExtendedInfo);
+
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo cannot be updated!" });
+                    }
+                }
+
+                await AtoCashDbContextTransaction.CommitAsync();
             }
-            else
+            return Ok(new RespStatus { Status = "Success", Message = "EmployeeExtendedInfo Records Updated!" });
+        }
+
+
+        // POST: api/EmployeeExtendedInfo
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<EmployeeExtendedInfo>> PostEmployeeExtendedInfo(EmployeeExtendedInfoDTO employeeExtendedInfoDTO)
+        {
+
+            using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
                 try
                 {
+                    EmployeeExtendedInfo empExtendedInfo = new EmployeeExtendedInfo();
+
                     empExtendedInfo.BusinessTypeId = employeeExtendedInfoDTO.BusinessTypeId;
                     empExtendedInfo.BusinessUnitId = employeeExtendedInfoDTO.BusinessUnitId;
                     empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
@@ -150,20 +200,38 @@ namespace AtoCashAPI.Controllers.BasicControls
                     empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
                     empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
 
+
                     EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
 
-                    double oldJobRoleLimit = _context.JobRoles.Find(empExtendedInfo.JobRoleId).MaxPettyCashAllowed ?? 0;
-                    double NewJobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxPettyCashAllowed ?? 0;
-
                     string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
+                    double JobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxPettyCashAllowed ?? 0;
 
-                    currentEmpPettyCashBalance.AllPettyCashLimits = RemoveStringMaxLimits(strPettyCashLimits, oldJobRoleLimit); //REMOVE OLD LIMIT
-                    currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, NewJobRoleLimit); // ADD NEW LIMIT
+                    currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, JobRoleLimit);
                     currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
+
+                    //this is problematics needs resolution
+                    //this is problematics needs resolution
+
+                    double? diffamount = currentEmpPettyCashBalance.MaxPettyCashLimit - currentEmpPettyCashBalance.CurBalance;
+
+                    if (currentEmpPettyCashBalance.CurBalance == 0)
+                    {
+                        currentEmpPettyCashBalance.CurBalance = currentEmpPettyCashBalance.MaxPettyCashLimit;
+                    }
+                    else if (currentEmpPettyCashBalance.CurBalance > 0)
+                    {
+                        currentEmpPettyCashBalance.CurBalance = currentEmpPettyCashBalance.CurBalance + diffamount;
+                    }
+                    else //(currentEmpPettyCashBalance.CurBalance < 0)
+                    {
+                        currentEmpPettyCashBalance.CurBalance = currentEmpPettyCashBalance.CurBalance + diffamount;
+                    }
+
+                    currentEmpPettyCashBalance.UpdatedOn = DateTime.UtcNow;
 
                     _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
 
-                    _context.EmployeeExtendedInfos.Update(empExtendedInfo);
+                    _context.EmployeeExtendedInfos.Add(empExtendedInfo);
 
                     await _context.SaveChangesAsync();
                 }
@@ -171,50 +239,12 @@ namespace AtoCashAPI.Controllers.BasicControls
                 {
                     return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo cannot be updated!" });
                 }
+
+
+
+                await AtoCashDbContextTransaction.CommitAsync();
             }
-            return Ok(new RespStatus { Status = "Success", Message = "EmployeeExtendedInfo Records Updated!" });
-        }
-    
 
-        // POST: api/EmployeeExtendedInfo
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<EmployeeExtendedInfo>> PostEmployeeExtendedInfo(EmployeeExtendedInfoDTO employeeExtendedInfoDTO)
-        {
-            try
-            {
-                EmployeeExtendedInfo empExtendedInfo = new EmployeeExtendedInfo();
-
-                empExtendedInfo.BusinessTypeId = employeeExtendedInfoDTO.BusinessTypeId;
-                empExtendedInfo.BusinessUnitId = employeeExtendedInfoDTO.BusinessUnitId;
-                empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
-                empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
-                empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
-                empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
-
-
-                EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b=> b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
-
-                string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
-                double JobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxPettyCashAllowed ?? 0;
-               
-                currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, JobRoleLimit);
-                currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
-
-                //this is problematics needs resolution
-                currentEmpPettyCashBalance.CurBalance = currentEmpPettyCashBalance.CurBalance == 0 ? JobRoleLimit : currentEmpPettyCashBalance.CurBalance ;
-                currentEmpPettyCashBalance.UpdatedOn = DateTime.UtcNow;
-
-                _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
-
-                _context.EmployeeExtendedInfos.Add(empExtendedInfo);
-
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo cannot be updated!" });
-            }
 
             return Ok(new RespStatus { Status = "Success", Message = "Employee EmployeeExtendedInfo Recorded!" });
         }
@@ -240,7 +270,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             // bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
             bool blnUsedInCashAdvReq = _context.PettyCashRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
-           // bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+            // bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)
             {
@@ -289,7 +319,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             string strLimitAmount = string.Format("{0:N2}", Math.Truncate(limitAmount * 100) / 100);
 
-            List<string> ListOfMaxlimits= MaxLimitsInStrings.Split(";").ToList();
+            List<string> ListOfMaxlimits = MaxLimitsInStrings.Split(";").ToList();
             ListOfMaxlimits = ListOfMaxlimits.Where(l => l != strLimitAmount).ToList();
 
             return string.Join(";", ListOfMaxlimits);
@@ -306,7 +336,7 @@ namespace AtoCashAPI.Controllers.BasicControls
             {
                 ListOfMaxlimits = MaxLimitsInStrings.Split(";").ToList();
             }
-           
+
             ListOfMaxlimits.Add(strLimitAmount);
             return string.Join(";", ListOfMaxlimits);
         }
