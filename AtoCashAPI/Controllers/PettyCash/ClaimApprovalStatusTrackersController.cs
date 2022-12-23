@@ -617,13 +617,30 @@ namespace AtoCashAPI.Controllers
 
             var claimRequestTracks = _context.ClaimApprovalStatusTrackers.Where(c => c.BlendedRequestId == id).OrderBy(x => x.JobRoleId).ToList();
 
+            List<ApprovalStatusFlowVM> ListApprovalStatusFlow = new();
+
             if (claimRequestTracks == null)
             {
                 return Conflict(new RespStatus { Status = "Failure", Message = "PettycashRequest Id is Not Found" });
             }
+            else
+            {
+                int reqEmpId = claimRequestTracks[0].EmployeeId ?? 0;
+                Employee reqEmp = _context.Employees.Find(reqEmpId);
 
-            List<ApprovalStatusFlowVM> ListApprovalStatusFlow = new();
+                //add requester to the approval flow with Level 0
+                ApprovalStatusFlowVM requesterInApprovalFlow = new();
+                requesterInApprovalFlow.ApprovalLevel = 0;
+                requesterInApprovalFlow.ApproverRole = "Requestor";
+                requesterInApprovalFlow.ApproverName = reqEmp.GetFullName();
+                requesterInApprovalFlow.ApprovedDate = claimRequestTracks[0].ReqDate;
+                requesterInApprovalFlow.ApprovalStatusType = _context.ApprovalStatusTypes.Find((int)EApprovalStatus.Intitated).Status;
 
+
+                ListApprovalStatusFlow.Add(requesterInApprovalFlow);
+            }
+
+          
             foreach (ClaimApprovalStatusTracker claim in claimRequestTracks)
             {
                 string claimApproverName = null;
@@ -640,6 +657,8 @@ namespace AtoCashAPI.Controllers
                     claimApproverName = _context.Employees.Find(apprEmpExtInfo.EmployeeId).GetFullName();
                       
                 }
+
+                
 
                 ApprovalStatusFlowVM approvalStatusFlow = new();
                 approvalStatusFlow.ApprovalLevel = claim.ApprovalLevelId;

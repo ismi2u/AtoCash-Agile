@@ -7,7 +7,7 @@ namespace AtoCashAPI.Models
 {
     public enum EApprovalStatus
     {
-        Initiating = 1,
+        Intitated = 1,
         Pending,
         InReview,
         Approved,

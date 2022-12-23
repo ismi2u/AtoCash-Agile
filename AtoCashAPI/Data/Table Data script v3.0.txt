@@ -108,7 +108,7 @@ INSERT INTO public."ApprovalLevels" VALUES (4, 4, 'Level 4');
 
 ---
 
-INSERT INTO public."ApprovalStatusTypes" VALUES (1, 'Initiating', 'Request Initiated');
+INSERT INTO public."ApprovalStatusTypes" VALUES (1, 'Initiated', 'Request Initiated');
 INSERT INTO public."ApprovalStatusTypes" VALUES (2, 'Pending', 'Awaiting Approval');
 INSERT INTO public."ApprovalStatusTypes" VALUES (3, 'In Review', 'Request is in progress');
 INSERT INTO public."ApprovalStatusTypes" VALUES (4, 'Approved', 'Request Approved');
