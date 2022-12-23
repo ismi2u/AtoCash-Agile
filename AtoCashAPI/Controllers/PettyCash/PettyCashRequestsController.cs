@@ -60,6 +60,9 @@ namespace AtoCashAPI.Controllers.PettyCash
                 pettyCashRequestDTO.PettyClaimAmount = pettyCashRequest.PettyClaimAmount;
                 pettyCashRequestDTO.PettyClaimRequestDesc = pettyCashRequest.PettyClaimRequestDesc;
                 pettyCashRequestDTO.CashReqDate = pettyCashRequest.CashReqDate;
+                pettyCashRequestDTO.BusinessTypeId = pettyCashRequest.BusinessTypeId;
+                pettyCashRequestDTO.BusinessType = pettyCashRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(pettyCashRequest.BusinessTypeId).BusinessTypeName : null;
+                pettyCashRequestDTO.BusinessUnitId = pettyCashRequest.BusinessUnitId;
                 pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBusinessUnitName() : null;
                 pettyCashRequestDTO.CostCentre = pettyCashRequest.CostCenterId != null ? _context.CostCenters.Find(pettyCashRequest.CostCenterId).GetCostCentre() : null;
                 pettyCashRequestDTO.ProjectId = pettyCashRequest.ProjectId;
@@ -104,6 +107,9 @@ namespace AtoCashAPI.Controllers.PettyCash
             pettyCashRequestDTO.PettyClaimAmount = pettyCashRequest.PettyClaimAmount;
             pettyCashRequestDTO.PettyClaimRequestDesc = pettyCashRequest.PettyClaimRequestDesc;
             pettyCashRequestDTO.CashReqDate = pettyCashRequest.CashReqDate;
+            pettyCashRequestDTO.BusinessTypeId = pettyCashRequest.BusinessTypeId;
+            pettyCashRequestDTO.BusinessType = pettyCashRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(pettyCashRequest.BusinessTypeId).BusinessTypeName : null;
+            pettyCashRequestDTO.BusinessUnitId = pettyCashRequest.BusinessUnitId;
             pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBusinessUnitName() : null;
             pettyCashRequestDTO.CostCentre = pettyCashRequest.CostCenterId != null ? _context.CostCenters.Find(pettyCashRequest.CostCenterId).GetCostCentre() : null;
             pettyCashRequestDTO.ProjectId = pettyCashRequest.ProjectId;
@@ -149,11 +155,13 @@ namespace AtoCashAPI.Controllers.PettyCash
                 pettyCashRequestDTO.PettyClaimAmount = pettyCashRequest.PettyClaimAmount;
                 pettyCashRequestDTO.PettyClaimRequestDesc = pettyCashRequest.PettyClaimRequestDesc;
                 pettyCashRequestDTO.CashReqDate = pettyCashRequest.CashReqDate;
-                pettyCashRequestDTO.BusinessUnitId = pettyCashRequest.BusinessUnitId;
 
                 var reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == pettyCashRequest.BusinessUnitId).FirstOrDefault();
                 pettyCashRequestDTO.JobRole = reqEmpExtInfo != null ?  _context.JobRoles.Find(reqEmpExtInfo.JobRoleId).GetJobRole() : "";
 
+                pettyCashRequestDTO.BusinessTypeId = pettyCashRequest.BusinessTypeId;
+                pettyCashRequestDTO.BusinessType = pettyCashRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(pettyCashRequest.BusinessTypeId).BusinessTypeName : null;
+                pettyCashRequestDTO.BusinessUnitId = pettyCashRequest.BusinessUnitId;
                 pettyCashRequestDTO.BusinessUnit = pettyCashRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(pettyCashRequest.BusinessUnitId).GetBusinessUnitName() : null;
                 pettyCashRequestDTO.CostCentre = pettyCashRequest.CostCenterId != null ? _context.CostCenters.Find(pettyCashRequest.CostCenterId).GetCostCentre() : null;
                 pettyCashRequestDTO.ProjectId = pettyCashRequest.ProjectId;
@@ -317,6 +325,7 @@ namespace AtoCashAPI.Controllers.PettyCash
             //Step -2 change the claim approval status tracker records
             var claims = await _context.ClaimApprovalStatusTrackers.Where(c => c.BlendedRequestId == pettyCashRequestDto.Id).ToListAsync();
             bool IsFirstEmail = true;
+            int? newBusinesTypeId = pettyCashRequest.BusinessTypeId;
             int? newBusinesUnitId = pettyCashRequest.BusinessUnitId;
             int? newProjId = pettyCashRequestDto.ProjectId;
             int? newSubProjId = pettyCashRequestDto.SubProjectId;
@@ -325,6 +334,7 @@ namespace AtoCashAPI.Controllers.PettyCash
 
             foreach (ClaimApprovalStatusTracker claim in claims)
             {
+                claim.BusinessTypeId = newBusinesTypeId;
                 claim.BusinessUnitId = newBusinesUnitId;
                 claim.ProjectId = newProjId;
                 claim.SubProjectId = newSubProjId;
@@ -379,7 +389,7 @@ namespace AtoCashAPI.Controllers.PettyCash
             //Step-3 change the Disbursements and Claims Master record
 
             var disburseMasterRecord = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == pettyCashRequestDto.Id).FirstOrDefault();
-
+            disburseMasterRecord.BusinessTypeId = newBusinesTypeId;
             disburseMasterRecord.BusinessUnitId = newBusinesUnitId;
             disburseMasterRecord.ProjectId = newProjId;
             disburseMasterRecord.SubProjectId = newSubProjId;
@@ -613,7 +623,8 @@ namespace AtoCashAPI.Controllers.PettyCash
                     EmployeeId = empid,
                     PettyClaimAmount = empReqAmount,
                     CashReqDate = DateTime.UtcNow,
-                    BusinessUnitId = null,
+                    BusinessTypeId = null, //project
+                    BusinessUnitId = null, //project
                     ProjectId = pettyCashRequestDto.ProjectId,
                     SubProjectId = pettyCashRequestDto.SubProjectId,
                     WorkTaskId = pettyCashRequestDto.WorkTaskId,
@@ -657,7 +668,8 @@ namespace AtoCashAPI.Controllers.PettyCash
                     {
                         EmployeeId = pettyCashRequestDto.EmployeeId,
                         BlendedRequestId = pettyCashRequestDto.Id,
-                        BusinessUnitId = null,
+                        BusinessTypeId = null, //project
+                        BusinessUnitId = null, //project
                         ProjManagerId = projManagerid,
                         ProjectId = pettyCashRequestDto.ProjectId,
                         SubProjectId = pettyCashRequestDto.SubProjectId,
@@ -685,7 +697,8 @@ namespace AtoCashAPI.Controllers.PettyCash
                     {
                         EmployeeId = pettyCashRequestDto.EmployeeId,
                         BlendedRequestId = pettyCashRequestDto.Id,
-                        BusinessUnitId = null,
+                        BusinessTypeId = null, //project
+                        BusinessUnitId = null, //project
                         ProjManagerId = projManagerid,
                         ProjectId = pettyCashRequestDto.ProjectId,
                         SubProjectId = pettyCashRequestDto.SubProjectId,
@@ -748,6 +761,8 @@ namespace AtoCashAPI.Controllers.PettyCash
 
                 disbursementsAndClaimsMaster.EmployeeId = pettyCashRequestDto.EmployeeId;
                 disbursementsAndClaimsMaster.BlendedRequestId = pettyCashRequestDto.Id;
+                disbursementsAndClaimsMaster.BusinessTypeId = null; //project
+                disbursementsAndClaimsMaster.BusinessUnitId = null; //project
                 disbursementsAndClaimsMaster.RequestTypeId = (int)ERequestType.CashAdvance;
                 disbursementsAndClaimsMaster.ProjectId = pettyCashRequestDto.ProjectId;
                 disbursementsAndClaimsMaster.SubProjectId = pettyCashRequestDto.SubProjectId;
