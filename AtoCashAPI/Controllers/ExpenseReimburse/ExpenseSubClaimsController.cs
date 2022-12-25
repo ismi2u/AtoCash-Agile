@@ -225,11 +225,11 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.CostCenterId = expenseSubClaim.CostCenterId;
                 expenseSubClaimsDto.CostCenter = expenseSubClaim.CostCenterId != null ? _context.CostCenters.Find(expenseSubClaim.CostCenterId).GetCostCentre() : null;
 
-                expenseSubClaimsDto.ProjectName = _context.Projects.Find(expReimReq.ProjectId).ProjectName;
+                expenseSubClaimsDto.ProjectName = expenseSubClaim.ProjectId != null ? _context.Projects.Find(expReimReq.ProjectId).ProjectName : null;
                 expenseSubClaimsDto.ProjectId = expReimReq.ProjectId;
-                expenseSubClaimsDto.SubProjectName = _context.SubProjects.Find(expReimReq.SubProjectId).SubProjectName;
+                expenseSubClaimsDto.SubProjectName = expenseSubClaim.SubProjectId != null ? _context.SubProjects.Find(expReimReq.SubProjectId).SubProjectName : null;
                 expenseSubClaimsDto.SubProjectId = expReimReq.SubProjectId;
-                expenseSubClaimsDto.WorkTaskName = _context.WorkTasks.Find(expReimReq.WorkTaskId).TaskName;
+                expenseSubClaimsDto.WorkTaskName = expenseSubClaim.WorkTaskId != null ? _context.WorkTasks.Find(expReimReq.WorkTaskId).TaskName : null;
                 expenseSubClaimsDto.WorkTaskId = expReimReq.WorkTaskId;
 
 

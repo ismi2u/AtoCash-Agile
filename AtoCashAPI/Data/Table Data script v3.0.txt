@@ -1,4 +1,7 @@
 -- to create an employee ---
+
+INSERT INTO public."VATRates"("Id", "VATPercentage") VALUES (1, 5);
+
 INSERT INTO public."StatusTypes" VALUES (1, 'Active');
 INSERT INTO public."StatusTypes" VALUES (2, 'Inactive');
 

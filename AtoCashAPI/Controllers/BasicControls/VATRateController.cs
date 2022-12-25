@@ -30,7 +30,7 @@ namespace AtoCashAPI.Controllers
         public ActionResult<VATRate> GetVATPercentage()
         {
 
-            var VATRate = _context.VATRates.Where(r => r.VATPercentage != 0).SingleOrDefault();
+            var VATRate = _context.VATRates.Where(r => r.VATPercentage >= 0).SingleOrDefault();
 
             return VATRate;
 
@@ -43,8 +43,17 @@ namespace AtoCashAPI.Controllers
         {
             if (id != VATRate.Id)
             {
+                
                 return Conflict(new RespStatus { Status = "Failure", Message = "Id is invalid" });
             }
+
+            //if(VATRate.VATPercentage != 0 || VATRate.VATPercentage != null)
+            //{
+            //    VATRate newVATRate = new VATRate();
+
+            //    newVATRate.VATPercentage = VATRate.VATPercentage;
+            //    _context.VATRates.Add(newVATRate);
+            //}
 
             var updVATRate = await _context.VATRates.FindAsync(id);
             updVATRate.VATPercentage = VATRate.VATPercentage;
