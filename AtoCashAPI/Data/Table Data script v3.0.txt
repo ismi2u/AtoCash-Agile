@@ -178,7 +178,7 @@ SELECT pg_catalog.setval('public."ApprovalStatusTypes_Id_seq"', 6, true);
 --SELECT pg_catalog.setval('public."AspNetRoleClaims_Id_seq"', 1, false);
 --SELECT pg_catalog.setval('public."AspNetUserClaims_Id_seq"', 1, false);
 --SELECT pg_catalog.setval('public."BusinessAreas_Id_seq"', 3, true);
-SELECT pg_catalog.setval('public."ClaimApprovalStatusTrackers_Id_seq"', 5000, false);
+SELECT pg_catalog.setval('public."CashAdvanceStatusTrackers_Id_seq"', 5000, false);
 SELECT pg_catalog.setval('public."CostCenters_Id_seq"', 505, false);
 SELECT pg_catalog.setval('public."CurrencyTypes_Id_seq"', 1, false);
 --SELECT pg_catalog.setval('public."Departments_Id_seq"', 2, true);

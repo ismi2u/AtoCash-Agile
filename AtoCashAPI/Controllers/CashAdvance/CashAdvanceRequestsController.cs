@@ -59,7 +59,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTO.CurrencyType = CashAdvanceRequest.CurrencyType != null ? _context.CurrencyTypes.Find(CashAdvanceRequest.CurrencyType).CurrencyName : null;
                 CashAdvanceRequestDTO.CashAdvanceAmount = CashAdvanceRequest.CashAdvanceAmount;
                 CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
-                CashAdvanceRequestDTO.CashReqDate = CashAdvanceRequest.CashReqDate;
+                CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
                 CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
                 CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
                 CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
@@ -77,7 +77,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 ListCashAdvanceRequestDTO.Add(CashAdvanceRequestDTO);
             }
 
-            return ListCashAdvanceRequestDTO.OrderByDescending(o => o.CashReqDate).ToList();
+            return ListCashAdvanceRequestDTO.OrderByDescending(o => o.RequestDate).ToList();
         }
 
 
@@ -106,7 +106,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
             CashAdvanceRequestDTO.CurrencyType = CashAdvanceRequest.CurrencyType != null ? _context.CurrencyTypes.Find(CashAdvanceRequest.CurrencyType).CurrencyName : null;
             CashAdvanceRequestDTO.CashAdvanceAmount = CashAdvanceRequest.CashAdvanceAmount;
             CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
-            CashAdvanceRequestDTO.CashReqDate = CashAdvanceRequest.CashReqDate;
+            CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
             CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
             CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
             CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
@@ -154,7 +154,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTO.CurrencyType = CashAdvanceRequest.CurrencyType != null ? _context.CurrencyTypes.Find(CashAdvanceRequest.CurrencyType).CurrencyName : null;
                 CashAdvanceRequestDTO.CashAdvanceAmount = CashAdvanceRequest.CashAdvanceAmount;
                 CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
-                CashAdvanceRequestDTO.CashReqDate = CashAdvanceRequest.CashReqDate;
+                CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
 
                 var reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == CashAdvanceRequest.BusinessUnitId).FirstOrDefault();
                 CashAdvanceRequestDTO.JobRole = reqEmpExtInfo != null ? _context.JobRoles.Find(reqEmpExtInfo.JobRoleId).GetJobRole() : "";
@@ -194,7 +194,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTOs.Add(CashAdvanceRequestDTO);
             }
 
-            return Ok(CashAdvanceRequestDTOs.OrderByDescending(o => o.CashReqDate).ToList());
+            return Ok(CashAdvanceRequestDTOs.OrderByDescending(o => o.RequestDate).ToList());
         }
 
 
@@ -315,7 +315,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
             CashAdvanceRequest.CashAdvanceAmount = CashAdvanceRequestDto.CashAdvanceAmount;
             CashAdvanceRequest.CashAdvanceRequestDesc = CashAdvanceRequestDto.CashAdvanceRequestDesc;
-            CashAdvanceRequest.CashReqDate = DateTime.UtcNow;
+            CashAdvanceRequest.RequestDate = DateTime.UtcNow;
 
             _context.CashAdvanceRequests.Update(CashAdvanceRequest);
 
@@ -339,7 +339,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 claim.ProjectId = newProjId;
                 claim.SubProjectId = newSubProjId;
                 claim.WorkTaskId = newWorkTaskId;
-                claim.RequestedDate = CashAdvanceRequest.CashReqDate;
+                claim.RequestedDate = CashAdvanceRequest.RequestDate;
                 claim.ApproverActionDate = null;
                 //claim.ApprovalStatusTypeId = claim.ApprovalLevelId == 1 ? (int)EApprovalStatus.Pending : (int)EApprovalStatus.Initiating;
                 claim.Comments = "Modified Request";
@@ -626,7 +626,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 {
                     EmployeeId = reqEmpid,
                     CashAdvanceAmount = empReqAmount,
-                    CashReqDate = DateTime.UtcNow,
+                    RequestDate = DateTime.UtcNow,
                     BusinessTypeId = null, //project
                     BusinessUnitId = null, //project
                     ProjectId = CashAdvanceRequestDto.ProjectId,
@@ -704,7 +704,6 @@ namespace AtoCashAPI.Controllers.CashAdvance
                         CashAdvanceRequestId = CashAdvanceRequestDto.Id,
                         BusinessTypeId = null, //project
                         BusinessUnitId = null, //project
-                        RequestTypeId = (int)ERequestType.CashAdvance,
                         ProjManagerId = projManagerid,
                         ProjectId = CashAdvanceRequestDto.ProjectId,
                         SubProjectId = CashAdvanceRequestDto.SubProjectId,
@@ -901,7 +900,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 {
                     EmployeeId = reqEmpid,
                     CashAdvanceAmount = empReqAmount,
-                    CashReqDate = DateTime.UtcNow,
+                    RequestDate = DateTime.UtcNow,
                     CashAdvanceRequestDesc = CashAdvanceRequestDto.CashAdvanceRequestDesc,
                     ProjectId = null,
                     SubProjectId = CashAdvanceRequestDto.SubProjectId,
@@ -959,7 +958,6 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     CashAdvanceStatusTracker claimAppStatusTrack = new()
                     {
                         EmployeeId = CashAdvanceRequestDto.EmployeeId,
-                        RequestTypeId = (int)ERequestType.CashAdvance,
                         CashAdvanceRequestId = CashAdvanceRequestDto.Id,
                         BusinessTypeId = CashAdvanceRequestDto.BusinessTypeId,
                         BusinessUnitId = CashAdvanceRequestDto.BusinessUnitId,
@@ -1025,7 +1023,6 @@ namespace AtoCashAPI.Controllers.CashAdvance
                         {
                             EmployeeId = CashAdvanceRequestDto.EmployeeId,
                             CashAdvanceRequestId = CashAdvanceRequestDto.Id,
-                            RequestTypeId = (int)ERequestType.CashAdvance,
                             BusinessTypeId = CashAdvanceRequestDto.BusinessTypeId,
                             BusinessUnitId = CashAdvanceRequestDto.BusinessUnitId,
                             ProjManagerId = null,

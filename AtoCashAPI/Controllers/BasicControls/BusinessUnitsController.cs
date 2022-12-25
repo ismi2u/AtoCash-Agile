@@ -107,7 +107,8 @@ namespace AtoCashAPI.Controllers
             {
                 BusinessUnitDTO BusinessUnitsDTO = new()
                 {
-                    Id = businessUnit.BusinessTypeId,
+                    Id = businessUnit.Id,
+                    BusinessTypeId = businessUnit.BusinessTypeId,
                     BusinessType = _context.BusinessTypes.Find(businessUnit.BusinessTypeId).BusinessTypeName,
                     BusinessUnitName = businessUnit.BusinessUnitName,
                     CostCenterId = businessUnit.CostCenterId,
@@ -139,6 +140,7 @@ namespace AtoCashAPI.Controllers
             BusinessUnitDTO BusinessUnitsDTO = new()
             {
                 Id = businessUnit.Id,
+                BusinessTypeId = businessUnit.BusinessTypeId,
                 BusinessType = _context.BusinessTypes.Find(businessUnit.BusinessTypeId).BusinessTypeName,
                 BusinessUnitName = businessUnit.BusinessUnitName,
                 CostCenterId = businessUnit.CostCenterId,

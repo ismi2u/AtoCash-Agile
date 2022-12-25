@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20221225072106_initial")]
+    [Migration("20221225103624_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -307,10 +307,6 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<DateTime?>("CashReqDate")
-                        .IsRequired()
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Comments")
                         .IsRequired()
                         .HasColumnType("varchar(250)");
@@ -327,6 +323,10 @@ namespace AtoCashAPI.Migrations
 
                     b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime?>("RequestDate")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("SubProjectId")
                         .HasColumnType("integer");
@@ -408,10 +408,6 @@ namespace AtoCashAPI.Migrations
                     b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("RequestTypeId")
-                        .IsRequired()
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("RequestedDate")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
@@ -434,6 +430,8 @@ namespace AtoCashAPI.Migrations
 
                     b.HasIndex("BusinessUnitId");
 
+                    b.HasIndex("CashAdvanceRequestId");
+
                     b.HasIndex("EmployeeId");
 
                     b.HasIndex("JobRoleId");
@@ -441,8 +439,6 @@ namespace AtoCashAPI.Migrations
                     b.HasIndex("ProjManagerId");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("RequestTypeId");
 
                     b.HasIndex("SubProjectId");
 
@@ -972,10 +968,6 @@ namespace AtoCashAPI.Migrations
                     b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("RequestTypeId")
-                        .IsRequired()
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("RequestedDate")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
@@ -1008,13 +1000,13 @@ namespace AtoCashAPI.Migrations
 
                     b.HasIndex("EmployeeId");
 
+                    b.HasIndex("ExpenseReimburseRequestId");
+
                     b.HasIndex("JobRoleId");
 
                     b.HasIndex("ProjManagerId");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("RequestTypeId");
 
                     b.HasIndex("SubProjectId");
 
@@ -1954,6 +1946,12 @@ namespace AtoCashAPI.Migrations
                         .WithMany()
                         .HasForeignKey("BusinessUnitId");
 
+                    b.HasOne("AtoCashAPI.Models.CashAdvanceRequest", "CashAdvanceRequest")
+                        .WithMany()
+                        .HasForeignKey("CashAdvanceRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AtoCashAPI.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId")
@@ -1964,19 +1962,13 @@ namespace AtoCashAPI.Migrations
                         .WithMany()
                         .HasForeignKey("JobRoleId");
 
-                    b.HasOne("AtoCashAPI.Models.Employee", "ProjManager")
+                    b.HasOne("AtoCashAPI.Models.Employee", "ProjectManager")
                         .WithMany()
                         .HasForeignKey("ProjManagerId");
 
                     b.HasOne("AtoCashAPI.Models.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId");
-
-                    b.HasOne("AtoCashAPI.Models.RequestType", "RequestType")
-                        .WithMany()
-                        .HasForeignKey("RequestTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("AtoCashAPI.Models.SubProject", "SubProject")
                         .WithMany()
@@ -1996,15 +1988,15 @@ namespace AtoCashAPI.Migrations
 
                     b.Navigation("BusinessUnit");
 
+                    b.Navigation("CashAdvanceRequest");
+
                     b.Navigation("Employee");
 
                     b.Navigation("JobRole");
 
-                    b.Navigation("ProjManager");
-
                     b.Navigation("Project");
 
-                    b.Navigation("RequestType");
+                    b.Navigation("ProjectManager");
 
                     b.Navigation("SubProject");
 
@@ -2315,6 +2307,12 @@ namespace AtoCashAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AtoCashAPI.Models.ExpenseReimburseRequest", "ExpenseReimburseRequest")
+                        .WithMany()
+                        .HasForeignKey("ExpenseReimburseRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AtoCashAPI.Models.JobRole", "JobRole")
                         .WithMany()
                         .HasForeignKey("JobRoleId")
@@ -2328,12 +2326,6 @@ namespace AtoCashAPI.Migrations
                     b.HasOne("AtoCashAPI.Models.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId");
-
-                    b.HasOne("AtoCashAPI.Models.RequestType", "RequestType")
-                        .WithMany()
-                        .HasForeignKey("RequestTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("AtoCashAPI.Models.SubProject", "SubProject")
                         .WithMany()
@@ -2359,13 +2351,13 @@ namespace AtoCashAPI.Migrations
 
                     b.Navigation("Employee");
 
+                    b.Navigation("ExpenseReimburseRequest");
+
                     b.Navigation("JobRole");
 
                     b.Navigation("ProjManager");
 
                     b.Navigation("Project");
-
-                    b.Navigation("RequestType");
 
                     b.Navigation("SubProject");
 

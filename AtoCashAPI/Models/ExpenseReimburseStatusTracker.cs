@@ -31,12 +31,9 @@ namespace AtoCashAPI.Models
         public int? BusinessUnitId { get; set; }
 
         [Required]
+        [ForeignKey("ExpenseReimburseRequestId")]
+        public virtual ExpenseReimburseRequest? ExpenseReimburseRequest { get; set; }
         public int? ExpenseReimburseRequestId { get; set; }
-
-        [Required]
-        [ForeignKey("RequestTypeId")]
-        public virtual RequestType? RequestType { get; set; }
-        public int? RequestTypeId { get; set; }
 
         [Required]
         [ForeignKey("CurrencyTypeId")]
@@ -113,10 +110,6 @@ namespace AtoCashAPI.Models
         public int? CurrencyTypeId { get; set; }
         public string? CurrencyType { get; set; }
         public Double? TotalClaimAmount { get; set; }
-
-
-        public int? RequestTypeId { get; set; }
-        public string? RequestType { get; set; }
 
         public string? BusinessType { get; set; }
         public int? BusinessTypeId { get; set; }

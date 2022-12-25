@@ -26,7 +26,7 @@ namespace AtoCashAPI.Models
         public string? CashAdvanceRequestDesc{ get; set; }
 
         [Required]
-        public DateTime? CashReqDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
 
         [Required]
@@ -87,7 +87,7 @@ namespace AtoCashAPI.Models
         public Double? CashAdvanceAmount { get; set; }
         public string? CashAdvanceRequestDesc { get; set; }
 
-        public DateTime? CashReqDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
         public string? JobRole { get; set; }
         public int JobRoleId { get; set; }

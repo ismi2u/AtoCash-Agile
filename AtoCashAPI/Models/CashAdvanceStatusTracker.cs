@@ -29,16 +29,13 @@ namespace AtoCashAPI.Models
         public int? BusinessUnitId { get; set; }
 
         [Required]
+        [ForeignKey("CashAdvanceRequestId")]
+        public virtual CashAdvanceRequest? CashAdvanceRequest { get; set; }
         public int? CashAdvanceRequestId { get; set; }
-
-        [Required]
-        [ForeignKey("RequestTypeId")]
-        public virtual RequestType? RequestType { get; set; }
-        public int? RequestTypeId { get; set; }
 
 
         [ForeignKey("ProjManagerId")]
-        public virtual Employee? ProjManager { get; set; }
+        public virtual Employee? ProjectManager { get; set; }
         public int? ProjManagerId { get; set; }
 
         [ForeignKey("ProjectId")]
@@ -100,9 +97,6 @@ namespace AtoCashAPI.Models
         public string? EmployeeName { get; set; }
 
         public int? CashAdvanceRequestId { get; set; }
-
-        public int? RequestTypeId { get; set; }
-        public string? RequestType { get; set; }
 
         public string? BusinessType{ get; set; }
         public int? BusinessTypeId { get; set; }
