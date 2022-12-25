@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AtoCashAPI.Models
 {
-    public class EmpCurrentPettyCashBalance
+    public class EmpCurrentCashAdvanceBalance
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -19,9 +19,9 @@ namespace AtoCashAPI.Models
         public int? EmployeeId { get; set; }
 
         [Required]
-        public Double? MaxPettyCashLimit { get; set; }
+        public Double? MaxCashAdvanceLimit { get; set; }
 
-        public string? AllPettyCashLimits { get; set; }
+        public string? AllCashAdvanceLimits { get; set; }
 
 
         [Required]
@@ -37,7 +37,7 @@ namespace AtoCashAPI.Models
     }
 
 
-    public class EmpCurrentPettyCashBalanceDTO
+    public class EmpCurrentCashAdvanceBalanceDTO
     {
         public int Id { get; set; }
         public int? EmployeeId { get; set; }

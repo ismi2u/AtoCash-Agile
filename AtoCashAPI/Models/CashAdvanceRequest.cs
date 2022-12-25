@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AtoCashAPI.Models
 {
-    public class PettyCashRequest
+    public class CashAdvanceRequest
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -19,11 +19,11 @@ namespace AtoCashAPI.Models
         public int EmployeeId { get; set; }
 
         [Required]
-        public Double? PettyClaimAmount { get; set; }
+        public Double? CashAdvanceAmount { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(150)")]
-        public string? PettyClaimRequestDesc{ get; set; }
+        public string? CashAdvanceRequestDesc{ get; set; }
 
         [Required]
         public DateTime? CashReqDate { get; set; }
@@ -73,7 +73,7 @@ namespace AtoCashAPI.Models
 
     }
 
-    public class PettyCashRequestDTO
+    public class CashAdvanceRequestDTO
     {
 
         public int Id { get; set; }
@@ -84,8 +84,8 @@ namespace AtoCashAPI.Models
         public string? CurrencyType { get; set; }
         public int? CurrencyTypeId { get; set; }
 
-        public Double? PettyClaimAmount { get; set; }
-        public string? PettyClaimRequestDesc { get; set; }
+        public Double? CashAdvanceAmount { get; set; }
+        public string? CashAdvanceRequestDesc { get; set; }
 
         public DateTime? CashReqDate { get; set; }
 

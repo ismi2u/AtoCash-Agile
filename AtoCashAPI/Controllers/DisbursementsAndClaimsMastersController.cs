@@ -180,7 +180,7 @@ namespace AtoCashAPI.Controllers
                     postSAPApiData.AmountToBank = disbclaim.AmountToCredit;
                     postSAPApiData.Status = _context.ApprovalStatusTypes.Find(disbclaim.ApprovalStatusId).Status;
                     postSAPApiData.Action = "To be Settled, and Amount Credited to Bank";
-                    postSAPApiData.IsCashAdvanceRequest = disbclaim.RequestTypeId == 1 ? true : false; //1- Petty cash req, 2- Exp Reimburse
+                    postSAPApiData.IsCashAdvanceRequest = disbclaim.RequestTypeId == 1 ? true : false; //1- Cash Advance req, 2- Exp Reimburse
 
 
                     List<PostSubClaimItems> ListPostSubClaimItem = new List<PostSubClaimItems>();
@@ -289,44 +289,44 @@ namespace AtoCashAPI.Controllers
 
                 if (disbursementsAndClaimsMaster.ProjectId == null)
                 {
-                    //check the Credit To Wallet and Credit to Bank details to adjust for CashOnhand in EmpCurrentPettyCashBalance.CashOnHand
+                    //check the Credit To Wallet and Credit to Bank details to adjust for CashOnhand in EmpCurrentCashAdvanceBalance.CashOnHand
                     var empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == disbursementsAndClaimsMaster.EmployeeId && e.BusinessUnitId == disbursementsAndClaimsMaster.BusinessUnitId).FirstOrDefault();
 
-                    RoleMaxLimit = _context.JobRoles.Find(empExtInfo.JobRoleId).MaxPettyCashAllowed;
+                    RoleMaxLimit = _context.JobRoles.Find(empExtInfo.JobRoleId).MaxCashAdvanceAllowed;
                 }
                 else
                 {
 
-                    RoleMaxLimit = _context.EmpCurrentPettyCashBalances.Where(e=> e.EmployeeId == disbursementsAndClaimsMaster.EmployeeId).FirstOrDefault().MaxPettyCashLimit;
+                    RoleMaxLimit = _context.EmpCurrentCashAdvanceBalances.Where(e=> e.EmployeeId == disbursementsAndClaimsMaster.EmployeeId).FirstOrDefault().MaxCashAdvanceLimit;
                 }
 
                 double CreditToWallet = disbursementsAndClaimsMaster.AmountToWallet ?? 0;
-                EmpCurrentPettyCashBalance empPettyCashBal = _context.EmpCurrentPettyCashBalances.Where(e => e.EmployeeId == disbursementsAndClaimsMaster.EmployeeId).FirstOrDefault();
+                EmpCurrentCashAdvanceBalance empCashAdvanceBal = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == disbursementsAndClaimsMaster.EmployeeId).FirstOrDefault();
 
-                //if PettyCash Request then update the CashOnHand in EmpPettyCash Balances table
+                //if CashAdvance Request then update the CashOnHand in EmpCashAdvance Balances table
 
-                //Pettycash Request
+                //CashAdvance Request
                 if (disbursementsAndClaimsMaster.BlendedRequestId != null && disbursementsAndClaimsMaster.RequestTypeId == 1)
                 {
 
-                    empPettyCashBal.CashOnHand = empPettyCashBal.CashOnHand + disbursementsAndClaimsMaster.AmountToCredit ?? 0;
-                    //empPettyCashBal.CurBalance = empPettyCashBal.CurBalance - empPettyCashBal.CashOnHand;
-                    //empPettyCashBal.CurBalance = (empPettyCashBal.CurBalance - empPettyCashBal.CashOnHand) >= 0 ? (empPettyCashBal.CurBalance - empPettyCashBal.CashOnHand) : RoleMaxLimit;
+                    empCashAdvanceBal.CashOnHand = empCashAdvanceBal.CashOnHand + disbursementsAndClaimsMaster.AmountToCredit ?? 0;
+                    //empCashAdvanceBal.CurBalance = empCashAdvanceBal.CurBalance - empCashAdvanceBal.CashOnHand;
+                    //empCashAdvanceBal.CurBalance = (empCashAdvanceBal.CurBalance - empCashAdvanceBal.CashOnHand) >= 0 ? (empCashAdvanceBal.CurBalance - empCashAdvanceBal.CashOnHand) : RoleMaxLimit;
                 }
                 else
                 {
 
-                    empPettyCashBal.CashOnHand = (empPettyCashBal.CashOnHand - CreditToWallet) >= 0 ? empPettyCashBal.CashOnHand - CreditToWallet : 0;
-                    empPettyCashBal.CurBalance = (empPettyCashBal.CurBalance + (disbursementsAndClaimsMaster.AmountToWallet ?? 0)) < RoleMaxLimit ? (empPettyCashBal.CurBalance + (disbursementsAndClaimsMaster.AmountToWallet ?? 0)) : RoleMaxLimit;
+                    empCashAdvanceBal.CashOnHand = (empCashAdvanceBal.CashOnHand - CreditToWallet) >= 0 ? empCashAdvanceBal.CashOnHand - CreditToWallet : 0;
+                    empCashAdvanceBal.CurBalance = (empCashAdvanceBal.CurBalance + (disbursementsAndClaimsMaster.AmountToWallet ?? 0)) < RoleMaxLimit ? (empCashAdvanceBal.CurBalance + (disbursementsAndClaimsMaster.AmountToWallet ?? 0)) : RoleMaxLimit;
 
                     //curbalance cannot be more than the RoleMax lime for cash requests
-                    if (empPettyCashBal.CurBalance > RoleMaxLimit)
+                    if (empCashAdvanceBal.CurBalance > RoleMaxLimit)
                     {
-                        empPettyCashBal.CurBalance = RoleMaxLimit;
+                        empCashAdvanceBal.CurBalance = RoleMaxLimit;
                     }
                 }
 
-                _context.Update(empPettyCashBal);
+                _context.Update(empCashAdvanceBal);
 
 
 

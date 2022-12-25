@@ -41,14 +41,14 @@ namespace AtoCashAPI.Data
         public DbSet<JobRole> JobRoles { get; set; }
 
         public DbSet<EmploymentType> EmploymentTypes { get; set; }
-        public DbSet<PettyCashRequest> PettyCashRequests { get; set; }
+        public DbSet<CashAdvanceRequest> CashAdvanceRequests { get; set; }
 
         public DbSet<RequestType> RequestTypes { get; set; }
         public DbSet<DisbursementsAndClaimsMaster> DisbursementsAndClaimsMasters { get; set; }
 
-        public DbSet<EmpCurrentPettyCashBalance> EmpCurrentPettyCashBalances { get; set; }
+        public DbSet<EmpCurrentCashAdvanceBalance> EmpCurrentCashAdvanceBalances { get; set; }
 
-        public DbSet<ClaimApprovalStatusTracker> ClaimApprovalStatusTrackers { get; set; }
+        public DbSet<CashAdvanceStatusTracker> CashAdvanceStatusTrackers { get; set; }
 
         public DbSet<ApprovalStatusType> ApprovalStatusTypes { get; set; }
 

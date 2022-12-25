@@ -113,7 +113,7 @@ namespace AtoCashAPI.Controllers
                 if (jRole != null)
                 {
                     jRole.JobRoleName = jobrole.JobRoleName == null ? "" : jobrole.JobRoleName;
-                    jRole.MaxPettyCashAllowed = jobrole.MaxPettyCashAllowed;
+                    jRole.MaxCashAdvanceAllowed = jobrole.MaxCashAdvanceAllowed;
                     _context.JobRoles.Update(jRole);
                 }
 

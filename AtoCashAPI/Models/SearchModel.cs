@@ -10,7 +10,7 @@ namespace AtoCashAPI.Models
     public class CashAndClaimRequestSearchModel
     {
         public int? EmpId { get; set; }
-        public int? PettyCashRequestId { get; set; }
+        public int? CashAdvanceRequestId { get; set; }
         public int? RequestTypeId { get; set; }
         public int? DepartmentId { get; set; }
         public int? ProjectId{ get; set; }

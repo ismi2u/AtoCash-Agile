@@ -20,7 +20,7 @@ namespace AtoCashAPI.Models
         public string? JobRoleName { get; set; }
 
         [Required]
-        public Double? MaxPettyCashAllowed { get; set; }
+        public Double? MaxCashAdvanceAllowed { get; set; }
 
 
         public string? GetJobRole()
@@ -48,7 +48,7 @@ namespace AtoCashAPI.Models
 
         public string? JobRoleName { get; set; }
 
-        public Double? MaxPettyCashAllowed { get; set; }
+        public Double? MaxCashAdvanceAllowed { get; set; }
 
     }
 

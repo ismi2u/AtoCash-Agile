@@ -567,7 +567,7 @@ namespace AtoCashAPI.Controllers
         //            disbursementsAndClaimsMasterDTO.Id = disb.Id;
         //            disbursementsAndClaimsMasterDTO.EmployeeId = disb.EmployeeId;
         //            disbursementsAndClaimsMasterDTO.EmployeeName = _context.Employees.Find(disb.EmployeeId).GetFullName();
-        //            disbursementsAndClaimsMasterDTO.PettyCashRequestId = disb.PettyCashRequestId;
+        //            disbursementsAndClaimsMasterDTO.CashAdvanceRequestId = disb.CashAdvanceRequestId;
         //            disbursementsAndClaimsMasterDTO.ExpenseReimburseReqId = disb.ExpenseReimburseReqId;
         //            disbursementsAndClaimsMasterDTO.RequestTypeId = disb.RequestTypeId;
         //            disbursementsAndClaimsMasterDTO.RequestType = _context.RequestTypes.Find(disb.RequestTypeId).RequestName;
@@ -601,7 +601,7 @@ namespace AtoCashAPI.Controllers
 
         //            if (searchModel.RequestTypeId == 1)
         //            {
-        //                disbursementsAndClaimsMasterDTO.RequestTitleDescription = _context.PettyCashRequests.Find(disb.PettyCashRequestId).Comments;
+        //                disbursementsAndClaimsMasterDTO.RequestTitleDescription = _context.CashAdvanceRequests.Find(disb.CashAdvanceRequestId).Comments;
         //            }
         //            else
         //            {
@@ -698,7 +698,7 @@ namespace AtoCashAPI.Controllers
         //            disbursementsAndClaimsMasterDTO.Id = disb.Id;
         //            disbursementsAndClaimsMasterDTO.EmployeeId = disb.EmployeeId;
         //            disbursementsAndClaimsMasterDTO.EmployeeName = _context.Employees.Find(disb.EmployeeId).GetFullName();
-        //            disbursementsAndClaimsMasterDTO.PettyCashRequestId = disb.PettyCashRequestId;
+        //            disbursementsAndClaimsMasterDTO.CashAdvanceRequestId = disb.CashAdvanceRequestId;
         //            disbursementsAndClaimsMasterDTO.ExpenseReimburseReqId = disb.ExpenseReimburseReqId;
         //            disbursementsAndClaimsMasterDTO.RequestTypeId = disb.RequestTypeId;
         //            disbursementsAndClaimsMasterDTO.RequestType = _context.RequestTypes.Find(disb.RequestTypeId).RequestName;
@@ -733,7 +733,7 @@ namespace AtoCashAPI.Controllers
 
         //            if (searchModel.RequestTypeId == 1)
         //            {
-        //                disbursementsAndClaimsMasterDTO.RequestTitleDescription = _context.PettyCashRequests.Find(disb.PettyCashRequestId).Comments;
+        //                disbursementsAndClaimsMasterDTO.RequestTitleDescription = _context.CashAdvanceRequests.Find(disb.CashAdvanceRequestId).Comments;
         //            }
         //            else
         //            {
@@ -752,7 +752,7 @@ namespace AtoCashAPI.Controllers
         //        {
         //            //new DataColumn("Id", typeof(int)),
         //            new DataColumn("EmployeeName", typeof(string)),
-        //            new DataColumn("PettyCashRequestId", typeof(int)),
+        //            new DataColumn("CashAdvanceRequestId", typeof(int)),
         //            new DataColumn("ExpenseReimburseReqId", typeof(int)),
         //            new DataColumn("RequestType",typeof(string)),
         //            new DataColumn("Department",typeof(string)),
@@ -781,7 +781,7 @@ namespace AtoCashAPI.Controllers
         //    {
         //        dt.Rows.Add(
         //            disbItem.EmployeeName,
-        //            disbItem.PettyCashRequestId,
+        //            disbItem.CashAdvanceRequestId,
         //            disbItem.ExpenseReimburseReqId,
         //            disbItem.RequestType,
         //            disbItem.DepartmentName,
@@ -1199,7 +1199,7 @@ namespace AtoCashAPI.Controllers
         //        disbursementsAndClaimsMasterDTO.EmployeeId = disbursementsAndClaimsMaster.EmployeeId;
         //        disbursementsAndClaimsMasterDTO.EmployeeName = _context.Employees.Find(disbursementsAndClaimsMaster.EmployeeId).GetFullName();
         //        disbursementsAndClaimsMasterDTO.ExpenseReimburseReqId = disbursementsAndClaimsMaster.ExpenseReimburseReqId;
-        //        disbursementsAndClaimsMasterDTO.PettyCashRequestId = disbursementsAndClaimsMaster.PettyCashRequestId;
+        //        disbursementsAndClaimsMasterDTO.CashAdvanceRequestId = disbursementsAndClaimsMaster.CashAdvanceRequestId;
         //        disbursementsAndClaimsMasterDTO.DepartmentId = disbursementsAndClaimsMaster.DepartmentId;
         //        disbursementsAndClaimsMasterDTO.DepartmentName = disbursementsAndClaimsMaster.DepartmentId != null ? _context.Departments.Find(disbursementsAndClaimsMaster.DepartmentId).DeptName : string.Empty;
         //        disbursementsAndClaimsMasterDTO.ProjectId = disbursementsAndClaimsMaster.ProjectId;
@@ -1235,7 +1235,7 @@ namespace AtoCashAPI.Controllers
         //        {
         //            new DataColumn("Id", typeof(int)),
         //            new DataColumn("EmployeeName", typeof(string)),
-        //            new DataColumn("PettyCashRequestId", typeof(int)),
+        //            new DataColumn("CashAdvanceRequestId", typeof(int)),
         //            new DataColumn("ExpenseReimburseReqId", typeof(int)),
         //            new DataColumn("RequestType",typeof(string)),
         //            new DataColumn("Department",typeof(string)),
@@ -1263,7 +1263,7 @@ namespace AtoCashAPI.Controllers
         //        dt.Rows.Add(
         //             disbItem.Id,
         //            disbItem.EmployeeName,
-        //            disbItem.PettyCashRequestId,
+        //            disbItem.CashAdvanceRequestId,
         //            disbItem.ExpenseReimburseReqId,
         //            disbItem.RequestType,
         //            disbItem.DepartmentName,

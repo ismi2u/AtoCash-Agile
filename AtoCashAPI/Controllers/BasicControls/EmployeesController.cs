@@ -243,19 +243,19 @@ namespace AtoCashAPI.Controllers.BasicControls
                     //if (employee.RoleId != employeeDto.RoleId)
                     //{
 
-                    //    double oldAmt = _context.JobRoles.Find(employee.RoleId).MaxPettyCashAllowed;
-                    //    double newAmt = _context.JobRoles.Find(employeeDto.RoleId).MaxPettyCashAllowed;
-                    //    EmpCurrentPettyCashBalance empCurrentPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(e => e.EmployeeId == employee.Id).FirstOrDefault();
-                    //    double empCurBal = empCurrentPettyCashBalance.CurBalance;
+                    //    double oldAmt = _context.JobRoles.Find(employee.RoleId).MaxCashAdvanceAllowed;
+                    //    double newAmt = _context.JobRoles.Find(employeeDto.RoleId).MaxCashAdvanceAllowed;
+                    //    EmpCurrentCashAdvanceBalance empCurrentCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == employee.Id).FirstOrDefault();
+                    //    double empCurBal = empCurrentCashAdvanceBalance.CurBalance;
 
                     //    //update the roleId to new RoleId
                     //    employee.RoleId = employeeDto.RoleId;
 
-                    //    double usedAmount = oldAmt - empCurrentPettyCashBalance.CurBalance;
+                    //    double usedAmount = oldAmt - empCurrentCashAdvanceBalance.CurBalance;
                     //    double NewUpdatedLimit = newAmt - usedAmount;
 
-                    //    empCurrentPettyCashBalance.CurBalance = NewUpdatedLimit;
-                    //    _context.EmpCurrentPettyCashBalances.Update(empCurrentPettyCashBalance);
+                    //    empCurrentCashAdvanceBalance.CurBalance = NewUpdatedLimit;
+                    //    _context.EmpCurrentCashAdvanceBalances.Update(empCurrentCashAdvanceBalance);
                     //}
 
                     _context.Employees.Update(employee);
@@ -324,13 +324,13 @@ namespace AtoCashAPI.Controllers.BasicControls
                 await _context.SaveChangesAsync();
 
 
-                //Add PettyCash Balance
-                _context.EmpCurrentPettyCashBalances.Add(new EmpCurrentPettyCashBalance()
+                //Add CashAdvance Balance
+                _context.EmpCurrentCashAdvanceBalances.Add(new EmpCurrentCashAdvanceBalance()
                 {
 
                     EmployeeId = employee.Id,
-                    MaxPettyCashLimit = 0,
-                    AllPettyCashLimits = String.Empty,
+                    MaxCashAdvanceLimit = 0,
+                    AllCashAdvanceLimits = String.Empty,
                     CurBalance = 0,
                     CashOnHand = 0,
                     UpdatedOn = DateTime.UtcNow
@@ -364,7 +364,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
 
             bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(t => t.EmployeeId == id).Any();
-            bool blnUsedInCashAdvReq = _context.PettyCashRequests.Where(t => t.EmployeeId == id).Any();
+            bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(t => t.EmployeeId == id).Any();
             bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(t => t.EmployeeId == id).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)
@@ -375,8 +375,8 @@ namespace AtoCashAPI.Controllers.BasicControls
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
                 _context.Employees.Remove(employee);
-                var empPettyCashBal = _context.EmpCurrentPettyCashBalances.Where(e => e.EmployeeId == id).FirstOrDefault();
-                _context.EmpCurrentPettyCashBalances.Remove(empPettyCashBal);
+                var empCashAdvanceBal = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == id).FirstOrDefault();
+                _context.EmpCurrentCashAdvanceBalances.Remove(empCashAdvanceBal);
                 await _context.SaveChangesAsync();
 
                 await AtoCashDbContextTransaction.CommitAsync();

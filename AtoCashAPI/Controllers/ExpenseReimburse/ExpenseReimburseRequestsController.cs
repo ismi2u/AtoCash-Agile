@@ -982,17 +982,17 @@ namespace AtoCashAPI.Controllers
                 {
                     var empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == reqEmpid && e.BusinessUnitId == expenseReimburseRequestDto.BusinessUnitId).FirstOrDefault();
                     double? expenseReimAmt = expenseReimburseRequest.TotalClaimAmount;
-                    double? RoleLimitAmt = _context.JobRoles.Find(empExtInfo.JobRoleId).MaxPettyCashAllowed;
+                    double? RoleLimitAmt = _context.JobRoles.Find(empExtInfo.JobRoleId).MaxCashAdvanceAllowed;
                    
-                    var empCurrentPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(e => e.EmployeeId == reqEmp.Id).FirstOrDefault();
-                    double? empCurPettyBal = empCurrentPettyCashBalance.CurBalance;
+                    var empCurrentCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == reqEmp.Id).FirstOrDefault();
+                    double? empCurCashAdvanceBal = empCurrentCashAdvanceBalance.CurBalance;
 
                     //logic goes here
 
-                    if (expenseReimAmt + empCurPettyBal >= RoleLimitAmt) // claiming amount is greater than replishable amount
+                    if (expenseReimAmt + empCurCashAdvanceBal >= RoleLimitAmt) // claiming amount is greater than replishable amount
                     {
-                        disbursementsAndClaimsMaster.AmountToWallet = RoleLimitAmt - empCurPettyBal;
-                        disbursementsAndClaimsMaster.AmountToCredit = expenseReimAmt - (RoleLimitAmt - empCurPettyBal);
+                        disbursementsAndClaimsMaster.AmountToWallet = RoleLimitAmt - empCurCashAdvanceBal;
+                        disbursementsAndClaimsMaster.AmountToCredit = expenseReimAmt - (RoleLimitAmt - empCurCashAdvanceBal);
 
                     }
                     else
@@ -1164,7 +1164,7 @@ namespace AtoCashAPI.Controllers
 
                
                 ///////////////////////////// Check if self Approved Request /////////////////////////////
-                //if highest approver is requesting Petty cash request himself
+                //if highest approver is requesting Cash Advance request himself
                 if (projManagerid == reqEmpid)
                 {
                     isSelfApprovedRequest = true;
@@ -1317,18 +1317,18 @@ namespace AtoCashAPI.Controllers
                 if (isSelfApprovedRequest)
                 {
                     double? expenseReimAmt = expenseReimburseRequest.TotalClaimAmount;
-                    EmpCurrentPettyCashBalance empPettyCashBal =_context.EmpCurrentPettyCashBalances.Where(e => e.EmployeeId == reqEmpid).FirstOrDefault();
-                    double? RoleLimitAmt = empPettyCashBal.MaxPettyCashLimit;
+                    EmpCurrentCashAdvanceBalance empCashAdvanceBal =_context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == reqEmpid).FirstOrDefault();
+                    double? RoleLimitAmt = empCashAdvanceBal.MaxCashAdvanceLimit;
 
-                    EmpCurrentPettyCashBalance empCurrentPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(e => e.EmployeeId == reqEmp.Id).FirstOrDefault();
-                    double? empCurPettyBal = empCurrentPettyCashBalance.CurBalance;
+                    EmpCurrentCashAdvanceBalance empCurrentCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == reqEmp.Id).FirstOrDefault();
+                    double? empCurCashAdvanceBal = empCurrentCashAdvanceBalance.CurBalance;
 
                     //logic goes here
 
-                    if (expenseReimAmt + empCurPettyBal >= RoleLimitAmt) // claiming amount is greater than replishable amount
+                    if (expenseReimAmt + empCurCashAdvanceBal >= RoleLimitAmt) // claiming amount is greater than replishable amount
                     {
-                        disbursementsAndClaimsMaster.AmountToWallet = RoleLimitAmt - empCurPettyBal;
-                        disbursementsAndClaimsMaster.AmountToCredit = expenseReimAmt - (RoleLimitAmt - empCurPettyBal);
+                        disbursementsAndClaimsMaster.AmountToWallet = RoleLimitAmt - empCurCashAdvanceBal;
+                        disbursementsAndClaimsMaster.AmountToCredit = expenseReimAmt - (RoleLimitAmt - empCurCashAdvanceBal);
                     }
                     else
                     {
@@ -1342,10 +1342,10 @@ namespace AtoCashAPI.Controllers
                     _context.Update(disbursementsAndClaimsMaster);
 
 
-                    //////Final Approveer hence update the EmpCurrentPettyCashBalance table for the employee to reflect the credit
-                    ////empCurrentPettyCashBalance.CurBalance = empCurPettyBal + disbursementsAndClaimsMaster.AmountToWallet ?? 0;
-                    ////empCurrentPettyCashBalance.UpdatedOn = DateTime.UtcNow;
-                    ////_context.EmpCurrentPettyCashBalances.Update(empCurrentPettyCashBalance);
+                    //////Final Approveer hence update the EmpCurrentCashAdvanceBalance table for the employee to reflect the credit
+                    ////empCurrentCashAdvanceBalance.CurBalance = empCurCashAdvanceBal + disbursementsAndClaimsMaster.AmountToWallet ?? 0;
+                    ////empCurrentCashAdvanceBalance.UpdatedOn = DateTime.UtcNow;
+                    ////_context.EmpCurrentCashAdvanceBalances.Update(empCurrentCashAdvanceBalance);
 
                     await _context.DisbursementsAndClaimsMasters.AddAsync(disbursementsAndClaimsMaster);
 

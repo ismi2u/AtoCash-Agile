@@ -166,7 +166,7 @@ namespace AtoCashAPI.Controllers.BasicControlrs
         public async Task<IActionResult> DeleteCurrencyType(int id)
         {
             bool blnUsedInEmployees = _context.Employees.Where(e => e.CurrencyTypeId == id).Any();
-            bool blnUsedInCashAdvReq = _context.PettyCashRequests.Where(t => t.CurrencyTypeId == id).Any();
+            bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(t => t.CurrencyTypeId == id).Any();
             bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(t => t.CurrencyTypeId == id).Any();
 
             if (blnUsedInEmployees || blnUsedInCashAdvReq || blnUsedInExpeReimReq)

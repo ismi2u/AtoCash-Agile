@@ -28,18 +28,18 @@ INSERT INTO public."Employees" (
 	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId")
 	VALUES (40006, 'Walid', NULL, 'E-4166', 'E-4166', '2345468765',  'AD1400080001001234567890', '3453456547532343', '2343244', NULL, NULL, 'Saudi', '2022-09-14 11:42:55.352', '2022-09-27 11:41:50.017', 'male', 'AtoCashAPI.walid@gmail.com', '23423445',1, 1,1,1);
 
-INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (1, 40001, 0, NULL, 0, 0, '2022-09-28 11:35:13.909336');
-INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn")VALUES (2, 40002, 10000,'10,000.00', 10000, 0, '2022-09-28 11:35:13.909336');
-INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit","AllPettyCashLimits",  "CurBalance", "CashOnHand", "UpdatedOn") VALUES (3, 40003, 50000, '50,000.00', 50000, 0, '2022-09-28 11:37:05.395571');
-INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (4, 40004, 0,NULL, 0, 0, '2022-09-28 11:39:19.125081');
-INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (5, 40005, 0,NULL, 0, 0, '2022-09-28 11:41:37.616992');
-INSERT INTO public."EmpCurrentPettyCashBalances" (
-	"Id", "EmployeeId", "MaxPettyCashLimit", "AllPettyCashLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (6, 40006, 0,NULL, 0, 0, '2022-09-28 11:44:55.218718');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" (
+	"Id", "EmployeeId", "MaxCashAdvanceLimit", "AllCashAdvanceLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (1, 40001, 0, NULL, 0, 0, '2022-09-28 11:35:13.909336');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" (
+	"Id", "EmployeeId", "MaxCashAdvanceLimit", "AllCashAdvanceLimits", "CurBalance", "CashOnHand", "UpdatedOn")VALUES (2, 40002, 10000,'10,000.00', 10000, 0, '2022-09-28 11:35:13.909336');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" (
+	"Id", "EmployeeId", "MaxCashAdvanceLimit","AllCashAdvanceLimits",  "CurBalance", "CashOnHand", "UpdatedOn") VALUES (3, 40003, 50000, '50,000.00', 50000, 0, '2022-09-28 11:37:05.395571');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" (
+	"Id", "EmployeeId", "MaxCashAdvanceLimit", "AllCashAdvanceLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (4, 40004, 0,NULL, 0, 0, '2022-09-28 11:39:19.125081');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" (
+	"Id", "EmployeeId", "MaxCashAdvanceLimit", "AllCashAdvanceLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (5, 40005, 0,NULL, 0, 0, '2022-09-28 11:41:37.616992');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" (
+	"Id", "EmployeeId", "MaxCashAdvanceLimit", "AllCashAdvanceLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (6, 40006, 0,NULL, 0, 0, '2022-09-28 11:44:55.218718');
 
 
 ---
@@ -90,7 +90,7 @@ INSERT INTO public."JobRoles" VALUES (608, 'STOR-ROLE-FINMGR', 'STOR-ROLE-FINMGR
 
 
 
-INSERT INTO public."RequestTypes" VALUES (1, 'Petty Cash Request', 'Petty Cash Request');
+INSERT INTO public."RequestTypes" VALUES (1, 'Cash Advance Request', 'Cash Advance Request');
 INSERT INTO public."RequestTypes" VALUES (2, 'Department Expense Reimbursement', 'All Department based expense reimbursement claims');
 INSERT INTO public."RequestTypes" VALUES (3, 'Store Expense Reimbursement', 'All Store based expense reimbursement claims');
 
@@ -170,7 +170,7 @@ SELECT pg_catalog.setval('public."ApprovalStatusTypes_Id_seq"', 6, true);
 --SELECT pg_catalog.setval('public."AspNetRoleClaims_Id_seq"', 1, false);
 --SELECT pg_catalog.setval('public."AspNetUserClaims_Id_seq"', 1, false);
 --SELECT pg_catalog.setval('public."BusinessAreas_Id_seq"', 3, true);
-SELECT pg_catalog.setval('public."ClaimApprovalStatusTrackers_Id_seq"', 5000, false);
+SELECT pg_catalog.setval('public."CashAdvanceStatusTrackers_Id_seq"', 5000, false);
 SELECT pg_catalog.setval('public."CostCenters_Id_seq"', 505, false);
 SELECT pg_catalog.setval('public."CurrencyTypes_Id_seq"', 1, false);
 --SELECT pg_catalog.setval('public."Departments_Id_seq"', 2, true);
@@ -178,7 +178,7 @@ SELECT pg_catalog.setval('public."DisbursementsAndClaimsMasters_Id_seq"', 1000, 
 SELECT pg_catalog.setval('public."ExpenseReimburseRequests_Id_seq"', 1000, true);
 SELECT pg_catalog.setval('public."ExpenseReimburseStatusTrackers_Id_seq"', 10000, true);
 SELECT pg_catalog.setval('public."ExpenseSubClaims_Id_seq"', 1000, true);
-SELECT pg_catalog.setval('public."EmpCurrentPettyCashBalances_Id_seq"', 6, true);
+SELECT pg_catalog.setval('public."EmpCurrentCashAdvanceBalances_Id_seq"', 6, true);
 SELECT pg_catalog.setval('public."Employees_Id_seq"', 40006, true);
 SELECT pg_catalog.setval('public."EmploymentTypes_Id_seq"', 3, false);
 --SELECT pg_catalog.setval('public."ExpenseCategories_Id_seq"', 4, true);
@@ -186,7 +186,7 @@ SELECT pg_catalog.setval('public."EmploymentTypes_Id_seq"', 3, false);
 --SELECT pg_catalog.setval('public."FileDocuments_Id_seq"', 1, true);
 --SELECT pg_catalog.setval('public."GeneralLedger_Id_seq"', 5, true);
 SELECT pg_catalog.setval('public."JobRoles_Id_seq"', 609, true);
-SELECT pg_catalog.setval('public."PettyCashRequests_Id_seq"', 1000, false);
+SELECT pg_catalog.setval('public."CashAdvanceRequests_Id_seq"', 1000, false);
 SELECT pg_catalog.setval('public."ProjectManagements_Id_seq"', 1, false);
 SELECT pg_catalog.setval('public."Projects_Id_seq"', 1, false);
 SELECT pg_catalog.setval('public."RequestTypes_Id_seq"', 4, false);

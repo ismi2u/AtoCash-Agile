@@ -196,7 +196,7 @@ namespace AtoCashAPI.Controllers
             }
 
             bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(t => t.SubProjectId == id).Any();
-            bool blnUsedInCashAdvReq = _context.PettyCashRequests.Where(t => t.SubProjectId == id).Any();
+            bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(t => t.SubProjectId == id).Any();
             bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(t => t.SubProjectId == id).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)

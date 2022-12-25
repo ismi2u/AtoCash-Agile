@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AtoCashAPI.Models
 {
-    public class ClaimApprovalStatusTracker
+    public class CashAdvanceStatusTracker
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -29,7 +29,7 @@ namespace AtoCashAPI.Models
         public int? BusinessUnitId { get; set; }
 
         [Required]
-        public int? BlendedRequestId { get; set; }
+        public int? CashAdvanceRequestId { get; set; }
 
         [Required]
         [ForeignKey("RequestTypeId")]
@@ -92,14 +92,14 @@ namespace AtoCashAPI.Models
     }
 
 
-    public class ClaimApprovalStatusTrackerDTO
+    public class CashAdvanceStatusTrackerDTO
     {
         public int Id { get; set; }
 
         public int? EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
 
-        public int? BlendedRequestId { get; set; }
+        public int? CashAdvanceRequestId { get; set; }
 
         public int? RequestTypeId { get; set; }
         public string? RequestType { get; set; }

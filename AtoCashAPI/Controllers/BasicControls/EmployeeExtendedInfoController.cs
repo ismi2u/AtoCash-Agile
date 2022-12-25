@@ -152,18 +152,18 @@ namespace AtoCashAPI.Controllers.BasicControls
                         empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
                         empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
 
-                        EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
+                        EmpCurrentCashAdvanceBalance currentEmpCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
 
-                        double oldJobRoleLimit = _context.JobRoles.Find(empExtendedInfo.JobRoleId).MaxPettyCashAllowed ?? 0;
-                        double NewJobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxPettyCashAllowed ?? 0;
+                        double oldJobRoleLimit = _context.JobRoles.Find(empExtendedInfo.JobRoleId).MaxCashAdvanceAllowed ?? 0;
+                        double NewJobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxCashAdvanceAllowed ?? 0;
 
-                        string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
+                        string strCashAdvanceLimits = currentEmpCashAdvanceBalance.AllCashAdvanceLimits;
 
-                        currentEmpPettyCashBalance.AllPettyCashLimits = RemoveStringMaxLimits(strPettyCashLimits, oldJobRoleLimit); //REMOVE OLD LIMIT
-                        currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, NewJobRoleLimit); // ADD NEW LIMIT
-                        currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
+                        currentEmpCashAdvanceBalance.AllCashAdvanceLimits = RemoveStringMaxLimits(strCashAdvanceLimits, oldJobRoleLimit); //REMOVE OLD LIMIT
+                        currentEmpCashAdvanceBalance.AllCashAdvanceLimits = AddStringMaxLimits(strCashAdvanceLimits, NewJobRoleLimit); // ADD NEW LIMIT
+                        currentEmpCashAdvanceBalance.MaxCashAdvanceLimit = GetMaxFromStringDoubles(currentEmpCashAdvanceBalance.AllCashAdvanceLimits);
 
-                        _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
+                        _context.EmpCurrentCashAdvanceBalances.Update(currentEmpCashAdvanceBalance);
 
                         _context.EmployeeExtendedInfos.Update(empExtendedInfo);
 
@@ -212,35 +212,35 @@ namespace AtoCashAPI.Controllers.BasicControls
                     empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
 
 
-                    EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
+                    EmpCurrentCashAdvanceBalance currentEmpCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
 
-                    string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
-                    double JobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxPettyCashAllowed ?? 0;
+                    string strCashAdvanceLimits = currentEmpCashAdvanceBalance.AllCashAdvanceLimits;
+                    double JobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxCashAdvanceAllowed ?? 0;
 
-                    currentEmpPettyCashBalance.AllPettyCashLimits = AddStringMaxLimits(strPettyCashLimits, JobRoleLimit);
-                    currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
+                    currentEmpCashAdvanceBalance.AllCashAdvanceLimits = AddStringMaxLimits(strCashAdvanceLimits, JobRoleLimit);
+                    currentEmpCashAdvanceBalance.MaxCashAdvanceLimit = GetMaxFromStringDoubles(currentEmpCashAdvanceBalance.AllCashAdvanceLimits);
 
                     //this is problematics needs resolution
                     //this is problematics needs resolution
 
-                    double? diffamount = currentEmpPettyCashBalance.MaxPettyCashLimit - currentEmpPettyCashBalance.CurBalance;
+                    double? diffamount = currentEmpCashAdvanceBalance.MaxCashAdvanceLimit - currentEmpCashAdvanceBalance.CurBalance;
 
-                    if (currentEmpPettyCashBalance.CurBalance == 0)
+                    if (currentEmpCashAdvanceBalance.CurBalance == 0)
                     {
-                        currentEmpPettyCashBalance.CurBalance = currentEmpPettyCashBalance.MaxPettyCashLimit;
+                        currentEmpCashAdvanceBalance.CurBalance = currentEmpCashAdvanceBalance.MaxCashAdvanceLimit;
                     }
-                    else if (currentEmpPettyCashBalance.CurBalance > 0)
+                    else if (currentEmpCashAdvanceBalance.CurBalance > 0)
                     {
-                        currentEmpPettyCashBalance.CurBalance = currentEmpPettyCashBalance.CurBalance + diffamount;
+                        currentEmpCashAdvanceBalance.CurBalance = currentEmpCashAdvanceBalance.CurBalance + diffamount;
                     }
-                    else //(currentEmpPettyCashBalance.CurBalance < 0)
+                    else //(currentEmpCashAdvanceBalance.CurBalance < 0)
                     {
-                        currentEmpPettyCashBalance.CurBalance = currentEmpPettyCashBalance.CurBalance + diffamount;
+                        currentEmpCashAdvanceBalance.CurBalance = currentEmpCashAdvanceBalance.CurBalance + diffamount;
                     }
 
-                    currentEmpPettyCashBalance.UpdatedOn = DateTime.UtcNow;
+                    currentEmpCashAdvanceBalance.UpdatedOn = DateTime.UtcNow;
 
-                    _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
+                    _context.EmpCurrentCashAdvanceBalances.Update(currentEmpCashAdvanceBalance);
 
                     _context.EmployeeExtendedInfos.Add(empExtendedInfo);
 
@@ -280,7 +280,7 @@ namespace AtoCashAPI.Controllers.BasicControls
             bool blnUsedInExpeReimReq = false; // remove this after ExpReimburse is fixed below
 
             // bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
-            bool blnUsedInCashAdvReq = _context.PettyCashRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+            bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
             // bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)
@@ -292,15 +292,15 @@ namespace AtoCashAPI.Controllers.BasicControls
             {
 
 
-                EmpCurrentPettyCashBalance currentEmpPettyCashBalance = _context.EmpCurrentPettyCashBalances.Where(b => b.EmployeeId == employeeExtendedInfo.EmployeeId).FirstOrDefault();
+                EmpCurrentCashAdvanceBalance currentEmpCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(b => b.EmployeeId == employeeExtendedInfo.EmployeeId).FirstOrDefault();
 
-                double JobRoleLimit = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).MaxPettyCashAllowed ?? 0;
-                string strPettyCashLimits = currentEmpPettyCashBalance.AllPettyCashLimits;
+                double JobRoleLimit = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).MaxCashAdvanceAllowed ?? 0;
+                string strCashAdvanceLimits = currentEmpCashAdvanceBalance.AllCashAdvanceLimits;
 
-                currentEmpPettyCashBalance.AllPettyCashLimits = RemoveStringMaxLimits(strPettyCashLimits, JobRoleLimit); //REMOVE OLD LIMIT
-                currentEmpPettyCashBalance.MaxPettyCashLimit = GetMaxFromStringDoubles(currentEmpPettyCashBalance.AllPettyCashLimits);
+                currentEmpCashAdvanceBalance.AllCashAdvanceLimits = RemoveStringMaxLimits(strCashAdvanceLimits, JobRoleLimit); //REMOVE OLD LIMIT
+                currentEmpCashAdvanceBalance.MaxCashAdvanceLimit = GetMaxFromStringDoubles(currentEmpCashAdvanceBalance.AllCashAdvanceLimits);
 
-                _context.EmpCurrentPettyCashBalances.Update(currentEmpPettyCashBalance);
+                _context.EmpCurrentCashAdvanceBalances.Update(currentEmpCashAdvanceBalance);
 
 
                 _context.EmployeeExtendedInfos.Remove(employeeExtendedInfo);
