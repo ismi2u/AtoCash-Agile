@@ -1086,6 +1086,7 @@ namespace AtoCashAPI.Controllers
                     expenseSubClaim.ExpStrtDate = expenseSubClaimDto.ExpStrtDate;
                     expenseSubClaim.ExpEndDate = expenseSubClaimDto.ExpEndDate;
                     expenseSubClaim.ExpNoOfDays = expenseSubClaimDto.ExpNoOfDays;
+                    expenseSubClaim.RequestDate = DateTime.UtcNow;
 
                     expenseSubClaim.Tax = expenseSubClaimDto.Tax;
                     expenseSubClaim.TaxAmount = expenseSubClaimDto.TaxAmount;

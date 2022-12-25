@@ -78,8 +78,9 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             }
 
 
-            var ListOfExpReimStatusTrackers = _context.ExpenseReimburseStatusTrackers.Where(e =>
-                                e.ExpenseReimburseRequestId == id).ToList().OrderBy(x => x.JobRoleId);
+            var ListOfExpReimStatusTrackers = _context.ExpenseReimburseStatusTrackers.Where(e => e.ExpenseReimburseRequestId == id).OrderBy(x => x.JobRoleId).ToList();
+
+            List<ApprovalStatusFlowVM> ListApprovalStatusFlow = new();
 
             if (expenseReimburseStatusTrackers == null)
             {
@@ -87,8 +88,22 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 return Conflict(new RespStatus { Status = "Failure", Message = "Status Tracker Request Id is returning null records:" + id });
             }
 
+            else
+            {
+                int reqEmpId = ListOfExpReimStatusTrackers[0].EmployeeId ?? 0;
+                Employee reqEmp = _context.Employees.Find(reqEmpId);
 
-            List<ApprovalStatusFlowVM> ListApprovalStatusFlow = new();
+                //add requester to the approval flow with Level 0
+                ApprovalStatusFlowVM requesterInApprovalFlow = new();
+                requesterInApprovalFlow.ApprovalLevel = 0;
+                requesterInApprovalFlow.ApproverRole = "Requestor";
+                requesterInApprovalFlow.ApproverName = reqEmp.GetFullName();
+                requesterInApprovalFlow.ApproverActionDate = ListOfExpReimStatusTrackers[0].RequestDate;
+                requesterInApprovalFlow.ApprovalStatusType = _context.ApprovalStatusTypes.Find((int)EApprovalStatus.Intitated).Status;
+
+
+                ListApprovalStatusFlow.Add(requesterInApprovalFlow);
+            }
 
             foreach (ExpenseReimburseStatusTracker statusTracker in ListOfExpReimStatusTrackers)
             {
