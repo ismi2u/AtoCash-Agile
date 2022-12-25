@@ -293,7 +293,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
 
                 //check employee allowed limit to Cash Advance, if limit exceeded return with an conflict message.
-                var empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == CashAdvanceRequest.BusinessUnitId).FirstOrDefault();
+                var empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == CashAdvanceRequest.EmployeeId && e.BusinessUnitId == CashAdvanceRequest.BusinessUnitId).FirstOrDefault();
                 int reqJobRoleId = empExtInfo.JobRoleId ?? 0;
                 double maxAllowed = _context.JobRoles.Find(reqJobRoleId).MaxCashAdvanceAllowed ?? 0;
                 if (maxAllowed >= oldBal + prevAmt - NewAmt && oldBal + prevAmt - NewAmt > 0)

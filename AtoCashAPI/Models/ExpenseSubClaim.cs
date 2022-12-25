@@ -27,9 +27,6 @@ namespace AtoCashAPI.Models
         public int? ExpenseCategoryId { get; set; }
 
 
-
-       
-
         [Required]
         [ForeignKey("ExpenseTypeId")]
         public virtual ExpenseType? ExpenseType { get; set; }
@@ -189,7 +186,7 @@ namespace AtoCashAPI.Models
         public int? ApprovalStatusTypeId { get; set; }
 
 
-        public DateTime? ApprovedDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
     }
 }

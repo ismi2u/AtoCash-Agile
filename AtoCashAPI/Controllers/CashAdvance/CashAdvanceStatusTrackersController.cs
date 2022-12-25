@@ -627,7 +627,7 @@ namespace AtoCashAPI.Controllers
                 requesterInApprovalFlow.ApprovalLevel = 0;
                 requesterInApprovalFlow.ApproverRole = "Requestor";
                 requesterInApprovalFlow.ApproverName = reqEmp.GetFullName();
-                requesterInApprovalFlow.ApprovedDate = claimRequestTracks[0].RequestedDate;
+                requesterInApprovalFlow.ApproverActionDate = claimRequestTracks[0].RequestedDate;
                 requesterInApprovalFlow.ApprovalStatusType = _context.ApprovalStatusTypes.Find((int)EApprovalStatus.Intitated).Status;
 
 
@@ -658,7 +658,7 @@ namespace AtoCashAPI.Controllers
                 approvalStatusFlow.ApprovalLevel = claim.ApprovalLevelId;
                 approvalStatusFlow.ApproverRole = claim.ProjectId == null ? _context.JobRoles.Find(claim.JobRoleId).GetJobRole() : "Project Manager";
                 approvalStatusFlow.ApproverName = claimApproverName;
-                approvalStatusFlow.ApprovedDate = claim.ApproverActionDate;
+                approvalStatusFlow.ApproverActionDate = claim.ApproverActionDate;
                 approvalStatusFlow.ApprovalStatusType = _context.ApprovalStatusTypes.Find(claim.ApprovalStatusTypeId).Status;
 
 

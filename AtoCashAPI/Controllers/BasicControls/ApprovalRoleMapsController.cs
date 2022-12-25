@@ -65,7 +65,7 @@ namespace AtoCashAPI.Controllers
 
 
                 string empName = string.Empty;
-                int ApprvLevel = _context.ApprovalLevels.Find(approvalRoleMap.ApprovalLevelId).Level ?? 0;
+                int? ApprvLevel = _context.ApprovalLevels.Find(approvalRoleMap.ApprovalLevelId).Level;
                 if (ApprvLevel != 1)
                 {
                     if (ListEmployeeIds.Count() > 1)

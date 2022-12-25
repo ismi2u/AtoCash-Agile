@@ -118,8 +118,7 @@ namespace AtoCashAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("Level")
-                        .IsRequired()
+                    b.Property<int>("Level")
                         .HasColumnType("integer");
 
                     b.Property<string>("LevelDesc")

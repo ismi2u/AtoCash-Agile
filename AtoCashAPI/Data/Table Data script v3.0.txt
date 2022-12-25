@@ -88,7 +88,7 @@ INSERT INTO public."JobRoles" VALUES (603, 'DEPT-MGR', 'Department Manager', 500
 INSERT INTO public."JobRoles" VALUES (604, 'DEPT-FINMGR', 'Finance Manager', 100000);
 INSERT INTO public."JobRoles" VALUES (605, 'STOR-ROLE-EMP', 'Store employee ', 10000);
 INSERT INTO public."JobRoles" VALUES (606, 'STOR-ROLE-MGR', 'STOR-ROLE-MGR', 50000);
-INSERT INTO public."JobRoles" VALUES (607, 'STOR-ROLE-OPSMGR', 'STOR-ROLE-OPSMGR', 10000);
+INSERT INTO public."JobRoles" VALUES (607, 'STOR-ROLE-OPSMGR', 'STOR-ROLE-OPSMGR', 100000);
 INSERT INTO public."JobRoles" VALUES (608, 'STOR-ROLE-FINMGR', 'STOR-ROLE-FINMGR',  200000);
 
 INSERT INTO public."EmployeeExtendedInfos"(

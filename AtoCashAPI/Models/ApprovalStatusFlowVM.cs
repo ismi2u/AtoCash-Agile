@@ -12,7 +12,7 @@ namespace AtoCashAPI.Models
         public string? ApproverName { get; set; }
         
         public string? ApprovalStatusType { get; set; }
-        public DateTime? ApprovedDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
     }
 }

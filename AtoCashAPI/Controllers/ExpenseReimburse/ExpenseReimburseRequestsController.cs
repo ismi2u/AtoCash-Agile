@@ -151,6 +151,7 @@ namespace AtoCashAPI.Controllers
             {
 
 
+
                 expenseReimburseRequestDTO.Id = expenseReimbRequest.Id;
                 expenseReimburseRequestDTO.EmployeeId = expenseReimbRequest.EmployeeId;
                 expenseReimburseRequestDTO.EmployeeName = _context.Employees.Find(expenseReimbRequest.EmployeeId).GetFullName();
@@ -178,9 +179,10 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequestDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(expenseReimbRequest.ApprovalStatusTypeId).Status;
 
                 expenseReimburseRequestDTO.Comments = expenseReimbRequest.Comments;
-                expenseReimburseRequestDTO.CreditToBank = (disbAndClaim.IsSettledAmountCredited ?? false) ? disbAndClaim.AmountToCredit : 0;
-                expenseReimburseRequestDTO.CreditToWallet = (disbAndClaim.IsSettledAmountCredited ?? false) ? disbAndClaim.AmountToWallet : 0;
+                expenseReimburseRequestDTO.CreditToBank = disbAndClaim.IsSettledAmountCredited ?? false ? disbAndClaim.AmountToCredit : 0;
+                expenseReimburseRequestDTO.CreditToWallet = disbAndClaim.IsSettledAmountCredited ?? false ? disbAndClaim.AmountToWallet : 0;
                 expenseReimburseRequestDTO.IsSettled = !(disbAndClaim.IsSettledAmountCredited ?? false);
+
 
             }
             catch (Exception ex)

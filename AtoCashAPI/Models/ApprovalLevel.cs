@@ -14,7 +14,7 @@ namespace AtoCashAPI.Models
         public int Id { get; set; }
 
         [Required]
-        public int? Level { get; set; }
+        public int Level { get; set; }
 
         [Column(TypeName = "varchar(150)")]
         public string? LevelDesc { get; set; }
@@ -23,7 +23,7 @@ namespace AtoCashAPI.Models
     public class ApprovalLevelDTO
     {
         public int Id { get; set; }
-        public int? Level { get; set; }
+        public int Level { get; set; }
         public string? LevelDesc { get; set; }
     }
 }
