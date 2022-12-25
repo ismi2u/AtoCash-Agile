@@ -55,7 +55,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.EmployeeName = empFullName;
                 expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
                 expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
-                expenseSubClaimsDto.RequestedDate = expReimReq.RequestedDate;
+                expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
                 expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
                 expenseSubClaimsDto.InvoiceDate = expenseSubClaim.InvoiceDate;
                 expenseSubClaimsDto.Tax = expenseSubClaim.Tax;
@@ -128,7 +128,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             expenseSubClaimsDto.EmployeeName = empFullName;
             expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
             expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
-            expenseSubClaimsDto.RequestedDate = expReimReq.RequestedDate;
+            expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
             expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
             expenseSubClaimsDto.InvoiceDate = expenseSubClaim.InvoiceDate;
             expenseSubClaimsDto.Tax = expenseSubClaim.Tax;
@@ -205,7 +205,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.EmployeeName = empFullName;
                 expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
                 expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
-                expenseSubClaimsDto.RequestedDate = expReimReq.RequestedDate;
+                expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
                 expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
                 expenseSubClaimsDto.InvoiceDate = expenseSubClaim.InvoiceDate;
                 expenseSubClaimsDto.Tax = expenseSubClaim.Tax;

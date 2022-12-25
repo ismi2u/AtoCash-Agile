@@ -33,11 +33,11 @@ namespace AtoCashAPI.Models
         public string? TravelPurpose { get; set; }
 
         [Required]
-        public DateTime? ReqRaisedDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
-        /// <summary>
-        /// foreignkeys
-        /// </summary>
+        [ForeignKey("BusinessTypeId")]
+        public virtual BusinessType? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
 
         [ForeignKey("BusinessUnitId")]
         public virtual BusinessUnit? BusinessUnit { get; set; }
@@ -65,7 +65,7 @@ namespace AtoCashAPI.Models
         public virtual ApprovalStatusType? ApprovalStatusType { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
 
-        public DateTime? ApprovedDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(250)")]
@@ -83,7 +83,7 @@ namespace AtoCashAPI.Models
         public DateTime? TravelStartDate { get; set; }
         public DateTime? TravelEndDate { get; set; }
         public string? TravelPurpose { get; set; }
-        public DateTime? ReqRaisedDate { get; set; }
+        public DateTime? RequestDate { get; set; }
         public string? DepartmentName { get; set; }
         public int? DepartmentId { get; set; }
         public int? ProjectId { get; set; }
@@ -98,7 +98,7 @@ namespace AtoCashAPI.Models
         public string? CostCenter { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
         public string? ApprovalStatusType { get; set; }
-        public DateTime? ApprovedDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
         public bool ShowEditDelete { get; set; }
 

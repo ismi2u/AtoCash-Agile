@@ -818,7 +818,7 @@ namespace AtoCashAPI.Migrations
                     WorkTaskId = table.Column<int>(type: "integer", nullable: true),
                     CostCenterId = table.Column<int>(type: "integer", nullable: false),
                     ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ApproverActionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Comments = table.Column<string>(type: "varchar(250)", nullable: false)
                 },
                 constraints: table =>
@@ -973,7 +973,7 @@ namespace AtoCashAPI.Migrations
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
                     CurrencyTypeId = table.Column<int>(type: "integer", nullable: false),
                     TotalClaimAmount = table.Column<double>(type: "double precision", nullable: false),
-                    RequestedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
@@ -1047,14 +1047,15 @@ namespace AtoCashAPI.Migrations
                     TravelStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TravelEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TravelPurpose = table.Column<string>(type: "varchar(150)", nullable: false),
-                    ReqRaisedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
                     WorkTaskId = table.Column<int>(type: "integer", nullable: true),
                     CostCenterId = table.Column<int>(type: "integer", nullable: false),
                     ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ApproverActionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Comments = table.Column<string>(type: "varchar(250)", nullable: false)
                 },
                 constraints: table =>
@@ -1066,6 +1067,11 @@ namespace AtoCashAPI.Migrations
                         principalTable: "ApprovalStatusTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TravelApprovalRequests_BusinessTypes_BusinessTypeId",
+                        column: x => x.BusinessTypeId,
+                        principalTable: "BusinessTypes",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TravelApprovalRequests_BusinessUnits_BusinessUnitId",
                         column: x => x.BusinessUnitId,
@@ -1311,6 +1317,7 @@ namespace AtoCashAPI.Migrations
                     ExpNoOfDays = table.Column<int>(type: "integer", nullable: true),
                     TaxNo = table.Column<string>(type: "text", nullable: true),
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ExpenseReimbClaimAmount = table.Column<double>(type: "double precision", nullable: false),
                     DocumentIDs = table.Column<string>(type: "text", nullable: true),
                     InvoiceNo = table.Column<string>(type: "varchar(100)", nullable: false),
@@ -2013,6 +2020,11 @@ namespace AtoCashAPI.Migrations
                 name: "IX_TravelApprovalRequests_ApprovalStatusTypeId",
                 table: "TravelApprovalRequests",
                 column: "ApprovalStatusTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TravelApprovalRequests_BusinessTypeId",
+                table: "TravelApprovalRequests",
+                column: "BusinessTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TravelApprovalRequests_BusinessUnitId",

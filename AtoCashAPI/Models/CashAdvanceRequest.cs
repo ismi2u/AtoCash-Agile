@@ -64,7 +64,7 @@ namespace AtoCashAPI.Models
         public virtual ApprovalStatusType? ApprovalStatusType { get; set; }
         public int ApprovalStatusTypeId { get; set; }
 
-        public DateTime? ApprovedDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(250)")]
@@ -116,7 +116,7 @@ namespace AtoCashAPI.Models
         public int CostCenterId { get; set; }
         public string? CostCentre { get; set; }
 
-        public DateTime? ApprovedDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
         public bool ShowEditDelete { get; set; }
 

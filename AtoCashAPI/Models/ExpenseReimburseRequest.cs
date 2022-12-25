@@ -37,7 +37,7 @@ namespace AtoCashAPI.Models
         public Double? TotalClaimAmount { get; set; }
 
         [Required]
-        public DateTime? RequestedDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
 
         [ForeignKey("BusinessTypeId")]
@@ -90,7 +90,6 @@ namespace AtoCashAPI.Models
         public string? EmployeeName { get; set; }
         public int? CurrencyTypeId { get; set; }
         public Double? TotalClaimAmount { get; set; }
-        public DateTime? RequestedDate { get; set; }
 
         public int? BusinessTypeId { get; set; }
         public string? BusinessType { get; set; }

@@ -88,7 +88,7 @@ namespace AtoCashAPI.Controllers
                     expenseReimburseRequestDTO.WorkTaskId = expenseReimbRequest.WorkTaskId;
                     expenseReimburseRequestDTO.WorkTaskName = expenseReimbRequest.WorkTaskId != null ? _context.WorkTasks.Find(expenseReimbRequest.WorkTaskId).TaskName : null;
 
-                    expenseReimburseRequestDTO.RequestedDate = expenseReimbRequest.RequestedDate;
+                    expenseReimburseRequestDTO.RequestDate = expenseReimbRequest.RequestDate;
                     expenseReimburseRequestDTO.ApproverActionDate = expenseReimbRequest.ApproverActionDate;
                     expenseReimburseRequestDTO.ApprovalStatusTypeId = expenseReimbRequest.ApprovalStatusTypeId;
                     expenseReimburseRequestDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(expenseReimbRequest.ApprovalStatusTypeId).Status;
@@ -109,7 +109,7 @@ namespace AtoCashAPI.Controllers
 
             }
 
-            return ListExpenseReimburseRequestDTO.OrderByDescending(o => o.RequestedDate).ToList();
+            return ListExpenseReimburseRequestDTO.OrderByDescending(o => o.RequestDate).ToList();
         }
 
         //GET: api/ExpenseReimburseRequests/5
@@ -173,7 +173,7 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequestDTO.WorkTaskId = expenseReimbRequest.WorkTaskId;
                 expenseReimburseRequestDTO.WorkTaskName = expenseReimbRequest.WorkTaskId != null ? _context.WorkTasks.Find(expenseReimbRequest.WorkTaskId).TaskName : null;
 
-                expenseReimburseRequestDTO.RequestedDate = expenseReimbRequest.RequestedDate;
+                expenseReimburseRequestDTO.RequestDate = expenseReimbRequest.RequestDate;
                 expenseReimburseRequestDTO.ApproverActionDate = expenseReimbRequest.ApproverActionDate;
                 expenseReimburseRequestDTO.ApprovalStatusTypeId = expenseReimbRequest.ApprovalStatusTypeId;
                 expenseReimburseRequestDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(expenseReimbRequest.ApprovalStatusTypeId).Status;
@@ -397,12 +397,11 @@ namespace AtoCashAPI.Controllers
                 expenseReimbRequest.EmployeeId = expenseReimbRequestDTO.EmployeeId;
                 expenseReimbRequest.CurrencyTypeId = expenseReimbRequestDTO.CurrencyTypeId;
                 expenseReimbRequest.TotalClaimAmount = expenseReimbRequestDTO.TotalClaimAmount; //Initially Zero but will be updated after all subclaimes added as per the request
-                expenseReimbRequest.RequestedDate = DateTime.UtcNow;
+                expenseReimbRequest.RequestDate = DateTime.UtcNow;
                 expenseReimbRequest.CostCenterId = costCenterId;
                 expenseReimbRequest.ProjectId = expenseReimbRequestDTO.ProjectId;
                 expenseReimbRequest.SubProjectId = expenseReimbRequestDTO.SubProjectId;
                 expenseReimbRequest.WorkTaskId = expenseReimbRequestDTO.WorkTaskId;
-                expenseReimbRequest.RequestedDate = expenseReimbRequestDTO.RequestedDate;
                 expenseReimbRequest.ApproverActionDate = expenseReimbRequestDTO.ApproverActionDate;
                 expenseReimbRequest.ApprovalStatusTypeId = expenseReimbRequestDTO.ApprovalStatusTypeId;
                 expenseReimbRequest.Comments = "Expense Reimburse Request in Process!";
@@ -726,7 +725,7 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequest.EmployeeId = expenseReimburseRequestDto.EmployeeId;
                 expenseReimburseRequest.CurrencyTypeId = expenseReimburseRequestDto.CurrencyTypeId;
                 expenseReimburseRequest.TotalClaimAmount = dblTotalClaimAmount; //Initially Zero but will be updated after all subclaimes added as per the request
-                expenseReimburseRequest.RequestedDate = DateTime.UtcNow;
+                expenseReimburseRequest.RequestDate = DateTime.UtcNow;
                 expenseReimburseRequest.CostCenterId = costCenterId;
                 expenseReimburseRequest.ProjectId = null;
                 expenseReimburseRequest.SubProjectId = null;
@@ -1088,7 +1087,7 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequest.EmployeeId = expenseReimburseRequestDto.EmployeeId;
                 expenseReimburseRequest.CurrencyTypeId = expenseReimburseRequestDto.CurrencyTypeId;
                 expenseReimburseRequest.TotalClaimAmount = dblTotalClaimAmount; //Initially Zero but will be updated after all subclaimes added as per the request
-                expenseReimburseRequest.RequestedDate = DateTime.UtcNow;
+                expenseReimburseRequest.RequestDate = DateTime.UtcNow;
                 expenseReimburseRequest.CostCenterId = costCenterId;
                 expenseReimburseRequest.ProjectId = expenseReimburseRequestDto.ProjectId;
                 expenseReimburseRequest.SubProjectId = expenseReimburseRequestDto.SubProjectId;

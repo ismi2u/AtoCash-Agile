@@ -73,7 +73,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTO.WorkTask = CashAdvanceRequest.WorkTaskId != null ? _context.WorkTasks.Find(CashAdvanceRequest.WorkTaskId).TaskName : null;
                 CashAdvanceRequestDTO.ApprovalStatusType = CashAdvanceRequest.ApprovalStatusTypeId != 0 ? _context.ApprovalStatusTypes.Find(CashAdvanceRequest.ApprovalStatusTypeId).Status : null;
                 CashAdvanceRequestDTO.ApprovalStatusTypeId = CashAdvanceRequest.ApprovalStatusTypeId;
-                CashAdvanceRequestDTO.ApprovedDate = CashAdvanceRequest.ApprovedDate;
+                CashAdvanceRequestDTO.ApproverActionDate = CashAdvanceRequest.ApproverActionDate;
                 ListCashAdvanceRequestDTO.Add(CashAdvanceRequestDTO);
             }
 
@@ -120,7 +120,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
             CashAdvanceRequestDTO.WorkTask = CashAdvanceRequest.WorkTaskId != null ? _context.WorkTasks.Find(CashAdvanceRequest.WorkTaskId).TaskName : null;
             CashAdvanceRequestDTO.ApprovalStatusTypeId = CashAdvanceRequest.ApprovalStatusTypeId;
             CashAdvanceRequestDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(CashAdvanceRequest.ApprovalStatusTypeId).Status;
-            CashAdvanceRequestDTO.ApprovedDate = CashAdvanceRequest.ApprovedDate;
+            CashAdvanceRequestDTO.ApproverActionDate = CashAdvanceRequest.ApproverActionDate;
             CashAdvanceRequestDTO.CreditToBank = CashAdvanceRequest.ApprovalStatusTypeId == (int)EApprovalStatus.Approved ? disbAndClaim.AmountToCredit : 0;
             CashAdvanceRequestDTO.IsSettled = (disbAndClaim.IsSettledAmountCredited ?? false);
 
@@ -172,7 +172,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTO.WorkTask = CashAdvanceRequest.WorkTaskId != null ? _context.WorkTasks.Find(CashAdvanceRequest.WorkTaskId).TaskName : null;
                 CashAdvanceRequestDTO.ApprovalStatusTypeId = CashAdvanceRequest.ApprovalStatusTypeId;
                 CashAdvanceRequestDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(CashAdvanceRequest.ApprovalStatusTypeId).Status;
-                CashAdvanceRequestDTO.ApprovedDate = CashAdvanceRequest.ApprovedDate;
+                CashAdvanceRequestDTO.ApproverActionDate = CashAdvanceRequest.ApproverActionDate;
 
                 // set the bookean flat to TRUE if No approver has yet approved the Request else FALSE
                 bool ifAnyOfStatusRecordsApproved = _context.CashAdvanceStatusTrackers.Where(t =>

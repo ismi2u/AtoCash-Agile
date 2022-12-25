@@ -48,6 +48,9 @@ namespace AtoCashAPI.Models
         public int? EmployeeId { get; set; }
 
         [Required]
+        public DateTime? RequestDate { get; set; }
+
+        [Required]
         public Double? ExpenseReimbClaimAmount { get; set; }
 
         public string? DocumentIDs { get; set; }
@@ -137,7 +140,7 @@ namespace AtoCashAPI.Models
 
         public string? DocumentIDs { get; set; }
 
-        public DateTime? RequestedDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
         public string? InvoiceNo { get; set; }
 
