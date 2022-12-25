@@ -193,7 +193,10 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                     expenseReimburseStatusTrackerDTO.JobRole = _context.JobRoles.Find(expenseReimburseStatusTracker.JobRoleId).GetJobRole();
                     expenseReimburseStatusTrackerDTO.ApprovalLevelId = expenseReimburseStatusTracker.ApprovalLevelId;
                     expenseReimburseStatusTrackerDTO.RequestedDate = expenseReimburseStatusTracker.RequestedDate;
-                    expenseReimburseStatusTrackerDTO.ApproverName = _context.Employees.Find(expenseReimburseStatusTracker.ApproverEmpId).GetFullName();
+
+                    //var apprEmpId = _context.EmployeeExtendedInfos.Where(e => e.ApprovalGroupId == expenseReimburseStatusTracker.ApprovalGroupId && e.JobRoleId == expenseReimburseStatusTracker.JobRoleId).FirstOrDefault().EmployeeId;
+
+                    //expenseReimburseStatusTrackerDTO.ApproverName = _context.Employees.Find(apprEmpId).GetFullName();
                     expenseReimburseStatusTrackerDTO.ApproverActionDate = expenseReimburseStatusTracker.ApproverActionDate;
                     expenseReimburseStatusTrackerDTO.ApprovalStatusTypeId = expenseReimburseStatusTracker.ApprovalStatusTypeId;
                     expenseReimburseStatusTrackerDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(expenseReimburseStatusTracker.ApprovalStatusTypeId).Status;

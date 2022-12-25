@@ -133,19 +133,12 @@ namespace AtoCashAPI.Models
         public int? JobRoleId { get; set; }
         public string? JobRole { get; set; }
 
-        public int? BARoleId { get; set; }
-        public string? BAJobRole { get; set; }
-
-        public int? BAApprovalGroupId { get; set; }
-        public string? BAApprovalGroup { get; set; }
-
+  
         public string? ApprovalStatusType { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
 
         public DateTime? RequestedDate { get; set; }
         public int? ApproverEmpId { get; set; }
-
-        public string? ApproverName { get; set; }
 
         public DateTime? ApproverActionDate { get; set; }
 
