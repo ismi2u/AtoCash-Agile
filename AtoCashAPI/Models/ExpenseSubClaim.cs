@@ -77,9 +77,10 @@ namespace AtoCashAPI.Models
         public DateTime? InvoiceDate { get; set; }  
         
         [Required]
-        [Column(TypeName = "varchar(150)")]
-        public string? Vendor { get; set; } 
-        
+        [ForeignKey("VendorId")]
+        public virtual Vendor? Vendor { get; set; }
+        public int? VendorId { get; set; }
+
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string? Location { get; set; }
@@ -88,12 +89,9 @@ namespace AtoCashAPI.Models
         [Column(TypeName = "varchar(250)")]
         public string? Description { get; set; }
 
-        [Required]
-        public bool IsStoreReq { get; set; }
-
-        //[ForeignKey("StoreId")]
-        //public virtual Store? Store { get; set; }
-        //public int? StoreId { get; set; }
+        [ForeignKey("BusinessTypeId")]
+        public virtual BusinessType? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
 
         [ForeignKey("BusinessUnitId")]
         public virtual BusinessUnit? BusinessUnit { get; set; }
@@ -142,7 +140,7 @@ namespace AtoCashAPI.Models
 
         public string? DocumentIDs { get; set; }
 
-        public DateTime? ExpReimReqDate { get; set; }
+        public DateTime? RequestedDate { get; set; }
 
         public string? InvoiceNo { get; set; }
 
@@ -152,7 +150,7 @@ namespace AtoCashAPI.Models
 
         public Double? TaxAmount { get; set; }
 
-        public string? Vendor { get; set; }
+        public int? VendorId { get; set; }
 
         public string? Location { get; set; }
 
@@ -170,11 +168,12 @@ namespace AtoCashAPI.Models
         public string? GeneralLedger { get; set; }
 
 
-        public int? StoreId { get; set; }
-        public string? Store { get; set; }
+        public int? BusinessTypeId { get; set; }
+        public string? BusinessType { get; set; }
+        public int? BusinessUnitId { get; set; }
+        public string? BusinessUnit { get; set; }
 
-        public string? DepartmentName { get; set; }
-        public int? DepartmentId { get; set; }
+
         public string? ProjectName { get; set; }
         public int? ProjectId { get; set; }
 

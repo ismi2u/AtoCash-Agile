@@ -69,10 +69,17 @@ namespace AtoCashAPI.Models
         public int? ApprovalLevelId { get; set; }
 
 
-        [Required]
-        public DateTime? ReqDate { get; set; }
+   
 
-        public DateTime? FinalApprovedDate { get; set; }
+        [Required]
+        public DateTime? RequestedDate { get; set; }
+
+
+        [ForeignKey("ApproverEmpId")]
+        public virtual Employee? Approver { get; set; }
+        public int? ApproverEmpId { get; set; }
+
+        public DateTime? ApproverActionDate { get; set; }
 
         [Required]
         [ForeignKey("ApprovalStatusTypeId")]
@@ -120,9 +127,9 @@ namespace AtoCashAPI.Models
 
         public int? ApprovalLevelId { get; set; }
 
-        public DateTime? ReqDate { get; set; }
+        public DateTime? RequestedDate { get; set; }
 
-        public DateTime? FinalApprovedDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
         public int? ApprovalStatusTypeId { get; set; }
         public string? ApprovalStatusType { get; set; }

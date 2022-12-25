@@ -1376,7 +1376,7 @@ namespace AtoCashAPI.Controllers
         //        expenseSubClaimDTO.EmployeeId = expenseSubClaim.EmployeeId;
         //        expenseSubClaimDTO.EmployeeName = _context.Employees.Find(expenseSubClaim.EmployeeId).GetFullName();
         //        expenseSubClaimDTO.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
-        //        expenseSubClaimDTO.ExpReimReqDate = expReimReq.ExpReimReqDate;
+        //        expenseSubClaimDTO.RequestedDate = expReimReq.RequestedDate;
         //        expenseSubClaimDTO.InvoiceNo = expenseSubClaim.InvoiceNo;
         //        expenseSubClaimDTO.InvoiceDate = expenseSubClaim.InvoiceDate;
         //        expenseSubClaimDTO.Tax = expenseSubClaim.Tax;
@@ -1496,7 +1496,7 @@ namespace AtoCashAPI.Controllers
         //        expenseSubClaimDTO.EmployeeId = expenseSubClaim.EmployeeId;
         //        expenseSubClaimDTO.EmployeeName = _context.Employees.Find(expenseSubClaim.EmployeeId).GetFullName();
         //        expenseSubClaimDTO.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
-        //        expenseSubClaimDTO.ExpReimReqDate = expReimReq.ExpReimReqDate;
+        //        expenseSubClaimDTO.RequestedDate = expReimReq.RequestedDate;
         //        expenseSubClaimDTO.InvoiceNo = expenseSubClaim.InvoiceNo;
         //        expenseSubClaimDTO.InvoiceDate = expenseSubClaim.InvoiceDate;
         //        expenseSubClaimDTO.Tax = expenseSubClaim.Tax;
@@ -1540,7 +1540,7 @@ namespace AtoCashAPI.Controllers
         //            new DataColumn("ExpenseReimburseId", typeof(int)),
         //            new DataColumn("ExpenseSubClaimId", typeof(int)),
         //            new DataColumn("EmployeeName", typeof(string)),
-        //            new DataColumn("ExpReimReqDate",typeof(string)),
+        //            new DataColumn("RequestedDate",typeof(string)),
         //            new DataColumn("InvoiceNo",typeof(string)),
         //            new DataColumn("InvoiceDate",typeof(string)),
         //            new DataColumn("Tax",typeof(float)),
@@ -1567,7 +1567,7 @@ namespace AtoCashAPI.Controllers
         //            claimItem.ExpenseReimburseReqId,
         //            claimItem.Id,
         //            claimItem.EmployeeName,
-        //            claimItem.ExpReimReqDate,
+        //            claimItem.RequestedDate,
         //            claimItem.InvoiceNo,
         //            claimItem.InvoiceDate,
         //            claimItem.Tax,

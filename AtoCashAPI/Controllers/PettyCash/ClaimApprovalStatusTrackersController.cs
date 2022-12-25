@@ -56,8 +56,8 @@ namespace AtoCashAPI.Controllers
                     JobRoleId = claimApprovalStatusTracker.JobRoleId,
                     JobRole = _context.JobRoles.Find(claimApprovalStatusTracker.JobRoleId).GetJobRole(),
                     ApprovalLevelId = claimApprovalStatusTracker.ApprovalLevelId,
-                    ReqDate = claimApprovalStatusTracker.ReqDate,
-                    FinalApprovedDate = claimApprovalStatusTracker.FinalApprovedDate,
+                    RequestedDate = claimApprovalStatusTracker.RequestedDate,
+                    ApproverActionDate = claimApprovalStatusTracker.ApproverActionDate,
                     ApprovalStatusTypeId = claimApprovalStatusTracker.ApprovalStatusTypeId,
                     ApprovalStatusType = _context.ApprovalStatusTypes.Find(claimApprovalStatusTracker.ApprovalStatusTypeId).Status,
                     Comments = claimApprovalStatusTracker.Comments
@@ -68,7 +68,7 @@ namespace AtoCashAPI.Controllers
 
             }
 
-            return ListClaimApprovalStatusTrackerDTO.OrderByDescending(o => o.ReqDate).ToList();
+            return ListClaimApprovalStatusTrackerDTO.OrderByDescending(o => o.RequestedDate).ToList();
         }
 
         // GET: api/ClaimApprovalStatusTrackers/5
@@ -99,8 +99,8 @@ namespace AtoCashAPI.Controllers
                 JobRoleId = claimApprovalStatusTracker.JobRoleId,
                 JobRole = _context.JobRoles.Find(claimApprovalStatusTracker.JobRoleId).GetJobRole(),
                 ApprovalLevelId = claimApprovalStatusTracker.ApprovalLevelId,
-                ReqDate = claimApprovalStatusTracker.ReqDate,
-                FinalApprovedDate = claimApprovalStatusTracker.FinalApprovedDate,
+                RequestedDate = claimApprovalStatusTracker.RequestedDate,
+                ApproverActionDate = claimApprovalStatusTracker.ApproverActionDate,
                 ApprovalStatusTypeId = claimApprovalStatusTracker.ApprovalStatusTypeId,
                 ApprovalStatusType = _context.ApprovalStatusTypes.Find(claimApprovalStatusTracker.ApprovalStatusTypeId).Status,
                 Comments = claimApprovalStatusTracker.Comments
@@ -147,7 +147,7 @@ namespace AtoCashAPI.Controllers
                     bRejectMessage = true;
                 }
 
-                claimApprovalStatusTracker.FinalApprovedDate = DateTime.UtcNow;
+                claimApprovalStatusTracker.ApproverActionDate = DateTime.UtcNow;
                 claimApprovalStatusTracker.Comments = bRejectMessage ? claimApprovalStatusTrackerDto.Comments : "Approved";
 
                 ClaimApprovalStatusTracker claimitem;
@@ -210,7 +210,7 @@ namespace AtoCashAPI.Controllers
                                 c.ApprovalGroupId == apprGroupId &&
                                c.ApprovalLevelId == qApprovalLevelId).FirstOrDefault();
                             //claimitem.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
-                            claimitem.FinalApprovedDate = DateTime.UtcNow;
+                            claimitem.ApproverActionDate = DateTime.UtcNow;
 
 
                             //final Approver hence updating ExpenseReimburseRequest table
@@ -421,8 +421,8 @@ namespace AtoCashAPI.Controllers
                 ProjectId = claimApprovalStatusTrackerDto.ProjectId,
                 JobRoleId = claimApprovalStatusTrackerDto.JobRoleId,
                 ApprovalLevelId = claimApprovalStatusTrackerDto.ApprovalLevelId,
-                ReqDate = claimApprovalStatusTrackerDto.ReqDate,
-                FinalApprovedDate = claimApprovalStatusTrackerDto.FinalApprovedDate,
+                RequestedDate = claimApprovalStatusTrackerDto.RequestedDate,
+                ApproverActionDate = claimApprovalStatusTrackerDto.ApproverActionDate,
                 ApprovalStatusTypeId = (int)EApprovalStatus.Pending,
                 Comments = claimApprovalStatusTrackerDto.Comments
             };
@@ -508,8 +508,8 @@ namespace AtoCashAPI.Controllers
                     JobRole = claimApprovalStatusTracker.JobRoleId!=null ? _context.JobRoles.Find(claimApprovalStatusTracker.JobRoleId).GetJobRole() : null ,
                     ApprovalLevelId = claimApprovalStatusTracker.ApprovalLevelId,
                     ClaimAmount = pettyCashReq.PettyClaimAmount,
-                    ReqDate = claimApprovalStatusTracker.ReqDate,
-                    FinalApprovedDate = claimApprovalStatusTracker.FinalApprovedDate,
+                    RequestedDate = claimApprovalStatusTracker.RequestedDate,
+                    ApproverActionDate = claimApprovalStatusTracker.ApproverActionDate,
                     ApprovalStatusTypeId = claimApprovalStatusTracker.ApprovalStatusTypeId,
                     ApprovalStatusType = _context.ApprovalStatusTypes.Find(claimApprovalStatusTracker.ApprovalStatusTypeId).Status,
                     Comments = claimApprovalStatusTracker.Comments
@@ -521,7 +521,7 @@ namespace AtoCashAPI.Controllers
             }
 
 
-            return Ok(ListClaimApprovalStatusTrackerDTO.OrderByDescending(o => o.ReqDate).ToList());
+            return Ok(ListClaimApprovalStatusTrackerDTO.OrderByDescending(o => o.RequestedDate).ToList());
 
         }
 
@@ -580,8 +580,8 @@ namespace AtoCashAPI.Controllers
                     JobRole = _context.JobRoles.Find(claimApprovalStatusTracker.JobRoleId).GetJobRole(),
                     ApprovalLevelId = claimApprovalStatusTracker.ApprovalLevelId,
                     ClaimAmount = pettyCashReq.PettyClaimAmount,
-                    ReqDate = claimApprovalStatusTracker.ReqDate,
-                    FinalApprovedDate = claimApprovalStatusTracker.FinalApprovedDate,
+                    RequestedDate = claimApprovalStatusTracker.RequestedDate,
+                    ApproverActionDate = claimApprovalStatusTracker.ApproverActionDate,
                     ApprovalStatusTypeId = claimApprovalStatusTracker.ApprovalStatusTypeId,
                     ApprovalStatusType = _context.ApprovalStatusTypes.Find(claimApprovalStatusTracker.ApprovalStatusTypeId).Status,
                     Comments = claimApprovalStatusTracker.Comments
@@ -631,7 +631,7 @@ namespace AtoCashAPI.Controllers
                 requesterInApprovalFlow.ApprovalLevel = 0;
                 requesterInApprovalFlow.ApproverRole = "Requestor";
                 requesterInApprovalFlow.ApproverName = reqEmp.GetFullName();
-                requesterInApprovalFlow.ApprovedDate = claimRequestTracks[0].ReqDate;
+                requesterInApprovalFlow.ApprovedDate = claimRequestTracks[0].RequestedDate;
                 requesterInApprovalFlow.ApprovalStatusType = _context.ApprovalStatusTypes.Find((int)EApprovalStatus.Intitated).Status;
 
 
@@ -662,7 +662,7 @@ namespace AtoCashAPI.Controllers
                 approvalStatusFlow.ApprovalLevel = claim.ApprovalLevelId;
                 approvalStatusFlow.ApproverRole = claim.ProjectId == null ? _context.JobRoles.Find(claim.JobRoleId).GetJobRole() : "Project Manager";
                 approvalStatusFlow.ApproverName = claimApproverName;
-                approvalStatusFlow.ApprovedDate = claim.FinalApprovedDate;
+                approvalStatusFlow.ApprovedDate = claim.ApproverActionDate;
                 approvalStatusFlow.ApprovalStatusType = _context.ApprovalStatusTypes.Find(claim.ApprovalStatusTypeId).Status;
 
 

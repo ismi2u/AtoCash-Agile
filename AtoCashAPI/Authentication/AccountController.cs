@@ -263,9 +263,9 @@ namespace AtoCashAPI.Authentication
                     var receiverEmail = model.email;
                     string subject = "Password Reset Link";
                     string content = "Please click the below Password Reset Link to reset your password:" + Environment.NewLine +
-                                        "https://atocash.netlify.app/change-password?token=" + token + "&email=" + model.email;
+                                        "https://AtoCashAPI.netlify.app/change-password?token=" + token + "&email=" + model.email;
 
-                    //"<a href=\"https://atocash.netlify.app/change-password?token=" + token + "&email=" + model.email + "\">";
+                    //"<a href=\"https://AtoCashAPI.netlify.app/change-password?token=" + token + "&email=" + model.email + "\">";
                     var messagemail = new Message(new string[] { receiverEmail }, subject, content);
 
                     await _emailSender.SendEmailAsync(messagemail);

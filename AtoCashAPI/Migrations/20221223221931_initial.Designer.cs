@@ -315,7 +315,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("FinalApprovedDate")
+                    b.Property<DateTime?>("ApproverActionDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("JobRoleId")
@@ -786,7 +786,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("ExpReimReqDate")
+                    b.Property<DateTime?>("RequestedDate")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
@@ -868,7 +868,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("ExpReimReqDate")
+                    b.Property<DateTime?>("RequestedDate")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
@@ -1494,7 +1494,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("FinalApprovedDate")
+                    b.Property<DateTime?>("ApproverActionDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("JobRoleId")

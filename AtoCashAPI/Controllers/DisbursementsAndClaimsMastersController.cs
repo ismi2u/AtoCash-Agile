@@ -201,7 +201,7 @@ namespace AtoCashAPI.Controllers
                             postSubClaimItem.SubClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
                             postSubClaimItem.InvoiceNo = expenseSubClaim.InvoiceNo;
                             postSubClaimItem.InvoiceDate = expenseSubClaim.InvoiceDate;
-                            postSubClaimItem.Vendor = expenseSubClaim.Vendor;
+                            postSubClaimItem.Vendor = _context.Vendors.Find(expenseSubClaim.VendorId).VendorName;
                             postSubClaimItem.ExpenseType = exptype.ExpenseTypeName;
 
                             ListPostSubClaimItem.Add(postSubClaimItem);

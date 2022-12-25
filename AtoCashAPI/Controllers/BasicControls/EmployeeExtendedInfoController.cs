@@ -187,11 +187,16 @@ namespace AtoCashAPI.Controllers.BasicControls
         public async Task<ActionResult<EmployeeExtendedInfo>> PostEmployeeExtendedInfo(EmployeeExtendedInfoDTO employeeExtendedInfoDTO)
         {
             //to eliminate duplicate businessUnitId && JobRoleId
-            var empExtInfo =   _context.EmployeeExtendedInfos.Where(e => e.BusinessUnitId == employeeExtendedInfoDTO.BusinessUnitId && e.JobRoleId == employeeExtendedInfoDTO.JobRoleId).Any();
+            var empExtInfo =   _context.EmployeeExtendedInfos.Where(e => (e.BusinessUnitId == employeeExtendedInfoDTO.BusinessUnitId  && 
+                                                                        e.JobRoleId == employeeExtendedInfoDTO.JobRoleId) ||
+                                                                        (e.EmployeeId == employeeExtendedInfoDTO.EmployeeId && e.BusinessUnitId == employeeExtendedInfoDTO.BusinessUnitId)
+                                                                         ).Any();
 
-            if(empExtInfo != null)
+
+            
+            if (empExtInfo )
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "BusinessUnitId & JobRoleId combination already exists!" });
+                return Conflict(new RespStatus { Status = "Failure", Message = "Probable Business Unit duplication - action aborted!" });
             }
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace AtoCashAPI.Models
 {
     public class ExpenseReimburseStatusTracker
-    { 
+    {
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
@@ -20,11 +20,23 @@ namespace AtoCashAPI.Models
         public virtual Employee? Employee { get; set; }
         public int? EmployeeId { get; set; }
 
+
+        [ForeignKey("BusinessTypeId")]
+        public virtual BusinessType? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
+
+
+        [ForeignKey("BusinessUnitId")]
+        public virtual BusinessUnit? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
+
         [Required]
-        [ForeignKey("ExpenseReimburseRequestId")]
-        public virtual ExpenseReimburseRequest? ExpenseReimburseRequest { get; set; }
         public int? ExpenseReimburseRequestId { get; set; }
 
+        [Required]
+        [ForeignKey("RequestTypeId")]
+        public virtual RequestType? RequestType { get; set; }
+        public int? RequestTypeId { get; set; }
 
         [Required]
         [ForeignKey("CurrencyTypeId")]
@@ -33,22 +45,6 @@ namespace AtoCashAPI.Models
 
         [Required]
         public Double? TotalClaimAmount { get; set; }
-
-        [Required]
-        public DateTime? ExpReimReqDate { get; set; }
-        //[Required]
-        //public bool IsStoreReq { get; set; }
-
-        ///// 
-
-        //[ForeignKey("StoreId")]
-        //public virtual Store? Store { get; set; }
-        //public int? StoreId { get; set; }
-
-        [ForeignKey("BusinessUnitId")]
-        public virtual BusinessUnit? BusinessUnit { get; set; }
-        public int? BusinessUnitId { get; set; }
-
 
         [ForeignKey("ProjManagerId")]
         public virtual Employee? ProjManager { get; set; }
@@ -89,7 +85,16 @@ namespace AtoCashAPI.Models
         public virtual ApprovalStatusType? ApprovalStatusType { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
 
-        public DateTime? ApprovedDate { get; set; }
+        [Required]
+        public DateTime? RequestedDate { get; set; }
+
+
+        [ForeignKey("ApproverEmpId")]
+        public virtual Employee? Approver { get; set; }
+        public int? ApproverEmpId { get; set; }
+
+        public DateTime? ApproverActionDate { get; set; }
+
 
         [Required]
         [Column(TypeName = "varchar(250)")]
@@ -108,14 +113,17 @@ namespace AtoCashAPI.Models
         public int? CurrencyTypeId { get; set; }
         public string? CurrencyType { get; set; }
         public Double? TotalClaimAmount { get; set; }
-        public DateTime? ExpReimReqDate { get; set; }
 
-        public int? StoreId { get; set; }
-        public string? Store{ get; set; }
 
-        public bool IsStoreReq { get; set; }
-        public int? DepartmentId { get; set; }
-        public string? Department { get; set; }
+        public int? RequestTypeId { get; set; }
+        public string? RequestType { get; set; }
+
+        public string? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
+
+        public string? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
+
         public int? ProjectId { get; set; }
         public string? Project { get; set; }
 
@@ -141,7 +149,12 @@ namespace AtoCashAPI.Models
         public string? ApprovalStatusType { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
 
-        public DateTime? ApprovedDate { get; set; }
+        public DateTime? RequestedDate { get; set; }
+        public int? ApproverEmpId { get; set; }
+
+        public string? ApproverName { get; set; }
+
+        public DateTime? ApproverActionDate { get; set; }
 
         public string? Comments { get; set; }
 

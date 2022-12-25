@@ -32,6 +32,8 @@ namespace AtoCashAPI.Data
         public DbSet<BusinessUnit> BusinessUnits { get; set; }
         public DbSet<Location> Locations { get; set; }
 
+        public DbSet<Vendor> Vendors { get; set; }
+
         public DbSet<CostCenter> CostCenters { get; set; }
 
         public DbSet<ApprovalGroup> ApprovalGroups { get; set; }

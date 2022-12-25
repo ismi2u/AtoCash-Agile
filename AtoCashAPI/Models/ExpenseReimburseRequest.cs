@@ -26,7 +26,7 @@ namespace AtoCashAPI.Models
         [Required]
         [ForeignKey("EmployeeId")]
         public virtual Employee? Employee { get; set; }
-        public int? EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
 
         [Required]
         [ForeignKey("CurrencyTypeId")]
@@ -37,18 +37,16 @@ namespace AtoCashAPI.Models
         public Double? TotalClaimAmount { get; set; }
 
         [Required]
-        public DateTime? ExpReimReqDate { get; set; }
+        public DateTime? RequestedDate { get; set; }
 
-        [Required]
-        public bool IsStoreReq { get; set; }
+
+        [ForeignKey("BusinessTypeId")]
+        public virtual BusinessType? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
 
         [ForeignKey("BusinessUnitId")]
         public virtual BusinessUnit? BusinessUnit { get; set; }
         public int? BusinessUnitId { get; set; }
-
-        //[ForeignKey("StoreId")]
-        //public virtual Store? Store { get; set; }
-        //public int? StoreId { get; set; }
 
         [ForeignKey("ProjectId")]
         public virtual Project? Project { get; set; }
@@ -71,7 +69,7 @@ namespace AtoCashAPI.Models
         public virtual ApprovalStatusType? ApprovalStatusType { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
 
-        public DateTime? ApprovedDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
         [Required]
         [Column(TypeName = "varchar(250)")]
@@ -86,23 +84,19 @@ namespace AtoCashAPI.Models
         public int Id { get; set; }
 
         public string? ExpenseReportTitle { get; set; }
-        public int? EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
 
        
         public string? EmployeeName { get; set; }
         public int? CurrencyTypeId { get; set; }
         public Double? TotalClaimAmount { get; set; }
-        public DateTime? ExpReimReqDate { get; set; }
+        public DateTime? RequestedDate { get; set; }
 
-        public bool IsStoreReq { get; set; }
-       
+        public int? BusinessTypeId { get; set; }
+        public string? BusinessType { get; set; }
 
-       
-
-        public string? DepartmentName { get; set; }
-        public int? DepartmentId { get; set; }
-        public int? StoreId { get; set; }
-        public string? Store { get; set; }
+        public int? BusinessUnitId { get; set; }
+        public string? BusinessUnit { get; set; }
         public string? ProjectName { get; set; }
         public int? ProjectId { get; set; }
 
@@ -111,9 +105,14 @@ namespace AtoCashAPI.Models
 
         public string? WorkTaskName { get; set; }
         public int? WorkTaskId { get; set; }
+
+        public int CostCenterId { get; set; }
+        public string? CostCentre { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
         public string? ApprovalStatusType { get; set; }
-        public DateTime? ApprovedDate { get; set; }
+
+        public DateTime? RequestDate { get; set; }
+        public DateTime? ApproverActionDate { get; set; }
 
         public bool ShowEditDelete { get; set; }
         public List<ExpenseSubClaimDTO> ExpenseSubClaims { get; set; }
