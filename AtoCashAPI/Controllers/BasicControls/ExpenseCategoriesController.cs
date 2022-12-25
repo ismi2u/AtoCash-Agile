@@ -14,7 +14,7 @@ namespace AtoCashAPI.Controllers
 {
     [Route("api/[controller]/[Action]")]
     [ApiController]
-      [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
+    [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
     public class ExpenseCategoriesController : ControllerBase
     {
         private readonly AtoCashDbContext _context;
@@ -31,7 +31,7 @@ namespace AtoCashAPI.Controllers
         {
             List<ExpenseCategoryVM> ListExpenseCategoryVM = new();
 
-            var expenseCategories = await _context.ExpenseCategories.Where(c => c.StatusTypeId == (int)EStatusType.Active && c.IsBusinessCategory == isBussCategory).ToListAsync();
+            var expenseCategories = await _context.ExpenseCategories.Where(c => c.StatusTypeId == (int)EStatusType.Active).ToListAsync();
             foreach (ExpenseCategory expenseCategory in expenseCategories)
             {
                 ExpenseCategoryVM expenseCategoryVM = new()
@@ -85,7 +85,6 @@ namespace AtoCashAPI.Controllers
                     Id = expenseCategory.Id,
                     ExpenseCategoryName = expenseCategory.ExpenseCategoryName,
                     ExpenseCategoryDesc = expenseCategory.ExpenseCategoryDesc,
-                    IsBusinessCategory = expenseCategory.IsBusinessCategory,
                     StatusTypeId = expenseCategory.StatusTypeId,
                     StatusType = _context.StatusTypes.Find(expenseCategory.StatusTypeId).Status
                 };
@@ -112,7 +111,6 @@ namespace AtoCashAPI.Controllers
                 Id = expenseCategory.Id,
                 ExpenseCategoryName = expenseCategory.ExpenseCategoryName,
                 ExpenseCategoryDesc = expenseCategory.ExpenseCategoryDesc,
-                IsBusinessCategory = expenseCategory.IsBusinessCategory,
                 StatusTypeId = expenseCategory.StatusTypeId,
                 StatusType = _context.StatusTypes.Find(expenseCategory.StatusTypeId).Status
             };
@@ -122,7 +120,7 @@ namespace AtoCashAPI.Controllers
 
         // PUT: api/ExpenseCategories/5
         [HttpPut("{id}")]
-          [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> PutExpenseCategory(int id, ExpenseCategoryDTO expenseCategoryDTO)
         {
             if (id != expenseCategoryDTO.Id)
@@ -133,7 +131,6 @@ namespace AtoCashAPI.Controllers
             var expCategory = await _context.ExpenseCategories.FindAsync(id);
 
             expCategory.ExpenseCategoryDesc = expenseCategoryDTO.ExpenseCategoryDesc;
-            expCategory.IsBusinessCategory = expenseCategoryDTO.IsBusinessCategory;
             expCategory.StatusTypeId = expenseCategoryDTO.StatusTypeId;
             _context.ExpenseCategories.Update(expCategory);
 
@@ -154,7 +151,7 @@ namespace AtoCashAPI.Controllers
         // POST: api/ExpenseCategories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-          [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<ActionResult<ExpenseCategory>> PostExpenseCategory(ExpenseCategoryDTO expenseCategoryDTO)
         {
             var eCategory = _context.ExpenseCategories.Where(e => e.ExpenseCategoryName == expenseCategoryDTO.ExpenseCategoryName).FirstOrDefault();
@@ -166,7 +163,6 @@ namespace AtoCashAPI.Controllers
             ExpenseCategory expenseCategory = new();
             expenseCategory.ExpenseCategoryName = expenseCategoryDTO.ExpenseCategoryName;
             expenseCategory.ExpenseCategoryDesc = expenseCategoryDTO.ExpenseCategoryDesc;
-            expenseCategory.IsBusinessCategory = expenseCategoryDTO.IsBusinessCategory;
             expenseCategory.StatusTypeId = expenseCategoryDTO.StatusTypeId;
             _context.ExpenseCategories.Add(expenseCategory);
             await _context.SaveChangesAsync();
@@ -176,7 +172,7 @@ namespace AtoCashAPI.Controllers
 
         // DELETE: api/ExpenseCategories/5
         [HttpDelete("{id}")]
-          [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> DeleteExpenseCategory(int id)
         {
 

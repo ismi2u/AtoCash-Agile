@@ -22,9 +22,6 @@ namespace AtoCashAPI.Models
         [Column(TypeName = "varchar(150)")]
         public string? ExpenseCategoryDesc { get; set; }
 
-        [Required]
-        public bool IsBusinessCategory { get; set; }
-
 
 
         [Required]
@@ -41,8 +38,6 @@ namespace AtoCashAPI.Models
         public int Id { get; set; }
         public string? ExpenseCategoryName { get; set; }
         public string? ExpenseCategoryDesc { get; set; }
-
-        public bool IsBusinessCategory { get; set; }
         public string? StatusType { get; set; }
         public int StatusTypeId { get; set; }
 
