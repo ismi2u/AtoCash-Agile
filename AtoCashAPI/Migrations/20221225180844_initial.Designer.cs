@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20221225171446_initial")]
+    [Migration("20221225180844_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -817,9 +817,6 @@ namespace AtoCashAPI.Migrations
                     b.Property<string>("ExpenseCategoryName")
                         .IsRequired()
                         .HasColumnType("varchar(150)");
-
-                    b.Property<bool>("IsBusinessCategory")
-                        .HasColumnType("boolean");
 
                     b.Property<int>("StatusTypeId")
                         .HasColumnType("integer");
