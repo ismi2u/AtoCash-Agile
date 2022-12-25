@@ -801,6 +801,81 @@ namespace AtoCashAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CashAdvanceRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EmployeeId = table.Column<int>(type: "integer", nullable: false),
+                    CashAdvanceAmount = table.Column<double>(type: "double precision", nullable: false),
+                    CashAdvanceRequestDesc = table.Column<string>(type: "varchar(150)", nullable: false),
+                    CashReqDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CurrencyTypeId = table.Column<int>(type: "integer", nullable: false),
+                    BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
+                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
+                    ProjectId = table.Column<int>(type: "integer", nullable: true),
+                    SubProjectId = table.Column<int>(type: "integer", nullable: true),
+                    WorkTaskId = table.Column<int>(type: "integer", nullable: true),
+                    CostCenterId = table.Column<int>(type: "integer", nullable: false),
+                    ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
+                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Comments = table.Column<string>(type: "varchar(250)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CashAdvanceRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_ApprovalStatusTypes_ApprovalStatusTypeId",
+                        column: x => x.ApprovalStatusTypeId,
+                        principalTable: "ApprovalStatusTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_BusinessTypes_BusinessTypeId",
+                        column: x => x.BusinessTypeId,
+                        principalTable: "BusinessTypes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_BusinessUnits_BusinessUnitId",
+                        column: x => x.BusinessUnitId,
+                        principalTable: "BusinessUnits",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_CostCenters_CostCenterId",
+                        column: x => x.CostCenterId,
+                        principalTable: "CostCenters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_CurrencyTypes_CurrencyTypeId",
+                        column: x => x.CurrencyTypeId,
+                        principalTable: "CurrencyTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_SubProjects_SubProjectId",
+                        column: x => x.SubProjectId,
+                        principalTable: "SubProjects",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CashAdvanceRequests_WorkTasks_WorkTaskId",
+                        column: x => x.WorkTaskId,
+                        principalTable: "WorkTasks",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CashAdvanceStatusTrackers",
                 columns: table => new
                 {
@@ -809,7 +884,7 @@ namespace AtoCashAPI.Migrations
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
                     BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
-                    BlendedRequestId = table.Column<int>(type: "integer", nullable: false),
+                    CashAdvanceRequestId = table.Column<int>(type: "integer", nullable: false),
                     RequestTypeId = table.Column<int>(type: "integer", nullable: false),
                     ProjManagerId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
@@ -833,7 +908,7 @@ namespace AtoCashAPI.Migrations
                         principalTable: "ApprovalLevels",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CashAdvanceStatusTrackers_ApprovalStatusTypes_ApprovalSta~",
+                        name: "FK_CashAdvanceStatusTrackers_ApprovalStatusTypes_ApprovalStatu~",
                         column: x => x.ApprovalStatusTypeId,
                         principalTable: "ApprovalStatusTypes",
                         principalColumn: "Id",
@@ -1156,81 +1231,6 @@ namespace AtoCashAPI.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ExpenseReimburseStatusTrackers_WorkTasks_WorkTaskId",
-                        column: x => x.WorkTaskId,
-                        principalTable: "WorkTasks",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CashAdvanceRequests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    EmployeeId = table.Column<int>(type: "integer", nullable: false),
-                    CashAdvanceAmount = table.Column<double>(type: "double precision", nullable: false),
-                    CashAdvanceRequestDesc = table.Column<string>(type: "varchar(150)", nullable: false),
-                    CashReqDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CurrencyTypeId = table.Column<int>(type: "integer", nullable: false),
-                    BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
-                    BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
-                    ProjectId = table.Column<int>(type: "integer", nullable: true),
-                    SubProjectId = table.Column<int>(type: "integer", nullable: true),
-                    WorkTaskId = table.Column<int>(type: "integer", nullable: true),
-                    CostCenterId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
-                    ApprovedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Comments = table.Column<string>(type: "varchar(250)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CashAdvanceRequests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_ApprovalStatusTypes_ApprovalStatusTypeId",
-                        column: x => x.ApprovalStatusTypeId,
-                        principalTable: "ApprovalStatusTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_BusinessTypes_BusinessTypeId",
-                        column: x => x.BusinessTypeId,
-                        principalTable: "BusinessTypes",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_BusinessUnits_BusinessUnitId",
-                        column: x => x.BusinessUnitId,
-                        principalTable: "BusinessUnits",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_CostCenters_CostCenterId",
-                        column: x => x.CostCenterId,
-                        principalTable: "CostCenters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_CurrencyTypes_CurrencyTypeId",
-                        column: x => x.CurrencyTypeId,
-                        principalTable: "CurrencyTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_SubProjects_SubProjectId",
-                        column: x => x.SubProjectId,
-                        principalTable: "SubProjects",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_CashAdvanceRequests_WorkTasks_WorkTaskId",
                         column: x => x.WorkTaskId,
                         principalTable: "WorkTasks",
                         principalColumn: "Id");
@@ -1560,6 +1560,51 @@ namespace AtoCashAPI.Migrations
                 name: "IX_BusinessUnits_StatusTypeId",
                 table: "BusinessUnits",
                 column: "StatusTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_ApprovalStatusTypeId",
+                table: "CashAdvanceRequests",
+                column: "ApprovalStatusTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_BusinessTypeId",
+                table: "CashAdvanceRequests",
+                column: "BusinessTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_BusinessUnitId",
+                table: "CashAdvanceRequests",
+                column: "BusinessUnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_CostCenterId",
+                table: "CashAdvanceRequests",
+                column: "CostCenterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_CurrencyTypeId",
+                table: "CashAdvanceRequests",
+                column: "CurrencyTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_EmployeeId",
+                table: "CashAdvanceRequests",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_ProjectId",
+                table: "CashAdvanceRequests",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_SubProjectId",
+                table: "CashAdvanceRequests",
+                column: "SubProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashAdvanceRequests_WorkTaskId",
+                table: "CashAdvanceRequests",
+                column: "WorkTaskId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CashAdvanceStatusTrackers_ApprovalLevelId",
@@ -1937,51 +1982,6 @@ namespace AtoCashAPI.Migrations
                 column: "StatusTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_ApprovalStatusTypeId",
-                table: "CashAdvanceRequests",
-                column: "ApprovalStatusTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_BusinessTypeId",
-                table: "CashAdvanceRequests",
-                column: "BusinessTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_BusinessUnitId",
-                table: "CashAdvanceRequests",
-                column: "BusinessUnitId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_CostCenterId",
-                table: "CashAdvanceRequests",
-                column: "CostCenterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_CurrencyTypeId",
-                table: "CashAdvanceRequests",
-                column: "CurrencyTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_EmployeeId",
-                table: "CashAdvanceRequests",
-                column: "EmployeeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_ProjectId",
-                table: "CashAdvanceRequests",
-                column: "ProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_SubProjectId",
-                table: "CashAdvanceRequests",
-                column: "SubProjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CashAdvanceRequests_WorkTaskId",
-                table: "CashAdvanceRequests",
-                column: "WorkTaskId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProjectManagements_EmployeeId",
                 table: "ProjectManagements",
                 column: "EmployeeId");
@@ -2128,6 +2128,9 @@ namespace AtoCashAPI.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CashAdvanceRequests");
+
+            migrationBuilder.DropTable(
                 name: "CashAdvanceStatusTrackers");
 
             migrationBuilder.DropTable(
@@ -2147,9 +2150,6 @@ namespace AtoCashAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "FileDocuments");
-
-            migrationBuilder.DropTable(
-                name: "CashAdvanceRequests");
 
             migrationBuilder.DropTable(
                 name: "ProjectManagements");
