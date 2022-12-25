@@ -56,7 +56,7 @@ namespace AtoCashAPI.Controllers
                     JobRoleId = CashAdvanceStatusTracker.JobRoleId,
                     JobRole = _context.JobRoles.Find(CashAdvanceStatusTracker.JobRoleId).GetJobRole(),
                     ApprovalLevelId = CashAdvanceStatusTracker.ApprovalLevelId,
-                    RequestedDate = CashAdvanceStatusTracker.RequestedDate,
+                    RequestDate = CashAdvanceStatusTracker.RequestDate,
                     ApproverActionDate = CashAdvanceStatusTracker.ApproverActionDate,
                     ApprovalStatusTypeId = CashAdvanceStatusTracker.ApprovalStatusTypeId,
                     ApprovalStatusType = _context.ApprovalStatusTypes.Find(CashAdvanceStatusTracker.ApprovalStatusTypeId).Status,
@@ -68,7 +68,7 @@ namespace AtoCashAPI.Controllers
 
             }
 
-            return ListCashAdvanceStatusTrackerDTO.OrderByDescending(o => o.RequestedDate).ToList();
+            return ListCashAdvanceStatusTrackerDTO.OrderByDescending(o => o.RequestDate).ToList();
         }
 
         // GET: api/CashAdvanceStatusTrackers/5
@@ -99,7 +99,7 @@ namespace AtoCashAPI.Controllers
                 JobRoleId = CashAdvanceStatusTracker.JobRoleId,
                 JobRole = _context.JobRoles.Find(CashAdvanceStatusTracker.JobRoleId).GetJobRole(),
                 ApprovalLevelId = CashAdvanceStatusTracker.ApprovalLevelId,
-                RequestedDate = CashAdvanceStatusTracker.RequestedDate,
+                RequestDate = CashAdvanceStatusTracker.RequestDate,
                 ApproverActionDate = CashAdvanceStatusTracker.ApproverActionDate,
                 ApprovalStatusTypeId = CashAdvanceStatusTracker.ApprovalStatusTypeId,
                 ApprovalStatusType = _context.ApprovalStatusTypes.Find(CashAdvanceStatusTracker.ApprovalStatusTypeId).Status,
@@ -421,7 +421,7 @@ namespace AtoCashAPI.Controllers
                 ProjectId = CashAdvanceStatusTrackerDto.ProjectId,
                 JobRoleId = CashAdvanceStatusTrackerDto.JobRoleId,
                 ApprovalLevelId = CashAdvanceStatusTrackerDto.ApprovalLevelId,
-                RequestedDate = CashAdvanceStatusTrackerDto.RequestedDate,
+                RequestDate = CashAdvanceStatusTrackerDto.RequestDate,
                 ApproverActionDate = CashAdvanceStatusTrackerDto.ApproverActionDate,
                 ApprovalStatusTypeId = (int)EApprovalStatus.Pending,
                 Comments = CashAdvanceStatusTrackerDto.Comments
@@ -506,7 +506,7 @@ namespace AtoCashAPI.Controllers
                     JobRole = CashAdvanceStatusTracker.JobRoleId != null ? _context.JobRoles.Find(CashAdvanceStatusTracker.JobRoleId).GetJobRole() : null,
                     ApprovalLevelId = CashAdvanceStatusTracker.ApprovalLevelId,
                     ClaimAmount = CashAdvanceReq.CashAdvanceAmount,
-                    RequestedDate = CashAdvanceStatusTracker.RequestedDate,
+                    RequestDate = CashAdvanceStatusTracker.RequestDate,
                     ApproverActionDate = CashAdvanceStatusTracker.ApproverActionDate,
                     ApprovalStatusTypeId = CashAdvanceStatusTracker.ApprovalStatusTypeId,
                     ApprovalStatusType = _context.ApprovalStatusTypes.Find(CashAdvanceStatusTracker.ApprovalStatusTypeId).Status,
@@ -519,7 +519,7 @@ namespace AtoCashAPI.Controllers
             }
 
 
-            return Ok(ListCashAdvanceStatusTrackerDTO.OrderByDescending(o => o.RequestedDate).ToList());
+            return Ok(ListCashAdvanceStatusTrackerDTO.OrderByDescending(o => o.RequestDate).ToList());
 
         }
 
@@ -576,7 +576,7 @@ namespace AtoCashAPI.Controllers
                     JobRole = _context.JobRoles.Find(CashAdvanceStatusTracker.JobRoleId).GetJobRole(),
                     ApprovalLevelId = CashAdvanceStatusTracker.ApprovalLevelId,
                     ClaimAmount = CashAdvanceReq.CashAdvanceAmount,
-                    RequestedDate = CashAdvanceStatusTracker.RequestedDate,
+                    RequestDate = CashAdvanceStatusTracker.RequestDate,
                     ApproverActionDate = CashAdvanceStatusTracker.ApproverActionDate,
                     ApprovalStatusTypeId = CashAdvanceStatusTracker.ApprovalStatusTypeId,
                     ApprovalStatusType = _context.ApprovalStatusTypes.Find(CashAdvanceStatusTracker.ApprovalStatusTypeId).Status,
@@ -627,7 +627,7 @@ namespace AtoCashAPI.Controllers
                 requesterInApprovalFlow.ApprovalLevel = 0;
                 requesterInApprovalFlow.ApproverRole = "Requestor";
                 requesterInApprovalFlow.ApproverName = reqEmp.GetFullName();
-                requesterInApprovalFlow.ApproverActionDate = claimRequestTracks[0].RequestedDate;
+                requesterInApprovalFlow.ApproverActionDate = claimRequestTracks[0].RequestDate;
                 requesterInApprovalFlow.ApprovalStatusType = _context.ApprovalStatusTypes.Find((int)EApprovalStatus.Intitated).Status;
 
 

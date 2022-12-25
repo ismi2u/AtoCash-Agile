@@ -1122,7 +1122,7 @@ namespace AtoCashAPI.Migrations
                     ApprovalGroupId = table.Column<int>(type: "integer", nullable: true),
                     JobRoleId = table.Column<int>(type: "integer", nullable: true),
                     ApprovalLevelId = table.Column<int>(type: "integer", nullable: true),
-                    RequestedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ApproverEmpId = table.Column<int>(type: "integer", nullable: true),
                     ApproverActionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
@@ -1216,7 +1216,7 @@ namespace AtoCashAPI.Migrations
                     JobRoleId = table.Column<int>(type: "integer", nullable: false),
                     ApprovalLevelId = table.Column<int>(type: "integer", nullable: false),
                     ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
-                    RequestedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ApproverEmpId = table.Column<int>(type: "integer", nullable: true),
                     ApproverActionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Comments = table.Column<string>(type: "varchar(250)", nullable: false)
@@ -1410,6 +1410,7 @@ namespace AtoCashAPI.Migrations
                     TravelApprovalRequestId = table.Column<int>(type: "integer", nullable: false),
                     TravelStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     TravelEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: true),
                     ProjManagerId = table.Column<int>(type: "integer", nullable: true),
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
@@ -1418,7 +1419,8 @@ namespace AtoCashAPI.Migrations
                     ApprovalGroupId = table.Column<int>(type: "integer", nullable: false),
                     JobRoleId = table.Column<int>(type: "integer", nullable: false),
                     ApprovalLevelId = table.Column<int>(type: "integer", nullable: false),
-                    ReqDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ApproverEmpId = table.Column<int>(type: "integer", nullable: true),
                     ApproverActionDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
                     Comments = table.Column<string>(type: "varchar(250)", nullable: true)
@@ -1439,9 +1441,19 @@ namespace AtoCashAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_TravelApprovalStatusTrackers_BusinessTypes_BusinessTypeId",
+                        column: x => x.BusinessTypeId,
+                        principalTable: "BusinessTypes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_TravelApprovalStatusTrackers_BusinessUnits_BusinessUnitId",
                         column: x => x.BusinessUnitId,
                         principalTable: "BusinessUnits",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TravelApprovalStatusTrackers_Employees_ApproverEmpId",
+                        column: x => x.ApproverEmpId,
+                        principalTable: "Employees",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TravelApprovalStatusTrackers_Employees_EmployeeId",
@@ -2064,6 +2076,16 @@ namespace AtoCashAPI.Migrations
                 name: "IX_TravelApprovalStatusTrackers_ApprovalStatusTypeId",
                 table: "TravelApprovalStatusTrackers",
                 column: "ApprovalStatusTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TravelApprovalStatusTrackers_ApproverEmpId",
+                table: "TravelApprovalStatusTrackers",
+                column: "ApproverEmpId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TravelApprovalStatusTrackers_BusinessTypeId",
+                table: "TravelApprovalStatusTrackers",
+                column: "BusinessTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TravelApprovalStatusTrackers_BusinessUnitId",

@@ -802,7 +802,7 @@ namespace AtoCashAPI.Controllers
                         JobRoleId = reqJobRoleId,
                         ApprovalGroupId = reqApprGroupId,
                         ApprovalLevelId = reqApprLevel,
-                        RequestedDate = DateTime.UtcNow,
+                        RequestDate = DateTime.UtcNow,
                         ApproverEmpId = reqEmpid,
                         ApproverActionDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Approved, //1-Pending, 2-Approved, 3-Rejected
@@ -862,7 +862,7 @@ namespace AtoCashAPI.Controllers
                             JobRoleId = apprjobRoleId,
                             ApprovalGroupId = reqApprGroupId,
                             ApprovalLevelId = ApprMap.ApprovalLevelId,
-                            RequestedDate = DateTime.UtcNow,
+                            RequestDate = DateTime.UtcNow,
                             ApproverEmpId = null,
                             ApproverActionDate = DateTime.UtcNow,
                             ApprovalStatusTypeId = isFirstApprover ? (int)EApprovalStatus.Pending : (int)EApprovalStatus.Intitated,
@@ -1151,7 +1151,7 @@ namespace AtoCashAPI.Controllers
                         JobRoleId = null,
                         ApprovalGroupId = null,
                         ApprovalLevelId = 2,
-                        RequestedDate = DateTime.UtcNow,
+                        RequestDate = DateTime.UtcNow,
                         ApproverEmpId = reqEmpid,
                         ApproverActionDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Approved, //1-Pending, 2-Approved, 3-Rejected
@@ -1186,7 +1186,7 @@ namespace AtoCashAPI.Controllers
                         JobRoleId = null,
                         ApprovalGroupId = null,
                         ApprovalLevelId = 2,
-                        RequestedDate = DateTime.UtcNow,
+                        RequestDate = DateTime.UtcNow,
                         ApproverEmpId = reqEmpid,
                         ApproverActionDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Pending, //1-Pending, 2-Approved, 3-Rejected

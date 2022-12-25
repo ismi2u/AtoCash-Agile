@@ -101,7 +101,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 }
                 else
                 {
-                    var approverExtInfo = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == statusTracker.EmployeeId && e.ApprovalGroupId == statusTracker.ApprovalGroupId).FirstOrDefault();
+                    var approverExtInfo = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == statusTracker.JobRoleId && e.ApprovalGroupId == statusTracker.ApprovalGroupId).FirstOrDefault();
                     claimApproverName = _context.Employees.Find(approverExtInfo.EmployeeId).GetFullName();
                 }
 
@@ -192,7 +192,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                     expenseReimburseStatusTrackerDTO.JobRoleId = expenseReimburseStatusTracker.JobRoleId;
                     expenseReimburseStatusTrackerDTO.JobRole = _context.JobRoles.Find(expenseReimburseStatusTracker.JobRoleId).GetJobRole();
                     expenseReimburseStatusTrackerDTO.ApprovalLevelId = expenseReimburseStatusTracker.ApprovalLevelId;
-                    expenseReimburseStatusTrackerDTO.RequestedDate = expenseReimburseStatusTracker.RequestedDate;
+                    expenseReimburseStatusTrackerDTO.RequestDate = expenseReimburseStatusTracker.RequestDate;
 
                     //var apprEmpId = _context.EmployeeExtendedInfos.Where(e => e.ApprovalGroupId == expenseReimburseStatusTracker.ApprovalGroupId && e.JobRoleId == expenseReimburseStatusTracker.JobRoleId).FirstOrDefault().EmployeeId;
 
@@ -210,7 +210,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             }
 
 
-            return Ok(ListExpenseReimburseStatusTrackerDTO.OrderByDescending(o => o.RequestedDate).ToList());
+            return Ok(ListExpenseReimburseStatusTrackerDTO.OrderByDescending(o => o.RequestDate).ToList());
 
         }
 
@@ -303,7 +303,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                     expenseReimburseStatusTracker.ProjectId = expenseReimburseStatusTrackerDto.ProjectId;
                     expenseReimburseStatusTracker.JobRoleId = expenseReimburseStatusTrackerDto.JobRoleId;
                     expenseReimburseStatusTracker.ApprovalLevelId = expenseReimburseStatusTrackerDto.ApprovalLevelId;
-                    expenseReimburseStatusTracker.RequestedDate = expenseReimburseStatusTrackerDto.RequestedDate;
+                    expenseReimburseStatusTracker.RequestDate = expenseReimburseStatusTrackerDto.RequestDate;
                     expenseReimburseStatusTracker.ApproverActionDate = expenseReimburseStatusTrackerDto.ApproverActionDate;
                     expenseReimburseStatusTracker.ApprovalStatusTypeId = expenseReimburseStatusTrackerDto.ApprovalStatusTypeId;
                     expenseReimburseStatusTracker.Comments = bRejectMessage ? expenseReimburseStatusTrackerDto.Comments : "Approved";
@@ -330,7 +330,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
 
                         
 
-                        double? RoleLimitAmt = _context.EmpCurrentCashAdvanceBalances.Find(claimitem.EmployeeId).MaxCashAdvanceLimit;
+                        double? RoleLimitAmt = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == claimitem.EmployeeId).FirstOrDefault().MaxCashAdvanceLimit;
                         EmpCurrentCashAdvanceBalance empCurrentCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == claimitem.EmployeeId).FirstOrDefault();
                         double? empCurPettyBal = empCurrentCashAdvanceBalance.CurBalance;
 
@@ -457,7 +457,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                                 /// 
                                 _logger.LogInformation("============== Crediting to Wallet =======================");
                                 double? expenseReimAmt = expenseReimburseRequest.TotalClaimAmount;
-                                double? RoleLimitAmt = _context.EmpCurrentCashAdvanceBalances.Find(claimitem.EmployeeId).MaxCashAdvanceLimit;
+                                double? RoleLimitAmt = _context.EmpCurrentCashAdvanceBalances.Where(e=> e.EmployeeId == claimitem.EmployeeId).FirstOrDefault().MaxCashAdvanceLimit;
                                 EmpCurrentCashAdvanceBalance empCurrentCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == expenseReimburseRequest.EmployeeId).FirstOrDefault();
                                 double? empCurPettyBal = empCurrentCashAdvanceBalance.CurBalance;
                                 double? empCashOnHand = empCurrentCashAdvanceBalance.CashOnHand;

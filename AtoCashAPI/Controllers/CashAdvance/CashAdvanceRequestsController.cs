@@ -342,7 +342,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 claim.ProjectId = newProjId;
                 claim.SubProjectId = newSubProjId;
                 claim.WorkTaskId = newWorkTaskId;
-                claim.RequestedDate = CashAdvanceRequest.RequestDate;
+                claim.RequestDate = CashAdvanceRequest.RequestDate;
                 claim.ApproverActionDate = null;
                 //claim.ApprovalStatusTypeId = claim.ApprovalLevelId == 1 ? (int)EApprovalStatus.Pending : (int)EApprovalStatus.Initiating;
                 claim.Comments = "Modified Request";
@@ -685,7 +685,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                         JobRoleId = null,
                         ApprovalGroupId = null,
                         ApprovalLevelId = 2, //empApprLevel or 2 default approval level is 2 for Project based request
-                        RequestedDate = DateTime.UtcNow,
+                        RequestDate = DateTime.UtcNow,
                         ApproverEmpId = reqEmpid,
                         ApproverActionDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Approved, //1-Initiating, 2-Pending, 3-InReview, 4-Approved, 5-Rejected
@@ -715,7 +715,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                         // get the next ProjectManager approval.
                         ApprovalGroupId = null,
                         ApprovalLevelId = 2, // default approval level is 2 for Project based request
-                        RequestedDate = DateTime.UtcNow,
+                        RequestDate = DateTime.UtcNow,
                         ApproverEmpId = null,
                         ApproverActionDate = null,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Pending, //1-Initiating, 2-Pending, 3-InReview, 4-Approved, 5-Rejected
@@ -970,7 +970,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                         JobRoleId = reqJobRoleId,
                         ApprovalGroupId = reqApprGroupId,
                         ApprovalLevelId = reqApprLevel,
-                        RequestedDate = DateTime.UtcNow,
+                        RequestDate = DateTime.UtcNow,
                         ApproverEmpId = reqEmpid,
                         ApproverActionDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Approved,
@@ -1035,7 +1035,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                             JobRoleId = apprjobRoleId,
                             ApprovalGroupId = reqApprGroupId,
                             ApprovalLevelId = ApprMap.ApprovalLevelId,
-                            RequestedDate = DateTime.UtcNow,
+                            RequestDate = DateTime.UtcNow,
                             ApproverEmpId = null,
                             ApproverActionDate = null,
                             ApprovalStatusTypeId = isFirstApprover ? (int)EApprovalStatus.Pending : (int)EApprovalStatus.Intitated,

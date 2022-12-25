@@ -405,7 +405,7 @@ namespace AtoCashAPI.Migrations
                     b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("RequestedDate")
+                    b.Property<DateTime?>("RequestDate")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
@@ -962,7 +962,7 @@ namespace AtoCashAPI.Migrations
                     b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("RequestedDate")
+                    b.Property<DateTime?>("RequestDate")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
@@ -1506,6 +1506,12 @@ namespace AtoCashAPI.Migrations
                     b.Property<DateTime?>("ApproverActionDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("ApproverEmpId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("BusinessTypeId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("BusinessUnitId")
                         .HasColumnType("integer");
 
@@ -1526,7 +1532,7 @@ namespace AtoCashAPI.Migrations
                     b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("ReqDate")
+                    b.Property<DateTime?>("RequestDate")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
@@ -1551,6 +1557,10 @@ namespace AtoCashAPI.Migrations
                     b.HasIndex("ApprovalLevelId");
 
                     b.HasIndex("ApprovalStatusTypeId");
+
+                    b.HasIndex("ApproverEmpId");
+
+                    b.HasIndex("BusinessTypeId");
 
                     b.HasIndex("BusinessUnitId");
 
@@ -2625,6 +2635,14 @@ namespace AtoCashAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("AtoCashAPI.Models.Employee", "Approver")
+                        .WithMany()
+                        .HasForeignKey("ApproverEmpId");
+
+                    b.HasOne("AtoCashAPI.Models.BusinessType", "BusinessType")
+                        .WithMany()
+                        .HasForeignKey("BusinessTypeId");
+
                     b.HasOne("AtoCashAPI.Models.BusinessUnit", "BusinessUnit")
                         .WithMany()
                         .HasForeignKey("BusinessUnitId");
@@ -2666,6 +2684,10 @@ namespace AtoCashAPI.Migrations
                     b.Navigation("ApprovalLevel");
 
                     b.Navigation("ApprovalStatusType");
+
+                    b.Navigation("Approver");
+
+                    b.Navigation("BusinessType");
 
                     b.Navigation("BusinessUnit");
 

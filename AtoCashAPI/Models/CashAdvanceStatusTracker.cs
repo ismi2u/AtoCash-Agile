@@ -69,7 +69,7 @@ namespace AtoCashAPI.Models
    
 
         [Required]
-        public DateTime? RequestedDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
 
         [ForeignKey("ApproverEmpId")]
@@ -121,7 +121,7 @@ namespace AtoCashAPI.Models
 
         public int? ApprovalLevelId { get; set; }
 
-        public DateTime? RequestedDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
         public int? ApproverEmpId { get; set; }
         public DateTime? ApproverActionDate { get; set; }
