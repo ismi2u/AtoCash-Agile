@@ -84,8 +84,13 @@ namespace AtoCashAPI.Models
         public DateTime? TravelEndDate { get; set; }
         public string? TravelPurpose { get; set; }
         public DateTime? RequestDate { get; set; }
-        public string? DepartmentName { get; set; }
-        public int? DepartmentId { get; set; }
+
+        public string? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
+
+        public string? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
+
         public int? ProjectId { get; set; }
         public string? ProjectName { get; set; }
         public int? SubProjectId { get; set; }

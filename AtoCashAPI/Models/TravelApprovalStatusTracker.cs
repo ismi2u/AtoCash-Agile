@@ -29,6 +29,13 @@ namespace AtoCashAPI.Models
 
         public DateTime? TravelEndDate { get; set; }
 
+
+        [ForeignKey("BusinessTypeId")]
+        public virtual BusinessType? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
+
+
+
         [ForeignKey("BusinessUnitId")]
         public virtual BusinessUnit? BusinessUnit { get; set; }
         public int? BusinessUnitId { get; set; }
@@ -70,7 +77,12 @@ namespace AtoCashAPI.Models
         public int? ApprovalLevelId { get; set; }
 
         [Required]
-        public DateTime? ReqDate { get; set; }
+        public DateTime? RequestDate { get; set; }
+
+        [ForeignKey("ApproverEmpId")]
+        public virtual Employee? Approver { get; set; }
+        public int? ApproverEmpId { get; set; }
+
 
         public DateTime? ApproverActionDate { get; set; }
 
@@ -97,8 +109,11 @@ namespace AtoCashAPI.Models
         public DateTime? TravelStartDate { get; set; }
 
         public DateTime? TravelEndDate { get; set; }
-        public int? DepartmentId { get; set; }
-        public string? DepartmentName { get; set; }
+        public string? BusinessType { get; set; }
+        public int? BusinessTypeId { get; set; }
+
+        public string? BusinessUnit { get; set; }
+        public int? BusinessUnitId { get; set; }
         public int? ProjectId { get; set; }
         public string? ProjectName { get; set; }
 
@@ -106,8 +121,9 @@ namespace AtoCashAPI.Models
         public int? RoleId { get; set; }
         public string? JobRole { get; set; }
         public int? ApprovalLevelId { get; set; }
-        public DateTime? ReqDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
+        public int? ApproverEmpId { get; set; }
         public DateTime? ApproverActionDate { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
 

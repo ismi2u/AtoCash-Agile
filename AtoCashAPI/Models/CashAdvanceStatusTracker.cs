@@ -123,6 +123,7 @@ namespace AtoCashAPI.Models
 
         public DateTime? RequestedDate { get; set; }
 
+        public int? ApproverEmpId { get; set; }
         public DateTime? ApproverActionDate { get; set; }
 
         public int? ApprovalStatusTypeId { get; set; }

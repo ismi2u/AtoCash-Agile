@@ -87,8 +87,6 @@ namespace AtoCashAPI.Controllers.CashAdvance
         [ActionName("GetCashAdvanceRequest")]
         public async Task<ActionResult<CashAdvanceRequestDTO>> GetCashAdvanceRequest(int id)
         {
-
-
             var CashAdvanceRequest = await _context.CashAdvanceRequests.FindAsync(id);
 
             var disbAndClaim = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == id).FirstOrDefault();
@@ -135,65 +133,70 @@ namespace AtoCashAPI.Controllers.CashAdvance
         public async Task<ActionResult<IEnumerable<CashAdvanceRequestDTO>>> GetCashAdvanceRequestRaisedForEmployee(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
-            var empExtInfo = await _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id).ToListAsync();
+            var ListEmpExtInfos = await _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id).ToListAsync();
+
+
+            if (employee == null)
+            {
+                _logger.LogError("Travel : Employee Id is not valid:" + id);
+                return Conflict(new RespStatus { Status = "Failure", Message = "Employee Id is Invalid!" });
+            }
 
             var ListEmpCashAdvanceRequests = await _context.CashAdvanceRequests.Where(p => p.EmployeeId == id).ToListAsync();
 
-            List<CashAdvanceRequestDTO> CashAdvanceRequestDTOs = new();
-
-
-
-            foreach (var CashAdvanceRequest in ListEmpCashAdvanceRequests)
+            if (ListEmpCashAdvanceRequests == null)
             {
-                CashAdvanceRequestDTO CashAdvanceRequestDTO = new();
-
-                CashAdvanceRequestDTO.Id = CashAdvanceRequest.Id;
-                CashAdvanceRequestDTO.EmployeeId = CashAdvanceRequest.EmployeeId;
-                CashAdvanceRequestDTO.EmployeeName = _context.Employees.Find(CashAdvanceRequest.EmployeeId).GetFullName();
-                CashAdvanceRequestDTO.CurrencyTypeId = CashAdvanceRequest.CurrencyTypeId;
-                CashAdvanceRequestDTO.CurrencyType = CashAdvanceRequest.CurrencyType != null ? _context.CurrencyTypes.Find(CashAdvanceRequest.CurrencyType).CurrencyName : null;
-                CashAdvanceRequestDTO.CashAdvanceAmount = CashAdvanceRequest.CashAdvanceAmount;
-                CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
-                CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
-
-                var reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == CashAdvanceRequest.BusinessUnitId).FirstOrDefault();
-                CashAdvanceRequestDTO.JobRole = reqEmpExtInfo != null ? _context.JobRoles.Find(reqEmpExtInfo.JobRoleId).GetJobRole() : "";
-
-                CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
-                CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
-                CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
-                CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;
-                CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
-                CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
-                CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;
-                CashAdvanceRequestDTO.SubProjectId = CashAdvanceRequest.SubProjectId;
-                CashAdvanceRequestDTO.SubProject = CashAdvanceRequest.SubProjectId != null ? _context.SubProjects.Find(CashAdvanceRequest.SubProjectId).SubProjectName : null;
-                CashAdvanceRequestDTO.WorkTaskId = CashAdvanceRequest.WorkTaskId;
-                CashAdvanceRequestDTO.WorkTask = CashAdvanceRequest.WorkTaskId != null ? _context.WorkTasks.Find(CashAdvanceRequest.WorkTaskId).TaskName : null;
-                CashAdvanceRequestDTO.ApprovalStatusTypeId = CashAdvanceRequest.ApprovalStatusTypeId;
-                CashAdvanceRequestDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(CashAdvanceRequest.ApprovalStatusTypeId).Status;
-                CashAdvanceRequestDTO.ApproverActionDate = CashAdvanceRequest.ApproverActionDate;
-
-                // set the bookean flat to TRUE if No approver has yet approved the Request else FALSE
-                bool ifAnyOfStatusRecordsApproved = _context.CashAdvanceStatusTrackers.Where(t =>
-                                                           (t.ApprovalStatusTypeId == (int)EApprovalStatus.Rejected ||
-                                                          t.ApprovalStatusTypeId == (int)EApprovalStatus.Approved) &&
-                                                          t.CashAdvanceRequestId == CashAdvanceRequest.Id).Any();
-
-                if (ifAnyOfStatusRecordsApproved)
-                {
-                    CashAdvanceRequestDTO.ShowEditDelete = false;
-                }
-                else
-                {
-                    CashAdvanceRequestDTO.ShowEditDelete = true;
-                }
-
-
-                ///
-                CashAdvanceRequestDTOs.Add(CashAdvanceRequestDTO);
+                _logger.LogError("Cash Advance :CashAdvanceRequests is null");
+                return Ok(new RespStatus { Status = "Failure", Message = "No Travel Requests raised!" });
             }
 
+            List<CashAdvanceRequestDTO> CashAdvanceRequestDTOs = new();
+
+            foreach (var empExtInfo in ListEmpExtInfos)
+            {
+
+                foreach (var CashAdvanceRequest in ListEmpCashAdvanceRequests)
+                {
+                    CashAdvanceRequestDTO CashAdvanceRequestDTO = new();
+
+                    CashAdvanceRequestDTO.Id = CashAdvanceRequest.Id;
+                    CashAdvanceRequestDTO.EmployeeId = CashAdvanceRequest.EmployeeId;
+                    CashAdvanceRequestDTO.EmployeeName = _context.Employees.Find(CashAdvanceRequest.EmployeeId).GetFullName();
+                    CashAdvanceRequestDTO.CurrencyTypeId = CashAdvanceRequest.CurrencyTypeId;
+                    CashAdvanceRequestDTO.CurrencyType = CashAdvanceRequest.CurrencyType != null ? _context.CurrencyTypes.Find(CashAdvanceRequest.CurrencyType).CurrencyName : null;
+                    CashAdvanceRequestDTO.CashAdvanceAmount = CashAdvanceRequest.CashAdvanceAmount;
+                    CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
+                    CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
+
+                    var reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == CashAdvanceRequest.BusinessUnitId).FirstOrDefault();
+                    CashAdvanceRequestDTO.JobRole = reqEmpExtInfo != null ? _context.JobRoles.Find(reqEmpExtInfo.JobRoleId).GetJobRole() : "";
+
+                    CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
+                    CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
+                    CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
+                    CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;
+                    CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
+                    CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
+                    CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;
+                    CashAdvanceRequestDTO.SubProjectId = CashAdvanceRequest.SubProjectId;
+                    CashAdvanceRequestDTO.SubProject = CashAdvanceRequest.SubProjectId != null ? _context.SubProjects.Find(CashAdvanceRequest.SubProjectId).SubProjectName : null;
+                    CashAdvanceRequestDTO.WorkTaskId = CashAdvanceRequest.WorkTaskId;
+                    CashAdvanceRequestDTO.WorkTask = CashAdvanceRequest.WorkTaskId != null ? _context.WorkTasks.Find(CashAdvanceRequest.WorkTaskId).TaskName : null;
+                    CashAdvanceRequestDTO.ApprovalStatusTypeId = CashAdvanceRequest.ApprovalStatusTypeId;
+                    CashAdvanceRequestDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(CashAdvanceRequest.ApprovalStatusTypeId).Status;
+                    CashAdvanceRequestDTO.ApproverActionDate = CashAdvanceRequest.ApproverActionDate;
+
+                    // set the bookean flat to TRUE if No approver has yet approved the Request else FALSE
+                    bool ifAnyOfStatusRecordsApproved = _context.CashAdvanceStatusTrackers.Where(t =>
+                                                               (t.ApprovalStatusTypeId == (int)EApprovalStatus.Rejected ||
+                                                              t.ApprovalStatusTypeId == (int)EApprovalStatus.Approved) &&
+                                                              t.CashAdvanceRequestId == CashAdvanceRequest.Id).Any();
+
+                    CashAdvanceRequestDTO.ShowEditDelete = ifAnyOfStatusRecordsApproved ? false : true;
+                    ///
+                    CashAdvanceRequestDTOs.Add(CashAdvanceRequestDTO);
+                }
+            }
             return Ok(CashAdvanceRequestDTOs.OrderByDescending(o => o.RequestDate).ToList());
         }
 

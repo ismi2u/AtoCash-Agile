@@ -75,7 +75,7 @@ namespace AtoCashAPI.Controllers
         //            userByRole.DOJ = emp.DOJ;
         //            userByRole.Gender = emp.Gender;
         //            userByRole.MobileNumber = emp.MobileNumber;
-        //            userByRole.Department = _context.Departments.Find(emp.DepartmentId).DeptCode + ":" + _context.Departments.Find(emp.DepartmentId).DeptName;
+        //            userByRole.Business Unit = _context.Departments.Find(emp.DepartmentId).DeptCode + ":" + _context.Departments.Find(emp.DepartmentId).DeptName;
         //            userByRole.JobRole = _context.JobRoles.Find(emp.RoleId).RoleCode + ":" + _context.JobRoles.Find(emp.RoleId).RoleName;
         //            userByRole.AccessRole = rolName;
         //            userByRole.StatusType = _context.StatusTypes.Find(emp.StatusTypeId).Status;
@@ -108,7 +108,7 @@ namespace AtoCashAPI.Controllers
         //            userByRole.DOJ = emp.DOJ;
         //            userByRole.Gender = emp.Gender;
         //            userByRole.MobileNumber = emp.MobileNumber;
-        //            userByRole.Department = _context.Departments.Find(emp.DepartmentId).DeptCode + ":" + _context.Departments.Find(emp.DepartmentId).DeptName;
+        //            userByRole.Business Unit = _context.Departments.Find(emp.DepartmentId).DeptCode + ":" + _context.Departments.Find(emp.DepartmentId).DeptName;
         //            userByRole.JobRole = _context.JobRoles.Find(emp.RoleId).RoleCode + ":" + _context.JobRoles.Find(emp.RoleId).RoleName;
         //            userByRole.StatusType = _context.StatusTypes.Find(emp.StatusTypeId).Status;
         //            foreach (var r in roles)
@@ -145,7 +145,7 @@ namespace AtoCashAPI.Controllers
         //            new DataColumn("DOJ", typeof(string)),
         //            new DataColumn("Gender",typeof(string)),
         //            new DataColumn("MobileNumber",typeof(string)),
-        //            new DataColumn("Department",typeof(string)),
+        //            new DataColumn("Business Unit",typeof(string)),
         //            new DataColumn("JobRole", typeof(string)),
         //            new DataColumn("StatusType", typeof(string)),
         //            new DataColumn("AccessRole", typeof(string))
@@ -164,7 +164,7 @@ namespace AtoCashAPI.Controllers
         //            usr.DOJ,
         //            usr.Gender,
         //            usr.MobileNumber,
-        //            usr.Department,
+        //            usr.Business Unit,
         //            usr.JobRole,
         //            usr.StatusType,
         //            usr.AccessRole
@@ -210,7 +210,7 @@ namespace AtoCashAPI.Controllers
         //            userByRole.DOJ = emp.DOJ;
         //            userByRole.Gender = emp.Gender;
         //            userByRole.MobileNumber = emp.MobileNumber;
-        //            userByRole.Department = _context.Departments.Find(emp.DepartmentId).DeptCode + ":" + _context.Departments.Find(emp.DepartmentId).DeptName;
+        //            userByRole.Business Unit = _context.Departments.Find(emp.DepartmentId).DeptCode + ":" + _context.Departments.Find(emp.DepartmentId).DeptName;
         //            userByRole.JobRole = _context.JobRoles.Find(emp.RoleId).RoleCode + ":" + _context.JobRoles.Find(emp.RoleId).RoleName;
         //            userByRole.AccessRole = rolName;
         //            userByRole.StatusType = _context.StatusTypes.Find(emp.StatusTypeId).Status;
@@ -243,7 +243,7 @@ namespace AtoCashAPI.Controllers
         //            userByRole.DOJ = emp.DOJ;
         //            userByRole.Gender = emp.Gender;
         //            userByRole.MobileNumber = emp.MobileNumber;
-        //            userByRole.Department = _context.Departments.Find(emp.DepartmentId).DeptCode + ":" + _context.Departments.Find(emp.DepartmentId).DeptName;
+        //            userByRole.Business Unit = _context.Departments.Find(emp.DepartmentId).DeptCode + ":" + _context.Departments.Find(emp.DepartmentId).DeptName;
         //            userByRole.JobRole = _context.JobRoles.Find(emp.RoleId).RoleCode + ":" + _context.JobRoles.Find(emp.RoleId).RoleName;
         //            userByRole.StatusType = _context.StatusTypes.Find(emp.StatusTypeId).Status;
         //            foreach (var r in roles)
@@ -337,7 +337,7 @@ namespace AtoCashAPI.Controllers
         //            employeeDTO.Email = employee.Email;
         //            employeeDTO.MobileNumber = employee.MobileNumber;
         //            employeeDTO.EmploymentType = employee.EmploymentTypeId != 0 ? _context.EmploymentTypes.Find(employee.EmploymentTypeId).EmpJobTypeCode + ":" + _context.EmploymentTypes.Find(employee.EmploymentTypeId).EmpJobTypeDesc : string.Empty;
-        //            employeeDTO.Department = employee.DepartmentId != 0 ? _context.Departments.Find(employee.DepartmentId).DeptCode + ":" + _context.Departments.Find(employee.DepartmentId).DeptName : string.Empty;
+        //            employeeDTO.Business Unit = employee.DepartmentId != 0 ? _context.Departments.Find(employee.DepartmentId).DeptCode + ":" + _context.Departments.Find(employee.DepartmentId).DeptName : string.Empty;
         //            employeeDTO.JobRole = employee.RoleId != 0 ? _context.JobRoles.Find(employee.RoleId).RoleCode + ":" + _context.JobRoles.Find(employee.RoleId).RoleName : string.Empty;
         //            employeeDTO.ApprovalGroup = employee.ApprovalGroupId != 0 ? _context.ApprovalGroups.Find(employee.ApprovalGroupId).ApprovalGroupCode : string.Empty;
         //            employeeDTO.StatusType = employee.StatusTypeId != 0 ? _context.StatusTypes.Find(employee.StatusTypeId).Status : string.Empty;
@@ -364,7 +364,7 @@ namespace AtoCashAPI.Controllers
         //            new DataColumn("Email",typeof(string)),
         //            new DataColumn("MobileNumber",typeof(string)),
         //            new DataColumn("EmploymentType",typeof(string)),
-        //            new DataColumn("Department",typeof(string)),
+        //            new DataColumn("Business Unit",typeof(string)),
         //            new DataColumn("JobRole", typeof(string)),
         //            new DataColumn("ApprovalGroup", typeof(string)),
         //            new DataColumn("StatusType", typeof(string))
@@ -387,7 +387,7 @@ namespace AtoCashAPI.Controllers
         //            emp.Email,
         //            emp.MobileNumber,
         //            emp.EmploymentType,
-        //            emp.Department,
+        //            emp.Business Unit,
         //            emp.JobRole,
         //            emp.ApprovalGroup,
         //            emp.StatusType
@@ -472,7 +472,7 @@ namespace AtoCashAPI.Controllers
         //            employeeDTO.Email = employee.Email;
         //            employeeDTO.MobileNumber = employee.MobileNumber;
         //            employeeDTO.EmploymentType = employee.EmploymentTypeId != 0 ? _context.EmploymentTypes.Find(employee.EmploymentTypeId).EmpJobTypeCode + ":" + _context.EmploymentTypes.Find(employee.EmploymentTypeId).EmpJobTypeDesc : string.Empty;
-        //            employeeDTO.Department = employee.DepartmentId != 0 ? _context.Departments.Find(employee.DepartmentId).DeptCode + ":" + _context.Departments.Find(employee.DepartmentId).DeptName : string.Empty;
+        //            employeeDTO.Business Unit = employee.DepartmentId != 0 ? _context.Departments.Find(employee.DepartmentId).DeptCode + ":" + _context.Departments.Find(employee.DepartmentId).DeptName : string.Empty;
         //            employeeDTO.JobRole = employee.RoleId != 0 ? _context.JobRoles.Find(employee.RoleId).RoleCode + ":" + _context.JobRoles.Find(employee.RoleId).RoleName : string.Empty;
         //            employeeDTO.ApprovalGroup = employee.ApprovalGroupId != 0 ? _context.ApprovalGroups.Find(employee.ApprovalGroupId).ApprovalGroupCode : string.Empty;
         //            employeeDTO.StatusType = employee.StatusTypeId != 0 ? _context.StatusTypes.Find(employee.StatusTypeId).Status : string.Empty;
@@ -503,7 +503,7 @@ namespace AtoCashAPI.Controllers
         //    }
 
         //    // all employees who report under the manager
-        //    //if Admin then show all the employee reports irrespective of the department.
+        //    //if Admin then show all the employee reports irrespective of the Business Unit.
         //    string empEmailId = _context.Employees.Find(empid).Email;
         //    var user = await userManager.FindByEmailAsync(empEmailId);
         //    bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
@@ -635,7 +635,7 @@ namespace AtoCashAPI.Controllers
         //    }
 
         //    // all employees who report under the manager
-        //    //if Admin then show all the employee reports irrespective of the department.
+        //    //if Admin then show all the employee reports irrespective of the Business Unit.
         //    string empEmailId = _context.Employees.Find(empid).Email;
         //    var user = await userManager.FindByEmailAsync(empEmailId);
         //    bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
@@ -755,7 +755,7 @@ namespace AtoCashAPI.Controllers
         //            new DataColumn("CashAdvanceRequestId", typeof(int)),
         //            new DataColumn("ExpenseReimburseReqId", typeof(int)),
         //            new DataColumn("RequestType",typeof(string)),
-        //            new DataColumn("Department",typeof(string)),
+        //            new DataColumn("Business Unit",typeof(string)),
         //            new DataColumn("BusinessArea",typeof(string)),
         //            new DataColumn("Project",typeof(string)),
         //            new DataColumn("SubProject", typeof(string)),
@@ -837,7 +837,7 @@ namespace AtoCashAPI.Controllers
         //    }
 
         //    // all employees who report under the manager
-        //    //if Admin then show all the employee reports irrespective of the department.
+        //    //if Admin then show all the employee reports irrespective of the Business Unit.
         //    string empEmailId = _context.Employees.Find(empid).Email;
         //    var user = await userManager.FindByEmailAsync(empEmailId);
         //    bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
@@ -940,7 +940,7 @@ namespace AtoCashAPI.Controllers
         //    }
 
         //    // all employees who report under the manager
-        //    //if Admin then show all the employee reports irrespective of the department.
+        //    //if Admin then show all the employee reports irrespective of the Business Unit.
         //    string empEmailId = _context.Employees.Find(empid).Email;
         //    var user = await userManager.FindByEmailAsync(empEmailId);
         //    bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
@@ -1032,7 +1032,7 @@ namespace AtoCashAPI.Controllers
         //            new DataColumn("TravelStartDate",typeof(string)),
         //            new DataColumn("TravelEndDate",typeof(string)),
         //            new DataColumn("TravelPurpose",typeof(string)),
-        //            new DataColumn("Department",typeof(string)),
+        //            new DataColumn("Business Unit",typeof(string)),
         //            new DataColumn("Project",typeof(string)),
         //            new DataColumn("SubProject", typeof(string)),
         //            new DataColumn("WorkTask",typeof(string)),
@@ -1238,7 +1238,7 @@ namespace AtoCashAPI.Controllers
         //            new DataColumn("CashAdvanceRequestId", typeof(int)),
         //            new DataColumn("ExpenseReimburseReqId", typeof(int)),
         //            new DataColumn("RequestType",typeof(string)),
-        //            new DataColumn("Department",typeof(string)),
+        //            new DataColumn("Business Unit",typeof(string)),
         //            new DataColumn("Project",typeof(string)),
         //            new DataColumn("SubProject", typeof(string)),
         //            new DataColumn("WorkTask",typeof(string)),
@@ -1314,7 +1314,7 @@ namespace AtoCashAPI.Controllers
         //    }
 
         //    // all employees who report under the manager
-        //    //if Admin then show all the employee reports irrespective of the department.
+        //    //if Admin then show all the employee reports irrespective of the Business Unit.
         //    string empEmailId = _context.Employees.Find(empid).Email;
         //    var user = await userManager.FindByEmailAsync(empEmailId);
         //    bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
@@ -1434,7 +1434,7 @@ namespace AtoCashAPI.Controllers
         //    }
 
         //    // all employees who report under the manager
-        //    //if Admin then show all the employee reports irrespective of the department.
+        //    //if Admin then show all the employee reports irrespective of the Business Unit.
         //    string empEmailId = _context.Employees.Find(empid).Email;
         //    var user = await userManager.FindByEmailAsync(empEmailId);
         //    bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
@@ -1552,7 +1552,7 @@ namespace AtoCashAPI.Controllers
         //            new DataColumn("ExpenseType", typeof(string)),
         //            new DataColumn("BusinessArea", typeof(string)),
         //            new DataColumn("GeneralLedger", typeof(string)),
-        //            new DataColumn("Department",typeof(string)),
+        //            new DataColumn("Business Unit",typeof(string)),
         //            new DataColumn("CostCenter",typeof(string)),
         //            new DataColumn("Project",typeof(string)),
         //            new DataColumn("SubProject", typeof(string)),
