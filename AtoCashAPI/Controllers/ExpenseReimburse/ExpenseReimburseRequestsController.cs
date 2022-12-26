@@ -1144,8 +1144,8 @@ namespace AtoCashAPI.Controllers
                         CurrencyTypeId = expenseReimburseRequestDto.CurrencyTypeId,
                         TotalClaimAmount = dblTotalClaimAmount,
                         ExpenseReimburseRequestId = expenseReimburseRequest.Id,
-                        BusinessTypeId = expenseReimburseRequestDto.BusinessTypeId,
-                        BusinessUnitId = expenseReimburseRequestDto.BusinessUnitId,
+                        BusinessTypeId = null,
+                        BusinessUnitId = null,
                         ProjectId = expenseReimburseRequestDto.ProjectId, //Approver Project Id
                         SubProjectId = expenseReimburseRequestDto.SubProjectId,
                         WorkTaskId = expenseReimburseRequestDto.WorkTaskId,
@@ -1179,8 +1179,8 @@ namespace AtoCashAPI.Controllers
                         CurrencyTypeId = expenseReimburseRequestDto.CurrencyTypeId,
                         TotalClaimAmount = dblTotalClaimAmount,
                         ExpenseReimburseRequestId = expenseReimburseRequest.Id,
-                        BusinessTypeId = expenseReimburseRequestDto.BusinessTypeId,
-                        BusinessUnitId = expenseReimburseRequestDto.BusinessUnitId,
+                        BusinessTypeId = null,
+                        BusinessUnitId = null,
                         ProjectId = expenseReimburseRequestDto.ProjectId, //Approver Project Id
                         SubProjectId = expenseReimburseRequestDto.SubProjectId,
                         WorkTaskId = expenseReimburseRequestDto.WorkTaskId,

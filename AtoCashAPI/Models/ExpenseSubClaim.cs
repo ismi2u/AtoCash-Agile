@@ -124,7 +124,8 @@ namespace AtoCashAPI.Models
         public string? EmployeeName { get; set; }
         public int? EmployeeId { get; set; }
 
-        
+
+        public int? ExpenseReimburseRequestId { get; set; }
         public int? ExpenseCategoryId { get; set; }
 
         public string? ExpenseCategoryName { get; set; }
@@ -135,7 +136,6 @@ namespace AtoCashAPI.Models
 
         public bool IsVAT { get; set; }
         public string? TaxNo { get; set; }
-        public int? ExpenseReimburseReqId { get; set; }
         public Double? ExpenseReimbClaimAmount { get; set; }
 
         public string? DocumentIDs { get; set; }

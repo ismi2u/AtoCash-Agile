@@ -82,7 +82,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
 
             List<ApprovalStatusFlowVM> ListApprovalStatusFlow = new();
 
-            if (expenseReimburseStatusTrackers == null)
+            if (ListOfExpReimStatusTrackers == null)
             {
                 _logger.LogError("Expense-Reimburse Status Tracker Request Id is returning null records:" + id);
                 return Conflict(new RespStatus { Status = "Failure", Message = "Status Tracker Request Id is returning null records:" + id });
@@ -306,6 +306,8 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                         bRejectMessage = true;
                     }
 
+                    
+
 
                     expenseReimburseStatusTracker.Id = expenseReimburseStatusTrackerDto.Id;
                     expenseReimburseStatusTracker.EmployeeId = expenseReimburseStatusTrackerDto.EmployeeId;
@@ -319,9 +321,12 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                     expenseReimburseStatusTracker.JobRoleId = expenseReimburseStatusTrackerDto.JobRoleId;
                     expenseReimburseStatusTracker.ApprovalLevelId = expenseReimburseStatusTrackerDto.ApprovalLevelId;
                     expenseReimburseStatusTracker.RequestDate = expenseReimburseStatusTrackerDto.RequestDate;
-                    expenseReimburseStatusTracker.ApproverActionDate = expenseReimburseStatusTrackerDto.ApproverActionDate;
-                    expenseReimburseStatusTracker.ApprovalStatusTypeId = expenseReimburseStatusTrackerDto.ApprovalStatusTypeId;
+
+                    expenseReimburseStatusTracker.ApproverActionDate = DateTime.UtcNow;
+                    expenseReimburseStatusTracker.ApproverEmpId = expenseReimburseStatusTrackerDto.ApproverEmpId;
                     expenseReimburseStatusTracker.Comments = bRejectMessage ? expenseReimburseStatusTrackerDto.Comments : "Approved";
+                    expenseReimburseStatusTracker.ApprovalStatusTypeId = expenseReimburseStatusTrackerDto.ApprovalStatusTypeId;
+                    
 
 
                     ExpenseReimburseStatusTracker claimitem;

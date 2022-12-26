@@ -65,7 +65,6 @@ namespace AtoCashAPI.Models
 
 
         //Approver Role
-        [Required]
         [ForeignKey("JobRoleId")]
         public virtual JobRole? JobRole { get; set; }
         public int? JobRoleId { get; set; }

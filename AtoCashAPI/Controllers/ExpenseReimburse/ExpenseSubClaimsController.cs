@@ -53,6 +53,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.Id = expenseSubClaim.Id;
                 expenseSubClaimsDto.EmployeeId = empId;
                 expenseSubClaimsDto.EmployeeName = empFullName;
+                expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
                 expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
                 expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
                 expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
@@ -126,6 +127,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             expenseSubClaimsDto.Id = expenseSubClaim.Id;
             expenseSubClaimsDto.EmployeeId = empId;
             expenseSubClaimsDto.EmployeeName = empFullName;
+            expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
             expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
             expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
             expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
@@ -203,6 +205,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.Id = expenseSubClaim.Id;
                 expenseSubClaimsDto.EmployeeId = empId;
                 expenseSubClaimsDto.EmployeeName = empFullName;
+                expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
                 expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
                 expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
                 expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;

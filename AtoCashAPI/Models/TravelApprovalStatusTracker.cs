@@ -118,7 +118,7 @@ namespace AtoCashAPI.Models
         public string? ProjectName { get; set; }
 
         public int? ApprovalGroupId { get; set; }
-        public int? RoleId { get; set; }
+        public int? JobRoleId { get; set; }
         public string? JobRole { get; set; }
         public int? ApprovalLevelId { get; set; }
         public DateTime? RequestDate { get; set; }

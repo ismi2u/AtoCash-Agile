@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20221225213308_initial")]
+    [Migration("20221225224109_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -955,7 +955,6 @@ namespace AtoCashAPI.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("JobRoleId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("ProjManagerId")
@@ -2330,9 +2329,7 @@ namespace AtoCashAPI.Migrations
 
                     b.HasOne("AtoCashAPI.Models.JobRole", "JobRole")
                         .WithMany()
-                        .HasForeignKey("JobRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JobRoleId");
 
                     b.HasOne("AtoCashAPI.Models.Employee", "ProjManager")
                         .WithMany()

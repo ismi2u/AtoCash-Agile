@@ -148,6 +148,7 @@ namespace AtoCashAPI.Controllers
                 }
 
                 CashAdvanceStatusTracker.ApproverActionDate = DateTime.UtcNow;
+                CashAdvanceStatusTracker.ApproverEmpId = CashAdvanceStatusTrackerDto.ApproverEmpId;
                 CashAdvanceStatusTracker.Comments = bRejectMessage ? CashAdvanceStatusTrackerDto.Comments : "Approved";
 
                 CashAdvanceStatusTracker claimitem;
@@ -211,10 +212,14 @@ namespace AtoCashAPI.Controllers
                                c.ApprovalLevelId == qApprovalLevelId).FirstOrDefault();
                             //claimitem.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                             claimitem.ApproverActionDate = DateTime.UtcNow;
+                            claimitem.ApproverEmpId = CashAdvanceStatusTrackerDto.ApproverEmpId;
 
 
                             //final Approver hence updating ExpenseReimburseRequest table
                             var CashAdvanceRequest = _context.CashAdvanceRequests.Find(qCashAdvanceRequestId);
+
+
+                        
                             CashAdvanceRequest.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                             CashAdvanceRequest.ApproverActionDate = DateTime.UtcNow;
                             CashAdvanceRequest.Comments = bRejectMessage ? CashAdvanceStatusTrackerDto.Comments : "Approved";
@@ -343,6 +348,7 @@ namespace AtoCashAPI.Controllers
                     CashAdvanceStatusTracker.ApprovalStatusTypeId = CashAdvanceStatusTrackerDto.ApprovalStatusTypeId;
 
 
+
                     //Update CashAdvancerequest table to update the record to Approved as the final approver has approved it.
                     var CashAdvanceReq = await _context.CashAdvanceRequests.FindAsync(claimitem.CashAdvanceRequestId);
                     int? CashAdvanceReqId = CashAdvanceReq.Id;
@@ -358,6 +364,7 @@ namespace AtoCashAPI.Controllers
 
                     CashAdvanceReq.ApprovalStatusTypeId = bRejectMessage ? (int)EApprovalStatus.Rejected : (int)EApprovalStatus.Approved;
                     CashAdvanceReq.ApproverActionDate = DateTime.UtcNow;
+
                     CashAdvanceReq.Comments = bRejectMessage ? CashAdvanceStatusTrackerDto.Comments : "Approved";
                     _context.Update(CashAdvanceReq);
 

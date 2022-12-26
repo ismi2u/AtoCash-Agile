@@ -1213,7 +1213,7 @@ namespace AtoCashAPI.Migrations
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
                     WorkTaskId = table.Column<int>(type: "integer", nullable: true),
                     ApprovalGroupId = table.Column<int>(type: "integer", nullable: true),
-                    JobRoleId = table.Column<int>(type: "integer", nullable: false),
+                    JobRoleId = table.Column<int>(type: "integer", nullable: true),
                     ApprovalLevelId = table.Column<int>(type: "integer", nullable: false),
                     ApprovalStatusTypeId = table.Column<int>(type: "integer", nullable: false),
                     RequestDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -1283,8 +1283,7 @@ namespace AtoCashAPI.Migrations
                         name: "FK_ExpenseReimburseStatusTrackers_JobRoles_JobRoleId",
                         column: x => x.JobRoleId,
                         principalTable: "JobRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ExpenseReimburseStatusTrackers_Projects_ProjectId",
                         column: x => x.ProjectId,

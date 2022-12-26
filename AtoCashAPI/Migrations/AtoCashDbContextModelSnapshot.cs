@@ -953,7 +953,6 @@ namespace AtoCashAPI.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("JobRoleId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("ProjManagerId")
@@ -2328,9 +2327,7 @@ namespace AtoCashAPI.Migrations
 
                     b.HasOne("AtoCashAPI.Models.JobRole", "JobRole")
                         .WithMany()
-                        .HasForeignKey("JobRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JobRoleId");
 
                     b.HasOne("AtoCashAPI.Models.Employee", "ProjManager")
                         .WithMany()
