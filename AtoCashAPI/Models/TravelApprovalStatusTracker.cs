@@ -60,14 +60,13 @@ namespace AtoCashAPI.Models
 
 
         //Approver ApprovalLevel
-        [Required]
-        public int? ApprovalGroupId { get; set; }
+         public int? ApprovalGroupId { get; set; }
 
 
         //Approver Role => Multiple Approvers, hence their roles
-        [Required]
+ 
         [ForeignKey("JobRoleId")]
-        public virtual JobRole JobRole { get; set; }
+        public virtual JobRole? JobRole { get; set; }
         public int? JobRoleId { get; set; }
 
         //Approver ApprovalLevel

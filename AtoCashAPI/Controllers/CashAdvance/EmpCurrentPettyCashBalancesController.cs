@@ -206,7 +206,7 @@ namespace AtoCashAPI.Controllers
                         EmployeeId = id,
                         CurBalance = empPettyCashAmountEligible,
                         CashOnHand = 0,
-                        UpdatedOn = DateTime.Now
+                        UpdatedOn = DateTime.UtcNow
                     });
 
                     await _context.SaveChangesAsync();

@@ -68,8 +68,11 @@ namespace AtoCashAPI.Controllers
                 travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
                 travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
 
-                var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
-                travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                if (travelApprovalRequest.BusinessUnitId != null)
+                {
+                    var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
+                    travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                }
 
                 travelApprovalRequestDTO.ProjectId = travelApprovalRequest.ProjectId;
                 travelApprovalRequestDTO.ProjectName = travelApprovalRequest.ProjectId != null ? _context.Projects.Find(travelApprovalRequest.ProjectId).ProjectName : null;
@@ -122,8 +125,13 @@ namespace AtoCashAPI.Controllers
             travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
             travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
 
-            var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
-            travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+
+            if(travelApprovalRequest.BusinessUnitId != null)
+            {
+                var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
+                travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+            }
+          
 
             travelApprovalRequestDTO.ProjectId = travelApprovalRequest.ProjectId;
             travelApprovalRequestDTO.ProjectName = travelApprovalRequest.ProjectId != null ? _context.Projects.Find(travelApprovalRequest.ProjectId).ProjectName : null;
@@ -185,6 +193,11 @@ namespace AtoCashAPI.Controllers
                 travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
                 travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
 
+                if (travelApprovalRequest.BusinessUnitId != null)
+                {
+                    var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
+                    travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                }
 
                 travelApprovalRequestDTO.ProjectId = travelApprovalRequest.ProjectId;
                 travelApprovalRequestDTO.ProjectName = travelApprovalRequest.ProjectId != null ? _context.Projects.Find(travelApprovalRequest.ProjectId).ProjectName : null;
@@ -291,7 +304,7 @@ namespace AtoCashAPI.Controllers
             travelApprovalRequest.TravelStartDate = travelApprovalRequestDTO.TravelStartDate;
             travelApprovalRequest.TravelEndDate = travelApprovalRequestDTO.TravelEndDate;
             travelApprovalRequest.TravelPurpose = travelApprovalRequestDTO.TravelPurpose;
-            travelApprovalRequest.RequestDate = DateTime.Now;
+            travelApprovalRequest.RequestDate = DateTime.UtcNow;
           
             if (travelApprovalRequestDTO.ProjectId != null)
             {
@@ -333,7 +346,7 @@ namespace AtoCashAPI.Controllers
                     travelStatusItem.BusinessUnitId = travelApprovalRequestDTO.BusinessUnitId;
 
                 }
-                  travelStatusItem.RequestDate = DateTime.Now;
+                  travelStatusItem.RequestDate = DateTime.UtcNow;
 
                 _context.TravelApprovalStatusTrackers.Update(travelStatusItem);
 
@@ -521,7 +534,7 @@ namespace AtoCashAPI.Controllers
                 travelApprovalRequest.TravelStartDate = travelApprovalRequestDTO.TravelStartDate;
                 travelApprovalRequest.TravelEndDate = travelApprovalRequestDTO.TravelEndDate;
                 travelApprovalRequest.TravelPurpose = travelApprovalRequestDTO.TravelPurpose;
-                travelApprovalRequest.RequestDate = DateTime.Now;
+                travelApprovalRequest.RequestDate = DateTime.UtcNow;
                 travelApprovalRequest.BusinessTypeId = null;
                 travelApprovalRequest.BusinessUnitId = null;
                 travelApprovalRequest.ProjectId = travelApprovalRequestDTO.ProjectId;
@@ -568,8 +581,8 @@ namespace AtoCashAPI.Controllers
                     travelApprovalStatusTracker.JobRoleId = null;
                     travelApprovalStatusTracker.ApprovalGroupId = null;
                     travelApprovalStatusTracker.ApprovalLevelId = 2; // default approval level is 2 for Project based request
-                    travelApprovalStatusTracker.RequestDate = DateTime.Now;
-                    travelApprovalStatusTracker.ApproverActionDate = DateTime.Now;
+                    travelApprovalStatusTracker.RequestDate = DateTime.UtcNow;
+                    travelApprovalStatusTracker.ApproverActionDate = DateTime.UtcNow;
                     travelApprovalStatusTracker.ApproverEmpId = reqEmpid;
                     travelApprovalStatusTracker.Comments = "Travel Request is Self Approved!";
                     travelApprovalStatusTracker.ApprovalStatusTypeId = (int)EApprovalStatus.Approved; //status tracker
@@ -598,7 +611,7 @@ namespace AtoCashAPI.Controllers
                     travelApprovalStatusTracker.JobRoleId = null;
                     travelApprovalStatusTracker.ApprovalGroupId = null;
                     travelApprovalStatusTracker.ApprovalLevelId = 2; // default approval level is 2 for Project based request
-                    travelApprovalStatusTracker.RequestDate = DateTime.Now;
+                    travelApprovalStatusTracker.RequestDate = DateTime.UtcNow;
                     travelApprovalStatusTracker.ApproverActionDate = null;
                     travelApprovalStatusTracker.ApproverEmpId = null;
                     travelApprovalStatusTracker.Comments = "Travel Request in Proceess"; ;
@@ -690,7 +703,6 @@ namespace AtoCashAPI.Controllers
                 int costCenterId = _context.BusinessUnits.Find(reqBussUnitId).CostCenterId ?? 0;
                 int? reqEmpid = travelApprovalRequestDto.EmployeeId;
                 bool isSelfApprovedRequest = false;
-                double? dblTotalClaimAmount = 0;
 
                 Employee reqEmp = _context.Employees.Find(reqEmpid);
 
@@ -747,7 +759,7 @@ namespace AtoCashAPI.Controllers
 
                 travelApprovalRequest.BusinessTypeId = travelApprovalRequestDto.BusinessTypeId;
                 travelApprovalRequest.BusinessUnitId = travelApprovalRequestDto.BusinessUnitId;
-                travelApprovalRequest.CostCenterId = travelApprovalRequestDto.CostCenterId;
+                travelApprovalRequest.CostCenterId = costCenterId;
 
 
                 travelApprovalRequest.ProjectId = travelApprovalRequestDto.ProjectId;
@@ -810,8 +822,8 @@ namespace AtoCashAPI.Controllers
                     travelApprovalStatusTracker.JobRoleId = reqJobRoleId;
                     travelApprovalStatusTracker.ApprovalLevelId = reqApprLevel;
                     travelApprovalStatusTracker.ApprovalGroupId = reqApprGroupId;
-                    travelApprovalStatusTracker.RequestDate = DateTime.Now;
-                    travelApprovalStatusTracker.ApproverActionDate = DateTime.Now;
+                    travelApprovalStatusTracker.RequestDate = DateTime.UtcNow;
+                    travelApprovalStatusTracker.ApproverActionDate = DateTime.UtcNow;
 
                     travelApprovalStatusTracker.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                     travelApprovalStatusTracker.Comments = "Approved";
@@ -841,7 +853,8 @@ namespace AtoCashAPI.Controllers
                     {
 
                         int? apprjobRoleId = ApprMap.JobRoleId;
-                        int? approverEmpId = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == apprjobRoleId && e.ApprovalGroupId == reqApprGroupId).FirstOrDefault().EmployeeId;
+                        var empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == apprjobRoleId && e.ApprovalGroupId == reqApprGroupId).FirstOrDefault();
+                        int? approverEmpId = empExtInfo.EmployeeId;
 
                         var approver = await _context.Employees.FirstAsync(e => e.Id == approverEmpId);
 
@@ -874,7 +887,7 @@ namespace AtoCashAPI.Controllers
                         travelApprovalStatusTracker.ApprovalLevelId = reqApprLevel;
                         travelApprovalStatusTracker.ApprovalGroupId = reqApprGroupId;
 
-                        travelApprovalStatusTracker.RequestDate = DateTime.Now;
+                        travelApprovalStatusTracker.RequestDate = DateTime.UtcNow;
                         travelApprovalStatusTracker.ApproverActionDate = null;
 
                         travelApprovalStatusTracker.ApprovalStatusTypeId = isFirstApprover ? (int)EApprovalStatus.Pending : (int)EApprovalStatus.Intitated;
@@ -882,7 +895,16 @@ namespace AtoCashAPI.Controllers
 
                       
                         _context.TravelApprovalStatusTrackers.Add(travelApprovalStatusTracker);
-                        await _context.SaveChangesAsync();
+                        try
+                        {
+                            await _context.SaveChangesAsync();
+                            _logger.LogInformation("BusinessUnit: travelApprovalStatusTracker insert success");
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Self approved travelApprovalStatusTracker update failed");
+                            return 1;
+                        }
 
                         _logger.LogInformation(approver.GetFullName() + " Status Tracker inserted");
                         //##### 5. Send email to the Approver

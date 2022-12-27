@@ -82,8 +82,12 @@ namespace AtoCashAPI.Controllers
                     expenseReimburseRequestDTO.ProjectId = expenseReimbRequest.ProjectId;
                     expenseReimburseRequestDTO.ProjectName = expenseReimbRequest.ProjectId != null ? _context.Projects.Find(expenseReimbRequest.ProjectId).ProjectName : null;
 
-                    var locationId = _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).LocationId;
-                    expenseReimburseRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+
+                    if (expenseReimbRequest.BusinessUnitId != null)
+                    {
+                        var locationId = _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).LocationId;
+                        expenseReimburseRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                    }
 
                     expenseReimburseRequestDTO.SubProjectId = expenseReimbRequest.SubProjectId;
                     expenseReimburseRequestDTO.SubProjectName = expenseReimbRequest.SubProjectId != null ? _context.SubProjects.Find(expenseReimbRequest.SubProjectId).SubProjectName : null;
@@ -166,9 +170,12 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequestDTO.BusinessType = expenseReimbRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(expenseReimbRequest.BusinessTypeId).BusinessTypeName : null;
                 expenseReimburseRequestDTO.BusinessUnitId = expenseReimbRequest.BusinessUnitId;
                 expenseReimburseRequestDTO.BusinessUnit = expenseReimbRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).GetBusinessUnitName() : null;
-
-                var locationId = _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).LocationId;
-                expenseReimburseRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                
+                if (expenseReimbRequest.BusinessUnitId != null)
+                {
+                    var locationId = _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).LocationId;
+                    expenseReimburseRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                }
 
                 expenseReimburseRequestDTO.CostCentre = expenseReimbRequest.CostCenterId != null ? _context.CostCenters.Find(expenseReimbRequest.CostCenterId).GetCostCentre() : null;
                 expenseReimburseRequestDTO.ProjectId = expenseReimbRequest.ProjectId;

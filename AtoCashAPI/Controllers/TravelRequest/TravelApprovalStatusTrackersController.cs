@@ -257,7 +257,7 @@ namespace AtoCashAPI.Controllers
                                 var travelApprovalRequest = _context.TravelApprovalRequests.Find(qTravelApprovalRequestId);
                                 travelApprovalRequest.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                                 travelApprovalRequest.Comments = bRejectMessage ? travelApprovalStatusTrackerDTO.Comments : "Approved";
-                                travelApprovalRequest.ApproverActionDate = DateTime.Now;
+                                travelApprovalRequest.ApproverActionDate = DateTime.UtcNow;
                                 _context.Update(travelApprovalRequest);
 
                             }
@@ -327,7 +327,7 @@ namespace AtoCashAPI.Controllers
                         {
                             var trvlApprReq = _context.TravelApprovalRequests.Where(p => p.Id == travelApprovalStatusTrackerDTO.TravelApprovalRequestId).FirstOrDefault();
                             trvlApprReq.ApprovalStatusTypeId = travelApprovalStatusTrackerDTO.ApprovalStatusTypeId;
-                            trvlApprReq.ApproverActionDate = DateTime.Now;
+                            trvlApprReq.ApproverActionDate = DateTime.UtcNow;
                             trvlApprReq.Comments = travelApprovalStatusTrackerDTO.Comments;
                             _context.TravelApprovalRequests.Update(trvlApprReq);
                             await _context.SaveChangesAsync();
@@ -338,7 +338,7 @@ namespace AtoCashAPI.Controllers
                         {
                             var trvlApprReq = _context.TravelApprovalRequests.Where(p => p.Id == travelApprovalStatusTrackerDTO.TravelApprovalRequestId).FirstOrDefault();
                             trvlApprReq.ApprovalStatusTypeId = travelApprovalStatusTrackerDTO.ApprovalStatusTypeId;
-                            trvlApprReq.ApproverActionDate = DateTime.Now;
+                            trvlApprReq.ApproverActionDate = DateTime.UtcNow;
                             trvlApprReq.Comments = travelApprovalStatusTrackerDTO.Comments;
                             _context.TravelApprovalRequests.Update(trvlApprReq);
                             await _context.SaveChangesAsync();
