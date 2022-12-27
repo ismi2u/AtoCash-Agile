@@ -65,6 +65,10 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
                 CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;
                 CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
+
+                var locationId = _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId;
+                CashAdvanceRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+
                 CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
                 CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;
                 CashAdvanceRequestDTO.SubProjectId = CashAdvanceRequest.SubProjectId;
@@ -106,6 +110,10 @@ namespace AtoCashAPI.Controllers.CashAdvance
             CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
             CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
             CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
+
+            var locationId = _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId;
+            CashAdvanceRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+
             CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
             CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
             CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;

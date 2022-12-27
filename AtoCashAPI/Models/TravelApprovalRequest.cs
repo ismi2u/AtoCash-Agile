@@ -98,6 +98,8 @@ namespace AtoCashAPI.Models
         public int? WorkTaskId { get; set; }
         public string? WorkTaskName { get; set; }
 
+        public string? Location { get; set; }
+
         public int? CostCenterId { get; set; }
 
         public string? CostCenter { get; set; }

@@ -113,6 +113,8 @@ namespace AtoCashAPI.Models
         public DateTime? RequestDate { get; set; }
         public DateTime? ApproverActionDate { get; set; }
 
+        public string? Location { get; set; }
+
         public bool ShowEditDelete { get; set; }
         public List<ExpenseSubClaimDTO> ExpenseSubClaims { get; set; }
 

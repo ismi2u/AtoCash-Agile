@@ -116,6 +116,8 @@ namespace AtoCashAPI.Models
         public int CostCenterId { get; set; }
         public string? CostCentre { get; set; }
 
+        public string? Location { get; set; }
+
         public DateTime? ApproverActionDate { get; set; }
 
         public bool ShowEditDelete { get; set; }

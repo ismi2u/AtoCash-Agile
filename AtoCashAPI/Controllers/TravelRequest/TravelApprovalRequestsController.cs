@@ -17,7 +17,7 @@ namespace AtoCashAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
+    [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
 
 
     public class TravelApprovalRequestsController : ControllerBase
@@ -68,6 +68,8 @@ namespace AtoCashAPI.Controllers
                 travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
                 travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
 
+                var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
+                travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
 
                 travelApprovalRequestDTO.ProjectId = travelApprovalRequest.ProjectId;
                 travelApprovalRequestDTO.ProjectName = travelApprovalRequest.ProjectId != null ? _context.Projects.Find(travelApprovalRequest.ProjectId).ProjectName : null;
@@ -120,6 +122,8 @@ namespace AtoCashAPI.Controllers
             travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
             travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
 
+            var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
+            travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
 
             travelApprovalRequestDTO.ProjectId = travelApprovalRequest.ProjectId;
             travelApprovalRequestDTO.ProjectName = travelApprovalRequest.ProjectId != null ? _context.Projects.Find(travelApprovalRequest.ProjectId).ProjectName : null;
