@@ -12,6 +12,7 @@ using AtoCashAPI.Authentication;
 using EmailService;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 
 namespace AtoCashAPI.Controllers
 {
@@ -23,9 +24,13 @@ namespace AtoCashAPI.Controllers
         private readonly AtoCashDbContext _context;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<CashAdvanceStatusTrackersController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CashAdvanceStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender, ILogger<CashAdvanceStatusTrackersController> logger)
+        public CashAdvanceStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender, 
+                                                        ILogger<CashAdvanceStatusTrackersController> logger,
+                                                        UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
             _emailSender = emailSender;
             _logger = logger;
@@ -132,6 +137,7 @@ namespace AtoCashAPI.Controllers
 
             bool isNextApproverAvailable = true;
             bool bRejectMessage = false;
+            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
             foreach (CashAdvanceStatusTrackerDTO CashAdvanceStatusTrackerDto in ListCashAdvanceStatusTrackerDto)
             {
                 var CashAdvanceStatusTracker = await _context.CashAdvanceStatusTrackers.FindAsync(CashAdvanceStatusTrackerDto.Id);
@@ -148,7 +154,10 @@ namespace AtoCashAPI.Controllers
                 }
 
                 CashAdvanceStatusTracker.ApproverActionDate = DateTime.UtcNow;
-                CashAdvanceStatusTracker.ApproverEmpId = CashAdvanceStatusTrackerDto.ApproverEmpId;
+
+
+                CashAdvanceStatusTracker.ApproverEmpId = user != null ? user.EmployeeId : null;
+
                 CashAdvanceStatusTracker.Comments = bRejectMessage ? CashAdvanceStatusTrackerDto.Comments : "Approved";
 
                 CashAdvanceStatusTracker claimitem;
@@ -212,8 +221,7 @@ namespace AtoCashAPI.Controllers
                                c.ApprovalLevelId == qApprovalLevelId).FirstOrDefault();
                             //claimitem.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                             claimitem.ApproverActionDate = DateTime.UtcNow;
-                            claimitem.ApproverEmpId = CashAdvanceStatusTrackerDto.ApproverEmpId;
-
+                            claimitem.ApproverEmpId = user != null ? user.EmployeeId : null;
 
                             //final Approver hence updating ExpenseReimburseRequest table
                             var CashAdvanceRequest = _context.CashAdvanceRequests.Find(qCashAdvanceRequestId);
@@ -364,6 +372,7 @@ namespace AtoCashAPI.Controllers
 
                     CashAdvanceReq.ApprovalStatusTypeId = bRejectMessage ? (int)EApprovalStatus.Rejected : (int)EApprovalStatus.Approved;
                     CashAdvanceReq.ApproverActionDate = DateTime.UtcNow;
+
 
                     CashAdvanceReq.Comments = bRejectMessage ? CashAdvanceStatusTrackerDto.Comments : "Approved";
                     _context.Update(CashAdvanceReq);

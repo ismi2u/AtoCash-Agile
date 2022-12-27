@@ -1016,6 +1016,9 @@ namespace AtoCashAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AdditionalVendor")
+                        .HasColumnType("text");
+
                     b.Property<int?>("BusinessTypeId")
                         .HasColumnType("integer");
 

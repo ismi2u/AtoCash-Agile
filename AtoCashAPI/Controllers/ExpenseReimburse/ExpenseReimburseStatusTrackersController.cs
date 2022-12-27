@@ -12,6 +12,7 @@ using AtoCashAPI.Authentication;
 using EmailService;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 
 namespace AtoCashAPI.Controllers.ExpenseReimburse
 {
@@ -23,11 +24,14 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
         private readonly AtoCashDbContext _context;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExpenseReimburseStatusTrackersController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public ExpenseReimburseStatusTrackersController(AtoCashDbContext context,
                                                         IEmailSender emailSender,
-                                                        ILogger<ExpenseReimburseStatusTrackersController> logger)
+                                                        ILogger<ExpenseReimburseStatusTrackersController> logger,
+                                                        UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
             _emailSender = emailSender;
             _logger = logger;
@@ -288,6 +292,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
 
             bool isNextApproverAvailable = true;
             bool bRejectMessage = false;
+            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
                 _logger.LogInformation("PutExpsensReimburseStatus Tracker record updation START");
@@ -323,7 +328,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                     expenseReimburseStatusTracker.RequestDate = expenseReimburseStatusTrackerDto.RequestDate;
 
                     expenseReimburseStatusTracker.ApproverActionDate = DateTime.UtcNow;
-                    expenseReimburseStatusTracker.ApproverEmpId = expenseReimburseStatusTrackerDto.ApproverEmpId;
+                    expenseReimburseStatusTracker.ApproverEmpId = user != null ? user.EmployeeId : null;
                     expenseReimburseStatusTracker.Comments = bRejectMessage ? expenseReimburseStatusTrackerDto.Comments : "Approved";
                     expenseReimburseStatusTracker.ApprovalStatusTypeId = expenseReimburseStatusTrackerDto.ApprovalStatusTypeId;
                     

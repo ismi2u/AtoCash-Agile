@@ -81,6 +81,8 @@ namespace AtoCashAPI.Models
         public virtual Vendor? Vendor { get; set; }
         public int? VendorId { get; set; }
 
+        public string? AdditionalVendor { get; set; }
+
         [Required]
         [Column(TypeName = "varchar(100)")]
         public string? Location { get; set; }
@@ -151,6 +153,10 @@ namespace AtoCashAPI.Models
         public Double? TaxAmount { get; set; }
 
         public int? VendorId { get; set; }
+
+        public string? Vendor { get; set; }
+
+        public string? AdditionalVendor { get; set; }
 
         public string? Location { get; set; }
 

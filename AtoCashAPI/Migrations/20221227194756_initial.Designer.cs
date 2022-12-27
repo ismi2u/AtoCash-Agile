@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20221227055258_initial")]
+    [Migration("20221227194756_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1017,6 +1017,9 @@ namespace AtoCashAPI.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AdditionalVendor")
+                        .HasColumnType("text");
 
                     b.Property<int?>("BusinessTypeId")
                         .HasColumnType("integer");

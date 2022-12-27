@@ -62,6 +62,8 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.Tax = expenseSubClaim.Tax;
                 expenseSubClaimsDto.TaxAmount = expenseSubClaim.TaxAmount;
                 expenseSubClaimsDto.VendorId = expenseSubClaim.VendorId;
+                expenseSubClaimsDto.Vendor = _context.Vendors.Find(expenseSubClaim.VendorId).VendorName;
+                expenseSubClaimsDto.AdditionalVendor = expenseSubClaim.VendorId == null ? expenseSubClaim.AdditionalVendor : String.Empty;
                 expenseSubClaimsDto.Location = expenseSubClaim.Location;
                 expenseSubClaimsDto.Description = expenseSubClaim.Description;
                 expenseSubClaimsDto.CurrencyTypeId = expReimReq.CurrencyTypeId;
@@ -136,6 +138,8 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             expenseSubClaimsDto.Tax = expenseSubClaim.Tax;
             expenseSubClaimsDto.TaxAmount = expenseSubClaim.TaxAmount;
             expenseSubClaimsDto.VendorId = expenseSubClaim.VendorId;
+            expenseSubClaimsDto.Vendor = _context.Vendors.Find(expenseSubClaim.VendorId).VendorName;
+            expenseSubClaimsDto.AdditionalVendor = expenseSubClaim.VendorId == null ? expenseSubClaim.AdditionalVendor : String.Empty;
             expenseSubClaimsDto.Location = expenseSubClaim.Location;
             expenseSubClaimsDto.Description = expenseSubClaim.Description;
             expenseSubClaimsDto.CurrencyTypeId = expReimReq.CurrencyTypeId;
@@ -214,6 +218,8 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.Tax = expenseSubClaim.Tax;
                 expenseSubClaimsDto.TaxAmount = expenseSubClaim.TaxAmount;
                 expenseSubClaimsDto.VendorId = expenseSubClaim.VendorId;
+                expenseSubClaimsDto.Vendor = _context.Vendors.Find(expenseSubClaim.VendorId).VendorName;
+                expenseSubClaimsDto.AdditionalVendor = expenseSubClaim.VendorId == null ? expenseSubClaim.AdditionalVendor : String.Empty;
                 expenseSubClaimsDto.Location = expenseSubClaim.Location;
                 expenseSubClaimsDto.Description = expenseSubClaim.Description;
                 expenseSubClaimsDto.CurrencyTypeId = expReimReq.CurrencyTypeId;

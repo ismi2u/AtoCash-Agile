@@ -12,6 +12,7 @@ using EmailService;
 using AtoCashAPI.Authentication;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 
 namespace AtoCashAPI.Controllers
 {
@@ -23,10 +24,14 @@ namespace AtoCashAPI.Controllers
         private readonly AtoCashDbContext _context;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<TravelApprovalStatusTrackersController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public TravelApprovalStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender, ILogger<TravelApprovalStatusTrackersController> logger)
+        public TravelApprovalStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender, 
+                                                        ILogger<TravelApprovalStatusTrackersController> logger,
+                                                         UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
             _emailSender = emailSender;
             _logger = logger;
@@ -144,6 +149,7 @@ namespace AtoCashAPI.Controllers
 
             bool isNextApproverAvailable = true;
             bool bRejectMessage = false;
+            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
                 foreach (TravelApprovalStatusTrackerDTO travelApprovalStatusTrackerDTO in ListTravelApprovalStatusTrackerDTO)
@@ -175,7 +181,7 @@ namespace AtoCashAPI.Controllers
                     travelApprovalStatusTracker.ApprovalLevelId = travelApprovalStatusTrackerDTO.ApprovalLevelId;
                     travelApprovalStatusTracker.RequestDate = travelApprovalStatusTrackerDTO.RequestDate;
                     travelApprovalStatusTracker.ApproverActionDate = DateTime.UtcNow;
-                    travelApprovalStatusTracker.ApproverEmpId = travelApprovalStatusTrackerDTO.ApproverEmpId;
+                    travelApprovalStatusTracker.ApproverEmpId = user != null ? user.EmployeeId : null;
                     travelApprovalStatusTracker.Comments = bRejectMessage ? travelApprovalStatusTrackerDTO.Comments : "Approved";
 
 
@@ -244,7 +250,7 @@ namespace AtoCashAPI.Controllers
                                c.ApprovalLevelId == qApprovalLevelId).FirstOrDefault();
                                 //claimitem.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                                 travelItem.ApproverActionDate = DateTime.UtcNow;
-                                travelItem.ApproverEmpId = travelApprovalStatusTrackerDTO.ApproverEmpId;
+                                travelItem.ApproverEmpId = user != null ? user.EmployeeId : null;
 
 
                                 //final Approver hence updating TravelApprovalRequest
