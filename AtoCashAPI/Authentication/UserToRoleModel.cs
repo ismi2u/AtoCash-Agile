@@ -19,7 +19,7 @@ namespace AtoCashAPI.Authentication
     {
         public string? UserId { get; set; }
         public string? UserFullName { get; set; }
-        public new string? Department { get; set; }
+        public new string? BusinessUnit { get; set; }
 
         public new string? JobRole { get; set; }
         public new string? StatusType { get; set; }
