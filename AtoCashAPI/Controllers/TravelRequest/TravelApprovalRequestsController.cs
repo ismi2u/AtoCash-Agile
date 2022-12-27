@@ -883,8 +883,8 @@ namespace AtoCashAPI.Controllers
                         travelApprovalStatusTracker.BusinessUnitId = travelApprovalRequestDto.BusinessUnitId;
 
                         travelApprovalStatusTracker.ProjectId = null;
-                        travelApprovalStatusTracker.JobRoleId = reqJobRoleId;
-                        travelApprovalStatusTracker.ApprovalLevelId = reqApprLevel;
+                        travelApprovalStatusTracker.JobRoleId = apprjobRoleId;
+                        travelApprovalStatusTracker.ApprovalLevelId = approverLevelid;
                         travelApprovalStatusTracker.ApprovalGroupId = reqApprGroupId;
 
                         travelApprovalStatusTracker.RequestDate = DateTime.UtcNow;
