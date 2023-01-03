@@ -15,8 +15,8 @@ namespace AtoCashAPI.Models
 
         [Required]
         [ForeignKey("EmployeeId")]
-        public virtual Employee? Employee { get; set; }
-        public int? EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
+        public int EmployeeId { get; set; }
 
         [ForeignKey("BusinessTypeId")]
         public virtual BusinessType? BusinessType { get; set; }

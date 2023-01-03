@@ -49,12 +49,15 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 //
 
                 ExpenseSubClaimDTO expenseSubClaimsDto = new();
-               
+
                 expenseSubClaimsDto.Id = expenseSubClaim.Id;
                 expenseSubClaimsDto.EmployeeId = empId;
                 expenseSubClaimsDto.EmployeeName = empFullName;
                 expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
                 expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
+                expenseSubClaimsDto.ExpenseCategoryId = expenseSubClaim.ExpenseCategoryId;
+                expenseSubClaimsDto.ExpStrtDate = expenseSubClaim.ExpStrtDate;
+                expenseSubClaimsDto.ExpEndDate = expenseSubClaim.ExpEndDate;
                 expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
                 expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
                 expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
@@ -131,6 +134,9 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             expenseSubClaimsDto.EmployeeName = empFullName;
             expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
             expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
+            expenseSubClaimsDto.ExpenseCategoryId = expenseSubClaim.ExpenseCategoryId;
+            expenseSubClaimsDto.ExpStrtDate = expenseSubClaim.ExpStrtDate;
+            expenseSubClaimsDto.ExpEndDate = expenseSubClaim.ExpEndDate;
             expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
             expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
             expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
@@ -211,6 +217,9 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.EmployeeName = empFullName;
                 expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
                 expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
+                expenseSubClaimsDto.ExpenseCategoryId = expenseSubClaim.ExpenseCategoryId;
+                expenseSubClaimsDto.ExpStrtDate = expenseSubClaim.ExpStrtDate;
+                expenseSubClaimsDto.ExpEndDate = expenseSubClaim.ExpEndDate;
                 expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
                 expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
                 expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
@@ -294,21 +303,21 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
         //    return CreatedAtAction("GetExpenseSubClaim", new { id = expenseSubClaim.Id }, expenseSubClaim);
         //}
 
-        //// DELETE: api/ExpenseSubClaims/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteExpenseSubClaim(int id)
-        //{
-        //    var expenseSubClaim = await _context.ExpenseSubClaims.FindAsync(id);
-        //    if (expenseSubClaim == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // DELETE: api/ExpenseSubClaims/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteExpenseSubClaim(int id)
+        {
+            var expenseSubClaim = await _context.ExpenseSubClaims.FindAsync(id);
+            if (expenseSubClaim == null)
+            {
+                return NotFound();
+            }
 
-        //    _context.ExpenseSubClaims.Remove(expenseSubClaim);
-        //    await _context.SaveChangesAsync();
+            _context.ExpenseSubClaims.Remove(expenseSubClaim);
+            await _context.SaveChangesAsync();
 
-        //    return Ok(new RespStatus { Status = "Success", Message = "Expsense Sub Claim Deleted!" });
-        //}
+            return Ok(new RespStatus { Status = "Success", Message = "Expsense Sub Claim Deleted!" });
+        }
 
     }
 }

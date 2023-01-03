@@ -556,6 +556,8 @@ namespace AtoCashAPI.Controllers
 
 
         [HttpPost]
+
+        //[ActionName("PostExpenseReimburseRequest")]
         public async Task<ActionResult> PostExpenseReimburseRequest(ExpenseReimburseRequestDTO expenseReimburseRequestDto)
         {
             int SuccessResult;
@@ -893,7 +895,8 @@ namespace AtoCashAPI.Controllers
                         {
                             _logger.LogInformation(approver.GetFullName() + "Email Start");
 
-                            string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "ExpApprNotificationEmail.html" };
+                            //  string[] paths = { Directory.GetCurrentDirectory(),
+                            string[] paths = { Directory.GetCurrentDirectory(), "ExpApprNotificationEmail.html" };
                             string FilePath = Path.Combine(paths);
                             _logger.LogInformation("Email template path " + FilePath);
                             StreamReader str = new StreamReader(FilePath);
@@ -1233,7 +1236,7 @@ namespace AtoCashAPI.Controllers
 
                     _logger.LogInformation(approver.GetFullName() + "Email Start");
 
-                    string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "ExpApprNotificationEmail.html" };
+                    string[] paths = { Directory.GetCurrentDirectory(), "ExpApprNotificationEmail.html" };
                     string FilePath = Path.Combine(paths);
                     _logger.LogInformation("Email template path " + FilePath);
                     StreamReader str = new StreamReader(FilePath);

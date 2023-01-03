@@ -268,7 +268,7 @@ namespace AtoCashAPI.Controllers
                                 //##### 4. Send email to the Approver
                                 //####################################
 
-                                string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "CashAdvanceApprNotificationEmail.html" };
+                                string[] paths = { Directory.GetCurrentDirectory(), "CashAdvanceApprNotificationEmail.html" };
                                 string FilePath = Path.Combine(paths);
                                 _logger.LogInformation("Email template path " + FilePath);
                                 StreamReader str = new StreamReader(FilePath);

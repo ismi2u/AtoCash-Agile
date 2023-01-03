@@ -368,7 +368,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
                     _logger.LogInformation(approver.GetFullName() + "Email Start");
 
-                    string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "CashAdvanceApprNotificationEmail.html" };
+                    string[] paths = { Directory.GetCurrentDirectory(), "CashAdvanceApprNotificationEmail.html" };
                     string FilePath = Path.Combine(paths);
                     _logger.LogInformation("Email template path " + FilePath);
                     StreamReader str = new StreamReader(FilePath);
@@ -748,7 +748,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     #region
                     _logger.LogInformation("Project: CashAdvance Email Start");
 
-                    string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "CashAdvanceApprNotificationEmail.html" };
+                    string[] paths = { Directory.GetCurrentDirectory(), "CashAdvanceApprNotificationEmail.html" };
                     string FilePath = Path.Combine(paths);
                     _logger.LogInformation("Email template path " + FilePath);
                     StreamReader str = new StreamReader(FilePath);
@@ -1064,7 +1064,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                             //####################################
                             _logger.LogInformation(approver.GetFullName() + "Email Start");
 
-                            string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "CashAdvanceApprNotificationEmail.html" };
+                            string[] paths = { Directory.GetCurrentDirectory(), "CashAdvanceApprNotificationEmail.html" };
                             string FilePath = Path.Combine(paths);
                             _logger.LogInformation("Email template path " + FilePath);
                             StreamReader str = new StreamReader(FilePath);

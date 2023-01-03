@@ -556,7 +556,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                                     //####################################
                                     _logger.LogInformation("Sending email to Approver " + approver.GetFullName());
 
-                                    string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "ExpApprNotificationEmail.html" };
+                                    string[] paths = { Directory.GetCurrentDirectory(), "ExpApprNotificationEmail.html" };
                                     string FilePath = Path.Combine(paths);
                                     _logger.LogInformation("Email template path " + FilePath);
                                     StreamReader str = new StreamReader(FilePath);

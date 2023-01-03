@@ -354,7 +354,7 @@ namespace AtoCashAPI.Controllers
                 {
                     _logger.LogInformation("Travel Approval Email Start");
 
-                    string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "TravelApprNotificationEmail.html" };
+                    string[] paths = { Directory.GetCurrentDirectory(), "TravelApprNotificationEmail.html" };
                     string FilePath = Path.Combine(paths);
                     _logger.LogInformation("Email template path " + FilePath);
                     StreamReader str = new StreamReader(FilePath);
@@ -647,7 +647,7 @@ namespace AtoCashAPI.Controllers
                     return 0;
                 }
 
-                string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "TravelApprNotificationEmail.html" };
+                string[] paths = { Directory.GetCurrentDirectory(), "TravelApprNotificationEmail.html" };
                 string FilePath = Path.Combine(paths);
                 _logger.LogInformation("Email template path " + FilePath);
                 StreamReader str = new StreamReader(FilePath);
@@ -914,7 +914,7 @@ namespace AtoCashAPI.Controllers
                         {
                             _logger.LogInformation(approver.GetFullName() + "Email Start");
 
-                            string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "TravelApprNotificationEmail.html" };
+                            string[] paths = { Directory.GetCurrentDirectory(), "TravelApprNotificationEmail.html" };
                             string FilePath = Path.Combine(paths);
                             _logger.LogInformation("Email template path " + FilePath);
                             StreamReader str = new StreamReader(FilePath);

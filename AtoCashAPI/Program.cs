@@ -18,7 +18,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLInLocalAppInContainer")));
+
+//AzureCloudGmailServer
+//PostgreSQLInLocalAppInContainer
+builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("AzureCloudGmailServer")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AtoCashDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
@@ -86,12 +89,15 @@ app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, @"Images")),
     RequestPath = "/app/Images"
+    //RequestPath = Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + "Images"
 });
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, @"Reportdocs")),
     RequestPath = "/app/Reportdocs"
+    //RequestPath = Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + "Reportdocs"
 });
+
 app.UseHttpsRedirection();
 app.UseCors("myCorsPolicy");
 

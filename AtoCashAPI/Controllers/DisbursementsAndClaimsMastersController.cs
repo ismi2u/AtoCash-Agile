@@ -357,7 +357,7 @@ namespace AtoCashAPI.Controllers
 
                 _logger.LogInformation(requester.GetFullName() + "Settlement Email Start");
 
-                string[] paths = { Directory.GetCurrentDirectory(), "EmailTemplate", "ClaimApprovedandSettled.html" };
+                string[] paths = { Directory.GetCurrentDirectory(), "ClaimApprovedandSettled.html" };
                 string FilePath = Path.Combine(paths);
                 _logger.LogInformation("Email template path " + FilePath);
                 StreamReader str = new StreamReader(FilePath);
