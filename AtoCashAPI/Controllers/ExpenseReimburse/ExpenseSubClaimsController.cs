@@ -64,7 +64,9 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
                 expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
                 expenseSubClaimsDto.InvoiceDate = expenseSubClaim.InvoiceDate;
+                expenseSubClaimsDto.IsVAT = expenseSubClaim.IsVAT;
                 expenseSubClaimsDto.Tax = expenseSubClaim.Tax;
+                expenseSubClaimsDto.TaxNo = expenseSubClaim.TaxNo;
                 expenseSubClaimsDto.TaxAmount = expenseSubClaim.TaxAmount;
                 expenseSubClaimsDto.VendorId = expenseSubClaim.VendorId;
                 expenseSubClaimsDto.Vendor = _context.Vendors.Find(expenseSubClaim.VendorId).VendorName;
@@ -144,7 +146,9 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
             expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
             expenseSubClaimsDto.InvoiceDate = expenseSubClaim.InvoiceDate;
+            expenseSubClaimsDto.IsVAT = expenseSubClaim.IsVAT;
             expenseSubClaimsDto.Tax = expenseSubClaim.Tax;
+            expenseSubClaimsDto.TaxNo = expenseSubClaim.TaxNo;
             expenseSubClaimsDto.TaxAmount = expenseSubClaim.TaxAmount;
             expenseSubClaimsDto.VendorId = expenseSubClaim.VendorId;
             expenseSubClaimsDto.Vendor = _context.Vendors.Find(expenseSubClaim.VendorId).VendorName;
@@ -229,7 +233,9 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
                 expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
                 expenseSubClaimsDto.InvoiceDate = expenseSubClaim.InvoiceDate;
+                expenseSubClaimsDto.IsVAT = expenseSubClaim.IsVAT;
                 expenseSubClaimsDto.Tax = expenseSubClaim.Tax;
+                expenseSubClaimsDto.TaxNo = expenseSubClaim.TaxNo;
                 expenseSubClaimsDto.TaxAmount = expenseSubClaim.TaxAmount;
                 expenseSubClaimsDto.VendorId = expenseSubClaim.VendorId;
                 expenseSubClaimsDto.Vendor = _context.Vendors.Find(expenseSubClaim.VendorId).VendorName;
