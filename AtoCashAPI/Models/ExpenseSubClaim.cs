@@ -130,7 +130,7 @@ namespace AtoCashAPI.Models
         public int? ExpenseReimburseRequestId { get; set; }
         public int? ExpenseCategoryId { get; set; }
 
-        public string? ExpenseCategoryName { get; set; }
+        public string? ExpenseCategory { get; set; }
 
         public DateTime? ExpStrtDate { get; set; }
         public DateTime? ExpEndDate { get; set; }

@@ -56,8 +56,10 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
                 expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
                 expenseSubClaimsDto.ExpenseCategoryId = expenseSubClaim.ExpenseCategoryId;
+                expenseSubClaimsDto.ExpenseCategory = _context.ExpenseCategories.Find(expenseSubClaim.ExpenseCategoryId).ExpenseCategoryName;
                 expenseSubClaimsDto.ExpStrtDate = expenseSubClaim.ExpStrtDate;
                 expenseSubClaimsDto.ExpEndDate = expenseSubClaim.ExpEndDate;
+                expenseSubClaimsDto.ExpNoOfDays = expenseSubClaim.ExpNoOfDays;
                 expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
                 expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
                 expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
@@ -87,7 +89,6 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.SubProjectId = expReimReq.SubProjectId;
                 expenseSubClaimsDto.WorkTaskName = _context.WorkTasks.Find(expReimReq.WorkTaskId).TaskName;
                 expenseSubClaimsDto.WorkTaskId = expReimReq.WorkTaskId;
-
 
                 expenseSubClaimsDto.ApprovalStatusType = _context.ApprovalStatusTypes.Find(expReimReq.ApprovalStatusTypeId).Status;
                 expenseSubClaimsDto.ApprovalStatusTypeId = expReimReq.ApprovalStatusTypeId;
@@ -135,8 +136,10 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
             expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
             expenseSubClaimsDto.ExpenseCategoryId = expenseSubClaim.ExpenseCategoryId;
+            expenseSubClaimsDto.ExpenseCategory = _context.ExpenseCategories.Find(expenseSubClaim.ExpenseCategoryId).ExpenseCategoryName;
             expenseSubClaimsDto.ExpStrtDate = expenseSubClaim.ExpStrtDate;
             expenseSubClaimsDto.ExpEndDate = expenseSubClaim.ExpEndDate;
+            expenseSubClaimsDto.ExpNoOfDays = expenseSubClaim.ExpNoOfDays;
             expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
             expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
             expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
@@ -218,8 +221,10 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                 expenseSubClaimsDto.ExpenseReimburseRequestId = expenseSubClaim.ExpenseReimburseRequestId;
                 expenseSubClaimsDto.ExpenseReimbClaimAmount = expenseSubClaim.ExpenseReimbClaimAmount;
                 expenseSubClaimsDto.ExpenseCategoryId = expenseSubClaim.ExpenseCategoryId;
+                expenseSubClaimsDto.ExpenseCategory = _context.ExpenseCategories.Find(expenseSubClaim.ExpenseCategoryId).ExpenseCategoryName;
                 expenseSubClaimsDto.ExpStrtDate = expenseSubClaim.ExpStrtDate;
                 expenseSubClaimsDto.ExpEndDate = expenseSubClaim.ExpEndDate;
+                expenseSubClaimsDto.ExpNoOfDays = expenseSubClaim.ExpNoOfDays;
                 expenseSubClaimsDto.DocumentIDs = expenseSubClaim.DocumentIDs;
                 expenseSubClaimsDto.RequestDate = expReimReq.RequestDate;
                 expenseSubClaimsDto.InvoiceNo = expenseSubClaim.InvoiceNo;
