@@ -76,7 +76,7 @@ namespace AtoCashAPI.Models
         [Required]
         public DateTime? InvoiceDate { get; set; }  
         
-        [Required]
+
         [ForeignKey("VendorId")]
         public virtual Vendor? Vendor { get; set; }
         public int? VendorId { get; set; }
