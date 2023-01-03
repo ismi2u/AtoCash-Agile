@@ -31,6 +31,15 @@ namespace AtoCashAPI.Controllers
             List<VendorVM> ListVendorVM = new List<VendorVM>();
 
             var Vendors = await _context.Vendors.Where(c => c.StatusTypeId == (int)EStatusType.Active).ToListAsync();
+
+            VendorVM firstVendorVM = new VendorVM
+            {
+                Id = 0,
+                VendorName = "Other Vendors"
+            };
+
+            ListVendorVM.Add(firstVendorVM);
+
             foreach (Vendor Vendor in Vendors)
             {
                 VendorVM VendorVM = new VendorVM

@@ -183,6 +183,13 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
                     CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
                     CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;
+
+                    if (CashAdvanceRequest.BusinessUnitId != null)
+                    {
+                        var locationId = _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId;
+                        CashAdvanceRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                    }
+
                     CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
                     CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
                     CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;

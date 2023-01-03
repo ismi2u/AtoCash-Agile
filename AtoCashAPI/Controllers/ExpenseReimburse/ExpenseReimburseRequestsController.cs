@@ -261,6 +261,12 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequestDTO.WorkTaskId = expenseReimbRequest.WorkTaskId;
                 expenseReimburseRequestDTO.WorkTaskName = expenseReimbRequest.WorkTaskId != null ? _context.WorkTasks.Find(expenseReimbRequest.WorkTaskId).TaskName : null;
 
+                if (expenseReimbRequest.BusinessUnitId != null)
+                {
+                    var locationId = _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).LocationId;
+                    expenseReimburseRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                }
+
                 expenseReimburseRequestDTO.RequestDate = expenseReimbRequest.RequestDate;
                 expenseReimburseRequestDTO.ApproverActionDate = expenseReimbRequest.ApproverActionDate;
                 expenseReimburseRequestDTO.ApprovalStatusTypeId = expenseReimbRequest.ApprovalStatusTypeId;
