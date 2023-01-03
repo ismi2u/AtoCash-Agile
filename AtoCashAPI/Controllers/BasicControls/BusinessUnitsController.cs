@@ -71,7 +71,7 @@ namespace AtoCashAPI.Controllers
         }
 
 
-        [HttpGet("{id}")]
+        [HttpPost]
         [ActionName("BusinessUnitsByBizTypeIdAndEmpIdForDropdown")]
         public async Task<ActionResult<IEnumerable<BusinessUnitVM>>> GetBusinessUnitsByBizTypeIdAndEmpIdForDropdown(BusinessTypeIdAndEmpId bizIdAndEmpID )
         {
