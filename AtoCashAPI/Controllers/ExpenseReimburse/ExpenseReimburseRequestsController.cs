@@ -195,7 +195,7 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequestDTO.Comments = expenseReimbRequest.Comments;
                 expenseReimburseRequestDTO.CreditToBank = disbAndClaim.IsSettledAmountCredited ?? false ? disbAndClaim.AmountToCredit : 0;
                 expenseReimburseRequestDTO.CreditToWallet = disbAndClaim.IsSettledAmountCredited ?? false ? disbAndClaim.AmountToWallet : 0;
-                expenseReimburseRequestDTO.IsSettled = !(disbAndClaim.IsSettledAmountCredited ?? false);
+                expenseReimburseRequestDTO.IsSettled = (disbAndClaim.IsSettledAmountCredited ?? false);
 
 
             }

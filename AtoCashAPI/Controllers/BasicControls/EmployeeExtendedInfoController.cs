@@ -273,15 +273,9 @@ namespace AtoCashAPI.Controllers.BasicControls
                 return Conflict(new RespStatus { Status = "Failure", Message = "Employee Extended Information Id is invalid!" });
             }
 
-
-
-
-            bool blnUsedInTravelReq = false; // remove this after travelrequest is fixed below
-            bool blnUsedInExpeReimReq = false; // remove this after ExpReimburse is fixed below
-
-            // bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+            bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
             bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
-            // bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+            bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)
             {
@@ -318,6 +312,12 @@ namespace AtoCashAPI.Controllers.BasicControls
         {
             double maximumLimit = 0;
 
+            if (String.IsNullOrEmpty(DoublesInStrings))
+            {
+                return maximumLimit;
+            }
+           
+
             double[] Limits = DoublesInStrings.Split(';').Select(double.Parse).ToArray();
             maximumLimit = Limits.Max();
 
@@ -330,9 +330,15 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             string strLimitAmount = string.Format("{0:N2}", Math.Truncate(limitAmount * 100) / 100);
 
-            List<string> ListOfMaxlimits = MaxLimitsInStrings.Split(";").ToList();
-            ListOfMaxlimits = ListOfMaxlimits.Where(l => l != strLimitAmount).ToList();
+            List<string> ListOfMaxlimits = new List<string>();
 
+            if (!String.IsNullOrEmpty(MaxLimitsInStrings))
+            {
+                ListOfMaxlimits = MaxLimitsInStrings.Split(";").ToList();
+            }
+            //ListOfMaxlimits = ListOfMaxlimits.Where(l => l != strLimitAmount).ToList();
+
+            ListOfMaxlimits.Remove(strLimitAmount);
             return string.Join(";", ListOfMaxlimits);
         }
 
