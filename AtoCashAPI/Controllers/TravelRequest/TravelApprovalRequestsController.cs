@@ -732,7 +732,14 @@ namespace AtoCashAPI.Controllers
                     {
                         int? jobRole_id = ApprMap.JobRoleId;
 
-                        int? approverEmpId = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == jobRole_id && e.ApprovalGroupId == reqApprGroupId).FirstOrDefault().EmployeeId;
+                        var employeeExtendedInfo = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == jobRole_id && e.ApprovalGroupId == reqApprGroupId).FirstOrDefault();
+                        if (employeeExtendedInfo == null)
+                        {
+                            _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
+                            return 1;
+                        }
+
+                        int? approverEmpId = employeeExtendedInfo.EmployeeId;
 
                         var approver = await _context.Employees.FirstAsync(e => e.Id == approverEmpId);
                         if (approver == null)
@@ -820,6 +827,8 @@ namespace AtoCashAPI.Controllers
 
                     travelApprovalStatusTracker.ProjectId = null;
                     travelApprovalStatusTracker.JobRoleId = reqJobRoleId;
+
+                    travelApprovalStatusTracker.ApproverEmpId = null;
                     travelApprovalStatusTracker.ApprovalLevelId = reqApprLevel;
                     travelApprovalStatusTracker.ApprovalGroupId = reqApprGroupId;
                     travelApprovalStatusTracker.RequestDate = DateTime.UtcNow;

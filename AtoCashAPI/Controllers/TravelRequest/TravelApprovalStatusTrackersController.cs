@@ -27,7 +27,7 @@ namespace AtoCashAPI.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public TravelApprovalStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender, 
+        public TravelApprovalStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender,
                                                         ILogger<TravelApprovalStatusTrackersController> logger,
                                                          UserManager<ApplicationUser> userManager)
         {
@@ -293,8 +293,8 @@ namespace AtoCashAPI.Controllers
                                     var approverMailAddress = approver.Email;
                                     string subject = "Travel Approval Request " + travelApprovalStatusTracker.TravelApprovalRequestId.ToString();
                                     Employee emp = await _context.Employees.FindAsync(travelApprovalStatusTracker.EmployeeId);
-                                    var travelreq = _context.TravelApprovalRequests.Find(travelApprovalStatusTracker.Id);
-
+                                    var travelreq = _context.TravelApprovalRequests.Find(travelApprovalStatusTracker.TravelApprovalRequestId);
+                                    //var travelreqStatusTracker = _context.TravelApprovalStatusTrackers.Find(travelApprovalStatusTracker.Id);
                                     var builder = new MimeKit.BodyBuilder();
 
                                     MailText = MailText.Replace("{Requester}", emp.GetFullName());
@@ -410,12 +410,12 @@ namespace AtoCashAPI.Controllers
             if (bRejectMessage)
             {
                 respStatus.Status = "Success";
-                respStatus.Message = "Cash Advance(s) Rejected!";
+                respStatus.Message = "Travel Request(s) Rejected!";
             }
             else
             {
                 respStatus.Status = "Success";
-                respStatus.Message = "Cash Advance(s) Approved!";
+                respStatus.Message = "Travel Request(s) Approved!";
             }
 
             return Ok(respStatus);
@@ -432,7 +432,6 @@ namespace AtoCashAPI.Controllers
                 return Conflict(new RespStatus { Status = "Failure", Message = "Employee Id is Invalid" });
             }
 
-
             //get the RoleID of the Employee (Approver)
             Employee? apprEmp = _context.Employees.Find(id);
 
@@ -445,59 +444,61 @@ namespace AtoCashAPI.Controllers
             var listEmpExtendedInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id).ToList();
 
 
+            List<TravelApprovalStatusTracker> ListTravelApprovalStatusTrackers = new();
+
+
+
+            //for Non-Project approval status trackers
+            foreach (var empExtInfo in listEmpExtendedInfo)
+            {
+                ListTravelApprovalStatusTrackers.AddRange(_context.TravelApprovalStatusTrackers.Where(r => r.JobRoleId == empExtInfo.JobRoleId
+                                                                                                         && r.ApprovalGroupId == empExtInfo.ApprovalGroupId
+                                                                                                         && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending
+                                                                                                         && r.ProjManagerId == null).ToList());
+            }
+            //for Project based approval status trackers
+            ListTravelApprovalStatusTrackers.AddRange(_context.TravelApprovalStatusTrackers.Where(r => r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending
+                                                                                                         && r.ProjManagerId == id).ToList());
+
+
             List<TravelApprovalStatusTrackerDTO> ListTravelApprovalStatusTrackerDTO = new();
 
-            foreach (EmployeeExtendedInfo empExtInfo in listEmpExtendedInfo)
+
+            foreach (TravelApprovalStatusTracker travelApprovalStatusTracker in ListTravelApprovalStatusTrackers)
             {
-                int? jobRoleid = empExtInfo.JobRoleId;
-                int? apprGroupId = empExtInfo.ApprovalGroupId;
-
-                if (jobRoleid == 0)
-                {
-                    _logger.LogError("ApprovalsPendingForApprover JobRole Id is Invalid:" + id);
-                    return Conflict(new RespStatus { Status = "Failure", Message = "JobRole Id is Invalid" });
-                }
-
-                var TravelApprovalStatusTrackers = _context.TravelApprovalStatusTrackers
-                                    .Where(r =>
-                                        (r.JobRoleId == jobRoleid && r.ApprovalGroupId == apprGroupId && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending && r.ProjManagerId == null)
-                                        || (r.ProjManagerId == id && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending)).ToList();
-
-                foreach (TravelApprovalStatusTracker travelApprovalStatusTracker in TravelApprovalStatusTrackers)
-                {
-                    TravelApprovalStatusTrackerDTO travelApprovalStatusTrackerDTO = new();
+                TravelApprovalStatusTrackerDTO travelApprovalStatusTrackerDTO = new();
 
 
-                    travelApprovalStatusTrackerDTO.Id = travelApprovalStatusTracker.Id;
-                    travelApprovalStatusTrackerDTO.EmployeeId = travelApprovalStatusTracker.EmployeeId;
-                    travelApprovalStatusTrackerDTO.TravelStartDate = travelApprovalStatusTracker.TravelStartDate;
-                    travelApprovalStatusTrackerDTO.TravelEndDate = travelApprovalStatusTracker.TravelEndDate;
-                    travelApprovalStatusTrackerDTO.EmployeeName = _context.Employees.Find(travelApprovalStatusTracker.EmployeeId).GetFullName();
-                    travelApprovalStatusTrackerDTO.TravelApprovalRequestId = travelApprovalStatusTracker.TravelApprovalRequestId;
+                travelApprovalStatusTrackerDTO.Id = travelApprovalStatusTracker.Id;
+                travelApprovalStatusTrackerDTO.EmployeeId = travelApprovalStatusTracker.EmployeeId;
+                travelApprovalStatusTrackerDTO.TravelStartDate = travelApprovalStatusTracker.TravelStartDate;
+                travelApprovalStatusTrackerDTO.TravelEndDate = travelApprovalStatusTracker.TravelEndDate;
+                travelApprovalStatusTrackerDTO.EmployeeName = _context.Employees.Find(travelApprovalStatusTracker.EmployeeId).GetFullName();
+                travelApprovalStatusTrackerDTO.TravelApprovalRequestId = travelApprovalStatusTracker.TravelApprovalRequestId;
 
-                    travelApprovalStatusTrackerDTO.BusinessTypeId = travelApprovalStatusTracker.BusinessTypeId;
-                    travelApprovalStatusTrackerDTO.BusinessType = travelApprovalStatusTracker.BusinessTypeId != null ? _context.BusinessTypes.Find(travelApprovalStatusTracker.BusinessTypeId).BusinessTypeName : null;
-                    travelApprovalStatusTrackerDTO.BusinessUnitId = travelApprovalStatusTracker.BusinessUnitId;
-                    travelApprovalStatusTrackerDTO.BusinessUnit = travelApprovalStatusTracker.BusinessUnitId != null ? _context.BusinessUnits.Find(travelApprovalStatusTracker.BusinessUnitId).GetBusinessUnitName() : null;
+                travelApprovalStatusTrackerDTO.BusinessTypeId = travelApprovalStatusTracker.BusinessTypeId;
+                travelApprovalStatusTrackerDTO.BusinessType = travelApprovalStatusTracker.BusinessTypeId != null ? _context.BusinessTypes.Find(travelApprovalStatusTracker.BusinessTypeId).BusinessTypeName : null;
+                travelApprovalStatusTrackerDTO.BusinessUnitId = travelApprovalStatusTracker.BusinessUnitId;
+                travelApprovalStatusTrackerDTO.BusinessUnit = travelApprovalStatusTracker.BusinessUnitId != null ? _context.BusinessUnits.Find(travelApprovalStatusTracker.BusinessUnitId).GetBusinessUnitName() : null;
 
-                    travelApprovalStatusTrackerDTO.ProjectId = travelApprovalStatusTracker.ProjectId;
-                    travelApprovalStatusTrackerDTO.ProjectName = travelApprovalStatusTracker.ProjectId != null ? _context.Projects.Find(travelApprovalStatusTracker.ProjectId).ProjectName : null;
-                    travelApprovalStatusTrackerDTO.JobRoleId = travelApprovalStatusTracker.JobRoleId;
-                    travelApprovalStatusTrackerDTO.JobRole = _context.JobRoles.Find(travelApprovalStatusTracker.JobRoleId).GetJobRole();
-                    travelApprovalStatusTrackerDTO.ApprovalLevelId = travelApprovalStatusTracker.ApprovalLevelId;
-                    travelApprovalStatusTrackerDTO.RequestDate = travelApprovalStatusTracker.RequestDate;
-                    travelApprovalStatusTrackerDTO.ApproverActionDate = travelApprovalStatusTracker.ApproverActionDate;
-                    travelApprovalStatusTrackerDTO.ApprovalStatusTypeId = travelApprovalStatusTracker.ApprovalStatusTypeId;
-                    travelApprovalStatusTrackerDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(travelApprovalStatusTracker.ApprovalStatusTypeId).Status;
-                    travelApprovalStatusTrackerDTO.Comments = travelApprovalStatusTracker.Comments;
+                travelApprovalStatusTrackerDTO.ProjectId = travelApprovalStatusTracker.ProjectId;
+                travelApprovalStatusTrackerDTO.ProjectName = travelApprovalStatusTracker.ProjectId != null ? _context.Projects.Find(travelApprovalStatusTracker.ProjectId).ProjectName : null;
+                travelApprovalStatusTrackerDTO.JobRoleId = travelApprovalStatusTracker.JobRoleId;
+                travelApprovalStatusTrackerDTO.JobRole = travelApprovalStatusTracker.JobRoleId != null ? _context.JobRoles.Find(travelApprovalStatusTracker.JobRoleId).GetJobRole() : null;
+                travelApprovalStatusTrackerDTO.ApprovalLevelId = travelApprovalStatusTracker.ApprovalLevelId;
+                travelApprovalStatusTrackerDTO.RequestDate = travelApprovalStatusTracker.RequestDate;
+                travelApprovalStatusTrackerDTO.ApproverActionDate = travelApprovalStatusTracker.ApproverActionDate;
+                travelApprovalStatusTrackerDTO.ApprovalStatusTypeId = travelApprovalStatusTracker.ApprovalStatusTypeId;
+                travelApprovalStatusTrackerDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(travelApprovalStatusTracker.ApprovalStatusTypeId).Status;
+                travelApprovalStatusTrackerDTO.Comments = travelApprovalStatusTracker.Comments;
 
 
 
-                    ListTravelApprovalStatusTrackerDTO.Add(travelApprovalStatusTrackerDTO);
-
-                }
+                ListTravelApprovalStatusTrackerDTO.Add(travelApprovalStatusTrackerDTO);
 
             }
+
+
             return Ok(ListTravelApprovalStatusTrackerDTO.OrderByDescending(o => o.RequestDate).ToList());
         }
 
@@ -573,8 +574,8 @@ namespace AtoCashAPI.Controllers
 
             if (ListOfTravelRequestStatusTrackers == null)
             {
-                _logger.LogError("Expense-Reimburse Status Tracker Request Id is returning null records:" + id);
-                return Conflict(new RespStatus { Status = "Failure", Message = "Status Tracker Request Id is returning null records:" + id });
+                _logger.LogError("Travel Request Status tracker Id is returning null records:" + id);
+                return Conflict(new RespStatus { Status = "Failure", Message = "Travel Request Status tracker Id is returning null records:" + id });
             }
 
             else

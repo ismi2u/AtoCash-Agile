@@ -681,7 +681,14 @@ namespace AtoCashAPI.Controllers
                     {
                         int? jobRole_id = ApprMap.JobRoleId;
 
-                        int? approverEmpId = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == jobRole_id && e.ApprovalGroupId == reqApprGroupId).FirstOrDefault().EmployeeId;
+                        var employeeExtendedInfo = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == jobRole_id && e.ApprovalGroupId == reqApprGroupId).FirstOrDefault();
+                        if (employeeExtendedInfo == null)
+                        {
+                            _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
+                            return 1;
+                        }
+
+                        int? approverEmpId = employeeExtendedInfo.EmployeeId;
 
                         var approver = await _context.Employees.FirstAsync(e => e.Id == approverEmpId);
                         if (approver == null)
@@ -1178,6 +1185,7 @@ namespace AtoCashAPI.Controllers
                         ApprovalLevelId = 2,
                         RequestDate = DateTime.UtcNow,
                         ApproverEmpId = reqEmpid,
+                        ProjManagerId = projManagerid,
                         ApproverActionDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Approved, //1-Pending, 2-Approved, 3-Rejected
                         Comments = "Requestor is highest approver level and is a Approver - Self Approved Request"
@@ -1213,6 +1221,7 @@ namespace AtoCashAPI.Controllers
                         ApprovalLevelId = 2,
                         RequestDate = DateTime.UtcNow,
                         ApproverEmpId = reqEmpid,
+                        ProjManagerId = projManagerid,
                         ApproverActionDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Pending, //1-Pending, 2-Approved, 3-Rejected
                         Comments = "Expense Reimburse is in Process - Pending approval!"

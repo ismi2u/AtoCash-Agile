@@ -26,7 +26,7 @@ namespace AtoCashAPI.Controllers
         private readonly ILogger<CashAdvanceStatusTrackersController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CashAdvanceStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender, 
+        public CashAdvanceStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender,
                                                         ILogger<CashAdvanceStatusTrackersController> logger,
                                                         UserManager<ApplicationUser> userManager)
         {
@@ -227,7 +227,7 @@ namespace AtoCashAPI.Controllers
                             var CashAdvanceRequest = _context.CashAdvanceRequests.Find(qCashAdvanceRequestId);
 
 
-                        
+
                             CashAdvanceRequest.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                             CashAdvanceRequest.ApproverActionDate = DateTime.UtcNow;
                             CashAdvanceRequest.Comments = bRejectMessage ? CashAdvanceStatusTrackerDto.Comments : "Approved";
@@ -483,13 +483,22 @@ namespace AtoCashAPI.Controllers
                 return Conflict(new RespStatus { Status = "Failure", Message = "Employee Id is Invalid" });
             }
 
-            List<EmployeeExtendedInfo>? ListEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id).ToList();
+            //get the RoleID of the Employee (Approver)
+            Employee? apprEmp = _context.Employees.Find(id);
+
+            if (apprEmp == null)
+            {
+                _logger.LogError("Employee Id is Invalid:" + id);
+                return Conflict(new RespStatus { Status = "Failure", Message = "Employee Id is Invalid" });
+            }
+
+            List<EmployeeExtendedInfo>? listEmpExtendedInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id).ToList();
 
 
             List<CashAdvanceStatusTracker> ListCashAdvanceStatusTrackers = new();
 
             //for Non-Project approval status trackers
-            foreach (var empExtInfo in ListEmpExtInfo)
+            foreach (var empExtInfo in listEmpExtendedInfo)
             {
                 ListCashAdvanceStatusTrackers.AddRange(_context.CashAdvanceStatusTrackers.Where(r => r.JobRoleId == empExtInfo.JobRoleId
                                                                                                          && r.ApprovalGroupId == empExtInfo.ApprovalGroupId
@@ -498,7 +507,7 @@ namespace AtoCashAPI.Controllers
             }
             //for Project based approval status trackers
             ListCashAdvanceStatusTrackers.AddRange(_context.CashAdvanceStatusTrackers.Where(r => r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending
-                                                                                                         && r.ProjManagerId != null).ToList());
+                                                                                                         && r.ProjManagerId == id).ToList());
 
             List<CashAdvanceStatusTrackerDTO> ListCashAdvanceStatusTrackerDTO = new();
 
