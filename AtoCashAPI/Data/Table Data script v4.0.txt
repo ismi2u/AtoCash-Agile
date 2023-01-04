@@ -13,42 +13,442 @@ INSERT INTO public."EmploymentTypes" VALUES (2, 'PART-TIME-EMP', 'Part Time Empl
 INSERT INTO public."Banks" VALUES (1, 'Riyad Bank', 'Riyad Bank', 1);
 
 
-INSERT INTO public."ApprovalGroups" VALUES (1, 'SETUP-ADMIN', 'SETUP-ADMIN');
-INSERT INTO public."ApprovalGroups" VALUES (2, 'DEPT-APPR-GROUP-001', 'Department approval group');
-INSERT INTO public."ApprovalGroups" VALUES (3, 'SALES-APPR-GROUP-001', 'Chennai Sales group');
-INSERT INTO public."ApprovalGroups" VALUES (4, 'SALES-APPR-GROUP-002', 'Mumabai sales group');
+--INSERT INTO public."ApprovalGroups" VALUES (1, 'SETUP-ADMIN', 'SETUP-ADMIN');
+--INSERT INTO public."ApprovalGroups" VALUES (2, 'DEPT-APPR-GROUP-001', 'Department approval group');
+--INSERT INTO public."ApprovalGroups" VALUES (3, 'SALES-APPR-GROUP-001', 'Chennai Sales group');
+--INSERT INTO public."ApprovalGroups" VALUES (4, 'SALES-APPR-GROUP-002', 'Mumbai sales group');
 
 
-INSERT INTO public."CostCenters" VALUES (501, 'ADM', 'Administration', 1);
-INSERT INTO public."CostCenters" VALUES (502, 'BUD', 'Business Development', 1);
-INSERT INTO public."CostCenters" VALUES (503, '11001', 'JB- Al Shawkiya', 1);
-INSERT INTO public."CostCenters" VALUES (504, '11009', 'JB-Andalus Mall', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1001, '20001', 'Sign Anas In Malek', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1002, '20002', 'Sign-AL Takhasusi', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1003, '11001', 'JB- Al Shawkiya', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1004, '11009', 'JB-Andalus Mall', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1005, '11012', 'JB-Heraa', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1006, '11014', 'JB-Suwaidi', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1007, '11015', 'JB-Al Ghadeer', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1008, '11016', 'JB-Takhasosi', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1009, '11017', 'JB-Murjan', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1010, '11018', 'JB-Um Alqura', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1011, '11019', 'JB-Azizya', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1012, '11020', 'JB-Al Nakheel', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1013, '11021', 'JB-Qurban', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1014, '11022', 'JB-Hezam', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1015, '11023', 'JB-Sultanh', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1016, '11024', 'JB-Al Shatie', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1017, '11025', 'JB-Jabal Omar', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1018, '11026', 'JB-Falastin St.', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1019, '11027', 'JB-Al Rabwah (Exit 14)', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1020, '11028', 'JB-Jarir', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1021, '11029', 'JB-Al Jazeera (Exit 15)', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1022, '11030', 'JB-New Safa', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1023, '11032', 'JB-Rabie', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1024, '11033', 'JB-SASCO 1', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1025, '11034', 'JB-Khanshalilla - Exit 19', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1026, '11035', 'JB-Al Wazireah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1027, '11036', 'JB-Cornishe', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1028, '11037', 'JB-Al Sulaimania', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1029, '11038', 'JB-Buraida', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1030, '11039', 'JB-Al Nahdha', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1031, '11040', 'JB-Al Falah (Exit 7)', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1032, '11041', 'JB-Al Dhabab', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1033, '11042', 'JB-Al Salama', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1034, '11043', 'JB-Wadi Laban', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1035, '11044', 'JB-Al Kharj 1', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1036, '11045', 'JB-Nakhla Plaza "Qurtuba"', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1037, '11046', 'JB-Al Basateen', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1038, '11047', 'JB-Badaya', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1039, '11048', 'JB-Al Samer', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1040, '11049', 'JB-Oniza Qassim', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1041, '11050', 'JB-Al Shifa', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1042, '11051', 'JB-Al Madinah Road', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1043, '11052', 'JB-Al Mohmadiah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1044, '11053', 'JB-Arruddaf Park', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1045, '11054', 'JB-Hail - Plaza', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1046, '11055', 'JB-Ad Diriyah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1047, '11056', 'JB-Naseem', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1048, '11057', 'JB-Nozha', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1049, '11058', 'JB-Morooj', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1050, '11059', 'JB-SASCO 2', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1051, '11060', 'JB-Al Kharj 2', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1052, '11061', 'JB-Hutut Sudyr', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1053, '11063', 'JB-King Fahed', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1054, '11064', 'JB-Erqa', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1055, '11065', 'JB-Suly CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1056, '11066', 'JB-Al Nadeem CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1057, '11067', 'JB-Al Suweidy 2', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1058, '11068', 'JB-Al Nozha 2', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1059, '11069', 'JB - Burida New', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1060, '11070', 'JB-Al Monasiya CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1061, '11071', 'JB- Anas Ibn Malek', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1062, '11072', 'JB- Taif New', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1063, '11073', 'JB- King Faisal CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1064, '11074', 'JB- Hail 2', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1065, '11075', 'JB- Jaber Al-Sabah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1066, '11076', 'JB-Al Hamdaniya', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1067, '11077', 'JB-Al Damam Road', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1068, '12001', 'SH-Al Ghadeer', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1069, '12002', 'SH-Al Hamra', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1070, '12003', 'SH-AL Nahda', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1071, '12004', 'SH-Al Yarmouk', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1072, '12005', 'SH-Al Aqiq', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1073, '12006', 'SH-Ashbiliyah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1074, '12007', 'SH-Al Mansora', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1075, '12008', 'SH-Sasco', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1076, '12009', 'SH-Aziziyah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1077, '12010', 'SH-Qurtuba', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1078, '12011', 'SH-Al Shifa', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1079, '12012', 'SH-Al Saada', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1080, '12013', 'SH-Al Rabwa', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1081, '12014', 'SH-Al Diriyah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1082, '12015', 'SH-Al Badiah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1083, '12016', 'SH-Al Nazeem', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1084, '12017', 'SH-Al Murooj', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1085, '12018', 'SH-Al Rawabi', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1086, '12019', 'SH-Al Nozha', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1087, '12020', 'SH-Al Malga', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1088, '12021', 'SH-Al Falah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1089, '12022', 'SH-Al Mouansiah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1090, '12023', 'SH-Sulaimania', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1091, '12024', 'SH-Sweidy', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1092, '12025', 'SH-Buraidah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1093, '12026', 'SH-Al Kharj', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1094, '12028', 'SH-Majmaah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1095, '12029', 'SH-Namar', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1096, '12030', 'SH-Laban', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1097, '12031', 'SH-Onaiza', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1098, '12032', 'SH-Suly CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1099, '12033', 'SH-Al Nadeem CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1100, '12034', 'SH-Al Moansia CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1101, '12035', 'SH - Hail New', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1102, '12036', 'SH-King Faisal CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1103, '13001', 'PZ-Al-Nuzha', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1104, '13002', 'PZ-Al-Nakhil', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1105, '13003', 'PZ- Al-Badiah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1106, '13004', 'PZ-Al-Yasmin', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1107, '13005', 'PZ-Al-Rawabi', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1108, '13006', 'PZ-Al-Rabwah', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1109, '13007', 'PZ-AlShifa', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1110, '13008', 'PZ-AlSuwaidi', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1111, '13009', 'PZ-Al-Rabea', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1112, '13010', 'PZ-Laban', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1113, '13011', 'PZ-AlMalqa', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1114, '13012', 'PZ-Al Suali CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1115, '13013', 'PZ-Al Yarmouk', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1116, '13014', 'PZ - Al Nadeem CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1117, '13015', 'PZ-CK Monasiya', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1118, '13016', 'PZ - Hail', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1119, '13017', 'PZ - King Faisal CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1120, '14001', '2E-Tahlia Store', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1121, '14002', '2E - Suly CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1122, '14003', '2E - AlNadeem CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1123, '14004', '2E - Al Moansia CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1124, '14005', '2E - Hail CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1125, '14006', '2E - King Faisal', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1126, '15001', 'TM-Al Yasmeen', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1127, '15002', 'TM - Suly CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1128, '15003', 'TM - AlNadeem CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1129, '15004', 'TM - Al Maonsia CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1130, '15005', 'TM - Hail CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1131, '15006', 'TM - King Faisal CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1132, '16001', 'DM-Estilo', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1133, '17001', 'LU-OR & More', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1134, '17002', 'LU-Golden Detailes', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1135, '17003', 'LU-Main WH', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1136, '17004', 'LU-WIP', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1137, '17005', 'Lulut Najed Sales', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1138, '17006', 'Luluat Najed -Purchas', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1139, '17007', 'Luluat Najed Jeddah Branch', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1140, '17008', 'Lu - Lab', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1141, '18001', 'DU-Commissiary', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1142, '18002', 'DU - CK SULY', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1143, '18003', 'DU - CK NAZIEM', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1144, '18004', 'DU - CK AL MOUNISA', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1145, '18005', 'DU - King Faisal CK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1146, '20020', 'Sign-Commissiary', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1147, '21101', 'TW-Direct Labour - Burger', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1148, '21102', 'TW-Production - Burger', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1149, '21201', 'TW-Direct Labour - Shawarma', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1150, '21202', 'TW-Production - Shawarma', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1151, '21301', 'TW-Direct Labor - Coffee', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1152, '21302', 'TW-Production - Coffee', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1153, '21401', 'TW-DI Labour Breaded Chicken', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1154, '21402', 'TW-PROD - Breaded Chicken', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1155, '21501', 'TW-Direct Labour - Commissary', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1156, '21502', 'TW-Production - Commissary', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1157, '21991', 'TW-WH', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1158, '21992', 'TW-Transportation', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1159, '21993', 'TW-Purchases -OPX', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1160, '2E-RY001', '2E-All Riyadh -Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1161, '51001', 'TQ-Key account', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1162, '51002', 'TQ-Cash Van', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1163, '51003', 'TQ-Wholesale', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1164, '51004', 'TQ-Mini-Market', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1165, '51005', 'TQ-Distributor', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1166, '51006', 'TQ-Export', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1167, '51007', 'TQ-Horcca', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1168, '51008', 'TQ-Customer Service Department', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1169, '51009', 'TQ-Selling Department', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1170, '51010', 'TQ-Warehouses', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1171, '51011', 'TQ-Cash Cutomar', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1172, 'Centr_z2', 'General Centre 2', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1173, 'DU-RY001', 'DUYOOF-All Riyadh -Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1174, 'JB-AMIDD', 'JB-MIDDLE AREA', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1175, 'JB-AWEST', 'JB-WESTERN AREA', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1176, 'JB-JD000', 'JB-All Jeddah-Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1177, 'JB-KH000', 'JB-All Kharj -Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1178, 'JB-MD000', 'JB-All Madinah Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1179, 'JB-MK000', 'JB-All Mecca - Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1180, 'JB-QA000', 'JB-All Qasim -Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1181, 'JB-RY000', 'JB-All Riyadh -Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1182, 'PZ-RY000', 'PZ-All Riyadh -Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1183, 'SH-AMIDD', 'SH-Middle Area', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1184, 'SH-KH000', 'SH-All Kharj', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1185, 'SH-QA000', 'SH-All Qasim', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1186, 'SH-RY000', 'SH-All Riyadh', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1187, 'TM-RY001', 'TM-All Riyadh -Shared', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1188, 'IT', 'IT', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1189, 'OPS', 'OPS', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1190, 'ADM', 'ADM', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1191, 'AUD', 'AUD', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1192, 'BUD', 'BUD', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1193, 'Centr_z', 'Centr_z', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1194, 'CON', 'CON', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1195, 'EXM', 'EXM', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1196, 'FIN', 'FIN', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1197, 'HRM', 'HRM', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1198, 'MIN', 'MIN', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1199, 'MRK', 'MRK', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1200, 'PUR', 'PUR', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1201, 'QUA', 'QUA', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1202, 'SUC', 'SUC', 1);
+INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1203, 'TRN', 'TRN', 1);
+
+
+
+
+
+
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600001, '6111204000009', 'Baladia Renewal', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600002, '5121104000003', 'Beverages Standard Cost', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600003, '6111804000002', 'Business Travel Ticket', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600004, '6111804000005', 'Business Travel Transportation', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600005, '6111404000003', 'Cleaning expense', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600006, '6111704000002', 'Computer Communications (VOIP)', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600007, '6111704000001', 'Computer Consumables', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600008, '6111404000051', 'Consumables Expenses', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600009, '6111404000005', 'Delivery Car-top Signs / Scooter Boxes', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600010, '6111504000002', 'Electricity', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600011, '6111404000002', 'Expendable tools & Wares', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600012, '5161104000017', 'Freight Charge', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600013, '6111504000004', 'Gas', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600014, '6111504000005', 'Internet', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600015, '6111704000003', 'IT Hardware Maintenance', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600016, '6111704000004', 'IT Software Maintenance', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600017, '5161104000005', 'Loading & Unloading', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600018, 'V10187', 'LOCAL PURCHASES CASH VENDOR', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600019, '6111204000005', 'Medical Expenses', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600020, '6150104000050', 'Miscellaneous Expenses', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600021, '6111204000050', 'Other Employee Costs', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600022, '6111404000050', 'Other Supplies Expenses', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600023, '6111504000050', 'Other Utilities', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600024, '6111304000050', 'Other Vehicles Expenses', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600025, '6111904000005', 'Out.Service  Duct Hood Clean', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600026, '6111904000050', 'Out.Service  Others', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600027, '6111904000001', 'Out.Service  Pest Control', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600028, '6111904000006', 'Out.Service - Security', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600029, '6111904000004', 'Out.Service Glass/Sign Clean', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600030, '6111904000003', 'Out.Service Sewage Suction', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600031, '6111904000002', 'Out.Service Trash Collection', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600032, '5121104000002', 'Paper Standard Cost', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600033, '6111404000004', 'Postage and courier', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600034, '6111404000001', 'Printing and stationary', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600035, '6112304000005', 'Protection & Civil Deffense Expenses', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600036, '6111604000004', 'R&M - Air Conditions', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600037, '6111604000001', 'R&M - Building', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600038, '6111604000007', 'R&M - Electric Supplies', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600039, '6111604000008', 'R&M - Fire Extinguishers', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600040, '6111604000002', 'R&M - Machinery', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600041, '6111604000003', 'R&M - Office equipment', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600042, '6111604000050', 'R&M - Other', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600043, '6111604000005', 'R&M - P.O.S & CCTV', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600044, '6111604000006', 'R&M - Sign, Glass, Seating', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600045, '6111204000015', 'Recruitment Expense', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600046, '6112104000003', 'Rent Equipment', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600047, '6112104000050', 'Rent Other', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600048, '6111404000006', 'Safety Supplies', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600049, '6150104000008', 'Samples Expenses', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600050, '6111204000011', 'Staff Accommodation Expense', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600051, '6111204000012', 'Staff Transportation Expense', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600052, '6111504000003', 'Telephone', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600053, '6111204000016', 'Training Cost', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600054, '6150104000004', 'Uniform Laundry Expense', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600055, '6111404000007', 'Uniforms', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600056, '6111304000002', 'Vehicles Fuel & Oil', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600057, '6111304000003', 'Vehicles License, registration and other fees', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600058, '6111304000005', 'Vehicles Parking Expense', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600059, '6111304000001', 'Vehicles Rental', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600060, '6111304000004', 'Vehicles Repair and Maintenance', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600061, '6111504000001', 'Water', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600062, '6215104000004', 'Gas - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600063, '6216104000001', 'R&M - Building - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600064, '6216104000002', 'R&M - Machinery - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600065, '6211304000010', 'Recruitment Expense - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600066, '6215104000003', 'Telephone - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600067, '6215104000002', 'Electricity - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600068, '6211304000004', 'Baladia Renewal - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600069, '6217104000001', 'Computer Consumables - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600070, '6213104000003', 'Business Travel - Hotel - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600071, '6213104000004', 'Business Travel - Meals - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600072, '6213104000001', 'Business Travel - Per Dium - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600073, '6213104000002', 'Business Travel - Ticket - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600074, '6213104000005', 'Business Travel - Transportation - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600075, '6212104000001', 'Car Rental - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600076, '6217104000003', 'IT Hardware Maintenance - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600077, '6217104000004', 'IT Software Maintenance - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600078, '6212104000002', 'Fuel & Oil - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600079, '6211204000004', 'GOSI Expense - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600080, '6218204000004', 'Government Penalties G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600081, '6250204000013', 'Hospitality - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600082, '6250204000011', 'Office (Supplies) - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600083, '6215104000001', 'Water - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600084, '6211304000006', 'Staff Accommodation Expense - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600085, '6211304000007', 'Staff Transportation Expense - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600086, '6212104000003', 'License, registration and other fees - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600087, '6211204000005', 'Medical Expenses - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600088, '1161204000001', 'Staff Advances - Loans', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600089, '6250204000012', 'Printings & Printing Materials -G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600090, '6250204000004', 'Entertainment Expenses - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600091, '6216104000004', 'R&M - Air Conditions - G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600092, '6212104000004', 'Repair and Maintenance -Vehicles- G&A', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600093, '6250204000019', 'Notary Attestation, Registration and Other Administrative Fees', 1);
+INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600094, '6215104000005', 'Internet - G&A', 1);
+
+-----------
+INSERT INTO public."ExpenseCategories"("Id", "ExpenseCategoryName", "ExpenseCategoryDesc", "StatusTypeId") VALUES (101, 'Store', 'Store Category',  1);
+INSERT INTO public."ExpenseCategories"("Id", "ExpenseCategoryName", "ExpenseCategoryDesc", "StatusTypeId") VALUES (102, 'Department', 'Department Category',  1);
+INSERT INTO public."ExpenseCategories"("Id", "ExpenseCategoryName", "ExpenseCategoryDesc", "StatusTypeId") VALUES (103, 'Inventory', 'Inventory Category',  1);
+
+
+
+--------
+
+
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1001, 'Baladia Renewal', 'Baladia Renewal', 101, 600001, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1002, 'Beverages Standard Cost', 'Beverages Standard Cost', 101, 600002, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1003, 'Business Travel Ticket', 'Business Travel Ticket', 101, 600003, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1004, 'Business Travel Transportation', 'Business Travel Transportation', 101, 600004, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1005, 'Cleaning expense', 'Cleaning expense', 101, 600005, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1006, 'Computer Communications (VOIP)', 'Computer Communications (VOIP)', 101, 600006, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1007, 'Computer Consumables', 'Computer Consumables', 101, 600007, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1008, 'Consumables Expenses', 'Consumables Expenses', 101, 600008, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1009, 'Delivery Car-top Signs / Scooter Boxes', 'Delivery Car-top Signs / Scooter Boxes', 101, 600009, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1010, 'Electricity', 'Electricity', 101, 600010, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1011, 'Expendable tools & Wares', 'Expendable tools & Wares', 101, 600011, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1012, 'Freight Charge', 'Freight Charge', 101, 600012, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1013, 'Gas', 'Gas', 101, 600013, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1014, 'Internet', 'Internet', 101, 600014, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1015, 'IT Hardware Maintenance', 'IT Hardware Maintenance', 101, 600015, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1016, 'IT Software Maintenance', 'IT Software Maintenance', 101, 600016, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1017, 'Loading & Unloading', 'Loading & Unloading', 101, 600017, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1018, 'LOCAL PURCHASES CASH VENDOR', 'LOCAL PURCHASES CASH VENDOR', 101, 600018, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1019, 'Medical Expenses', 'Medical Expenses', 103, 600019, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1020, 'Miscellaneous Expenses', 'Miscellaneous Expenses', 103, 600020, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1021, 'Other Employee Costs', 'Other Employee Costs', 103, 600021, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1022, 'Other Supplies Expenses', 'Other Supplies Expenses', 103, 600022, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1023, 'Other Utilities', 'Other Utilities', 103, 600023, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1024, 'Other Vehicles Expenses', 'Other Vehicles Expenses', 103, 600024, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1025, 'Out.Service  Duct Hood Clean', 'Out.Service  Duct Hood Clean', 103, 600025, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1026, 'Out.Service  Others', 'Out.Service  Others', 103, 600026, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1027, 'Out.Service  Pest Control', 'Out.Service  Pest Control', 103, 600027, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1028, 'Out.Service - Security', 'Out.Service - Security', 103, 600028, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1029, 'Out.Service Glass/Sign Clean', 'Out.Service Glass/Sign Clean', 103, 600029, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1030, 'Out.Service Sewage Suction', 'Out.Service Sewage Suction', 103, 600030, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1031, 'Out.Service Trash Collection', 'Out.Service Trash Collection', 103, 600031, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1032, 'Paper Standard Cost', 'Paper Standard Cost', 103, 600032, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1033, 'Postage and courier', 'Postage and courier', 103, 600033, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1034, 'Printing and stationary', 'Printing and stationary', 103, 600034, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1035, 'Protection & Civil Deffense Expenses', 'Protection & Civil Deffense Expenses', 103, 600035, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1036, 'R&M - Air Conditions', 'R&M - Air Conditions', 103, 600036, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1037, 'R&M - Building', 'R&M - Building', 103, 600037, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1038, 'R&M - Electric Supplies', 'R&M - Electric Supplies', 103, 600038, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1039, 'R&M - Fire Extinguishers', 'R&M - Fire Extinguishers', 103, 600039, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1040, 'R&M - Machinery', 'R&M - Machinery', 103, 600040, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1041, 'R&M - Office equipment', 'R&M - Office equipment', 103, 600041, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1042, 'R&M - Other', 'R&M - Other', 103, 600042, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1043, 'R&M - P.O.S & CCTV', 'R&M - P.O.S & CCTV', 103, 600043, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1044, 'R&M - Sign, Glass, Seating', 'R&M - Sign, Glass, Seating', 103, 600044, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1045, 'Recruitment Expense', 'Recruitment Expense', 103, 600045, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1046, 'Rent Equipment', 'Rent Equipment', 103, 600046, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1047, 'Rent Other', 'Rent Other', 103, 600047, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1048, 'Safety Supplies', 'Safety Supplies', 103, 600048, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1049, 'Samples Expenses', 'Samples Expenses', 103, 600049, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1050, 'Staff Accommodation Expense', 'Staff Accommodation Expense', 103, 600050, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1051, 'Staff Transportation Expense', 'Staff Transportation Expense', 103, 600051, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1052, 'Telephone', 'Telephone', 103, 600052, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1053, 'Training Cost', 'Training Cost', 103, 600053, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1054, 'Uniform Laundry Expense', 'Uniform Laundry Expense', 103, 600054, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1055, 'Uniforms', 'Uniforms', 103, 600055, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1056, 'Vehicles Fuel & Oil', 'Vehicles Fuel & Oil', 103, 600056, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1057, 'Vehicles License, registration and other fees  ', 'Vehicles License, registration and other fees  ', 103, 600057, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1058, 'Vehicles Parking Expense', 'Vehicles Parking Expense', 103, 600058, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1059, 'Vehicles Rental', 'Vehicles Rental', 103, 600059, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1060, 'Vehicles Repair and Maintenance', 'Vehicles Repair and Maintenance', 103, 600060, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1061, 'Water', 'Water', 103, 600061, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1062, 'Gas - G&A', 'Gas - G&A', 102, 600062, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1063, 'R&M - Building - G&A', 'R&M - Building - G&A', 102, 600063, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1064, 'R&M - Machinery - G&A', 'R&M - Machinery - G&A', 102, 600064, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1065, 'Recruitment Expense - G&A', 'Recruitment Expense - G&A', 102, 600065, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1066, 'Telephone - G&A', 'Telephone - G&A', 102, 600066, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1067, 'Electricity - G&A', 'Electricity - G&A', 102, 600067, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1068, 'Baladia Renewal - G&A', 'Baladia Renewal - G&A', 102, 600068, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1069, 'Computer Consumables - G&A', 'Computer Consumables - G&A', 102, 600069, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1070, 'Business Travel - Hotel - G&A', 'Business Travel - Hotel - G&A', 102, 600070, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1071, 'Business Travel - Meals - G&A', 'Business Travel - Meals - G&A', 102, 600071, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1072, 'Business Travel - Per Dium - G&A', 'Business Travel - Per Dium - G&A', 102, 600072, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1073, 'Business Travel - Ticket - G&A', 'Business Travel - Ticket - G&A', 102, 600073, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1074, 'Business Travel - Transportation - G&A', 'Business Travel - Transportation - G&A', 102, 600074, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1075, 'Car Rental - G&A', 'Car Rental - G&A', 102, 600075, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1076, 'IT Hardware Maintenance - G&A', 'IT Hardware Maintenance - G&A', 102, 600076, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1077, 'IT Software Maintenance - G&A', 'IT Software Maintenance - G&A', 102, 600077, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1078, 'Fuel & Oil - G&A', 'Fuel & Oil - G&A', 102, 600078, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1079, 'GOSI Expense - G&A', 'GOSI Expense - G&A', 102, 600079, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1080, 'Government Penalties G&A', 'Government Penalties G&A', 102, 600080, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1081, 'Hospitality - G&A', 'Hospitality - G&A', 102, 600081, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1082, 'Office (Supplies) - G&A', 'Office (Supplies) - G&A', 102, 600082, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1083, 'Water - G&A', 'Water - G&A', 102, 600083, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1084, 'Staff Accommodation Expense - G&A', 'Staff Accommodation Expense - G&A', 102, 600084, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1085, 'Staff Transportation Expense - G&A', 'Staff Transportation Expense - G&A', 102, 600085, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1086, 'License, registration and other fees - G&A', 'License, registration and other fees - G&A', 102, 600086, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1087, 'Medical Expenses - G&A', 'Medical Expenses - G&A', 102, 600087, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1088, 'Staff Advances - Loans', 'Staff Advances - Loans', 102, 600088, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1089, 'Printings & Printing Materials -G&A', 'Printings & Printing Materials -G&A', 102, 600089, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1090, 'Entertainment Expenses - G&A', 'Entertainment Expenses - G&A', 102, 600090, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1091, 'R&M - Air Conditions - G&A', 'R&M - Air Conditions - G&A', 102, 600091, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1092, 'Repair and Maintenance -Vehicles- G&A', 'Repair and Maintenance -Vehicles- G&A', 102, 600092, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1093, 'Notary Attestation, Registration and Other Administrative Fees', 'Notary Attestation, Registration and Other Administrative Fees', 102, 600093, 1);
+INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1094, 'Internet - G&A', 'Internet - G&A', 102, 600094, 1);
+
+
+----
+
 
 INSERT INTO public."Locations"(
 	"Id", "LocationName", "City", "Latitude", "Longitude", "LocationDesc", "StatusTypeId")
-	VALUES (101, 'Chennai Main', 'Chennai', null, null, 'Chennai City', 1);
+	VALUES (101, 'Riyadh', 'Riyadh City', null, null, 'Riyadh City', 1);
 INSERT INTO public."Locations"(
 	"Id", "LocationName", "City", "Latitude", "Longitude", "LocationDesc", "StatusTypeId")
-	VALUES (102, 'Mumbai Main', 'Mumbai', null, null, 'Bombay City', 1);
+	VALUES (102, 'Jeddah', 'Jeddah City', null, null, 'Jeddah City', 1);
 
 INSERT INTO public."BusinessTypes"(
 	"Id", "BusinessTypeName", "BusinessTypeDesc", "StatusTypeId")
-	VALUES (101, 'ChennaiStore', 'Chennai Store Business', 1);
+	VALUES (101, 'Store', 'Saudi Store Business', 1);
 	INSERT INTO public."BusinessTypes"(
 	"Id", "BusinessTypeName", "BusinessTypeDesc", "StatusTypeId")
-	VALUES (102, 'MumbaiStore', 'Mumbai Store Business', 1);
+	VALUES (102, 'Department', 'Functional Department', 1);
 
 
 
 
-
-INSERT INTO public."BusinessUnits"(
-	"Id", "BusinessTypeId", "BusinessUnitName", "CostCenterId", "BusinessDesc", "LocationId", "StatusTypeId")
-	VALUES (301, 101, 'Chennai Sales Stores', 503, 'Chennai Sales Division', 101, 1);
-INSERT INTO public."BusinessUnits"(
-	"Id", "BusinessTypeId", "BusinessUnitName", "CostCenterId", "BusinessDesc", "LocationId", "StatusTypeId")
-	VALUES (302, 101, 'Mumbai Sales Stores', 504, 'Mumbai Sales Division', 102, 1);
-	
 
 
 INSERT INTO public."Employees"(
@@ -56,19 +456,19 @@ INSERT INTO public."Employees"(
 	VALUES (40001, 'Atocash', NULL, 'Admin', 'E-11000', '235453565636', 'AD1400080001001234567890', '3453564667678854', '3249094', 'ZT445666', '343423123532423', 'Saudi', '2021-09-08 11:33:30.165', '2022-09-27 11:34:43.152', 'male', 'atocash@gmail.com', '8297333325', 1, 1,1,1);
 INSERT INTO public."Employees" (
 	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId")
-	VALUES (40002, 'ابراهيم عدنان القوزي', NULL, 'E-11000', 'E-11000', '235453565636',  'AD1400080001001234567890', '3453564667678854', '3249094', 'ZT445666', '343423123532423', 'Saudi', '2021-09-08 11:33:30.165', '2022-09-27 11:34:43.152', 'male', 'AtoCash.11000@gmail.com', '24245435',1, 1,1,1);
+	VALUES (40002, 'ابراهيم عدنان القوزي', NULL, 'E-11000', 'E-11000', '235453565636',  'AD1400080001001234567890', '3453564667678854', '3249094', 'ZT445666', '343423123532423', 'Saudi', '2021-09-08 11:33:30.165', '2022-09-27 11:34:43.152', 'male', 'atocash.11000@gmail.com', '24245435',1, 1,1,1);
 INSERT INTO public."Employees" (
 	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId")
-	VALUES (40003, 'أحمد عبدالمقصود احمد السيد', NULL, 'E-11002', 'E-11002', '2354535656361',  'AD1400080001001234567890', '3453564667678853', '2344662', 'z22435666', '3243577787', 'Saudi', '2022-09-06 11:35:32.934', '2022-09-20 11:35:32.945', 'male', 'AtoCash.11002@gmail.com', '32445566',1, 1,1,1);
+	VALUES (40003, 'أحمد عبدالمقصود احمد السيد', NULL, 'E-11002', 'E-11002', '2354535656361',  'AD1400080001001234567890', '3453564667678853', '2344662', 'z22435666', '3243577787', 'Saudi', '2022-09-06 11:35:32.934', '2022-09-20 11:35:32.945', 'male', 'atocash.11002@gmail.com', '32445566',1, 1,1,1);
 INSERT INTO public."Employees" (
 	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId")
-	VALUES (40004, 'Eslam ', 'Al ', 'Shazly', 'E-8450', '3445679876543456', 'AD1400080001001234567890' ,'4555675534345678', '324243232', NULL, NULL, 'Saudi', '2022-09-05 11:37:55.973', '2022-09-14 11:37:55.981', 'male', 'AtoCash.eslam@gmail.com', '847577744', 1, 1,1,1);
+	VALUES (40004, 'Eslam ', 'Al ', 'Shazly', 'E-8450', '3445679876543456', 'AD1400080001001234567890' ,'4555675534345678', '324243232', NULL, NULL, 'Saudi', '2022-09-05 11:37:55.973', '2022-09-14 11:37:55.981', 'male', 'atocash.eslam@gmail.com', '847577744', 1, 1,1,1);
 INSERT INTO public."Employees" (
 	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId")
-	VALUES (40005, 'Mahmoud', ' Ali ', 'Ibrahim', 'E-8602', '3247565434567',  'AD1400080001001234567890', '2345547653424567', '3442342456', NULL, NULL, 'Indian', '2022-09-05 11:39:44.544', '2022-09-28 11:39:44.555', 'male', 'AtoCash.ibrahim@gmail.com', '344354545',1, 1,1,1);
+	VALUES (40005, 'Mahmoud', ' Ali ', 'Ibrahim', 'E-8602', '3247565434567',  'AD1400080001001234567890', '2345547653424567', '3442342456', NULL, NULL, 'Indian', '2022-09-05 11:39:44.544', '2022-09-28 11:39:44.555', 'male', 'atocash.ibrahim@gmail.com', '344354545',1, 1,1,1);
 INSERT INTO public."Employees" (
 	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId")
-	VALUES (40006, 'Walid', NULL, 'E-4166', 'E-4166', '2345468765',  'AD1400080001001234567890', '3453456547532343', '2343244', NULL, NULL, 'Saudi', '2022-09-14 11:42:55.352', '2022-09-27 11:41:50.017', 'male', 'AtoCash.walid@gmail.com', '23423445',1, 1,1,1);
+	VALUES (40006, 'Walid', NULL, 'E-4166', 'E-4166', '2345468765',  'AD1400080001001234567890', '3453456547532343', '2343244', NULL, NULL, 'Saudi', '2022-09-14 11:42:55.352', '2022-09-27 11:41:50.017', 'male', 'atocash.walid@gmail.com', '23423445',1, 1,1,1);
 
 INSERT INTO public."EmpCurrentCashAdvanceBalances" (
 	"Id", "EmployeeId", "MaxCashAdvanceLimit", "AllCashAdvanceLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (1, 40001, 0, NULL, 0, 0, '2022-09-28 11:35:13.909336');
@@ -94,12 +494,12 @@ INSERT INTO public."JobRoles" VALUES (606, 'STOR-ROLE-MGR', 'STOR-ROLE-MGR', 500
 INSERT INTO public."JobRoles" VALUES (607, 'STOR-ROLE-OPSMGR', 'STOR-ROLE-OPSMGR', 100000);
 INSERT INTO public."JobRoles" VALUES (608, 'STOR-ROLE-FINMGR', 'STOR-ROLE-FINMGR',  200000);
 
-INSERT INTO public."EmployeeExtendedInfos"(
-	"Id", "EmployeeId", "BusinessTypeId", "BusinessUnitId", "JobRoleId", "ApprovalGroupId", "StatusTypeId")
-	VALUES (1, 40002, 101, 301, 605, 3, 1);
-	INSERT INTO public."EmployeeExtendedInfos"(
-	"Id", "EmployeeId", "BusinessTypeId", "BusinessUnitId", "JobRoleId", "ApprovalGroupId", "StatusTypeId")
-	VALUES (2, 40003, 101, 301, 606, 3, 1);
+
+----
+
+
+--INSERT INTO public."EmployeeExtendedInfos"(	"Id", "EmployeeId", "BusinessTypeId", "BusinessUnitId", "JobRoleId", "ApprovalGroupId", "StatusTypeId") 	VALUES (1, 40002, 101, 301, 605, 3, 1)
+--INSERT INTO public."EmployeeExtendedInfos"( 	"Id", "EmployeeId", "BusinessTypeId", "BusinessUnitId", "JobRoleId", "ApprovalGroupId", "StatusTypeId") 	VALUES (2, 40003, 101, 301, 606, 3, 1);
 
 
 ---------
@@ -161,12 +561,8 @@ INSERT INTO public."AspNetUserRoles" VALUES ('2f4869b4-1e97-4011-bf98-cfe44553ba
 
 
 
-INSERT INTO public."ApprovalRoleMaps"(
-	"Id", "ApprovalGroupId", "JobRoleId", "ApprovalLevelId")
-	VALUES (1, 3, 605, 1);
-INSERT INTO public."ApprovalRoleMaps"(
-	"Id", "ApprovalGroupId", "JobRoleId", "ApprovalLevelId")
-	VALUES (2, 3, 606, 2);
+--INSERT INTO public."ApprovalRoleMaps"("Id", "ApprovalGroupId", "JobRoleId", "ApprovalLevelId") VALUES (1, 3, 605, 1);
+--INSERT INTO public."ApprovalRoleMaps"("Id", "ApprovalGroupId", "JobRoleId", "ApprovalLevelId") 	VALUES (2, 3, 606, 2);
 
 	
 	
@@ -182,7 +578,7 @@ SELECT pg_catalog.setval('public."ApprovalStatusTypes_Id_seq"', 6, true);
 --SELECT pg_catalog.setval('public."AspNetUserClaims_Id_seq"', 1, false);
 --SELECT pg_catalog.setval('public."BusinessAreas_Id_seq"', 3, true);
 SELECT pg_catalog.setval('public."CashAdvanceStatusTrackers_Id_seq"', 5000, false);
-SELECT pg_catalog.setval('public."CostCenters_Id_seq"', 505, false);
+SELECT pg_catalog.setval('public."CostCenters_Id_seq"', 1204, false);
 SELECT pg_catalog.setval('public."CurrencyTypes_Id_seq"', 1, false);
 --SELECT pg_catalog.setval('public."Departments_Id_seq"', 2, true);
 SELECT pg_catalog.setval('public."DisbursementsAndClaimsMasters_Id_seq"', 1000, true);
@@ -192,10 +588,10 @@ SELECT pg_catalog.setval('public."ExpenseSubClaims_Id_seq"', 1000, true);
 SELECT pg_catalog.setval('public."EmpCurrentCashAdvanceBalances_Id_seq"', 6, true);
 SELECT pg_catalog.setval('public."Employees_Id_seq"', 40006, true);
 SELECT pg_catalog.setval('public."EmploymentTypes_Id_seq"', 3, false);
---SELECT pg_catalog.setval('public."ExpenseCategories_Id_seq"', 4, true);
---SELECT pg_catalog.setval('public."ExpenseTypes_Id_seq"', 5, true);
+SELECT pg_catalog.setval('public."ExpenseCategories_Id_seq"', 4, true);
+SELECT pg_catalog.setval('public."ExpenseTypes_Id_seq"', 1095, true);
 --SELECT pg_catalog.setval('public."FileDocuments_Id_seq"', 1, true);
---SELECT pg_catalog.setval('public."GeneralLedger_Id_seq"', 5, true);
+SELECT pg_catalog.setval('public."GeneralLedger_Id_seq"', 600095, true);
 SELECT pg_catalog.setval('public."JobRoles_Id_seq"', 609, true);
 SELECT pg_catalog.setval('public."CashAdvanceRequests_Id_seq"', 1000, false);
 SELECT pg_catalog.setval('public."ProjectManagements_Id_seq"', 1, false);

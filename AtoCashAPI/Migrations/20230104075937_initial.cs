@@ -584,6 +584,7 @@ namespace AtoCashAPI.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BusinessTypeId = table.Column<int>(type: "integer", nullable: false),
+                    BusinessUnitCode = table.Column<string>(type: "varchar(250)", nullable: true),
                     BusinessUnitName = table.Column<string>(type: "varchar(250)", nullable: false),
                     CostCenterId = table.Column<int>(type: "integer", nullable: false),
                     BusinessDesc = table.Column<string>(type: "varchar(250)", nullable: false),
@@ -1323,7 +1324,7 @@ namespace AtoCashAPI.Migrations
                     Tax = table.Column<float>(type: "real", nullable: false),
                     TaxAmount = table.Column<double>(type: "double precision", nullable: false),
                     InvoiceDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    VendorId = table.Column<int>(type: "integer", nullable: false),
+                    VendorId = table.Column<int>(type: "integer", nullable: true),
                     AdditionalVendor = table.Column<string>(type: "text", nullable: true),
                     Location = table.Column<string>(type: "varchar(100)", nullable: false),
                     Description = table.Column<string>(type: "varchar(250)", nullable: false),
@@ -1391,8 +1392,7 @@ namespace AtoCashAPI.Migrations
                         name: "FK_ExpenseSubClaims_Vendors_VendorId",
                         column: x => x.VendorId,
                         principalTable: "Vendors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ExpenseSubClaims_WorkTasks_WorkTaskId",
                         column: x => x.WorkTaskId,
@@ -1416,8 +1416,8 @@ namespace AtoCashAPI.Migrations
                     ProjectId = table.Column<int>(type: "integer", nullable: true),
                     SubProjectId = table.Column<int>(type: "integer", nullable: true),
                     WorkTaskId = table.Column<int>(type: "integer", nullable: true),
-                    ApprovalGroupId = table.Column<int>(type: "integer", nullable: false),
-                    JobRoleId = table.Column<int>(type: "integer", nullable: false),
+                    ApprovalGroupId = table.Column<int>(type: "integer", nullable: true),
+                    JobRoleId = table.Column<int>(type: "integer", nullable: true),
                     ApprovalLevelId = table.Column<int>(type: "integer", nullable: false),
                     RequestDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ApproverEmpId = table.Column<int>(type: "integer", nullable: true),
@@ -1470,8 +1470,7 @@ namespace AtoCashAPI.Migrations
                         name: "FK_TravelApprovalStatusTrackers_JobRoles_JobRoleId",
                         column: x => x.JobRoleId,
                         principalTable: "JobRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TravelApprovalStatusTrackers_Projects_ProjectId",
                         column: x => x.ProjectId,

@@ -22,6 +22,10 @@ namespace AtoCashAPI.Models
         public int? BusinessTypeId { get; set; }
 
 
+        [Column(TypeName = "varchar(250)")]
+        public string? BusinessUnitCode { get; set; }
+
+
         [Required]
         [Column(TypeName = "varchar(250)")]
         public string? BusinessUnitName{ get; set; }
@@ -52,6 +56,8 @@ namespace AtoCashAPI.Models
             var NameParts = new List<string>();
 
             NameParts.Add(BusinessUnitName ?? "");
+            NameParts.Add(BusinessUnitCode ?? "");
+
 
             //return String.Join(" ", FirstName, MiddleName, LastName);
 
@@ -67,6 +73,8 @@ namespace AtoCashAPI.Models
         public int? Id { get; set; }
         public int? BusinessTypeId { get; set; }
         public string? BusinessType { get; set; }
+        public string? BusinessUnitCode{ get; set; }
+
         public string? BusinessUnitName { get; set; }
         public int? CostCenterId { get; set; }
         public string? CostCenter { get; set; }

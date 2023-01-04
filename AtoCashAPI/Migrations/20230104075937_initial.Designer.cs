@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20221227194756_initial")]
+    [Migration("20230104075937_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -249,6 +249,9 @@ namespace AtoCashAPI.Migrations
                     b.Property<int?>("BusinessTypeId")
                         .IsRequired()
                         .HasColumnType("integer");
+
+                    b.Property<string>("BusinessUnitCode")
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("BusinessUnitName")
                         .IsRequired()
@@ -545,8 +548,7 @@ namespace AtoCashAPI.Migrations
                         .IsRequired()
                         .HasColumnType("integer");
 
-                    b.Property<int?>("EmployeeId")
-                        .IsRequired()
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
 
                     b.Property<bool?>("IsSettledAmountCredited")
@@ -1103,7 +1105,6 @@ namespace AtoCashAPI.Migrations
                         .HasColumnType("text");
 
                     b.Property<int?>("VendorId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("WorkTaskId")
@@ -1496,7 +1497,6 @@ namespace AtoCashAPI.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("ApprovalGroupId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("ApprovalLevelId")
@@ -1527,7 +1527,6 @@ namespace AtoCashAPI.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int?>("JobRoleId")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int?>("ProjManagerId")
@@ -2429,9 +2428,7 @@ namespace AtoCashAPI.Migrations
 
                     b.HasOne("AtoCashAPI.Models.Vendor", "Vendor")
                         .WithMany()
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VendorId");
 
                     b.HasOne("AtoCashAPI.Models.WorkTask", "WorkTask")
                         .WithMany()
@@ -2657,9 +2654,7 @@ namespace AtoCashAPI.Migrations
 
                     b.HasOne("AtoCashAPI.Models.JobRole", "JobRole")
                         .WithMany()
-                        .HasForeignKey("JobRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JobRoleId");
 
                     b.HasOne("AtoCashAPI.Models.Employee", "ProjManager")
                         .WithMany()

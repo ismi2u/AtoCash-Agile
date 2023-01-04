@@ -37,7 +37,7 @@ namespace AtoCashAPI.Controllers
                 BusinessUnitVM BusinessUnitsVM = new()
                 {
                     Id = businessUnit.Id,
-                    BusinessUnitName = businessUnit.BusinessUnitName
+                    BusinessUnitName = businessUnit.GetBusinessUnitName()
                 };
 
                 ListBusinessUnitsVM.Add(BusinessUnitsVM);
@@ -60,7 +60,7 @@ namespace AtoCashAPI.Controllers
                 BusinessUnitVM BusinessUnitsVM = new()
                 {
                     Id = businessUnit.Id,
-                    BusinessUnitName = businessUnit.BusinessUnitName
+                    BusinessUnitName = businessUnit.GetBusinessUnitName()
                 };
 
                 ListBusinessUnitsVM.Add(BusinessUnitsVM);
@@ -110,7 +110,7 @@ namespace AtoCashAPI.Controllers
                     Id = businessUnit.Id,
                     BusinessTypeId = businessUnit.BusinessTypeId,
                     BusinessType = _context.BusinessTypes.Find(businessUnit.BusinessTypeId).BusinessTypeName,
-                    BusinessUnitName = businessUnit.BusinessUnitName,
+                    BusinessUnitName = businessUnit.GetBusinessUnitName(),
                     CostCenterId = businessUnit.CostCenterId,
                     CostCenter = _context.CostCenters.Find(businessUnit.CostCenterId).GetCostCentre(),
                     BusinessDesc = businessUnit.BusinessDesc,
@@ -142,7 +142,7 @@ namespace AtoCashAPI.Controllers
                 Id = businessUnit.Id,
                 BusinessTypeId = businessUnit.BusinessTypeId,
                 BusinessType = _context.BusinessTypes.Find(businessUnit.BusinessTypeId).BusinessTypeName,
-                BusinessUnitName = businessUnit.BusinessUnitName,
+                BusinessUnitName = businessUnit.GetBusinessUnitName(),
                 CostCenterId = businessUnit.CostCenterId,
                 CostCenter = _context.CostCenters.Find(businessUnit.CostCenterId).GetCostCentre(),
                 BusinessDesc = businessUnit.BusinessDesc,
@@ -171,6 +171,7 @@ namespace AtoCashAPI.Controllers
             {
                 UpdBusinessUnit.BusinessTypeId = BusinessUnitsDTO.BusinessTypeId;
                 UpdBusinessUnit.BusinessUnitName = BusinessUnitsDTO.BusinessUnitName;
+                UpdBusinessUnit.BusinessUnitCode = BusinessUnitsDTO.BusinessUnitCode;
                 UpdBusinessUnit.CostCenterId = BusinessUnitsDTO.CostCenterId;
                 UpdBusinessUnit.BusinessDesc = BusinessUnitsDTO.BusinessDesc;
                 UpdBusinessUnit.LocationId = BusinessUnitsDTO.LocationId;
@@ -206,6 +207,7 @@ namespace AtoCashAPI.Controllers
             BusinessUnit newBusinessUnit = new();
 
             newBusinessUnit.BusinessUnitName = BusinessUnitsDTO.BusinessUnitName;
+            newBusinessUnit.BusinessUnitCode= BusinessUnitsDTO.BusinessUnitCode;
             newBusinessUnit.BusinessTypeId = BusinessUnitsDTO.BusinessTypeId;
             newBusinessUnit.CostCenterId = BusinessUnitsDTO.CostCenterId;
             newBusinessUnit.BusinessDesc = BusinessUnitsDTO.BusinessDesc;
@@ -216,7 +218,7 @@ namespace AtoCashAPI.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(new RespStatus { Status = "Success", Message = "Business Unit added to the database!" });
+            return Ok(new RespStatus { Status = "Success", Message = "Business Unit Created!" });
         }
 
         // DELETE: api/BusinessUnits/5

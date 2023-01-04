@@ -257,7 +257,7 @@ namespace AtoCashAPI.Controllers.BasicControls
             }
 
 
-            return Ok(new RespStatus { Status = "Success", Message = "Employee EmployeeExtendedInfo Recorded!" });
+            return Ok(new RespStatus { Status = "Success", Message = "Employee Extended Information Created!" });
         }
 
         // DELETE: api/EmployeeExtendedInfo/5
@@ -270,7 +270,7 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             if (employeeExtendedInfo == null)
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id is invalid!" });
+                return Conflict(new RespStatus { Status = "Failure", Message = "Employee Extended Information Id is invalid!" });
             }
 
 
