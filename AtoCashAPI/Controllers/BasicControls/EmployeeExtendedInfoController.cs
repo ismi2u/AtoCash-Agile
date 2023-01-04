@@ -248,7 +248,7 @@ namespace AtoCashAPI.Controllers.BasicControls
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo cannot be updated!" });
+                    return Conflict(new RespStatus { Status = "Failure", Message = "Employee Extended Info couldn't be updated!" });
                 }
 
 
@@ -257,7 +257,7 @@ namespace AtoCashAPI.Controllers.BasicControls
             }
 
 
-            return Ok(new RespStatus { Status = "Success", Message = "Employee Extended Information Created!" });
+            return Ok(new RespStatus { Status = "Success", Message = "Employee Extended Info Created!" });
         }
 
         // DELETE: api/EmployeeExtendedInfo/5
@@ -270,16 +270,16 @@ namespace AtoCashAPI.Controllers.BasicControls
 
             if (employeeExtendedInfo == null)
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "Employee Extended Information Id is invalid!" });
+                return Conflict(new RespStatus { Status = "Failure", Message = "Employee Extended Info Id is invalid!" });
             }
 
-            bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
-            bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
-            bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(p => p.EmployeeId == employeeExtendedInfo.EmployeeId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+            bool blnUsedInTravelReq = _context.TravelApprovalStatusTrackers.Where(p => p.JobRoleId == employeeExtendedInfo.JobRoleId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+            bool blnUsedInCashAdvReq = _context.CashAdvanceStatusTrackers.Where(p => p.JobRoleId == employeeExtendedInfo.JobRoleId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
+            bool blnUsedInExpeReimReq = _context.ExpenseReimburseStatusTrackers.Where(p => p.JobRoleId == employeeExtendedInfo.JobRoleId && p.BusinessUnitId == employeeExtendedInfo.BusinessUnitId).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "Employee in Use, Cant delete!" });
+                return Conflict(new RespStatus { Status = "Failure", Message = "Extended info used in status trackers, cant delete record!" });
             }
 
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
@@ -302,7 +302,7 @@ namespace AtoCashAPI.Controllers.BasicControls
                 await AtoCashDbContextTransaction.CommitAsync();
             }
 
-            return Ok(new RespStatus { Status = "Success", Message = "EmployeeExtendedInfo Deleted!" });
+            return Ok(new RespStatus { Status = "Success", Message = "Employee Extended Info record deleted!" });
         }
 
 
