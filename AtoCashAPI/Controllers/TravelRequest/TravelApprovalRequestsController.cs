@@ -735,9 +735,9 @@ namespace AtoCashAPI.Controllers
 
                 if (approRoleMap == null)
                 {
-                    _logger.LogError("Approver Role Map Not defined, approval group id " + reqApprGroupId);
+                    _logger.LogError("Approver Role Map Not defined, approval group id " + _context.ApprovalGroups.Find(reqApprGroupId).ApprovalGroupCode);
                     returnIntAndResponseString.IntReturn = 1;
-                    returnIntAndResponseString.StrResponse = "Approver Role Map Not defined, approval group id " + reqApprGroupId;
+                    returnIntAndResponseString.StrResponse = "Approver Role Map Not defined, approval group id " + _context.ApprovalGroups.Find(reqApprGroupId).ApprovalGroupCode;
                     return returnIntAndResponseString;
                 }
                 else
@@ -751,9 +751,9 @@ namespace AtoCashAPI.Controllers
                         var employeeExtendedInfo = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == jobRole_id && e.ApprovalGroupId == reqApprGroupId).FirstOrDefault();
                         if (employeeExtendedInfo == null)
                         {
-                            _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
+                            _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + _context.JobRoles.Find(jobRole_id).JobRoleName + "ApprovalGroupId:" + _context.ApprovalGroups.Find(reqApprGroupId).ApprovalGroupCode);
                             returnIntAndResponseString.IntReturn = 1;
-                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId;
+                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + _context.JobRoles.Find(jobRole_id).JobRoleName + "ApprovalGroupId:" + _context.ApprovalGroups.Find(reqApprGroupId).ApprovalGroupCode;
                             return returnIntAndResponseString;
                         }
 
@@ -762,9 +762,9 @@ namespace AtoCashAPI.Controllers
                         var approver = await _context.Employees.FirstAsync(e => e.Id == approverEmpId);
                         if (approver == null)
                         {
-                            _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
+                            _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + _context.JobRoles.Find(jobRole_id).JobRoleName + "ApprovalGroupId:" + _context.ApprovalGroups.Find(reqApprGroupId).ApprovalGroupCode);
                             returnIntAndResponseString.IntReturn = 1;
-                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId;
+                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + _context.JobRoles.Find(jobRole_id).JobRoleName + "ApprovalGroupId:" + _context.ApprovalGroups.Find(reqApprGroupId).ApprovalGroupCode;
                             return returnIntAndResponseString;
                         }
 
