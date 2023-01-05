@@ -411,7 +411,7 @@ namespace AtoCashAPI.Controllers
         {
             //Step ##1
 
-            int SuccessResult;
+            ReturnIntAndResponseString SuccessResult = null;
 
             var dupReq = _context.TravelApprovalRequests.Where(
                 t => t.TravelStartDate.Value == travelApprovalRequestDTO.TravelStartDate.Value &&
@@ -441,17 +441,17 @@ namespace AtoCashAPI.Controllers
             }
 
 
-            if (SuccessResult == 0)
+            if (SuccessResult.IntReturn == 0)
             {
                 _logger.LogInformation("PostExpenseReimburseRequest - Process completed");
 
-                return Ok(new RespStatus { Status = "Success", Message = "Travel Request Created!" });
+                return Ok(new RespStatus { Status = "Success", Message = SuccessResult.StrResponse });
             }
             else
             {
                 _logger.LogError("Expense Reimburse Request creation failed!");
 
-                return BadRequest(new RespStatus { Status = "Failure", Message = "Travel Request creation failed!" });
+                return BadRequest(new RespStatus { Status = "Failure", Message = SuccessResult.StrResponse });
             }
 
         }
@@ -496,9 +496,10 @@ namespace AtoCashAPI.Controllers
         /// </summary>
         /// <param name="travelApprovalRequestDto"></param>
         /// <param name="travelApprovalRequestDto"></param>
-        private async Task<int> ProjectTravelRequest(TravelApprovalRequestDTO travelApprovalRequestDTO)
+        private async Task<ReturnIntAndResponseString> ProjectTravelRequest(TravelApprovalRequestDTO travelApprovalRequestDTO)
         {
 
+            ReturnIntAndResponseString returnIntAndResponseString = new();
             _logger.LogInformation("ProjectBasedTravelRequest Started");
             #region
             int costCenterId = _context.Projects.Find(travelApprovalRequestDTO.ProjectId).CostCenterId;
@@ -519,7 +520,9 @@ namespace AtoCashAPI.Controllers
             else
             {
                 _logger.LogError("Project Manager is not Assigned");
-                return 1;
+                returnIntAndResponseString.IntReturn = 1;
+                returnIntAndResponseString.StrResponse = "Project: Project Manager is not Assigned";
+                return returnIntAndResponseString;
             }
 
             //### 1. If Employee Travel Request enter a record in TravelApprovalRequestTracker
@@ -633,18 +636,23 @@ namespace AtoCashAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, " Status Tracker insert failed");
-                    return 1;
+                    _logger.LogError(ex, "Project: Status Tracker insert failed");
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Project: Status Tracker insert failed";
+                    return returnIntAndResponseString;
                 }
                 #endregion
-
+                await AtoCashDbContextTransaction.CommitAsync();
 
                 //##### 4. Send email to the user
                 //####################################
                 #region
                 if (isSelfApprovedRequest)
                 {
-                    return 0;
+
+                    returnIntAndResponseString.IntReturn = 0;
+                    returnIntAndResponseString.StrResponse = "Project: Travel Approval request Created";
+                    return returnIntAndResponseString;
                 }
 
                 string[] paths = { Directory.GetCurrentDirectory(), "TravelApprNotificationEmail.html" };
@@ -681,7 +689,9 @@ namespace AtoCashAPI.Controllers
                 await AtoCashDbContextTransaction.CommitAsync();
             }
 
-            return 0;
+            returnIntAndResponseString.IntReturn = 0;
+            returnIntAndResponseString.StrResponse = "Project: Travel Approval request Created";
+            return returnIntAndResponseString;
         }
 
         /// <summary>
@@ -689,10 +699,12 @@ namespace AtoCashAPI.Controllers
         /// </summary>
         /// <param name="travelApprovalRequestDto"></param>
 
-        private async Task<int> BusinessUnitTravelRequest(TravelApprovalRequestDTO travelApprovalRequestDto)
+        private async Task<ReturnIntAndResponseString> BusinessUnitTravelRequest(TravelApprovalRequestDTO travelApprovalRequestDto)
         {
             //### 1. If Employee Eligible for Cash Claim enter a record and reduce the available amount for next claim
             #region
+
+            ReturnIntAndResponseString returnIntAndResponseString = new();
             _logger.LogInformation("Business Unit based Travel Request Started");
 
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
@@ -709,7 +721,9 @@ namespace AtoCashAPI.Controllers
 
                 if (reqEmp == null)
                 {
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Business: Employee Id invalid";
+                    return returnIntAndResponseString;
                 }
                 EmployeeExtendedInfo reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == travelApprovalRequestDto.EmployeeId && e.BusinessUnitId == reqBussUnitId).FirstOrDefault();
 
@@ -722,7 +736,9 @@ namespace AtoCashAPI.Controllers
                 if (approRoleMap == null)
                 {
                     _logger.LogError("Approver Role Map Not defined, approval group id " + reqApprGroupId);
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Approver Role Map Not defined, approval group id " + reqApprGroupId;
+                    return returnIntAndResponseString;
                 }
                 else
                 {
@@ -736,7 +752,9 @@ namespace AtoCashAPI.Controllers
                         if (employeeExtendedInfo == null)
                         {
                             _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
-                            return 1;
+                            returnIntAndResponseString.IntReturn = 1;
+                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId;
+                            return returnIntAndResponseString;
                         }
 
                         int? approverEmpId = employeeExtendedInfo.EmployeeId;
@@ -745,7 +763,9 @@ namespace AtoCashAPI.Controllers
                         if (approver == null)
                         {
                             _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
-                            return 1;
+                            returnIntAndResponseString.IntReturn = 1;
+                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId;
+                            return returnIntAndResponseString;
                         }
 
                     }
@@ -789,7 +809,9 @@ namespace AtoCashAPI.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Travel request Table insert failed");
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Travel Approval request creation failed";
+                    return returnIntAndResponseString;
                 }
 
                 //get the saved record Id
@@ -851,7 +873,9 @@ namespace AtoCashAPI.Controllers
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Self approved travelApprovalRequest update failed");
-                        return 1;
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Self approved travelApprovalRequest update failed";
+                        return returnIntAndResponseString;
                     }
 
                     _logger.LogInformation("Self Approved:Expense table Updated with Approved Status");
@@ -912,7 +936,9 @@ namespace AtoCashAPI.Controllers
                         catch (Exception ex)
                         {
                             _logger.LogError(ex, "Self approved travelApprovalStatusTracker update failed");
-                            return 1;
+                            returnIntAndResponseString.IntReturn = 1;
+                            returnIntAndResponseString.StrResponse = "Self approved travelApprovalRequest update failed";
+                            return returnIntAndResponseString;
                         }
 
                         _logger.LogInformation(approver.GetFullName() + " Status Tracker inserted");
@@ -958,10 +984,12 @@ namespace AtoCashAPI.Controllers
                 await AtoCashDbContextTransaction.CommitAsync();
             }
             _logger.LogInformation("Business Unit: Travel Request Created successfully");
-            return 0;
+            returnIntAndResponseString.IntReturn = 0;
+            returnIntAndResponseString.StrResponse = "Business Unit: Travel Request Created successfully";
+            return returnIntAndResponseString;
 
 
-            
+
         }
         #endregion
 

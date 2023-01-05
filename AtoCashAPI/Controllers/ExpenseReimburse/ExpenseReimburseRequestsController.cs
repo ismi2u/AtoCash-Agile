@@ -566,7 +566,7 @@ namespace AtoCashAPI.Controllers
         //[ActionName("PostExpenseReimburseRequest")]
         public async Task<ActionResult> PostExpenseReimburseRequest(ExpenseReimburseRequestDTO expenseReimburseRequestDto)
         {
-            int SuccessResult;
+            ReturnIntAndResponseString SuccessResult = null;
 
             if (expenseReimburseRequestDto == null)
             {
@@ -585,17 +585,17 @@ namespace AtoCashAPI.Controllers
                 SuccessResult = await Task.Run(() => BusinessUnitBasedExpReimRequest(expenseReimburseRequestDto));
             }
 
-            if (SuccessResult == 0)
+            if (SuccessResult.IntReturn == 0)
             {
                 _logger.LogInformation("PostExpenseReimburseRequest - Process completed");
 
-                return Ok(new RespStatus { Status = "Success", Message = "Expense Reimburse Request Created!" });
+                return Ok(new RespStatus { Status = "Success", Message = SuccessResult.StrResponse });
             }
             else
             {
                 _logger.LogError("Expense Reimburse Request creation failed!");
 
-                return BadRequest(new RespStatus { Status = "Failure", Message = "Expense Reimburse Request creation failed!" });
+                return BadRequest(new RespStatus { Status = "Failure", Message = SuccessResult.StrResponse });
             }
 
         }
@@ -639,8 +639,10 @@ namespace AtoCashAPI.Controllers
 
 
 
-        private async Task<int> BusinessUnitBasedExpReimRequest(ExpenseReimburseRequestDTO expenseReimburseRequestDto)
+        private async Task<ReturnIntAndResponseString> BusinessUnitBasedExpReimRequest(ExpenseReimburseRequestDTO expenseReimburseRequestDto)
         {
+
+            ReturnIntAndResponseString returnIntAndResponseString = new();
             _logger.LogInformation("Business Unit Expense Reimburse Request Started");
 
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
@@ -658,7 +660,9 @@ namespace AtoCashAPI.Controllers
 
                 if (reqEmp == null)
                 {
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Requesting Employee id is Invalid";
+                    return returnIntAndResponseString;
                 }
                 EmployeeExtendedInfo reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == expenseReimburseRequestDto.EmployeeId && e.BusinessUnitId == reqBussUnitId).FirstOrDefault();
 
@@ -671,7 +675,10 @@ namespace AtoCashAPI.Controllers
                 if (approRoleMap == null)
                 {
                     _logger.LogError("Approver Role Map Not defined, approval group id " + reqApprGroupId);
-                    return 1;
+
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Approver Role Map Not defined, approval group id " + reqApprGroupId;
+                    return returnIntAndResponseString;
                 }
                 else
                 {
@@ -685,7 +692,10 @@ namespace AtoCashAPI.Controllers
                         if (employeeExtendedInfo == null)
                         {
                             _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
-                            return 1;
+
+                            returnIntAndResponseString.IntReturn = 1;
+                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId;
+                            return returnIntAndResponseString;
                         }
 
                         int? approverEmpId = employeeExtendedInfo.EmployeeId;
@@ -694,7 +704,10 @@ namespace AtoCashAPI.Controllers
                         if (approver == null)
                         {
                             _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
-                            return 1;
+
+                            returnIntAndResponseString.IntReturn = 1;
+                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId;
+                            return returnIntAndResponseString;
                         }
 
                     }
@@ -776,7 +789,9 @@ namespace AtoCashAPI.Controllers
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Sub Claims Table insert failed");
-                        return 1;
+                         returnIntAndResponseString.IntReturn = 1;
+                            returnIntAndResponseString.StrResponse = "Sub Claims Table insert failed";
+                            return returnIntAndResponseString;
                     }
 
                     dblTotalClaimAmount = dblTotalClaimAmount + expenseSubClaimDto.TaxAmount + expenseSubClaimDto.ExpenseReimbClaimAmount;
@@ -794,7 +809,9 @@ namespace AtoCashAPI.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "TotalClaimAmount update failed");
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "TotalClaimAmount update failed";
+                    return returnIntAndResponseString;
                 }
 
                 _logger.LogInformation("Sub Claims Table records inserted");
@@ -849,7 +866,10 @@ namespace AtoCashAPI.Controllers
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Self approved ExpenseReimburseRequest update failed");
-                        return 1;
+                        
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Self approved ExpenseReimburseRequest update failed";
+                        return returnIntAndResponseString;
                     }
 
                     _logger.LogInformation("Self Approved:Expense table Updated with Approved Status");
@@ -1010,12 +1030,17 @@ namespace AtoCashAPI.Controllers
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "DisbursementsAndClaimsMasters save failed ");
-                        return 1;
+
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "DisbursementsAndClaimsMasters save failed ";
+                        return returnIntAndResponseString;
                     }
                     _logger.LogInformation("DisbursementsAndClaimsMaster table insert complete");
                     _logger.LogInformation("Business Area Request Created successfully");
                     await AtoCashDbContextTransaction.CommitAsync();
-                    return 0;
+                    returnIntAndResponseString.IntReturn = 0;
+                    returnIntAndResponseString.StrResponse = "Business Area Request Created successfully";
+                    return returnIntAndResponseString;
                 }
                 ///
 
@@ -1029,12 +1054,16 @@ namespace AtoCashAPI.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogInformation(ex.Message.ToString());
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "DisbursementsAndClaimsMaster table insert failed";
+                    return returnIntAndResponseString;
                 }
                 await AtoCashDbContextTransaction.CommitAsync();
             }
             _logger.LogInformation("Business Area Request Created successfully");
-            return 0;
+            returnIntAndResponseString.IntReturn = 0;
+            returnIntAndResponseString.StrResponse = "Business Area Request Created successfully";
+            return returnIntAndResponseString;
 
 
         }
@@ -1042,8 +1071,10 @@ namespace AtoCashAPI.Controllers
 
 
         //
-        private async Task<int> ProjectBasedExpReimRequest(ExpenseReimburseRequestDTO expenseReimburseRequestDto)
+        private async Task<ReturnIntAndResponseString> ProjectBasedExpReimRequest(ExpenseReimburseRequestDTO expenseReimburseRequestDto)
         {
+
+            ReturnIntAndResponseString returnIntAndResponseString = new();
             _logger.LogInformation("ProjectBasedExpReimRequest Started");
             //### 1. If Employee Eligible for Cash Claim enter a record and reduce the available amount for next claim
             #region
@@ -1064,7 +1095,9 @@ namespace AtoCashAPI.Controllers
                 else
                 {
                     _logger.LogError("Project Manager is not Assigned");
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Project Manager is not Assigned";
+                    return returnIntAndResponseString;
                 }
 
                 ExpenseReimburseRequest expenseReimburseRequest = new();
@@ -1141,7 +1174,9 @@ namespace AtoCashAPI.Controllers
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Sub Claims Table insert failed");
-                        return 1;
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Sub Claims Table insert failed";
+                        return returnIntAndResponseString;
                     }
 
 
@@ -1237,17 +1272,21 @@ namespace AtoCashAPI.Controllers
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, " Status Tracker insert failed");
-                        return 1;
+                        _logger.LogError(ex, "Project: Status Tracker insert failed");
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Project: Status Tracker insert failed";
+                        return returnIntAndResponseString;
                     }
 
 
                     //##### 5. Send email to the Approver
                     //####################################
-                    if (isSelfApprovedRequest)
-                    {
-                        return 0;
-                    }
+                    //if (isSelfApprovedRequest)
+                    //{
+                    //    returnIntAndResponseString.IntReturn = 0;
+                    //    returnIntAndResponseString.StrResponse = "Project: Status Tracker insert failed";
+                    //    return returnIntAndResponseString;
+                    //}
 
                     _logger.LogInformation(approver.GetFullName() + "Email Start");
 
@@ -1353,11 +1392,15 @@ namespace AtoCashAPI.Controllers
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Project: Self approved Expense request failed");
-                        return 1;
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Project:Self approved Expense request failed";
+                        return returnIntAndResponseString;
                     }
 
                     _logger.LogInformation("DisbursementsAndClaimsMaster approve/reject updated");
-                    return 0;
+                    returnIntAndResponseString.IntReturn = 0;
+                    returnIntAndResponseString.StrResponse = "DisbursementsAndClaimsMaster approve/reject updated";
+                    return returnIntAndResponseString;
                 }
                 ///
 
@@ -1369,7 +1412,9 @@ namespace AtoCashAPI.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Project Expense request failed");
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Project Expense request failed";
+                    return returnIntAndResponseString;
                 }
 
                 _logger.LogInformation("DisbursementsAndClaimsMaster approve/reject updated");
@@ -1377,7 +1422,9 @@ namespace AtoCashAPI.Controllers
 
                 await AtoCashDbContextTransaction.CommitAsync();
             }
-            return 0;
+            returnIntAndResponseString.IntReturn = 0;
+            returnIntAndResponseString.StrResponse = "Project: Expense request created";
+            return returnIntAndResponseString;
         }
 
     }

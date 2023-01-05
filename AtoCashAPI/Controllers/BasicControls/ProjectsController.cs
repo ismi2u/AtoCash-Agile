@@ -14,7 +14,7 @@ namespace AtoCashAPI.Controllers
 {
     [Route("api/[controller]/[Action]")]
     [ApiController]
-      [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
+    [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, Manager, User")]
     public class ProjectsController : ControllerBase
     {
         private readonly AtoCashDbContext _context;
@@ -137,7 +137,7 @@ namespace AtoCashAPI.Controllers
 
         // PUT: api/Projects/5
         [HttpPut("{id}")]
-          [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> PutProject(int id, ProjectDTO projectDto)
         {
             if (id != projectDto.Id)
@@ -178,7 +178,7 @@ namespace AtoCashAPI.Controllers
 
         // POST: api/Projects
         [HttpPost]
-          [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<ActionResult<Project>> PostProject(ProjectDTO projectDto)
         {
             var project = _context.Projects.Where(c => c.ProjectName == projectDto.ProjectName).FirstOrDefault();
@@ -196,15 +196,28 @@ namespace AtoCashAPI.Controllers
                 StatusTypeId = projectDto.StatusTypeId
             };
 
-            _context.Projects.Add(proj);
-            await _context.SaveChangesAsync();
+            using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
+            {
 
+                _context.Projects.Add(proj);
+                await _context.SaveChangesAsync();
+                //Add Project manager to the Project by default
+                ProjectManagement projectManagement = new();
+                projectManagement.EmployeeId = projectDto.ProjectManagerId;
+                projectManagement.ProjectId = proj.Id;
+
+                _context.ProjectManagements.Add(projectManagement);
+
+                await _context.SaveChangesAsync();
+
+                await AtoCashDbContextTransaction.CommitAsync();
+            }
             return Ok(new RespStatus { Status = "Success", Message = "Project Created!" });
         }
 
         // DELETE: api/Projects/5
         [HttpDelete("{id}")]
-          [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> DeleteProject(int id)
         {
             var subProj = _context.SubProjects.Where(s => s.ProjectId == id).FirstOrDefault();
@@ -228,10 +241,16 @@ namespace AtoCashAPI.Controllers
                 return Conflict(new RespStatus { Status = "Failure", Message = "Project in Use, Cant delete!" });
             }
 
+            using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
+            {
+                _context.Projects.Remove(project);
 
-            _context.Projects.Remove(project);
-            await _context.SaveChangesAsync();
+                List<ProjectManagement> ProjMgmtItems = await _context.ProjectManagements.Where(p => p.ProjectId == id).ToListAsync();
+                _context.ProjectManagements.RemoveRange(ProjMgmtItems);
+                await _context.SaveChangesAsync();
 
+                await AtoCashDbContextTransaction.CommitAsync();
+            }
             return Ok(new RespStatus { Status = "Success", Message = "Project Deleted!" });
         }
 

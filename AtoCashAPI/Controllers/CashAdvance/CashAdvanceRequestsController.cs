@@ -39,7 +39,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
         [ActionName("GetCashAdvanceRequests")]
         public async Task<ActionResult<IEnumerable<CashAdvanceRequestDTO>>> GetCashAdvanceRequests()
         {
-            List<CashAdvanceRequestDTO> ListCashAdvanceRequestDTO = new();
+            List<CashAdvanceRequestDTO> ListCashAdvanceRequestDTO = new();  
 
             //var CashAdvanceStatusTracker = await _context.CashAdvanceStatusTrackers.FindAsync(1);
 
@@ -60,15 +60,15 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTO.CashAdvanceAmount = CashAdvanceRequest.CashAdvanceAmount;
                 CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
                 CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
+
                 CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
+                var locationId = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId : null;
+                CashAdvanceRequestDTO.Location = locationId != null ? _context.Locations.Find(locationId).LocationName : null;
                 CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
                 CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
                 CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;
+
                 CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
-
-                var locationId = _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId;
-                CashAdvanceRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
-
                 CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
                 CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;
                 CashAdvanceRequestDTO.SubProjectId = CashAdvanceRequest.SubProjectId;
@@ -109,14 +109,14 @@ namespace AtoCashAPI.Controllers.CashAdvance
             CashAdvanceRequestDTO.CashAdvanceAmount = CashAdvanceRequest.CashAdvanceAmount;
             CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
             CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
+
             CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
-
-            var locationId = _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId;
-            CashAdvanceRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
-
+            var locationId = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId : null;
+            CashAdvanceRequestDTO.Location = locationId != null ? _context.Locations.Find(locationId).LocationName : null;
             CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
             CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
             CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;
+
             CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
             CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
             CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;
@@ -435,7 +435,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
         [ActionName("PostCashAdvanceRequest")]
         public async Task<ActionResult<CashAdvanceRequest>> PostCashAdvanceRequest(CashAdvanceRequestDTO CashAdvanceRequestDto)
         {
-            int SuccessResult;
+            ReturnIntAndResponseString SuccessResult = null;
 
             if (CashAdvanceRequestDto == null || (CashAdvanceRequestDto.BusinessUnitId == null && CashAdvanceRequestDto.ProjectId == null) || (CashAdvanceRequestDto.BusinessUnitId == 0 && CashAdvanceRequestDto.ProjectId == 0))
             {
@@ -480,17 +480,17 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 return Conflict(new RespStatus() { Status = "Failure", Message = "Invalid Cash Request Amount Or Limit Exceeded" });
             }
 
-            if (SuccessResult == 0)
+            if (SuccessResult.IntReturn == 0)
             {
                 _logger.LogInformation("Cash Advance Request - Process completed");
 
-                return Created("PostCashAdvanceRequest", new RespStatus() { Status = "Success", Message = "Cash Advance Request Created" });
+                return Created("PostCashAdvanceRequest", new RespStatus() { Status = "Success", Message = SuccessResult.StrResponse });
             }
             else
             {
                 _logger.LogError("Cash Advance Request creation failed -Check approval Role Map assignment!");
 
-                return BadRequest(new RespStatus { Status = "Failure", Message = "Cash Advance Request - Approval Role Map Undefined!" });
+                return BadRequest(new RespStatus { Status = "Failure", Message = SuccessResult.StrResponse });
             }
 
         }
@@ -579,11 +579,11 @@ namespace AtoCashAPI.Controllers.CashAdvance
         /// </summary>
         /// <param name="CashAdvanceRequestDto"></param>
         /// <param name="empCurAvailBal"></param>
-        private async Task<int> ProjectCashRequest(CashAdvanceRequestDTO CashAdvanceRequestDto, Double? empCurAvailBal)
+        private async Task<ReturnIntAndResponseString> ProjectCashRequest(CashAdvanceRequestDTO CashAdvanceRequestDto, Double? empCurAvailBal)
         {
 
             //### 1. If Employee Eligible for Cash Claim enter a record and reduce the available amount for next claim
-
+            ReturnIntAndResponseString returnIntAndResponseString = new();
 
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
@@ -603,7 +603,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 else
                 {
                     _logger.LogError("Project Manager is not Assigned");
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Project Manager is not Assigned";
+                    return returnIntAndResponseString;
                 }
                 ////
 
@@ -615,7 +617,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
                 if (CashAdvanceRequestDto.CashAdvanceAmount > maxCashAllowedForRole)
                 {
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Cash Advance Limit exceeds Max Limit";
+                    return returnIntAndResponseString;
                 }
 
                 var curCashAdvanceBal = _context.EmpCurrentCashAdvanceBalances.Where(x => x.EmployeeId == reqEmpid).FirstOrDefault();
@@ -632,6 +636,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Project: CashAdvanceRequests");
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Cash Advance CashAdvance Balance Update failed";
+                    return returnIntAndResponseString;
                 }
 
                 #endregion
@@ -663,6 +670,10 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Project: CashAdvanceRequests");
+
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Project: CashAdvance Request creation failed";
+                    return returnIntAndResponseString;
                 }
 
                 CashAdvanceRequestDto.Id = pcrq.Id;
@@ -745,6 +756,10 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     catch (Exception ex)
                     {
                         _logger.LogError(ex, "Project: CashAdvanceRequests");
+
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Project: CashAdvance Status Tracker creation failed";
+                        return returnIntAndResponseString;
                     }
                     #endregion
 
@@ -814,12 +829,19 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 catch (DbUpdateConcurrencyException ex)
                 {
                     string error = ex.Message;
+
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Project: DisbursementsAndClaims reacord creation failed";
+                    return returnIntAndResponseString;
                 }
                 #endregion
                 _logger.LogInformation("Project: Disbursement table insert Completed");
                 await AtoCashDbContextTransaction.CommitAsync();
             }
-            return 0;
+            returnIntAndResponseString.IntReturn = 0;
+            returnIntAndResponseString.StrResponse = "Project: DisbursementsAndClaims reacord created";
+            return returnIntAndResponseString;
+
         }
 
         /// <summary>
@@ -827,10 +849,11 @@ namespace AtoCashAPI.Controllers.CashAdvance
         /// </summary>
         /// <param name="CashAdvanceRequestDto"></param>
         /// <param name="empCurAvailBal"></param>
-        private async Task<int> BusinessUnitCashRequest(CashAdvanceRequestDTO CashAdvanceRequestDto, Double? empCurAvailBal)
+        private async Task<ReturnIntAndResponseString> BusinessUnitCashRequest(CashAdvanceRequestDTO CashAdvanceRequestDto, Double? empCurAvailBal)
         {
             //### 1. If Employee Eligible for Cash Claim enter a record and reduce the available amount for next claim
             #region
+            ReturnIntAndResponseString returnIntAndResponseString = new();
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
 
@@ -841,7 +864,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
                 if (reqEmp == null)
                 {
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Business: Employee Id is Invalid";
+                    return returnIntAndResponseString;
                 }
                 EmployeeExtendedInfo reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == CashAdvanceRequestDto.EmployeeId && e.BusinessUnitId == reqBussUnitId).FirstOrDefault();
 
@@ -855,7 +880,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 if (approRoleMap == null)
                 {
                     _logger.LogError("Approver Role Map Not defined, approval group id " + reqApprGroupId);
-                    return 1;
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Approver Role Map Not defined, approval group id " + reqApprGroupId;
+                    return returnIntAndResponseString;
                 }
                 else
                 {
@@ -869,7 +896,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                         if (employeeExtendedInfo == null)
                         {
                             _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
-                            return 1;
+                            returnIntAndResponseString.IntReturn = 1;
+                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId;
+                            return returnIntAndResponseString;
                         }
 
                         int? approverEmpId = employeeExtendedInfo.EmployeeId;
@@ -878,7 +907,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                         if (approver == null)
                         {
                             _logger.LogError("Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId);
-                            return 1;
+                            returnIntAndResponseString.IntReturn = 1;
+                            returnIntAndResponseString.StrResponse = "Approver employee not mapped for RoleMap RoleId:" + jobRole_id + "ApprovalGroupId:" + reqApprGroupId;
+                            return returnIntAndResponseString;
                         }
 
                     }
@@ -912,7 +943,10 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "BusinessUnit: CashAdvanceRequestDto balance check failed");
+                    _logger.LogError(ex, "BusinessUnit: CashAdvanceRequest balance check failed");
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "BusinessUnit: CashAdvanceRequest balance check failed";
+                    return returnIntAndResponseString;
 
                 }
                 ///
@@ -948,6 +982,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 {
 
                     _logger.LogError(ex, "BusinessUnit: CashAdvanceRequest insert failed");
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "BusinessUnit: CashAdvanceRequest insert failed";
+                    return returnIntAndResponseString;
                 }
 
 
@@ -1014,7 +1051,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     {
                         _logger.LogError(ex, "Business Unit: CashAdvanceRequest status tracker insert failed");
 
-                        return 1;
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Business Unit: CashAdvanceRequest status tracker insert failed";
+                        return returnIntAndResponseString;
                     }
 
                 }
@@ -1139,13 +1178,17 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Cash Advance Request Creation failed");
-                    return 1;
+                    _logger.LogError(ex, "Business Unit: Disbursmenent record insert failed");
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Business Unit: Disbursmenent record insert failed";
+                    return returnIntAndResponseString;
                 }
                 #endregion
                 await AtoCashDbContextTransaction.CommitAsync();
             }
-            return 0;
+            returnIntAndResponseString.IntReturn = 0;
+            returnIntAndResponseString.StrResponse = "Business Unit: Cash Request Created";
+            return returnIntAndResponseString;
         }
 
 
