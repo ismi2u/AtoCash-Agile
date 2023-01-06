@@ -78,10 +78,7 @@ namespace AtoCashAPI.Controllers
                     expenseReimburseRequestDTO.BusinessType = expenseReimbRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(expenseReimbRequest.BusinessTypeId).BusinessTypeName : null;
                     expenseReimburseRequestDTO.BusinessUnitId = expenseReimbRequest.BusinessUnitId;
                     expenseReimburseRequestDTO.BusinessUnit = expenseReimbRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).GetBusinessUnitName() : null;
-                    expenseReimburseRequestDTO.CostCentre = expenseReimbRequest.CostCenterId != null ? _context.CostCenters.Find(expenseReimbRequest.CostCenterId).GetCostCentre() : null;
-                    expenseReimburseRequestDTO.ProjectId = expenseReimbRequest.ProjectId;
-                    expenseReimburseRequestDTO.ProjectName = expenseReimbRequest.ProjectId != null ? _context.Projects.Find(expenseReimbRequest.ProjectId).ProjectName : null;
-
+                    
 
                     if (expenseReimbRequest.BusinessUnitId != null)
                     {
@@ -89,9 +86,13 @@ namespace AtoCashAPI.Controllers
                         expenseReimburseRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
                     }
 
+                    expenseReimburseRequestDTO.CostCenterId = expenseReimbRequest.CostCenterId;
+                    expenseReimburseRequestDTO.CostCentre = expenseReimbRequest.CostCenterId != null ? _context.CostCenters.Find(expenseReimbRequest.CostCenterId).GetCostCentre() : null;
+
+                    expenseReimburseRequestDTO.ProjectId = expenseReimbRequest.ProjectId;
+                    expenseReimburseRequestDTO.ProjectName = expenseReimbRequest.ProjectId != null ? _context.Projects.Find(expenseReimbRequest.ProjectId).ProjectName : null;
                     expenseReimburseRequestDTO.SubProjectId = expenseReimbRequest.SubProjectId;
                     expenseReimburseRequestDTO.SubProjectName = expenseReimbRequest.SubProjectId != null ? _context.SubProjects.Find(expenseReimbRequest.SubProjectId).SubProjectName : null;
-
                     expenseReimburseRequestDTO.WorkTaskId = expenseReimbRequest.WorkTaskId;
                     expenseReimburseRequestDTO.WorkTaskName = expenseReimbRequest.WorkTaskId != null ? _context.WorkTasks.Find(expenseReimbRequest.WorkTaskId).TaskName : null;
 
@@ -170,20 +171,21 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequestDTO.BusinessType = expenseReimbRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(expenseReimbRequest.BusinessTypeId).BusinessTypeName : null;
                 expenseReimburseRequestDTO.BusinessUnitId = expenseReimbRequest.BusinessUnitId;
                 expenseReimburseRequestDTO.BusinessUnit = expenseReimbRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).GetBusinessUnitName() : null;
-                
+
+
                 if (expenseReimbRequest.BusinessUnitId != null)
                 {
                     var locationId = _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).LocationId;
                     expenseReimburseRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
                 }
 
+                expenseReimburseRequestDTO.CostCenterId = expenseReimbRequest.CostCenterId;
                 expenseReimburseRequestDTO.CostCentre = expenseReimbRequest.CostCenterId != null ? _context.CostCenters.Find(expenseReimbRequest.CostCenterId).GetCostCentre() : null;
+
                 expenseReimburseRequestDTO.ProjectId = expenseReimbRequest.ProjectId;
                 expenseReimburseRequestDTO.ProjectName = expenseReimbRequest.ProjectId != null ? _context.Projects.Find(expenseReimbRequest.ProjectId).ProjectName : null;
-
                 expenseReimburseRequestDTO.SubProjectId = expenseReimbRequest.SubProjectId;
                 expenseReimburseRequestDTO.SubProjectName = expenseReimbRequest.SubProjectId != null ? _context.SubProjects.Find(expenseReimbRequest.SubProjectId).SubProjectName : null;
-
                 expenseReimburseRequestDTO.WorkTaskId = expenseReimbRequest.WorkTaskId;
                 expenseReimburseRequestDTO.WorkTaskName = expenseReimbRequest.WorkTaskId != null ? _context.WorkTasks.Find(expenseReimbRequest.WorkTaskId).TaskName : null;
 
@@ -239,7 +241,6 @@ namespace AtoCashAPI.Controllers
                 ExpenseReimburseRequestDTO expenseReimburseRequestDTO = new();
 
 
-
                 expenseReimburseRequestDTO.Id = expenseReimbRequest.Id;
                 expenseReimburseRequestDTO.EmployeeId = expenseReimbRequest.EmployeeId;
                 expenseReimburseRequestDTO.EmployeeName = _context.Employees.Find(expenseReimbRequest.EmployeeId).GetFullName();
@@ -251,21 +252,25 @@ namespace AtoCashAPI.Controllers
                 expenseReimburseRequestDTO.BusinessType = expenseReimbRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(expenseReimbRequest.BusinessTypeId).BusinessTypeName : null;
                 expenseReimburseRequestDTO.BusinessUnitId = expenseReimbRequest.BusinessUnitId;
                 expenseReimburseRequestDTO.BusinessUnit = expenseReimbRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).GetBusinessUnitName() : null;
-                expenseReimburseRequestDTO.CostCentre = expenseReimbRequest.CostCenterId != null ? _context.CostCenters.Find(expenseReimbRequest.CostCenterId).GetCostCentre() : null;
-                expenseReimburseRequestDTO.ProjectId = expenseReimbRequest.ProjectId;
-                expenseReimburseRequestDTO.ProjectName = expenseReimbRequest.ProjectId != null ? _context.Projects.Find(expenseReimbRequest.ProjectId).ProjectName : null;
 
-                expenseReimburseRequestDTO.SubProjectId = expenseReimbRequest.SubProjectId;
-                expenseReimburseRequestDTO.SubProjectName = expenseReimbRequest.SubProjectId != null ? _context.SubProjects.Find(expenseReimbRequest.SubProjectId).SubProjectName : null;
-
-                expenseReimburseRequestDTO.WorkTaskId = expenseReimbRequest.WorkTaskId;
-                expenseReimburseRequestDTO.WorkTaskName = expenseReimbRequest.WorkTaskId != null ? _context.WorkTasks.Find(expenseReimbRequest.WorkTaskId).TaskName : null;
 
                 if (expenseReimbRequest.BusinessUnitId != null)
                 {
                     var locationId = _context.BusinessUnits.Find(expenseReimbRequest.BusinessUnitId).LocationId;
                     expenseReimburseRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
                 }
+
+                expenseReimburseRequestDTO.CostCenterId = expenseReimbRequest.CostCenterId;
+                expenseReimburseRequestDTO.CostCentre = expenseReimbRequest.CostCenterId != null ? _context.CostCenters.Find(expenseReimbRequest.CostCenterId).GetCostCentre() : null;
+
+
+
+                expenseReimburseRequestDTO.ProjectId = expenseReimbRequest.ProjectId;
+                expenseReimburseRequestDTO.ProjectName = expenseReimbRequest.ProjectId != null ? _context.Projects.Find(expenseReimbRequest.ProjectId).ProjectName : null;
+                expenseReimburseRequestDTO.SubProjectId = expenseReimbRequest.SubProjectId;
+                expenseReimburseRequestDTO.SubProjectName = expenseReimbRequest.SubProjectId != null ? _context.SubProjects.Find(expenseReimbRequest.SubProjectId).SubProjectName : null;
+                expenseReimburseRequestDTO.WorkTaskId = expenseReimbRequest.WorkTaskId;
+                expenseReimburseRequestDTO.WorkTaskName = expenseReimbRequest.WorkTaskId != null ? _context.WorkTasks.Find(expenseReimbRequest.WorkTaskId).TaskName : null;
 
                 expenseReimburseRequestDTO.RequestDate = expenseReimbRequest.RequestDate;
                 expenseReimburseRequestDTO.ApproverActionDate = expenseReimbRequest.ApproverActionDate;

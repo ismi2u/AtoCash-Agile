@@ -137,7 +137,8 @@ namespace AtoCashAPI.Controllers
 
             bool isNextApproverAvailable = true;
             bool bRejectMessage = false;
-            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+            //ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+
             foreach (CashAdvanceStatusTrackerDTO CashAdvanceStatusTrackerDto in ListCashAdvanceStatusTrackerDto)
             {
                 var CashAdvanceStatusTracker = await _context.CashAdvanceStatusTrackers.FindAsync(CashAdvanceStatusTrackerDto.Id);
@@ -156,7 +157,7 @@ namespace AtoCashAPI.Controllers
                 CashAdvanceStatusTracker.ApproverActionDate = DateTime.UtcNow;
 
 
-                CashAdvanceStatusTracker.ApproverEmpId = user != null ? user.EmployeeId : null;
+                CashAdvanceStatusTracker.ApproverEmpId = int.Parse( HttpContext.User.Claims.First(c => c.Type == "EmployeeId").Value);
 
                 CashAdvanceStatusTracker.Comments = bRejectMessage ? CashAdvanceStatusTrackerDto.Comments : "Approved";
 
@@ -221,7 +222,7 @@ namespace AtoCashAPI.Controllers
                                c.ApprovalLevelId == qApprovalLevelId).FirstOrDefault();
                             //claimitem.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                             claimitem.ApproverActionDate = DateTime.UtcNow;
-                            claimitem.ApproverEmpId = user != null ? user.EmployeeId : null;
+                            claimitem.ApproverEmpId = int.Parse( HttpContext.User.Claims.First(c => c.Type == "EmployeeId").Value);
 
                             //final Approver hence updating ExpenseReimburseRequest table
                             var CashAdvanceRequest = _context.CashAdvanceRequests.Find(qCashAdvanceRequestId);

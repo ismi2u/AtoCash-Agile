@@ -199,7 +199,8 @@ namespace AtoCashAPI.Models
         public string? MobileNumber { get; set; }
         public int? EmploymentTypeId { get; set; }
         public string? EmploymentType { get; set; }
-        public int? DepartmentId { get; set; }
+        public int? BusinessUnitId { get; set; }
+        public string? BusinessUnit{ get; set; }
         public int? JobRoleId { get; set; }
         public int? ApprovalGroupId { get; set; }
         public int? StoreApprovalGroupId { get; set; }

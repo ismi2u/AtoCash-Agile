@@ -65,14 +65,17 @@ namespace AtoCashAPI.Controllers
                 travelApprovalRequestDTO.BusinessType = travelApprovalRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(travelApprovalRequest.BusinessTypeId).BusinessTypeName : null;
                 travelApprovalRequestDTO.BusinessUnitId = travelApprovalRequest.BusinessUnitId;
                 travelApprovalRequestDTO.BusinessUnit = travelApprovalRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).GetBusinessUnitName() : null;
-                travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
-                travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
+
 
                 if (travelApprovalRequest.BusinessUnitId != null)
                 {
                     var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
                     travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
                 }
+
+                travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
+                travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
+
 
                 travelApprovalRequestDTO.ProjectId = travelApprovalRequest.ProjectId;
                 travelApprovalRequestDTO.ProjectName = travelApprovalRequest.ProjectId != null ? _context.Projects.Find(travelApprovalRequest.ProjectId).ProjectName : null;
@@ -122,16 +125,16 @@ namespace AtoCashAPI.Controllers
             travelApprovalRequestDTO.BusinessType = travelApprovalRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(travelApprovalRequest.BusinessTypeId).BusinessTypeName : null;
             travelApprovalRequestDTO.BusinessUnitId = travelApprovalRequest.BusinessUnitId;
             travelApprovalRequestDTO.BusinessUnit = travelApprovalRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).GetBusinessUnitName() : null;
-            travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
-            travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
-
+           
 
             if(travelApprovalRequest.BusinessUnitId != null)
             {
                 var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
                 travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
             }
-          
+
+            travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
+            travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
 
             travelApprovalRequestDTO.ProjectId = travelApprovalRequest.ProjectId;
             travelApprovalRequestDTO.ProjectName = travelApprovalRequest.ProjectId != null ? _context.Projects.Find(travelApprovalRequest.ProjectId).ProjectName : null;
@@ -178,6 +181,7 @@ namespace AtoCashAPI.Controllers
             {
                 TravelApprovalRequestDTO travelApprovalRequestDTO = new();
 
+
                 travelApprovalRequestDTO.Id = travelApprovalRequest.Id;
                 travelApprovalRequestDTO.EmployeeId = travelApprovalRequest.EmployeeId;
                 travelApprovalRequestDTO.EmployeeName = _context.Employees.Find(travelApprovalRequest.EmployeeId).GetFullName();
@@ -190,14 +194,17 @@ namespace AtoCashAPI.Controllers
                 travelApprovalRequestDTO.BusinessType = travelApprovalRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(travelApprovalRequest.BusinessTypeId).BusinessTypeName : null;
                 travelApprovalRequestDTO.BusinessUnitId = travelApprovalRequest.BusinessUnitId;
                 travelApprovalRequestDTO.BusinessUnit = travelApprovalRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).GetBusinessUnitName() : null;
-                travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
-                travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
+
 
                 if (travelApprovalRequest.BusinessUnitId != null)
                 {
                     var locationId = _context.BusinessUnits.Find(travelApprovalRequest.BusinessUnitId).LocationId;
                     travelApprovalRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
                 }
+
+                travelApprovalRequestDTO.CostCenterId = travelApprovalRequest.CostCenterId;
+                travelApprovalRequestDTO.CostCenter = travelApprovalRequest.CostCenterId != null ? _context.CostCenters.Find(travelApprovalRequest.CostCenterId).GetCostCentre() : null;
+
 
                 travelApprovalRequestDTO.ProjectId = travelApprovalRequest.ProjectId;
                 travelApprovalRequestDTO.ProjectName = travelApprovalRequest.ProjectId != null ? _context.Projects.Find(travelApprovalRequest.ProjectId).ProjectName : null;

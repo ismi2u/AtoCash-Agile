@@ -289,7 +289,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
 
             bool isNextApproverAvailable = true;
             bool bRejectMessage = false;
-            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+            //ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
                 _logger.LogInformation("PutExpsensReimburseStatus Tracker record updation START");
@@ -325,7 +325,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                     expenseReimburseStatusTracker.RequestDate = expenseReimburseStatusTrackerDto.RequestDate;
 
                     expenseReimburseStatusTracker.ApproverActionDate = DateTime.UtcNow;
-                    expenseReimburseStatusTracker.ApproverEmpId = user != null ? user.EmployeeId : null;
+                    expenseReimburseStatusTracker.ApproverEmpId = int.Parse( HttpContext.User.Claims.First(c => c.Type == "EmployeeId").Value);
                     expenseReimburseStatusTracker.Comments = bRejectMessage ? expenseReimburseStatusTrackerDto.Comments : "Approved";
                     expenseReimburseStatusTracker.ApprovalStatusTypeId = expenseReimburseStatusTrackerDto.ApprovalStatusTypeId;
 

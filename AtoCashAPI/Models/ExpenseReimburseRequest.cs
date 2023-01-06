@@ -105,7 +105,7 @@ namespace AtoCashAPI.Models
         public string? WorkTaskName { get; set; }
         public int? WorkTaskId { get; set; }
 
-        public int CostCenterId { get; set; }
+        public int? CostCenterId { get; set; }
         public string? CostCentre { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
         public string? ApprovalStatusType { get; set; }

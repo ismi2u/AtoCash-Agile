@@ -62,13 +62,19 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
 
                 CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
-                var locationId = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId : null;
-                CashAdvanceRequestDTO.Location = locationId != null ? _context.Locations.Find(locationId).LocationName : null;
                 CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
                 CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
                 CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;
 
+                if (CashAdvanceRequest.BusinessUnitId != null)
+                {
+                    var locationId = _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId;
+                    CashAdvanceRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+                }
+
+                CashAdvanceRequestDTO.CostCenterId = CashAdvanceRequest.CostCenterId;
                 CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
+
                 CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
                 CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;
                 CashAdvanceRequestDTO.SubProjectId = CashAdvanceRequest.SubProjectId;
@@ -111,13 +117,20 @@ namespace AtoCashAPI.Controllers.CashAdvance
             CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
 
             CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
-            var locationId = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId : null;
-            CashAdvanceRequestDTO.Location = locationId != null ? _context.Locations.Find(locationId).LocationName : null;
             CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
             CashAdvanceRequestDTO.BusinessUnitId = CashAdvanceRequest.BusinessUnitId;
             CashAdvanceRequestDTO.BusinessUnit = CashAdvanceRequest.BusinessUnitId != null ? _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).GetBusinessUnitName() : null;
 
+            if (CashAdvanceRequest.BusinessUnitId != null)
+            {
+                var locationId = _context.BusinessUnits.Find(CashAdvanceRequest.BusinessUnitId).LocationId;
+                CashAdvanceRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
+            }
+
+            CashAdvanceRequestDTO.CostCenterId = CashAdvanceRequest.CostCenterId;
             CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
+
+
             CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
             CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;
             CashAdvanceRequestDTO.SubProjectId = CashAdvanceRequest.SubProjectId;
@@ -166,16 +179,12 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequestDTO CashAdvanceRequestDTO = new();
 
                 CashAdvanceRequestDTO.Id = CashAdvanceRequest.Id;
-                CashAdvanceRequestDTO.EmployeeId = CashAdvanceRequest.EmployeeId;
                 CashAdvanceRequestDTO.EmployeeName = _context.Employees.Find(CashAdvanceRequest.EmployeeId).GetFullName();
                 CashAdvanceRequestDTO.CurrencyTypeId = CashAdvanceRequest.CurrencyTypeId;
                 CashAdvanceRequestDTO.CurrencyType = CashAdvanceRequest.CurrencyType != null ? _context.CurrencyTypes.Find(CashAdvanceRequest.CurrencyType).CurrencyName : null;
                 CashAdvanceRequestDTO.CashAdvanceAmount = CashAdvanceRequest.CashAdvanceAmount;
                 CashAdvanceRequestDTO.CashAdvanceRequestDesc = CashAdvanceRequest.CashAdvanceRequestDesc;
                 CashAdvanceRequestDTO.RequestDate = CashAdvanceRequest.RequestDate;
-
-                var reqEmpExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id && e.BusinessUnitId == CashAdvanceRequest.BusinessUnitId).FirstOrDefault();
-                CashAdvanceRequestDTO.JobRole = reqEmpExtInfo != null ? _context.JobRoles.Find(reqEmpExtInfo.JobRoleId).GetJobRole() : "";
 
                 CashAdvanceRequestDTO.BusinessTypeId = CashAdvanceRequest.BusinessTypeId;
                 CashAdvanceRequestDTO.BusinessType = CashAdvanceRequest.BusinessTypeId != null ? _context.BusinessTypes.Find(CashAdvanceRequest.BusinessTypeId).BusinessTypeName : null;
@@ -188,7 +197,10 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     CashAdvanceRequestDTO.Location = _context.Locations.Find(locationId).LocationName;
                 }
 
+                CashAdvanceRequestDTO.CostCenterId = CashAdvanceRequest.CostCenterId;
                 CashAdvanceRequestDTO.CostCentre = CashAdvanceRequest.CostCenterId != null ? _context.CostCenters.Find(CashAdvanceRequest.CostCenterId).GetCostCentre() : null;
+
+
                 CashAdvanceRequestDTO.ProjectId = CashAdvanceRequest.ProjectId;
                 CashAdvanceRequestDTO.Project = CashAdvanceRequest.ProjectId != null ? _context.Projects.Find(CashAdvanceRequest.ProjectId).ProjectName : null;
                 CashAdvanceRequestDTO.SubProjectId = CashAdvanceRequest.SubProjectId;

@@ -149,7 +149,7 @@ namespace AtoCashAPI.Controllers
 
             bool isNextApproverAvailable = true;
             bool bRejectMessage = false;
-            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+            //ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
             {
                 foreach (TravelApprovalStatusTrackerDTO travelApprovalStatusTrackerDTO in ListTravelApprovalStatusTrackerDTO)
@@ -181,7 +181,7 @@ namespace AtoCashAPI.Controllers
                     travelApprovalStatusTracker.ApprovalLevelId = travelApprovalStatusTrackerDTO.ApprovalLevelId;
                     travelApprovalStatusTracker.RequestDate = travelApprovalStatusTrackerDTO.RequestDate;
                     travelApprovalStatusTracker.ApproverActionDate = DateTime.UtcNow;
-                    travelApprovalStatusTracker.ApproverEmpId = user != null ? user.EmployeeId : null;
+                    travelApprovalStatusTracker.ApproverEmpId = int.Parse( HttpContext.User.Claims.First(c => c.Type == "EmployeeId").Value);
                     travelApprovalStatusTracker.Comments = bRejectMessage ? travelApprovalStatusTrackerDTO.Comments : "Approved";
 
 
@@ -250,7 +250,7 @@ namespace AtoCashAPI.Controllers
                                c.ApprovalLevelId == qApprovalLevelId).FirstOrDefault();
                                 //claimitem.ApprovalStatusTypeId = (int)EApprovalStatus.Approved;
                                 travelItem.ApproverActionDate = DateTime.UtcNow;
-                                travelItem.ApproverEmpId = user != null ? user.EmployeeId : null;
+                                travelItem.ApproverEmpId = int.Parse( HttpContext.User.Claims.First(c => c.Type == "EmployeeId").Value);
 
 
                                 //final Approver hence updating TravelApprovalRequest
