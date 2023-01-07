@@ -311,7 +311,7 @@ namespace AtoCashAPI.Controllers
 
                     empCashAdvanceBal.CashOnHand = empCashAdvanceBal.CashOnHand + disbursementsAndClaimsMaster.AmountToCredit ?? 0;
                     //empCashAdvanceBal.CurBalance = empCashAdvanceBal.CurBalance - empCashAdvanceBal.CashOnHand;
-                    //empCashAdvanceBal.CurBalance = (empCashAdvanceBal.CurBalance - empCashAdvanceBal.CashOnHand) >= 0 ? (empCashAdvanceBal.CurBalance - empCashAdvanceBal.CashOnHand) : RoleMaxLimit;
+                   // empCashAdvanceBal.CurBalance = (empCashAdvanceBal.CurBalance - empCashAdvanceBal.CashOnHand) >= 0 ? (empCashAdvanceBal.CurBalance - empCashAdvanceBal.CashOnHand) : RoleMaxLimit;
                 }
                 else
                 {
@@ -330,7 +330,7 @@ namespace AtoCashAPI.Controllers
 
 
 
-                disbursementsAndClaimsMaster.IsSettledAmountCredited = disbursementsAndClaimsMasterDTO.IsSettledAmountCredited;
+                disbursementsAndClaimsMaster.IsSettledAmountCredited = true;
                 disbursementsAndClaimsMaster.SettledDate = DateTime.UtcNow;
                 disbursementsAndClaimsMaster.SettlementComment = disbursementsAndClaimsMasterDTO.SettlementComment;
                 disbursementsAndClaimsMaster.SettlementAccount = disbursementsAndClaimsMasterDTO.SettlementAccount;
