@@ -847,7 +847,8 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     return returnIntAndResponseString;
                 }
                 #endregion
-                _logger.LogInformation("Project: Disbursement table insert Completed");
+                _context.Update(disbursementsAndClaimsMaster);
+                await _context.SaveChangesAsync();
                 await AtoCashDbContextTransaction.CommitAsync();
             }
             returnIntAndResponseString.IntReturn = 0;
@@ -1186,6 +1187,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 _context.DisbursementsAndClaimsMasters.Add(disbursementsAndClaimsMaster);
                 try
                 {
+
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception ex)
