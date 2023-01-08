@@ -1,0 +1,61 @@
+INSERT INTO public."VATRates"("Id", "VATPercentage") VALUES (1, 5);
+
+INSERT INTO public."StatusTypes" VALUES (1, 'Active');
+INSERT INTO public."StatusTypes" VALUES (2, 'Inactive');
+
+INSERT INTO public."CurrencyTypes" VALUES (1, 'SAR', 'Saudi Riyal', 'SAUDI', 1);
+
+INSERT INTO public."EmploymentTypes" VALUES (1, 'FULL-TIME-EMP', 'Full Time Employee');
+INSERT INTO public."EmploymentTypes" VALUES (2, 'PART-TIME-EMP', 'Part Time Employee');
+
+INSERT INTO public."Banks" VALUES (1, 'Riyad Bank', 'Riyad Bank', 1);
+
+INSERT INTO public."ApprovalLevels" VALUES (1, 1, 'Level 1');
+INSERT INTO public."ApprovalLevels" VALUES (2, 2, 'Level 2');
+INSERT INTO public."ApprovalLevels" VALUES (3, 3, 'Level 3');
+INSERT INTO public."ApprovalLevels" VALUES (4, 4, 'Level 4');
+
+
+INSERT INTO public."ApprovalStatusTypes" VALUES (1, 'Initiated', 'Request Initiated');
+INSERT INTO public."ApprovalStatusTypes" VALUES (2, 'Pending', 'Awaiting Approval');
+INSERT INTO public."ApprovalStatusTypes" VALUES (3, 'In Review', 'Request is in progress');
+INSERT INTO public."ApprovalStatusTypes" VALUES (4, 'Approved', 'Request Approved');
+INSERT INTO public."ApprovalStatusTypes" VALUES (5, 'Rejected', 'Request is Rejected');
+INSERT INTO public."ApprovalStatusTypes" VALUES (6, 'Settled', 'Request is Settled');
+
+
+INSERT INTO public."RequestTypes" VALUES (1, 'Cash Advance Request', 'Cash Advance Request');
+INSERT INTO public."RequestTypes" VALUES (2, 'Department Expense Reimbursement', 'All Department based expense reimbursement claims');
+INSERT INTO public."RequestTypes" VALUES (3, 'Store Expense Reimbursement', 'All Store based expense reimbursement claims');
+
+
+
+
+----------
+
+INSERT INTO public."Employees"(
+	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId")
+	VALUES (40001, 'Almutaz', NULL, 'Mahd', 'E-4109', '235453565636', 'AD1400080001001234567890', '3453564667678854', '3249094', 'ZT445666', '343423123532423', 'Saudi', '2021-09-08 11:33:30.165', '2022-09-27 11:34:43.152', 'male', 'a.mahd@foodunitco.com', '8297333325', 1, 1,1,1);
+
+
+INSERT INTO public."EmpCurrentCashAdvanceBalances" (
+	"Id", "EmployeeId", "MaxCashAdvanceLimit", "AllCashAdvanceLimits", "CurBalance", "CashOnHand", "UpdatedOn") VALUES (1, 40001, 0, NULL, 0, 0, '2022-09-28 11:35:13.909336');
+	
+	
+	
+-----
+INSERT INTO public."AspNetUsers" VALUES ('d57cc679-f137-4eaf-bc55-339687ca8d89', 40001, 'a.mahd@foodunitco.com', 'A.MAHD@FOODUNITCO.COM', 'a.mahd@foodunitco.com', 'A.MAHD@FOODUNITCO.COM', false, 'AQAAAAEAACcQAAAAECt3xghizZE3rl6HJgnV85qAS0myEyzpMOksTN/oF0AL8ajtdMQZAywbHNVjVl2iGA==', 'BS7UMGFJ3AFJYU3NQHZITORPHIIAAMMC', '21068d4a-aab2-4402-8321-6e5eea58fc08', NULL, false, false, NULL, true, 0);
+
+
+
+INSERT INTO public."AspNetRoles" ("Id", "Name", "NormalizedName", "ConcurrencyStamp") VALUES ('user2af3-dc89-4f3f-adaa-6c136358user', 'User', 'USER', 'auser2b1-5957-4d1b-8025-75143dff446a');
+INSERT INTO public."AspNetRoles" ("Id", "Name", "NormalizedName", "ConcurrencyStamp") VALUES ('2abf2af3-dc89-4f3f-adaa-6c136358e9b0', 'Admin', 'ADMIN', 'a51632b1-5957-4d1b-8025-75143dff446a');
+INSERT INTO public."AspNetRoles" ("Id", "Name", "NormalizedName", "ConcurrencyStamp") VALUES ('2abfbara-dc89-4f3f-adaa-6c136358e9b0', 'Manager', 'MANAGER', 'a516bara-5957-4d1b-8025-75143dff446a');
+INSERT INTO public."AspNetRoles" ("Id", "Name", "NormalizedName", "ConcurrencyStamp") VALUES ('2abftera-dc89-4f3f-adaa-6c136358e9b0', 'Finmgr', 'FINMGR', 'a516tera-5957-4d1b-8025-75143dff446a');
+INSERT INTO public."AspNetRoles" ("Id", "Name", "NormalizedName", "ConcurrencyStamp") VALUES ('2abfsaud-dc89-4f3f-adaa-6c136358e9b0', 'AccPayable', 'ACCPAYABLE', 'a516saud-5957-4d1b-8025-75143dff446a');
+
+
+
+INSERT INTO public."AspNetUserRoles" VALUES ('d57cc679-f137-4eaf-bc55-339687ca8d89', '2abf2af3-dc89-4f3f-adaa-6c136358e9b0');
+
+---------------------------------

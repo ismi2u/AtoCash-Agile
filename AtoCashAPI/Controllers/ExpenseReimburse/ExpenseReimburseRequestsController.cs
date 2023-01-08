@@ -1261,7 +1261,7 @@ namespace AtoCashAPI.Controllers
                         ApprovalGroupId = null,
                         ApprovalLevelId = 2,
                         RequestDate = DateTime.UtcNow,
-                        ApproverEmpId = reqEmpid,
+                        ApproverEmpId = null,
                         ProjManagerId = projManagerid,
                         ApproverActionDate = DateTime.UtcNow,
                         ApprovalStatusTypeId = (int)EApprovalStatus.Pending, //1-Pending, 2-Approved, 3-Rejected
@@ -1394,6 +1394,7 @@ namespace AtoCashAPI.Controllers
                     try
                     {
                         await _context.SaveChangesAsync();
+                        await AtoCashDbContextTransaction.CommitAsync();
                     }
                     catch (Exception ex)
                     {
@@ -1403,7 +1404,7 @@ namespace AtoCashAPI.Controllers
                         return returnIntAndResponseString;
                     }
 
-                    await AtoCashDbContextTransaction.CommitAsync();
+                   
                     _logger.LogInformation("DisbursementsAndClaimsMaster approve/reject updated");
                     returnIntAndResponseString.IntReturn = 0;
                     returnIntAndResponseString.StrResponse = "Project:Self approved Expense request created";
@@ -1411,9 +1412,11 @@ namespace AtoCashAPI.Controllers
                 }
                 ///
 
-
-                
+                _context.Update(disbursementsAndClaimsMaster);
+                await _context.SaveChangesAsync();
+                await AtoCashDbContextTransaction.CommitAsync();
             }
+           
             returnIntAndResponseString.IntReturn = 0;
             returnIntAndResponseString.StrResponse = "Project: Expense request created";
             return returnIntAndResponseString;
