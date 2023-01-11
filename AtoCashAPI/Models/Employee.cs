@@ -98,9 +98,9 @@ namespace AtoCashAPI.Models
             NameParts.Add(MiddleName ?? "");
             NameParts.Add(LastName ?? "");
 
-            //return String.Join(" ", FirstName, MiddleName, LastName);
+            //return String.Join(":", FirstName, MiddleName, LastName);
 
-            return String.Join(" ", NameParts.Where(s => !String.IsNullOrEmpty(s)));
+            return String.Join(":", NameParts.Where(s => !String.IsNullOrEmpty(s)));
 
         }
     }

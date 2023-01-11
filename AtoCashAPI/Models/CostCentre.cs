@@ -33,9 +33,9 @@ namespace AtoCashAPI.Models
             NameParts.Add(CostCenterCode ?? "");
             NameParts.Add(CostCenterDesc ?? "");
 
-            //return String.Join(" ", FirstName, MiddleName, LastName);
+            //return String.Join(":", FirstName, MiddleName, LastName);
 
-            return String.Join(" ", NameParts.Where(s => !String.IsNullOrEmpty(s)));
+            return String.Join(":", NameParts.Where(s => !String.IsNullOrEmpty(s)));
 
         }
 
