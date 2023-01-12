@@ -99,7 +99,7 @@ namespace AtoCashAPI.Models
     }
 
 
-    public class PostSAPAPIData
+    public class PostERPAPIData
     {
         public int? ClaimId { get; set; }
 
@@ -133,7 +133,7 @@ namespace AtoCashAPI.Models
        
     }
 
-    public class ResponseSAPApiData
+    public class ResponseERPApiData
     {
         public string? AdditionalData { get; set; }
         public string? SettlementComment { get; set; }

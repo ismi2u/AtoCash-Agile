@@ -10,6 +10,7 @@ using AtoCashAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using AtoCashAPI.Authentication;
 
+
 namespace AtoCashAPI.Controllers
 {
     [Route("api/[controller]/[Action]")]
@@ -31,6 +32,7 @@ namespace AtoCashAPI.Controllers
             List<ApprovalRoleMapDTO> ListApprovalRoleMapDTO = new List<ApprovalRoleMapDTO>();
 
             var approvalRoleMaps = await _context.ApprovalRoleMaps.ToListAsync();
+
 
             foreach (ApprovalRoleMap approvalRoleMap in approvalRoleMaps)
             {
@@ -58,7 +60,8 @@ namespace AtoCashAPI.Controllers
 
                 foreach(int empId in ListEmployeeIds)
                 {
-                    listEmployeesNames = listEmployeesNames + "; " + _context.Employees.Find(empId).GetFullName();
+
+                    listEmployeesNames = !String.IsNullOrEmpty(listEmployeesNames)  ? listEmployeesNames + "| " + _context.Employees.Find(empId).GetFullName() :  _context.Employees.Find(empId).GetFullName();
                 }
 
                 approvalRoleMapDTO.AllAssignedEmployees = listEmployeesNames;

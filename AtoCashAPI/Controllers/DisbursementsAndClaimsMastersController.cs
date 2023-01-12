@@ -148,43 +148,43 @@ namespace AtoCashAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        [ActionName("SettleAccountsSAP")]
+        [ActionName("SettleAccountsERP")]
         [Authorize(Roles = "AccPayable")] // Only AccountPayables clerk can upate DisbursementsAndClaimsMaster
-        public async Task<IActionResult> SettleAccountsSAP(int[] accPayableSettleClaimIds)
+        public async Task<IActionResult> SettleAccountsERP(int[] accPayableSettleClaimIds)
         {
-            string SAPApiPostUrl = "https://localhost:44324/api/Reservation";
+            string ERPApiPostUrl = "https://localhost:44324/api/Reservation";
 
             if (accPayableSettleClaimIds != null)
             {
-                // List<PostSAPAPIData> postSAPAPIData = new List<PostSAPAPIData>();
+                // List<PostSAPAPIData> postERPAPIData = new List<PostSAPAPIData>();
 
                 foreach (var SettleClaimId in accPayableSettleClaimIds)
                 {
-                    PostSAPAPIData postSAPApiData = new PostSAPAPIData();
+                    PostERPAPIData postERPApiData = new PostERPAPIData();
 
                     var disbclaim = await _context.DisbursementsAndClaimsMasters.FindAsync(SettleClaimId);
                     var employee = await _context.Employees.FindAsync(disbclaim.EmployeeId);
                     //var expReimb = disbclaim.RequestTypeId == 1 ? true : false;
 
-                    postSAPApiData.ClaimId = SettleClaimId;
-                    postSAPApiData.EmployeeName = employee.GetFullName();
-                    postSAPApiData.EmployeeCode = employee.EmpCode;
+                    postERPApiData.ClaimId = SettleClaimId;
+                    postERPApiData.EmployeeName = employee.GetFullName();
+                    postERPApiData.EmployeeCode = employee.EmpCode;
 
-                    postSAPApiData.BusinessType = _context.BusinessTypes.Find(disbclaim.BusinessTypeId).BusinessTypeName;
-                    postSAPApiData.BusinessUnit = _context.BusinessUnits.Find(disbclaim.BusinessUnitId).GetBusinessUnitName();
+                    postERPApiData.BusinessType = _context.BusinessTypes.Find(disbclaim.BusinessTypeId).BusinessTypeName;
+                    postERPApiData.BusinessUnit = _context.BusinessUnits.Find(disbclaim.BusinessUnitId).GetBusinessUnitName();
 
-                    postSAPApiData.Project = disbclaim.ProjectId != null ? _context.Projects.Find(disbclaim.ProjectId).ProjectName : null;
-                    postSAPApiData.RequestDate = disbclaim.RecordDate;
-                    postSAPApiData.ClaimAmount = disbclaim.ClaimAmount;
-                    postSAPApiData.AmountToWallet = disbclaim.AmountToWallet;
-                    postSAPApiData.AmountToBank = disbclaim.AmountToCredit;
-                    postSAPApiData.Status = _context.ApprovalStatusTypes.Find(disbclaim.ApprovalStatusId).Status;
-                    postSAPApiData.Action = "To be Settled, and Amount Credited to Bank";
-                    postSAPApiData.IsCashAdvanceRequest = disbclaim.RequestTypeId == 1 ? true : false; //1- Cash Advance req, 2- Exp Reimburse
+                    postERPApiData.Project = disbclaim.ProjectId != null ? _context.Projects.Find(disbclaim.ProjectId).ProjectName : null;
+                    postERPApiData.RequestDate = disbclaim.RecordDate;
+                    postERPApiData.ClaimAmount = disbclaim.ClaimAmount;
+                    postERPApiData.AmountToWallet = disbclaim.AmountToWallet;
+                    postERPApiData.AmountToBank = disbclaim.AmountToCredit;
+                    postERPApiData.Status = _context.ApprovalStatusTypes.Find(disbclaim.ApprovalStatusId).Status;
+                    postERPApiData.Action = "To be Settled, and Amount Credited to Bank";
+                    postERPApiData.IsCashAdvanceRequest = disbclaim.RequestTypeId == 1 ? true : false; //1- Cash Advance req, 2- Exp Reimburse
 
 
                     List<PostSubClaimItems> ListPostSubClaimItem = new List<PostSubClaimItems>();
-                    if (postSAPApiData.IsCashAdvanceRequest == false)
+                    if (postERPApiData.IsCashAdvanceRequest == false)
                     {
                         var expReimbReq = _context.ExpenseReimburseRequests.Find(disbclaim.BlendedRequestId);
 
@@ -209,14 +209,14 @@ namespace AtoCashAPI.Controllers
 
                     }
 
-                    postSAPApiData.SubClaimItems = ListPostSubClaimItem;
+                    postERPApiData.SubClaimItems = ListPostSubClaimItem;
 
 
                 }
 
-                PostSAPAPIData postSAPAPIdata = new PostSAPAPIData();
+                PostERPAPIData postERPAPIdata = new PostERPAPIData();
 
-                var jsonString = JsonConvert.SerializeObject(postSAPAPIdata);
+                var jsonString = JsonConvert.SerializeObject(postERPAPIdata);
                 var SAPAPIDataContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
                 using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
@@ -224,10 +224,10 @@ namespace AtoCashAPI.Controllers
 
                     using (var httpClient = new HttpClient())
                     {
-                        using (var response = await httpClient.PostAsync(SAPApiPostUrl, SAPAPIDataContent))
+                        using (var response = await httpClient.PostAsync(ERPApiPostUrl, ERPAPIDataContent))
                         {
                             string apiResponse = await response.Content.ReadAsStringAsync();
-                            var ResponseRetunSAPApiData = JsonConvert.DeserializeObject<ResponseSAPApiData>(apiResponse);
+                            var ResponseRetunSAPApiData = JsonConvert.DeserializeObject<ResponseERPApiData>(apiResponse);
 
 
                             //if (ResponseRetunSAPApiData.StatusCode == System.Net.HttpStatusCode.OK)

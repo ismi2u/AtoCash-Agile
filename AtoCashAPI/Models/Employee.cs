@@ -100,7 +100,7 @@ namespace AtoCashAPI.Models
 
             //return String.Join(":", FirstName, MiddleName, LastName);
 
-            return String.Join(":", NameParts.Where(s => !String.IsNullOrEmpty(s)));
+            return String.Join(" ", NameParts.Where(s => !String.IsNullOrEmpty(s)));
 
         }
     }
