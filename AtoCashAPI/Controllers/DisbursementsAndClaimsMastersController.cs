@@ -217,7 +217,7 @@ namespace AtoCashAPI.Controllers
                 PostERPAPIData postERPAPIdata = new PostERPAPIData();
 
                 var jsonString = JsonConvert.SerializeObject(postERPAPIdata);
-                var SAPAPIDataContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                var ERPAPIDataContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
                 using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
                 {

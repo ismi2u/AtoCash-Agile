@@ -9,7 +9,8 @@ namespace AtoCashAPI.Models
 {
     public class CashAndClaimRequestSearchModel
     {
-        public int? EmpId { get; set; }
+        public int? LoggedEmpId { get; set; }
+        public int? ReporteeEmpId { get; set; }
         public int? BlendedRequestId { get; set; }
         public int? RequestTypeId { get; set; }
         public int? BusinessTypeId { get; set; }
@@ -41,6 +42,9 @@ namespace AtoCashAPI.Models
 
    
     }
+
+
+   
 
 
 

@@ -496,7 +496,8 @@ namespace AtoCashAPI.Controllers
 
         public async Task<IActionResult> GetAdvanceAndReimburseReportsEmployeeJson(CashAndClaimRequestSearchModel searchModel)
         {
-            int? empid = searchModel.EmpId;
+            int? empid = searchModel.LoggedEmpId;
+            int? reporteeEmpId = searchModel.ReporteeEmpId;
 
 
             //using predicate builder to add multiple filter cireteria
@@ -541,6 +542,16 @@ namespace AtoCashAPI.Controllers
             if (searchModel.ApprovalStatusId != 0 && searchModel.ApprovalStatusId != null)
                 predicate = predicate.And(x => x.ApprovalStatusId == searchModel.ApprovalStatusId);
 
+            if (reporteeEmpId != null && searchModel.IsManager == true)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
+            else if (reporteeEmpId == null && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == empid);
+            }
+
+
             if (isAdmin)
             {
                 result = _context.DisbursementsAndClaimsMasters.Where(predicate).OrderBy(e => e.RecordDate).ToList();
@@ -568,6 +579,7 @@ namespace AtoCashAPI.Controllers
 
                 result = _context.DisbursementsAndClaimsMasters.Where(predicate).OrderBy(e => e.RecordDate).ToList();
             }
+           
 
 
             List<DisbursementsAndClaimsMasterDTO> ListDisbItemsDTO = new();
@@ -639,8 +651,8 @@ namespace AtoCashAPI.Controllers
 
         public async Task<IActionResult> GetAdvanceAndReimburseReportsEmployeeExcel(CashAndClaimRequestSearchModel searchModel)
         {
-            int? empid = searchModel.EmpId;
-
+             int? empid = searchModel.LoggedEmpId;
+            int? reporteeEmpId = searchModel.ReporteeEmpId;
 
 
             //using predicate builder to add multiple filter cireteria
@@ -662,8 +674,10 @@ namespace AtoCashAPI.Controllers
 
             if (searchModel.RequestTypeId != 0 && searchModel.RequestTypeId != null)
                 predicate = predicate.And(x => x.RequestTypeId == searchModel.RequestTypeId);
-            //if (searchModel.DepartmentId != 0 && searchModel.DepartmentId != null)
-            //    predicate = predicate.And(x => x.DepartmentId == searchModel.DepartmentId);
+            if (searchModel.BusinessTypeId != 0 && searchModel.BusinessTypeId != null)
+                predicate = predicate.And(x => x.BusinessTypeId == searchModel.BusinessTypeId);
+            if (searchModel.BusinessUnitId != 0 && searchModel.BusinessUnitId != null)
+                predicate = predicate.And(x => x.BusinessUnitId == searchModel.BusinessUnitId);
             if (searchModel.ProjectId != 0 && searchModel.ProjectId != null)
                 predicate = predicate.And(x => x.ProjectId == searchModel.ProjectId);
             if (searchModel.SubProjectId != 0 && searchModel.SubProjectId != null)
@@ -682,6 +696,16 @@ namespace AtoCashAPI.Controllers
                 predicate = predicate.And(x => x.CostCenterId == searchModel.CostCenterId);
             if (searchModel.ApprovalStatusId != 0 && searchModel.ApprovalStatusId != null)
                 predicate = predicate.And(x => x.ApprovalStatusId == searchModel.ApprovalStatusId);
+
+            if (reporteeEmpId != null && searchModel.IsManager == true)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
+            else if (reporteeEmpId == null && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == empid);
+            }
+
 
             if (isAdmin)
             {
@@ -702,6 +726,7 @@ namespace AtoCashAPI.Controllers
 
                 result = result.Where(r => mgrReportees.Contains(r.EmployeeId) || mgrProjects.Contains(r.ProjectId ?? 0)).OrderBy(e => e.RecordDate).ToList();
 
+
             }
             else if (!searchModel.IsManager)
             {
@@ -709,6 +734,7 @@ namespace AtoCashAPI.Controllers
 
                 result = _context.DisbursementsAndClaimsMasters.Where(predicate).OrderBy(e => e.RecordDate).ToList();
             }
+
 
             List<DisbursementsAndClaimsMasterDTO> ListDisbItemsDTO = new();
 
