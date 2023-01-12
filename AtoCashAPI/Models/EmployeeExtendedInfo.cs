@@ -64,4 +64,17 @@ namespace AtoCashAPI.Models
         public string? StatusType { get; set; }
     }
 
+
+    public class EmpExtInfoSearchModel
+    {
+        public int EmployeeId { get; set; }
+
+        public string? Employee { get; set; }
+        public int? BusinessTypeId { get; set; }
+        public int? BusinessUnitId { get; set; }
+        public int? JobRoleId { get; set; }
+        public int? ApprovalGroupId { get; set; }
+        public int StatusTypeId { get; set; }
+    }
+
 }

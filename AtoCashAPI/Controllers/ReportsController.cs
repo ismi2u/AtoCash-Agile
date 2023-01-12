@@ -115,8 +115,8 @@ namespace AtoCashAPI.Controllers
                     userByRole.DOJ = emp.DOJ;
                     userByRole.Gender = emp.Gender;
                     userByRole.MobileNumber = emp.MobileNumber;
-                    userByRole.BusinessUnits =  getBusinessUnitsByEmployeeId(user.EmployeeId ?? 0);
-                    userByRole.JobRoles =  getJobRolesByEmployeeId(user.EmployeeId ?? 0);
+                    userByRole.BusinessUnits = getBusinessUnitsByEmployeeId(user.EmployeeId ?? 0);
+                    userByRole.JobRoles = getJobRolesByEmployeeId(user.EmployeeId ?? 0);
                     userByRole.StatusType = _context.StatusTypes.Find(emp.StatusTypeId).Status;
                     foreach (var r in roles)
                     {
@@ -186,6 +186,8 @@ namespace AtoCashAPI.Controllers
 
             return Ok(docUrls);
         }
+
+
 
         [HttpPost]
         [ActionName("GetUsersByRoleId")]
@@ -273,6 +275,191 @@ namespace AtoCashAPI.Controllers
 
             return Ok(ListUserByRole);
         }
+
+        [HttpPost]
+        [ActionName("GetEmployeeExtendedInfoData")]
+        public async Task<IActionResult> GetEmployeeExtendedInfoData(EmpExtInfoSearchModel searchmodel)
+        {
+
+            //using predicate builder to add multiple filter cireteria
+            var predicate = PredicateBuilder.New<EmployeeExtendedInfo>();
+
+            if (searchmodel.EmployeeId != 0 && searchmodel.EmployeeId != null)
+                predicate = predicate.And(x => x.Id == searchmodel.EmployeeId);
+            if (searchmodel.BusinessTypeId != 0 && searchmodel.BusinessTypeId != null)
+                predicate = predicate.And(x => x.BusinessTypeId == searchmodel.BusinessTypeId);
+            if (searchmodel.BusinessUnitId != 0 && searchmodel.BusinessUnitId != null)
+                predicate = predicate.And(x => x.BusinessUnitId == searchmodel.BusinessUnitId);
+            if (searchmodel.JobRoleId != 0 && searchmodel.JobRoleId != null)
+                predicate = predicate.And(x => x.JobRoleId == searchmodel.JobRoleId);
+            if (searchmodel.ApprovalGroupId != 0 && searchmodel.ApprovalGroupId != null)
+                predicate = predicate.And(x => x.ApprovalGroupId == searchmodel.ApprovalGroupId);
+            if (searchmodel.StatusTypeId != 0 && searchmodel.StatusTypeId != null)
+                predicate = predicate.And(x => x.StatusTypeId == searchmodel.StatusTypeId);
+
+
+
+            List<EmployeeExtendedInfo> result = new();
+
+
+            if (predicate.IsStarted)
+            {
+                result = _context.EmployeeExtendedInfos.Where(predicate).ToList();
+            }
+            else
+            {
+                result = _context.EmployeeExtendedInfos.ToList();
+            }
+
+
+            List<EmployeeExtendedInfoDTO> ListEmployeeExtendedInfoDTOs = new();
+
+
+            await Task.Run(() =>
+            {
+                foreach (EmployeeExtendedInfo employeeExtendedInfo in result)
+                {
+                    EmployeeExtendedInfoDTO empExtendedInfoDTO = new();
+
+                    empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
+                    empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
+                    empExtendedInfoDTO.Employee = _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
+                    empExtendedInfoDTO.BusinessTypeId = employeeExtendedInfo.BusinessTypeId;
+                    empExtendedInfoDTO.BusinessType = _context.BusinessTypes.Find(employeeExtendedInfo.BusinessTypeId).BusinessTypeName;
+                    empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
+                    empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
+                    empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
+                    empExtendedInfoDTO.JobRole = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).GetJobRole();
+                    empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
+                    empExtendedInfoDTO.ApprovalGroup = _context.ApprovalGroups.Find(employeeExtendedInfo.ApprovalGroupId).ApprovalGroupCode;
+                    empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
+                    empExtendedInfoDTO.StatusType = _context.StatusTypes.Find(employeeExtendedInfo.StatusTypeId).Status;
+
+                    ListEmployeeExtendedInfoDTOs.Add(empExtendedInfoDTO);
+
+                }
+            });
+
+
+            return Ok(ListEmployeeExtendedInfoDTOs);
+        }
+
+
+        [HttpPost]
+        [ActionName("GetEmployeeExtendedInfoReport")]
+        public async Task<IActionResult> GetEmployeeExtendedInfoReport(EmpExtInfoSearchModel searchmodel)
+        {
+
+            //using predicate builder to add multiple filter cireteria
+            var predicate = PredicateBuilder.New<EmployeeExtendedInfo>();
+
+            if (searchmodel.EmployeeId != 0 && searchmodel.EmployeeId != null)
+                predicate = predicate.And(x => x.Id == searchmodel.EmployeeId);
+            if (searchmodel.BusinessTypeId != 0 && searchmodel.BusinessTypeId != null)
+                predicate = predicate.And(x => x.BusinessTypeId == searchmodel.BusinessTypeId);
+            if (searchmodel.BusinessUnitId != 0 && searchmodel.BusinessUnitId != null)
+                predicate = predicate.And(x => x.BusinessUnitId == searchmodel.BusinessUnitId);
+            if (searchmodel.JobRoleId != 0 && searchmodel.JobRoleId != null)
+                predicate = predicate.And(x => x.JobRoleId == searchmodel.JobRoleId);
+            if (searchmodel.ApprovalGroupId != 0 && searchmodel.ApprovalGroupId != null)
+                predicate = predicate.And(x => x.ApprovalGroupId == searchmodel.ApprovalGroupId);
+            if (searchmodel.StatusTypeId != 0 && searchmodel.StatusTypeId != null)
+                predicate = predicate.And(x => x.StatusTypeId == searchmodel.StatusTypeId);
+
+
+
+            List<EmployeeExtendedInfo> result = new();
+
+
+            if (predicate.IsStarted)
+            {
+                result = _context.EmployeeExtendedInfos.Where(predicate).ToList();
+            }
+            else
+            {
+                result = _context.EmployeeExtendedInfos.ToList();
+            }
+
+
+            List<EmployeeExtendedInfoDTO> ListEmployeeExtendedInfoDTOs = new();
+
+
+            await Task.Run(() =>
+            {
+                foreach (EmployeeExtendedInfo employeeExtendedInfo in result)
+                {
+                    EmployeeExtendedInfoDTO empExtendedInfoDTO = new();
+
+                    empExtendedInfoDTO.Id = employeeExtendedInfo.Id;
+                    empExtendedInfoDTO.EmployeeId = employeeExtendedInfo.EmployeeId;
+                    empExtendedInfoDTO.Employee = _context.Employees.Find(employeeExtendedInfo.EmployeeId).GetFullName();
+                    empExtendedInfoDTO.BusinessTypeId = employeeExtendedInfo.BusinessTypeId;
+                    empExtendedInfoDTO.BusinessType = _context.BusinessTypes.Find(employeeExtendedInfo.BusinessTypeId).BusinessTypeName;
+                    empExtendedInfoDTO.BusinessUnitId = employeeExtendedInfo.BusinessUnitId;
+                    empExtendedInfoDTO.BusinessUnit = _context.BusinessUnits.Find(employeeExtendedInfo.BusinessUnitId).GetBusinessUnitName();
+                    empExtendedInfoDTO.JobRoleId = employeeExtendedInfo.JobRoleId;
+                    empExtendedInfoDTO.JobRole = _context.JobRoles.Find(employeeExtendedInfo.JobRoleId).GetJobRole();
+                    empExtendedInfoDTO.ApprovalGroupId = employeeExtendedInfo.ApprovalGroupId;
+                    empExtendedInfoDTO.ApprovalGroup = _context.ApprovalGroups.Find(employeeExtendedInfo.ApprovalGroupId).ApprovalGroupCode;
+                    empExtendedInfoDTO.StatusTypeId = employeeExtendedInfo.StatusTypeId;
+                    empExtendedInfoDTO.StatusType = _context.StatusTypes.Find(employeeExtendedInfo.StatusTypeId).Status;
+
+                    ListEmployeeExtendedInfoDTOs.Add(empExtendedInfoDTO);
+
+                }
+            });
+
+
+            DataTable dt = new();
+            dt.Columns.AddRange(new DataColumn[11]
+                {
+                    //new DataColumn("Id", typeof(int)),
+                    new DataColumn("EmployeeId", typeof(int)),
+                    new DataColumn("EmployeeFullName", typeof(string)),
+                    new DataColumn("BusinessTypeId",typeof(int)),
+                    new DataColumn("BusinessType",typeof(string)),
+                    new DataColumn("BusinessUnitId",typeof(int)),
+                    new DataColumn("BusinessUnit",typeof(string)),
+                    new DataColumn("JobRoleId",typeof(int)),
+                    new DataColumn("JobRole",typeof(string)),
+                    new DataColumn("ApprovalGroupId",typeof(int)),
+                    new DataColumn("ApprovalGroup", typeof(string)),
+                    new DataColumn("StatusType", typeof(string))
+                });
+
+            foreach (var empExtInfo in ListEmployeeExtendedInfoDTOs)
+            {
+                dt.Rows.Add(
+                    //empExtInfo.Id,
+                    empExtInfo.EmployeeId,
+                    empExtInfo.Employee,
+                    empExtInfo.BusinessTypeId,
+                    empExtInfo.BusinessType,
+                    empExtInfo.BusinessUnitId,
+                    empExtInfo.BusinessUnit,
+                    empExtInfo.JobRoleId,
+                    empExtInfo.JobRole,
+                    empExtInfo.ApprovalGroupId,
+                    empExtInfo.ApprovalGroup,
+                    empExtInfo.StatusType
+                    );
+            }
+
+            // Creating the Excel workbook 
+            // Add the datatable to the Excel workbook
+
+            List<string> docUrls = new();
+            var docUrl = GetExcel("GetEmpExtendedInfo", dt);
+
+            docUrls.Add(docUrl);
+
+            return Ok(docUrls);
+
+
+        }
+
+
+
 
 
         [HttpPost]
@@ -567,9 +754,9 @@ namespace AtoCashAPI.Controllers
                 var mgrLinkedBusinessUnits = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == empid).Select(s => s.BusinessUnitId).ToList();
                 // Find all employee Ids from the business units to apply filter (to find reportees to the manager)
                 List<int> mgrReportees = _context.EmployeeExtendedInfos.Where(r => mgrLinkedBusinessUnits.Contains(r.BusinessUnitId)).Select(s => s.EmployeeId).Distinct().ToList();
-                 
 
-                result = result.Where(r => mgrReportees.Contains(r.EmployeeId ) || mgrProjects.Contains(r.ProjectId ?? 0)).OrderBy(e => e.RecordDate).ToList();
+
+                result = result.Where(r => mgrReportees.Contains(r.EmployeeId) || mgrProjects.Contains(r.ProjectId ?? 0)).OrderBy(e => e.RecordDate).ToList();
 
 
             }
@@ -579,7 +766,7 @@ namespace AtoCashAPI.Controllers
 
                 result = _context.DisbursementsAndClaimsMasters.Where(predicate).OrderBy(e => e.RecordDate).ToList();
             }
-           
+
 
 
             List<DisbursementsAndClaimsMasterDTO> ListDisbItemsDTO = new();
@@ -651,7 +838,7 @@ namespace AtoCashAPI.Controllers
 
         public async Task<IActionResult> GetAdvanceAndReimburseReportsEmployeeExcel(CashAndClaimRequestSearchModel searchModel)
         {
-             int? empid = searchModel.LoggedEmpId;
+            int? empid = searchModel.LoggedEmpId;
             int? reporteeEmpId = searchModel.ReporteeEmpId;
 
 
@@ -1071,7 +1258,7 @@ namespace AtoCashAPI.Controllers
                     travelItemDTO.TravelPurpose = travel.TravelPurpose;
                     travelItemDTO.BusinessUnitId = travel.BusinessUnitId;
                     travelItemDTO.BusinessUnit = _context.BusinessUnits.Find(travel.BusinessUnit).GetBusinessUnitName();
-                    
+
                     travelItemDTO.ProjectId = travel.ProjectId;
                     travelItemDTO.ProjectName = travel.ProjectId != null ? _context.Projects.Find(travel.ProjectId).ProjectName : null;
                     travelItemDTO.SubProjectId = travel.SubProjectId;
@@ -1415,7 +1602,7 @@ namespace AtoCashAPI.Controllers
 
                 List<int> mgrProjects = _context.ProjectManagements.Where(x => x.EmployeeId == empid).Select(p => p.ProjectId).ToList(); //if projManager get projects
 
-                List<int?> mgrLinkedBusinessUnits =_context.EmployeeExtendedInfos.Where(e => e.EmployeeId == empid ).Select(s => s.BusinessUnitId).Distinct().ToList();
+                List<int?> mgrLinkedBusinessUnits = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == empid).Select(s => s.BusinessUnitId).Distinct().ToList();
                 List<int> mgrReportees = _context.EmployeeExtendedInfos.Where(r => mgrLinkedBusinessUnits.Contains(r.BusinessUnitId)).Select(s => s.EmployeeId).Distinct().ToList();
                 result = result.Where(r => mgrReportees.Contains(r.EmployeeId ?? 0) || mgrProjects.Contains(r.ProjectId ?? 0)).OrderBy(e => e.Id).ToList();
 
@@ -1456,7 +1643,7 @@ namespace AtoCashAPI.Controllers
                 expenseSubClaimDTO.VendorId = expenseSubClaim.VendorId ?? null;
                 expenseSubClaimDTO.AdditionalVendor = expenseSubClaim.VendorId == 0 ? expenseSubClaim.AdditionalVendor : String.Empty;
 
-                if (string.IsNullOrEmpty( expenseSubClaim.AdditionalVendor))
+                if (string.IsNullOrEmpty(expenseSubClaim.AdditionalVendor))
                 {
                     expenseSubClaimDTO.Vendor = expenseSubClaim.VendorId != null ? _context.Vendors.Find(expenseSubClaim.VendorId).VendorName : String.Empty;
                 }
@@ -1732,7 +1919,7 @@ namespace AtoCashAPI.Controllers
             return docurl;
 
         }
-       
+
 
         private string getJobRolesByEmployeeId(int empId)
         {
@@ -1757,7 +1944,7 @@ namespace AtoCashAPI.Controllers
 
         private string getBusinessUnitsByEmployeeId(int empId)
         {
-            var emp =  _context.Employees.FindAsync(empId);
+            var emp = _context.Employees.FindAsync(empId);
             var listBusinessUnitIds = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == empId).Select(s => s.BusinessUnitId).ToList();
 
             List<string> listBusinessUnitsInString = new List<string>();
@@ -1772,7 +1959,7 @@ namespace AtoCashAPI.Controllers
 
             }
 
-            return ( String.Join(';', listBusinessUnitsInString));
+            return (String.Join(';', listBusinessUnitsInString));
         }
 
         private string getApprovalGroupsByEmployeeId(int empId)

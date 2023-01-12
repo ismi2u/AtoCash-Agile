@@ -129,8 +129,13 @@ namespace AtoCashAPI.Models
         public string? Vendor { get; set; }
         public string? InvoiceNo { get; set; }
         public DateTime? InvoiceDate { get; set; }
+        public string? ExpenseCategory { get; set; }
         public string? ExpenseType { get; set; }
-       
+
+        public string? DocumentIDs { get; set; }
+
+
+
     }
 
     public class ResponseERPApiData
