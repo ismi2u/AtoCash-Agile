@@ -205,10 +205,13 @@ namespace AtoCashAPI.Controllers
                             postSubClaimItem.ExpenseType = exptype.ExpenseTypeName;
 
                             var documentIds = _context.ExpenseSubClaims.Find(expenseSubClaim.Id).DocumentIDs;
+
+                            var ListDocIds = documentIds.Split(';');
+
                             List<string> ListDocUrls = new();
-                            foreach (int docid in documentIds)
+                            foreach (var docid in ListDocIds)
                             {
-                                ListDocUrls.Add(_context.FileDocuments.Find(docid).UniqueFileName);
+                                ListDocUrls.Add(_context.FileDocuments.Find(int.Parse(docid)).UniqueFileName);
                             }
                             postSubClaimItem.DocumentUrls = String.Join("|", ListDocUrls);
                             ListPostSubClaimItem.Add(postSubClaimItem);
