@@ -132,7 +132,7 @@ namespace AtoCashAPI.Models
         public string? ExpenseCategory { get; set; }
         public string? ExpenseType { get; set; }
 
-        public string? DocumentIDs { get; set; }
+        public string? DocumentUrls { get; set; }
 
 
 

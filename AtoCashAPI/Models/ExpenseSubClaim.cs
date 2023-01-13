@@ -83,7 +83,6 @@ namespace AtoCashAPI.Models
 
         public string? AdditionalVendor { get; set; }
 
-        [Required]
         [Column(TypeName = "varchar(100)")]
         public string? Location { get; set; }
 

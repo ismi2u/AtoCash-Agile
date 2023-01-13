@@ -1079,7 +1079,6 @@ namespace AtoCashAPI.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<int?>("ProjectId")

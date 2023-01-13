@@ -10,7 +10,7 @@ namespace AtoCashAPI.Models
 
         public int Id { get; set; }
         public int? EmpId { get; set; }
-
+        public int? ReporteeEmpId { get; set; }
         public string? EmployeeName { get; set; }
         public int? TravelApprovalRequestId { get; set; }
 

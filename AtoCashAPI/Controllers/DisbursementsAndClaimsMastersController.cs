@@ -204,6 +204,13 @@ namespace AtoCashAPI.Controllers
                             postSubClaimItem.Vendor = _context.Vendors.Find(expenseSubClaim.VendorId).VendorName;
                             postSubClaimItem.ExpenseType = exptype.ExpenseTypeName;
 
+                            var documentIds = _context.ExpenseSubClaims.Find(expenseSubClaim.Id).DocumentIDs;
+                            List<string> ListDocUrls = new();
+                            foreach (int docid in documentIds)
+                            {
+                                ListDocUrls.Add(_context.FileDocuments.Find(docid).UniqueFileName);
+                            }
+                            postSubClaimItem.DocumentUrls = String.Join("|", ListDocUrls);
                             ListPostSubClaimItem.Add(postSubClaimItem);
                         }
 

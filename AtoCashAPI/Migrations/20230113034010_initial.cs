@@ -1326,7 +1326,7 @@ namespace AtoCashAPI.Migrations
                     InvoiceDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     VendorId = table.Column<int>(type: "integer", nullable: true),
                     AdditionalVendor = table.Column<string>(type: "text", nullable: true),
-                    Location = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Location = table.Column<string>(type: "varchar(100)", nullable: true),
                     Description = table.Column<string>(type: "varchar(250)", nullable: false),
                     BusinessTypeId = table.Column<int>(type: "integer", nullable: true),
                     BusinessUnitId = table.Column<int>(type: "integer", nullable: true),

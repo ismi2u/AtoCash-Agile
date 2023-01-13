@@ -1175,7 +1175,7 @@ namespace AtoCashAPI.Controllers
         {
 
             int? empid = searchModel.EmpId;
-
+            int? reporteeEmpId = searchModel.ReporteeEmpId;
 
 
             //using predicate builder to add multiple filter cireteria
@@ -1213,6 +1213,15 @@ namespace AtoCashAPI.Controllers
                 predicate = predicate.And(x => x.RequestDate <= searchModel.ReqRaisedDate);
             if (searchModel.ApprovalStatusTypeId != 0 && searchModel.ApprovalStatusTypeId != null)
                 predicate = predicate.And(x => x.ApprovalStatusTypeId == searchModel.ApprovalStatusTypeId);
+
+            if (reporteeEmpId != null && searchModel.IsManager == true)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
+            else if (reporteeEmpId == null && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == empid);
+            }
 
             if (isAdmin)
             {
