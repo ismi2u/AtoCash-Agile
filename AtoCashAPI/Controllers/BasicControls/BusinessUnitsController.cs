@@ -95,8 +95,33 @@ namespace AtoCashAPI.Controllers
             return ListBusinessUnitsVM;
 
         }
-        // GET: api/BusinessUnits
-        [HttpGet]
+
+        [HttpGet("{id}")]
+        [ActionName("BusinessUnitsForDropdownByCostCentre")]
+        public async Task<ActionResult<IEnumerable<BusinessUnitVM>>> GetBusinessUnitsForDropdownByCostCentre(int id)
+        {
+            List<BusinessUnitVM> ListBusinessUnitVM = new List<BusinessUnitVM>();
+
+            var businessUnits = await _context.BusinessUnits.Where(d => d.StatusTypeId == (int)EStatusType.Active && d.CostCenterId == id).ToListAsync();
+            foreach (BusinessUnit businessUnit in businessUnits)
+            {
+                BusinessUnitVM businessUnitVM = new BusinessUnitVM
+                {
+                    Id = businessUnit.Id,
+                    BusinessUnitName = businessUnit.GetBusinessUnitName()
+
+                };
+
+                 ListBusinessUnitVM.Add(businessUnitVM);
+
+            };
+
+            return ListBusinessUnitVM;
+        }
+
+
+    // GET: api/BusinessUnits
+    [HttpGet]
         public async Task<ActionResult<IEnumerable<BusinessUnitDTO>>> GetBusinessUnits()
         {
             List<BusinessUnitDTO> ListBusinessUnitsDTO = new();

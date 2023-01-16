@@ -165,20 +165,25 @@ namespace AtoCashAPI.Controllers.BasicControls
             {
                 return Conflict(new RespStatus { Status = "Failure", Message = "Employee Id invalid!" });
             }
+            List<int> mgrProjects = _context.ProjectManagements.Where(x => x.EmployeeId == id).Select(p => p.EmployeeId).ToList(); //if projManager get projects
+                                                                                                                                     //using parameter empId => get List of business units (where employee is a manager)
+            var mgrLinkedBusinessUnits = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == id).Select(s => s.BusinessUnitId).ToList();
+            // Find all employee Ids from the business units to apply filter (to find reportees to the manager)
+            List<int> mgrReportees = _context.EmployeeExtendedInfos.Where(r => mgrLinkedBusinessUnits.Contains(r.BusinessUnitId)).Select(s => s.EmployeeId).Distinct().ToList();
 
             // all employees who report under the manager
-            //int mgrDeptId = employee.DepartmentId;
-            //List<Employee> mgrReportees = _context.Employees.Where(e => e.DepartmentId == mgrDeptId && e.Id != id).ToList();
+            List<Employee> reporteeEmployees = _context.Employees.Where(e => mgrReportees.Contains(e.Id) || mgrProjects.Contains(e.Id)).OrderBy(s=> s.FirstName).ToList();
 
-            List<EmployeeVM> employeeVMs = new();
-            //foreach (Employee reportee in mgrReportees)
-            //{
-            //    EmployeeVM employeeVM = new();
-            //    employeeVM.Id = reportee.Id;
-            //    employeeVM.FullName = reportee.GetFullName();
+            List <EmployeeVM> employeeVMs = new();
 
-            //    employeeVMs.Add(employeeVM);
-            //}
+            foreach (Employee reportee in reporteeEmployees)
+            {
+                EmployeeVM employeeVM = new();
+                employeeVM.Id = reportee.Id;
+                employeeVM.FullName = reportee.GetFullName();
+
+                employeeVMs.Add(employeeVM);
+            }
 
             return Ok(employeeVMs);
         }
