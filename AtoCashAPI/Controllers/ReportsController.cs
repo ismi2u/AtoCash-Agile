@@ -1059,8 +1059,8 @@ namespace AtoCashAPI.Controllers
 
         public async Task<IActionResult> GetTravelRequestReportForEmployeeJson(TravelRequestSearchModel searchModel)
         {
-            int? empid = searchModel.EmpId;
-
+            int? empid = searchModel.LoggedEmpId;
+            int? reporteeEmpId = searchModel.ReporteeEmpId;
 
 
             //using predicate builder to add multiple filter cireteria
@@ -1098,6 +1098,17 @@ namespace AtoCashAPI.Controllers
                 predicate = predicate.And(x => x.RequestDate <= searchModel.ReqRaisedDate);
             if (searchModel.ApprovalStatusTypeId != 0 && searchModel.ApprovalStatusTypeId != null)
                 predicate = predicate.And(x => x.ApprovalStatusTypeId == searchModel.ApprovalStatusTypeId);
+
+
+            if (reporteeEmpId != null && searchModel.IsManager == true)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
+            else if (reporteeEmpId == null && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == empid);
+            }
+
 
             if (isAdmin)
             {
@@ -1174,7 +1185,7 @@ namespace AtoCashAPI.Controllers
         public async Task<IActionResult> GetTravelRequestReportForEmployeeExcel(TravelRequestSearchModel searchModel)
         {
 
-            int? empid = searchModel.EmpId;
+            int? empid = searchModel.LoggedEmpId;
             int? reporteeEmpId = searchModel.ReporteeEmpId;
 
 
@@ -1565,7 +1576,8 @@ namespace AtoCashAPI.Controllers
         [ActionName("ExpenseSubClaimsData")]
         public async Task<ActionResult<IEnumerable<ExpenseSubClaimDTO>>> ExpenseSubClaimsData(ExpenseSubClaimsSearchModel searchModel)
         {
-            int? empid = searchModel.EmpId;
+            int? empid = searchModel.LoggedEmpId;
+            int? reporteeEmpId = searchModel.ReporteeEmpId;
 
 
             //using predicate builder to add multiple filter cireteria
@@ -1599,6 +1611,17 @@ namespace AtoCashAPI.Controllers
                 predicate = predicate.And(x => x.InvoiceDate <= searchModel.RequestRaisedDateTo);
             //if (searchModel.ApprovalStatusTypeId > 0)
             //    predicate = predicate.And(x => x.ApprovalStatusTypeId == searchModel.ApprovalStatusTypeId);
+
+
+
+            if (reporteeEmpId != null && searchModel.IsManager == true)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
+            else if (reporteeEmpId == null && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == empid);
+            }
 
             if (isAdmin)
             {
@@ -1701,7 +1724,8 @@ namespace AtoCashAPI.Controllers
         [ActionName("ExpenseSubClaimsReport")]
         public async Task<ActionResult<IEnumerable<ExpenseSubClaimDTO>>> ExpenseSubClaimsReport(ExpenseSubClaimsSearchModel searchModel)
         {
-            int? empid = searchModel.EmpId;
+            int? empid = searchModel.LoggedEmpId;
+            int? reporteeEmpId = searchModel.ReporteeEmpId;
 
 
             //using predicate builder to add multiple filter cireteria
@@ -1735,6 +1759,15 @@ namespace AtoCashAPI.Controllers
                 predicate = predicate.And(x => x.InvoiceDate <= searchModel.RequestRaisedDateTo);
             //if (searchModel.ApprovalStatusTypeId > 0)
             //    predicate = predicate.And(x => x.ApprovalStatusTypeId == searchModel.ApprovalStatusTypeId);
+
+            if (reporteeEmpId != null && searchModel.IsManager == true)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
+            else if (reporteeEmpId == null && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == empid);
+            }
 
             if (isAdmin)
             {

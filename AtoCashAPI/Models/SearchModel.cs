@@ -52,7 +52,8 @@ namespace AtoCashAPI.Models
     {
         public int? ExpenseTypeId { get; set; }
 
-        public int? EmpId { get; set; }
+        public int? LoggedEmpId { get; set; }
+        public int? ReporteeEmpId { get; set; }
         public bool IsManager { get; set; }
         public double? ExpenseReimbClaimAmountFrom { get; set; }
         public double? ExpenseReimbClaimAmountTo { get; set; }
