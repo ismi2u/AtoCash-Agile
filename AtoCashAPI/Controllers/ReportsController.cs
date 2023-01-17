@@ -737,7 +737,7 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
-            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            else if (reporteeEmpId != null && searchModel.IsManager == false)
             {
                 predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
             }
@@ -896,7 +896,7 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
-            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            else if (reporteeEmpId != null && searchModel.IsManager == false)
             {
                 predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
             }
@@ -1116,7 +1116,7 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
-            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            else if (reporteeEmpId != null && searchModel.IsManager == false)
             {
                 predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
             }
@@ -1244,7 +1244,7 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
-            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            else if (reporteeEmpId != null && searchModel.IsManager == false)
             {
                 predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
             }
@@ -1637,7 +1637,7 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
-            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            else if (reporteeEmpId != null && searchModel.IsManager == false)
             {
                 predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
             }
@@ -1787,7 +1787,7 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
-            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            else if (reporteeEmpId != null && searchModel.IsManager == false)
             {
                 predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
             }
