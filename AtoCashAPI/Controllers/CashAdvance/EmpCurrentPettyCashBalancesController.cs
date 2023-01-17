@@ -107,10 +107,10 @@ namespace AtoCashAPI.Controllers
                 empAllCurBalStatusDTO.PendingSettlement = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.CashAdvance && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Approved)
                                                         .Select(s => s.AmountToCredit ?? 0).Sum();
 
-                empAllCurBalStatusDTO.PendingApprovalER = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Approved)
-                                                       .Select(s => s.AmountToCredit ?? 0).Sum();
+                empAllCurBalStatusDTO.PendingApprovalER = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Pending)
+                                                        .Select(s => s.ClaimAmount).Sum();
 
-                empAllCurBalStatusDTO.PendingApprovalCA = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Pending)
+                empAllCurBalStatusDTO.PendingApprovalCA = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.CashAdvance && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Pending)
                                                         .Select(s => s.ClaimAmount).Sum();
 
                 empAllCurBalStatusDTO.WalletBalLastUpdated = EmpCurrentCashAdvanceBalance.UpdatedOn;

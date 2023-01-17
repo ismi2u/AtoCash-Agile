@@ -199,7 +199,15 @@ namespace AtoCashAPI.Controllers
                 UpdBusinessUnit.BusinessTypeId = BusinessUnitsDTO.BusinessTypeId;
                 UpdBusinessUnit.BusinessUnitName = BusinessUnitsDTO.BusinessUnitName;
                 UpdBusinessUnit.BusinessUnitCode = BusinessUnitsDTO.BusinessUnitCode;
-                UpdBusinessUnit.CostCenterId = BusinessUnitsDTO.CostCenterId;
+
+                bool isUsedInExpReim = _context.ExpenseReimburseRequests.Where(x => x.CostCenterId == BusinessUnitsDTO.CostCenterId && x.BusinessTypeId == BusinessUnitsDTO.BusinessTypeId).Any();
+                bool isUsedInCashAdv = _context.CashAdvanceRequests.Where(x => x.CostCenterId == BusinessUnitsDTO.CostCenterId && x.BusinessTypeId == BusinessUnitsDTO.BusinessTypeId).Any();
+                bool isUsedInTravelReq = _context.TravelApprovalRequests.Where(x => x.CostCenterId == BusinessUnitsDTO.CostCenterId && x.BusinessTypeId == BusinessUnitsDTO.BusinessTypeId).Any();
+
+                if (!(isUsedInExpReim || isUsedInCashAdv || isUsedInTravelReq)) // is not used in any of the 
+                {
+                    UpdBusinessUnit.CostCenterId = BusinessUnitsDTO.CostCenterId;
+                } 
                 UpdBusinessUnit.BusinessDesc = BusinessUnitsDTO.BusinessDesc;
                 UpdBusinessUnit.LocationId = BusinessUnitsDTO.LocationId;
                 UpdBusinessUnit.StatusTypeId = BusinessUnitsDTO.StatusTypeId;
