@@ -807,7 +807,7 @@ namespace AtoCashAPI.Controllers
                 disbursementsAndClaimsMasterDTO.AmountToWallet = disb.AmountToWallet ?? 0;
                 disbursementsAndClaimsMasterDTO.AmountToCredit = disb.AmountToCredit ?? 0;
                 disbursementsAndClaimsMasterDTO.CostCenterId = disb.CostCenterId;
-                disbursementsAndClaimsMasterDTO.CostCenter = disb.CostCenterId != 0 ? _context.CostCenters.Find(disb.CostCenterId).CostCenterCode : null;
+                disbursementsAndClaimsMasterDTO.CostCenter = disb.CostCenterId != 0 ? _context.CostCenters.Find(disb.CostCenterId).GetCostCentre() : null;
                 disbursementsAndClaimsMasterDTO.ApprovalStatusId = disb.ApprovalStatusId;
                 disbursementsAndClaimsMasterDTO.ApprovalStatusType = disb.ApprovalStatusId != 0 ? _context.ApprovalStatusTypes.Find(disb.ApprovalStatusId).Status : null;
                 disbursementsAndClaimsMasterDTO.RequestDate = disb.RecordDate;
@@ -963,7 +963,7 @@ namespace AtoCashAPI.Controllers
                     disbursementsAndClaimsMasterDTO.AmountToWallet = disb.AmountToWallet ?? 0;
                     disbursementsAndClaimsMasterDTO.AmountToCredit = disb.AmountToCredit ?? 0;
                     disbursementsAndClaimsMasterDTO.CostCenterId = disb.CostCenterId;
-                    disbursementsAndClaimsMasterDTO.CostCenter = disb.CostCenterId != 0 ? _context.CostCenters.Find(disb.CostCenterId).CostCenterCode : null;
+                    disbursementsAndClaimsMasterDTO.CostCenter = disb.CostCenterId != 0 ? _context.CostCenters.Find(disb.CostCenterId).GetCostCentre() : null;
                     disbursementsAndClaimsMasterDTO.ApprovalStatusId = disb.ApprovalStatusId;
                     disbursementsAndClaimsMasterDTO.ApprovalStatusType = disb.ApprovalStatusId != 0 ? _context.ApprovalStatusTypes.Find(disb.ApprovalStatusId).Status : null;
                     disbursementsAndClaimsMasterDTO.RequestDate = disb.RecordDate;
@@ -1175,7 +1175,7 @@ namespace AtoCashAPI.Controllers
                     travelItemDTO.WorkTaskId = travel.WorkTaskId;
                     travelItemDTO.WorkTaskName = travel.WorkTaskId != null ? _context.WorkTasks.Find(travel.WorkTaskId).TaskName : null;
                     travelItemDTO.CostCenterId = travel.CostCenterId;
-                    travelItemDTO.CostCenter = travel.CostCenterId != 0 ? _context.CostCenters.Find(travel.CostCenterId).CostCenterCode : null;
+                    travelItemDTO.CostCenter = travel.CostCenterId != 0 ? _context.CostCenters.Find(travel.CostCenterId).GetCostCentre() : null;
                     travelItemDTO.ApprovalStatusTypeId = travel.ApprovalStatusTypeId;
                     travelItemDTO.ApprovalStatusType = travel.ApprovalStatusTypeId != 0 ? _context.ApprovalStatusTypes.Find(travel.ApprovalStatusTypeId).Status : null;
                     travelItemDTO.RequestDate = travel.RequestDate;
@@ -1722,7 +1722,7 @@ namespace AtoCashAPI.Controllers
                 expenseSubClaimDTO.ProjectName = expenseSubClaim.ProjectId != null ? _context.Projects.Find(expenseSubClaim.ProjectId).ProjectName : string.Empty;
 
                 expenseSubClaimDTO.CostCenterId = expenseSubClaim.CostCenterId;
-                expenseSubClaimDTO.CostCenter = _context.CostCenters.Find(expenseSubClaim.CostCenterId).CostCenterCode;
+                expenseSubClaimDTO.CostCenter = _context.CostCenters.Find(expenseSubClaim.CostCenterId).GetCostCentre();
 
                 expenseSubClaimDTO.SubProjectId = expenseSubClaim.SubProjectId;
                 expenseSubClaimDTO.SubProjectName = expenseSubClaim.SubProjectId != null ? _context.SubProjects.Find(expenseSubClaim.SubProjectId).SubProjectName : string.Empty;
@@ -1864,7 +1864,7 @@ namespace AtoCashAPI.Controllers
                 expenseSubClaimDTO.ProjectName = expenseSubClaim.ProjectId != null ? _context.Projects.Find(expenseSubClaim.ProjectId).ProjectName : string.Empty;
 
                 expenseSubClaimDTO.CostCenterId = expenseSubClaim.CostCenterId;
-                expenseSubClaimDTO.CostCenter = _context.CostCenters.Find(expenseSubClaim.CostCenterId).CostCenterCode;
+                expenseSubClaimDTO.CostCenter = _context.CostCenters.Find(expenseSubClaim.CostCenterId).GetCostCentre();
 
                 expenseSubClaimDTO.SubProjectId = expenseSubClaim.SubProjectId;
                 expenseSubClaimDTO.SubProjectName = expenseSubClaim.SubProjectId != null ? _context.SubProjects.Find(expenseSubClaim.SubProjectId).SubProjectName : string.Empty;
