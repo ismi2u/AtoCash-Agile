@@ -766,8 +766,7 @@ namespace AtoCashAPI.Controllers
             }
             else if (!searchModel.IsManager)
             {
-                predicate = predicate.And(x => x.EmployeeId == empid);
-
+               
                 result = _context.DisbursementsAndClaimsMasters.Where(predicate).OrderBy(e => e.RecordDate).ToList();
             }
 
@@ -925,7 +924,7 @@ namespace AtoCashAPI.Controllers
             }
             else if (!searchModel.IsManager)
             {
-                predicate = predicate.And(x => x.EmployeeId == empid);
+                
 
                 result = _context.DisbursementsAndClaimsMasters.Where(predicate).OrderBy(e => e.RecordDate).ToList();
             }
@@ -1144,7 +1143,7 @@ namespace AtoCashAPI.Controllers
             }
             else if (!searchModel.IsManager)
             {
-                predicate = predicate.And(x => x.EmployeeId == empid);
+                
 
                 result = _context.TravelApprovalRequests.Where(predicate).OrderBy(e => e.RequestDate).ToList();
             }
@@ -1270,7 +1269,7 @@ namespace AtoCashAPI.Controllers
             }
             else if (!searchModel.IsManager)
             {
-                predicate = predicate.And(x => x.EmployeeId == empid);
+                
 
                 result = _context.TravelApprovalRequests.Where(predicate).OrderBy(e => e.RequestDate).ToList();
             }
@@ -1662,7 +1661,7 @@ namespace AtoCashAPI.Controllers
             }
             else if (!searchModel.IsManager)
             {
-                predicate = predicate.And(x => x.EmployeeId == empid);
+                 
 
                 result = _context.ExpenseSubClaims.Where(predicate).OrderBy(e => e.Id).ToList();
             }
@@ -1809,7 +1808,7 @@ namespace AtoCashAPI.Controllers
             }
             else if (!searchModel.IsManager)
             {
-                predicate = predicate.And(x => x.EmployeeId == empid);
+                
 
                 result = _context.ExpenseSubClaims.Where(predicate).OrderBy(e => e.Id).ToList();
             }
