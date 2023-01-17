@@ -807,7 +807,7 @@ namespace AtoCashAPI.Controllers
                 disbursementsAndClaimsMasterDTO.CostCenter = disb.CostCenterId != 0 ? _context.CostCenters.Find(disb.CostCenterId).CostCenterCode : null;
                 disbursementsAndClaimsMasterDTO.ApprovalStatusId = disb.ApprovalStatusId;
                 disbursementsAndClaimsMasterDTO.ApprovalStatusType = disb.ApprovalStatusId != 0 ? _context.ApprovalStatusTypes.Find(disb.ApprovalStatusId).Status : null;
-                disbursementsAndClaimsMasterDTO.RecordDate = disb.RecordDate.Value.ToShortDateString();
+                disbursementsAndClaimsMasterDTO.RequestDate = disb.RecordDate.Value.ToShortDateString();
                 disbursementsAndClaimsMasterDTO.IsSettledAmountCredited = disb.IsSettledAmountCredited ?? false;
                 disbursementsAndClaimsMasterDTO.SettledDate = disb.SettledDate != null ? disb.SettledDate.Value.ToShortDateString() : string.Empty;
                 disbursementsAndClaimsMasterDTO.SettlementComment = disb.SettlementComment;

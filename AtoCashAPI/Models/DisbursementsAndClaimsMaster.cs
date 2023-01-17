@@ -175,7 +175,7 @@ namespace AtoCashAPI.Models
 
         public string? WorkTaskName { get; set; }
         public int? WorkTaskId { get; set; }
-        public string? RecordDate { get; set; }
+        public string? RequestDate { get; set; }
 
         public int? CurrencyTypeId { get; set; }
 
