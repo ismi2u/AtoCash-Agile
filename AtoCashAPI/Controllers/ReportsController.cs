@@ -959,7 +959,7 @@ namespace AtoCashAPI.Controllers
                     disbursementsAndClaimsMasterDTO.CostCenter = disb.CostCenterId != 0 ? _context.CostCenters.Find(disb.CostCenterId).CostCenterCode : null;
                     disbursementsAndClaimsMasterDTO.ApprovalStatusId = disb.ApprovalStatusId;
                     disbursementsAndClaimsMasterDTO.ApprovalStatusType = disb.ApprovalStatusId != 0 ? _context.ApprovalStatusTypes.Find(disb.ApprovalStatusId).Status : null;
-                    disbursementsAndClaimsMasterDTO.RecordDate = disb.RecordDate.Value.ToShortDateString();
+                    disbursementsAndClaimsMasterDTO.RequestDate = disb.RecordDate.Value.ToShortDateString();
                     disbursementsAndClaimsMasterDTO.IsSettledAmountCredited = disb.IsSettledAmountCredited ?? false;
                     disbursementsAndClaimsMasterDTO.SettledDate = disb.SettledDate != null ? disb.SettledDate.Value.ToShortDateString() : string.Empty;
                     disbursementsAndClaimsMasterDTO.SettlementComment = disb.SettlementComment;
@@ -1024,7 +1024,7 @@ namespace AtoCashAPI.Controllers
                     disbItem.ProjectName,
                     disbItem.SubProjectName,
                     disbItem.WorkTaskName,
-                    disbItem.RecordDate,
+                    disbItem.RequestDate,
                     disbItem.CurrencyType,
                     disbItem.ClaimAmount,
                     disbItem.AmountToWallet,
@@ -1393,7 +1393,7 @@ namespace AtoCashAPI.Controllers
                 disbursementsAndClaimsMasterDTO.WorkTaskName = disbursementsAndClaimsMaster.WorkTaskId != null ? _context.WorkTasks.Find(disbursementsAndClaimsMaster.WorkTaskId).TaskName : string.Empty;
                 disbursementsAndClaimsMasterDTO.CurrencyTypeId = disbursementsAndClaimsMaster.CurrencyTypeId;
                 disbursementsAndClaimsMasterDTO.CurrencyType = _context.CurrencyTypes.Find(disbursementsAndClaimsMaster.CurrencyTypeId).CurrencyCode;
-                disbursementsAndClaimsMasterDTO.RecordDate = disbursementsAndClaimsMaster.RecordDate == null ? String.Empty : disbursementsAndClaimsMaster.RecordDate.ToString(); //ToShortDateString()
+                disbursementsAndClaimsMasterDTO.RequestDate = disbursementsAndClaimsMaster.RecordDate == null ? String.Empty : disbursementsAndClaimsMaster.RecordDate.ToString(); //ToShortDateString()
                 disbursementsAndClaimsMasterDTO.ClaimAmount = disbursementsAndClaimsMaster.ClaimAmount;
                 disbursementsAndClaimsMasterDTO.AmountToWallet = disbursementsAndClaimsMaster.AmountToWallet;
                 disbursementsAndClaimsMasterDTO.AmountToCredit = disbursementsAndClaimsMaster.AmountToCredit;
@@ -1475,7 +1475,7 @@ namespace AtoCashAPI.Controllers
                 disbursementsAndClaimsMasterDTO.WorkTaskName = disbursementsAndClaimsMaster.WorkTaskId != null ? _context.WorkTasks.Find(disbursementsAndClaimsMaster.WorkTaskId).TaskName : string.Empty;
                 disbursementsAndClaimsMasterDTO.CurrencyTypeId = disbursementsAndClaimsMaster.CurrencyTypeId;
                 disbursementsAndClaimsMasterDTO.CurrencyType = _context.CurrencyTypes.Find(disbursementsAndClaimsMaster.CurrencyTypeId).CurrencyCode;
-                disbursementsAndClaimsMasterDTO.RecordDate = disbursementsAndClaimsMaster.RecordDate.Value.ToShortDateString();
+                disbursementsAndClaimsMasterDTO.RequestDate = disbursementsAndClaimsMaster.RecordDate.Value.ToShortDateString();
                 disbursementsAndClaimsMasterDTO.ClaimAmount = disbursementsAndClaimsMaster.ClaimAmount;
                 disbursementsAndClaimsMasterDTO.AmountToWallet = disbursementsAndClaimsMaster.AmountToWallet;
                 disbursementsAndClaimsMasterDTO.AmountToCredit = disbursementsAndClaimsMaster.AmountToCredit;
@@ -1533,7 +1533,7 @@ namespace AtoCashAPI.Controllers
                     disbItem.ProjectName,
                     disbItem.SubProjectName,
                     disbItem.WorkTaskName,
-                    disbItem.RecordDate,
+                    disbItem.RequestDate,
                     disbItem.CurrencyType,
                     disbItem.ClaimAmount,
                     disbItem.AmountToWallet,
