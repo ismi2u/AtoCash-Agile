@@ -737,6 +737,10 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
+            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
 
 
             if (isAdmin)
@@ -891,6 +895,10 @@ namespace AtoCashAPI.Controllers
             else if (reporteeEmpId == null && searchModel.IsManager == false)
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
+            }
+            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
             }
 
 
@@ -1108,7 +1116,10 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
-
+            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
 
             if (isAdmin)
             {
@@ -1232,6 +1243,10 @@ namespace AtoCashAPI.Controllers
             else if (reporteeEmpId == null && searchModel.IsManager == false)
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
+            }
+            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
             }
 
             if (isAdmin)
@@ -1622,6 +1637,10 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
+            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
 
             if (isAdmin)
             {
@@ -1768,7 +1787,10 @@ namespace AtoCashAPI.Controllers
             {
                 predicate = predicate.And(x => x.EmployeeId == empid);
             }
-
+            else if (reporteeEmpId == empid && searchModel.IsManager == false)
+            {
+                predicate = predicate.And(x => x.EmployeeId == reporteeEmpId);
+            }
             if (isAdmin)
             {
                 result = predicate.IsStarted ? _context.ExpenseSubClaims.Where(predicate).OrderBy(e => e.Id).ToList() : _context.ExpenseSubClaims.OrderBy(e => e.Id).ToList();
