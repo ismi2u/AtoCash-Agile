@@ -638,7 +638,7 @@ namespace AtoCashAPI.Controllers
 
 
 
-            var claimRequestTracks = _context.CashAdvanceStatusTrackers.Where(c => c.CashAdvanceRequestId == id).OrderBy(x => x.JobRoleId).ToList();
+            var claimRequestTracks = _context.CashAdvanceStatusTrackers.Where(c => c.CashAdvanceRequestId == id).OrderBy(x => x.ApprovalLevelId).ToList();
 
             List<ApprovalStatusFlowVM> ListApprovalStatusFlow = new();
 

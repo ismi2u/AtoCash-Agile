@@ -568,7 +568,7 @@ namespace AtoCashAPI.Controllers
             }
 
 
-            var ListOfTravelRequestStatusTrackers = _context.TravelApprovalStatusTrackers.Where(e => e.TravelApprovalRequestId == id).OrderBy(x => x.JobRoleId).ToList();
+            var ListOfTravelRequestStatusTrackers = _context.TravelApprovalStatusTrackers.Where(e => e.TravelApprovalRequestId == id).OrderBy(x => x.ApprovalLevelId).ToList();
 
             List<ApprovalStatusFlowVM> ListApprovalStatusFlow = new();
 

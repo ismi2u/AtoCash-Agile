@@ -82,7 +82,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             }
 
 
-            var ListOfExpReimStatusTrackers = _context.ExpenseReimburseStatusTrackers.Where(e => e.ExpenseReimburseRequestId == id).OrderBy(x => x.JobRoleId).ToList();
+            var ListOfExpReimStatusTrackers = _context.ExpenseReimburseStatusTrackers.Where(e => e.ExpenseReimburseRequestId == id).OrderBy(x => x.ApprovalLevelId).ToList();
 
             List<ApprovalStatusFlowVM> ListApprovalStatusFlow = new();
 
