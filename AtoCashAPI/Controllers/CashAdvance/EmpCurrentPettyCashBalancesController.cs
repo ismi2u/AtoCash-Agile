@@ -104,8 +104,11 @@ namespace AtoCashAPI.Controllers
                 empAllCurBalStatusDTO.CurBalance = empCurPettyBalance.CurBalance;
 
 
-                empAllCurBalStatusDTO.PendingSettlement = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.CashAdvance && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Approved)
+                empAllCurBalStatusDTO.PendingSettlementCA = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.CashAdvance && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Approved)
                                                         .Select(s => s.AmountToCredit ?? 0).Sum();
+
+                empAllCurBalStatusDTO.PendingSettlementER = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Approved)
+                                        .Select(s => s.AmountToCredit ?? 0).Sum();
 
                 empAllCurBalStatusDTO.PendingApprovalER = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Pending)
                                                         .Select(s => s.ClaimAmount).Sum();
