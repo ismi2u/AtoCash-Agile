@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AtoCashAPI.Migrations
 {
     [DbContext(typeof(AtoCashDbContext))]
-    [Migration("20230113034010_initial")]
-    partial class initial
+    [Migration("20230117162242_deploy")]
+    partial class deploy
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
