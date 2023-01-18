@@ -237,7 +237,7 @@ namespace AtoCashAPI.Controllers
 
 
                                 //DisbursementAndClaimsMaster update the record to Approved (ApprovalStatusId
-                                int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.CashAdvanceRequestId).FirstOrDefault().Id;
+                                int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.CashAdvanceRequestId && d.RequestTypeId == (int)ERequestType.CashAdvance).FirstOrDefault().Id;
                                 var disbAndClaimItem = await _context.DisbursementsAndClaimsMasters.FindAsync(disbAndClaimItemId);
 
                                 disbAndClaimItem.ClaimAmount = CashAdvanceRequest.CashAdvanceAmount;
@@ -338,7 +338,7 @@ namespace AtoCashAPI.Controllers
                             _context.EmpCurrentCashAdvanceBalances.Update(empCashAdvanceBal);
 
 
-                            var disbursementsAndClaimsMaster = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == CashAdvanceReq.Id).FirstOrDefault();
+                            var disbursementsAndClaimsMaster = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == CashAdvanceReq.Id && d.RequestTypeId == (int)ERequestType.CashAdvance).FirstOrDefault();
                             disbursementsAndClaimsMaster.ApprovalStatusId = (int)EApprovalStatus.Rejected;
                             disbursementsAndClaimsMaster.ClaimAmount = CashAdvanceReq.CashAdvanceAmount;
                             disbursementsAndClaimsMaster.AmountToWallet = 0;
@@ -382,7 +382,7 @@ namespace AtoCashAPI.Controllers
 
 
                         //DisbursementAndClaimsMaster update the record to Approved (ApprovalStatusId
-                        int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.CashAdvanceRequestId).FirstOrDefault().Id;
+                        int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.CashAdvanceRequestId && d.RequestTypeId == (int)ERequestType.CashAdvance).FirstOrDefault().Id;
                         var disbAndClaimItem = await _context.DisbursementsAndClaimsMasters.FindAsync(disbAndClaimItemId);
 
                         disbAndClaimItem.ApprovalStatusId = bRejectMessage ? (int)EApprovalStatus.Rejected : (int)EApprovalStatus.Approved;

@@ -342,7 +342,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                                     c.ApprovalStatusTypeId == (int)EApprovalStatus.Pending).FirstOrDefault();
                         expenseReimburseStatusTracker.ApprovalStatusTypeId = expenseReimburseStatusTrackerDto.ApprovalStatusTypeId;
                         //DisbursementAndClaimsMaster update the record to Approved (ApprovalStatusId
-                        int disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.ExpenseReimburseRequestId).FirstOrDefault().Id;
+                        int disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.ExpenseReimburseRequestId && d.RequestTypeId == (int)ERequestType.ExpenseReim).FirstOrDefault().Id;
                         var disbAndClaimItem = await _context.DisbursementsAndClaimsMasters.FindAsync(disbAndClaimItemId);
 
                         /// #############################
@@ -470,7 +470,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
 
 
                                 //DisbursementAndClaimsMaster update the record to Approved (ApprovalStatusId
-                                int disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.ExpenseReimburseRequestId).FirstOrDefault().Id;
+                                int disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.ExpenseReimburseRequestId && d.RequestTypeId == (int)ERequestType.ExpenseReim).FirstOrDefault().Id;
                                 var disbAndClaimItem = await _context.DisbursementsAndClaimsMasters.FindAsync(disbAndClaimItemId);
 
                                 /// #############################
@@ -620,7 +620,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                             _context.ExpenseReimburseRequests.Update(expReimbReq);
 
                             //DisbursementAndClaimsMaster update the record to Rejected (ApprovalStatusId = 5)
-                            int disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == expReimbReq.Id).FirstOrDefault().Id;
+                            int disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == expReimbReq.Id && d.RequestTypeId == (int)ERequestType.ExpenseReim).FirstOrDefault().Id;
                             var disbAndClaimItem = await _context.DisbursementsAndClaimsMasters.FindAsync(disbAndClaimItemId);
 
                             disbAndClaimItem.ApprovalStatusId = (int)EApprovalStatus.Rejected;

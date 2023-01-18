@@ -99,7 +99,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
         {
             var CashAdvanceRequest = await _context.CashAdvanceRequests.FindAsync(id);
 
-            var disbAndClaim = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == id).FirstOrDefault();
+            var disbAndClaim = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == id && d.RequestTypeId == (int)ERequestType.CashAdvance).FirstOrDefault();
 
             if (CashAdvanceRequest == null)
             {
@@ -416,7 +416,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
             //Step-3 change the Disbursements and Claims Master record
 
-            var disburseMasterRecord = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == CashAdvanceRequestDto.Id).FirstOrDefault();
+            var disburseMasterRecord = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == CashAdvanceRequestDto.Id && d.RequestTypeId == (int)ERequestType.CashAdvance).FirstOrDefault();
             disburseMasterRecord.BusinessTypeId = newBusinesTypeId;
             disburseMasterRecord.BusinessUnitId = newBusinesUnitId;
             disburseMasterRecord.ProjectId = newProjId;
@@ -544,7 +544,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 _context.CashAdvanceStatusTrackers.Remove(claim);
             }
 
-            var disburseAndClaims = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == CashAdvanceRequest.Id).ToList();
+            var disburseAndClaims = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == CashAdvanceRequest.Id && d.RequestTypeId == (int)ERequestType.CashAdvance).ToList();
             foreach (var disburse in disburseAndClaims)
             {
                 _context.DisbursementsAndClaimsMasters.Remove(disburse);

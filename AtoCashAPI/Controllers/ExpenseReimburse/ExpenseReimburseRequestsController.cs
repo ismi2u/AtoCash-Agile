@@ -56,7 +56,7 @@ namespace AtoCashAPI.Controllers
             foreach (ExpenseReimburseRequest expenseReimbRequest in expenseReimburseRequests)
             {
 
-                var disbAndClaim = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == expenseReimbRequest.Id).FirstOrDefault();
+                var disbAndClaim = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == expenseReimbRequest.Id && d.RequestTypeId == (int)ERequestType.ExpenseReim).FirstOrDefault();
 
                 if (disbAndClaim == null)
                 {
@@ -139,7 +139,7 @@ namespace AtoCashAPI.Controllers
             double tmpAmountToWallet = 0;
             bool tmpIsSettledAmountCredited = false;
 
-            var disbAndClaim = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == id).FirstOrDefault();
+            var disbAndClaim = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim).FirstOrDefault();
 
 
 
