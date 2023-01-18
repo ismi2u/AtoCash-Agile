@@ -649,7 +649,7 @@ namespace AtoCashAPI.Controllers
                     return returnIntAndResponseString;
                 }
                 #endregion
-                await AtoCashDbContextTransaction.CommitAsync();
+                
 
                 //##### 4. Send email to the user
                 //####################################
@@ -659,6 +659,8 @@ namespace AtoCashAPI.Controllers
 
                     returnIntAndResponseString.IntReturn = 0;
                     returnIntAndResponseString.StrResponse = "Project: Travel Approval request Created";
+
+                    await AtoCashDbContextTransaction.CommitAsync();
                     return returnIntAndResponseString;
                 }
 
@@ -691,7 +693,7 @@ namespace AtoCashAPI.Controllers
 
                 _logger.LogInformation(approver.GetFullName() + "Email Sent");
 
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
 
                 await AtoCashDbContextTransaction.CommitAsync();
             }
