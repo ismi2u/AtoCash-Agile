@@ -110,6 +110,9 @@ namespace AtoCashAPI.Controllers
                 empAllCurBalStatusDTO.PendingSettlementER = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Approved)
                                         .Select(s => s.AmountToCredit ?? 0).Sum();
 
+                empAllCurBalStatusDTO.AdjustedAgainstCA = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Approved)
+                                        .Select(s => s.AmountToWallet ?? 0).Sum();
+
                 empAllCurBalStatusDTO.PendingApprovalER = _context.DisbursementsAndClaimsMasters.Where(d => d.EmployeeId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim && d.IsSettledAmountCredited == false && d.ApprovalStatusId == (int)EApprovalStatus.Pending)
                                                         .Select(s => s.ClaimAmount).Sum();
 

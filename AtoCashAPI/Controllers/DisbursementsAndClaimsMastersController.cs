@@ -365,7 +365,7 @@ namespace AtoCashAPI.Controllers
 
                 var requesterMailAddress = requester.Email;
 
-                _logger.LogInformation(requester.GetFullName() + "Settlement Email Start");
+                _logger.LogInformation(requester.GetFullName() + " Settlement Email Start");
 
                 string[] paths = { Directory.GetCurrentDirectory(), "ClaimApprovedandSettled.html" };
                 string FilePath = Path.Combine(paths);
@@ -390,7 +390,7 @@ namespace AtoCashAPI.Controllers
                 var messagemail = new Message(new string[] { requesterMailAddress }, subject, builder.HtmlBody);
 
                 await _emailSender.SendEmailAsync(messagemail);
-                _logger.LogInformation(requester.GetFullName() + "Settlement Email Sent");
+                _logger.LogInformation(requester.GetFullName() + " Settlement Email Sent");
 
 
                 await AtoCashDbContextTransaction.CommitAsync();

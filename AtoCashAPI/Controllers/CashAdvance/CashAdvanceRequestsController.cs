@@ -383,7 +383,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     Employee? emp = await _context.Employees.FindAsync(CashAdvanceRequestDto.EmployeeId);
                     var CashAdvancereq = _context.CashAdvanceRequests.Find(CashAdvanceRequestDto.Id);
 
-                    _logger.LogInformation(approver.GetFullName() + "Email Start");
+                    _logger.LogInformation(approver.GetFullName() + " Email Start");
 
                     string[] paths = { Directory.GetCurrentDirectory(), "CashAdvanceApprNotificationEmail.html" };
                     string FilePath = Path.Combine(paths);
@@ -407,7 +407,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
 
                     await _emailSender.SendEmailAsync(messagemail);
-                    _logger.LogInformation(approver.GetFullName() + "Email Sent");
+                    _logger.LogInformation(approver.GetFullName() + " Email Sent");
 
                     IsFirstEmail = false;
                 }
@@ -1127,7 +1127,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                         {
                             //##### 4. Send email to the Approver
                             //####################################
-                            _logger.LogInformation(approver.GetFullName() + "Email Start");
+                            _logger.LogInformation(approver.GetFullName() + " Email Start");
 
                             string[] paths = { Directory.GetCurrentDirectory(), "CashAdvanceApprNotificationEmail.html" };
                             string FilePath = Path.Combine(paths);
@@ -1153,7 +1153,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
                             var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
 
                             await _emailSender.SendEmailAsync(messagemail);
-                            _logger.LogInformation(approver.GetFullName() + "Email Sent");
+                            _logger.LogInformation(approver.GetFullName() + " Email Sent");
 
                         }
 

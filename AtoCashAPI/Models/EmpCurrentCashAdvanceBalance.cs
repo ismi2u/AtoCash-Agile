@@ -57,10 +57,11 @@ namespace AtoCashAPI.Models
         public Double? CashInHand { get; set; }
 
         public Double? PendingApprovalCA { get; set; }
-
         public Double? PendingApprovalER { get; set; }
         public Double? PendingSettlementCA { get; set; }
         public Double? PendingSettlementER { get; set; }
+
+        public Double? AdjustedAgainstCA { get; set; }
         public DateTime? WalletBalLastUpdated { get; set; }
 
     }

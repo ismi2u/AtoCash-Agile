@@ -672,7 +672,7 @@ namespace AtoCashAPI.Controllers
                 str.Close();
 
 
-                _logger.LogInformation(approver.GetFullName() + "Email Start");
+                _logger.LogInformation(approver.GetFullName() + " Email Start");
                 var approverMailAddress = approver.Email;
                 string subject = "Travel Approval Request No# " + travelApprovalRequestDTO.Id.ToString();
                 Employee emp = await _context.Employees.FindAsync(travelApprovalRequestDTO.EmployeeId);
@@ -691,7 +691,7 @@ namespace AtoCashAPI.Controllers
                 await _emailSender.SendEmailAsync(messagemail);
                 #endregion
 
-                _logger.LogInformation(approver.GetFullName() + "Email Sent");
+                _logger.LogInformation(approver.GetFullName() + " Email Sent");
 
                 //await _context.SaveChangesAsync();
 
@@ -956,7 +956,7 @@ namespace AtoCashAPI.Controllers
 
                         if (isFirstApprover)
                         {
-                            _logger.LogInformation(approver.GetFullName() + "Email Start");
+                            _logger.LogInformation(approver.GetFullName() + " Email Start");
 
                             string[] paths = { Directory.GetCurrentDirectory(), "TravelApprNotificationEmail.html" };
                             string FilePath = Path.Combine(paths);
@@ -981,7 +981,7 @@ namespace AtoCashAPI.Controllers
                             var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
 
                             await _emailSender.SendEmailAsync(messagemail);
-                            _logger.LogInformation(approver.GetFullName() + "Email Sent");
+                            _logger.LogInformation(approver.GetFullName() + " Email Sent");
                         }
                         isFirstApprover = false;
 

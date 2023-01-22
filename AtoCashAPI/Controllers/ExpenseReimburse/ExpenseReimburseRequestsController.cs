@@ -904,7 +904,7 @@ namespace AtoCashAPI.Controllers
                             continue;
                         }
 
-                        _logger.LogInformation(approver.GetFullName() + " Status Tracker started");
+                        _logger.LogInformation(approver.GetFullName() + "  Status Tracker started");
                         ExpenseReimburseStatusTracker expenseReimburseStatusTracker = new()
                         {
                             EmployeeId = reqEmpid,
