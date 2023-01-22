@@ -318,6 +318,7 @@ namespace AtoCashAPI.Controllers
                 travelApprovalRequest.ProjectId = travelApprovalRequestDTO.ProjectId;
                 travelApprovalRequest.SubProjectId = travelApprovalRequestDTO.SubProjectId;
                 travelApprovalRequest.WorkTaskId = travelApprovalRequestDTO.WorkTaskId;
+                travelApprovalRequest.CostCenterId = _context.Projects.Find(travelApprovalRequestDTO.ProjectId).CostCenterId;
             }
             else
             {

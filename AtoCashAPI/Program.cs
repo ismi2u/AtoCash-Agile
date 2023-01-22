@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 
 //AzureCloudGmailServer
 //PostgreSQLInLocalAppInContainer
-builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("AzureCloudGmailServer")));
+builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("FUCOAzurePostgresSQLServer")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AtoCashDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);

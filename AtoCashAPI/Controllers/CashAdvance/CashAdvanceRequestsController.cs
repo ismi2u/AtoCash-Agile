@@ -288,7 +288,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
             var CashAdvanceRequest = await _context.CashAdvanceRequests.FindAsync(id);
             CashAdvanceRequestDto.EmployeeId = CashAdvanceRequest.EmployeeId;
-            int costCenterId = _context.Projects.Find(CashAdvanceRequestDto.ProjectId).CostCenterId;
+
+
+           
 
             Double? empCurAvailBal = GetEmpCurrentAvailableCashAdvanceBalance(CashAdvanceRequestDto);
 
@@ -319,7 +321,10 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
                 CashAdvanceRequest.CashAdvanceAmount = CashAdvanceRequestDto.CashAdvanceAmount;
                 CashAdvanceRequest.CashAdvanceRequestDesc = CashAdvanceRequestDto.CashAdvanceRequestDesc;
-                CashAdvanceRequest.CostCenterId = costCenterId;
+                if (CashAdvanceRequestDto.ProjectId != null)
+                {
+                    CashAdvanceRequest.CostCenterId = _context.Projects.Find(CashAdvanceRequestDto.ProjectId).CostCenterId;
+                }
 
                 //check employee allowed limit to Cash Advance, if limit exceeded return with an conflict message.
                 var empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == CashAdvanceRequest.EmployeeId && e.BusinessUnitId == CashAdvanceRequest.BusinessUnitId).FirstOrDefault();
