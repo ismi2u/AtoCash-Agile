@@ -288,7 +288,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
             var CashAdvanceRequest = await _context.CashAdvanceRequests.FindAsync(id);
             CashAdvanceRequestDto.EmployeeId = CashAdvanceRequest.EmployeeId;
-
+            int costcentreId = 0;
 
            
 
@@ -323,8 +323,13 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 CashAdvanceRequest.CashAdvanceRequestDesc = CashAdvanceRequestDto.CashAdvanceRequestDesc;
                 if (CashAdvanceRequestDto.ProjectId != null)
                 {
-                    CashAdvanceRequest.CostCenterId = _context.Projects.Find(CashAdvanceRequestDto.ProjectId).CostCenterId;
+                    costcentreId = _context.Projects.Find(CashAdvanceRequestDto.ProjectId).CostCenterId;
                 }
+                else
+                {
+                    costcentreId = CashAdvanceRequest.CostCenterId;
+                }
+              
 
                 //check employee allowed limit to Cash Advance, if limit exceeded return with an conflict message.
                 var empExtInfo = _context.EmployeeExtendedInfos.Where(e => e.EmployeeId == CashAdvanceRequest.EmployeeId && e.BusinessUnitId == CashAdvanceRequest.BusinessUnitId).FirstOrDefault();
@@ -426,7 +431,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
             // disburseMasterRecord.BusinessTypeId = newBusinesTypeId;
             //disburseMasterRecord.BusinessUnitId = newBusinesUnitId;
 
-            disburseMasterRecord.CostCenterId = costCenterId;
+            disburseMasterRecord.CostCenterId = costcentreId;
             disburseMasterRecord.ProjectId = newProjId;
             disburseMasterRecord.SubProjectId = newSubProjId;
             disburseMasterRecord.WorkTaskId = newWorkTaskId;
