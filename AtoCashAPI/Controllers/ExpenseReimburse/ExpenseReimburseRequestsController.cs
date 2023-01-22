@@ -371,8 +371,8 @@ namespace AtoCashAPI.Controllers
             {
                 var expenseReimbRequest = await _context.ExpenseReimburseRequests.FindAsync(expenseReimbRequestDTO.Id);
 
-                int? reqBussUnitId = expenseReimbRequestDTO.BusinessUnitId;
-                int costCenterId = _context.BusinessUnits.Find(reqBussUnitId).CostCenterId ?? 0;
+               // int? reqBussUnitId = expenseReimbRequestDTO.BusinessUnitId;
+               // int costCenterId = _context.BusinessUnits.Find(reqBussUnitId).CostCenterId ?? 0;
 
 
                 // expenseReimbRequest.Id = expenseReimbRequestDTO.Id;
@@ -383,7 +383,7 @@ namespace AtoCashAPI.Controllers
                 expenseReimbRequest.CurrencyTypeId = expenseReimbRequestDTO.CurrencyTypeId;
                 expenseReimbRequest.TotalClaimAmount = expenseReimbRequestDTO.TotalClaimAmount; //Initially Zero but will be updated after all subclaimes added as per the request
                 expenseReimbRequest.RequestDate = DateTime.UtcNow;
-                expenseReimbRequest.CostCenterId = costCenterId;
+               // expenseReimbRequest.CostCenterId = costCenterId;
                 expenseReimbRequest.ProjectId = expenseReimbRequestDTO.ProjectId;
                 expenseReimbRequest.SubProjectId = expenseReimbRequestDTO.SubProjectId;
                 expenseReimbRequest.WorkTaskId = expenseReimbRequestDTO.WorkTaskId;
@@ -626,6 +626,9 @@ namespace AtoCashAPI.Controllers
                 return Conflict(new RespStatus { Status = "Failure", Message = "Reimburse Request cant be Deleted after Approval!" });
             }
 
+            _context.DisbursementsAndClaimsMasters.RemoveRange(_context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == id && d.RequestTypeId == (int)ERequestType.ExpenseReim));
+
+            _context.ExpenseSubClaims.RemoveRange(_context.ExpenseSubClaims.Where(e => e.ExpenseReimburseRequestId == id));
 
             _context.ExpenseReimburseRequests.Remove(expenseReimburseRequest);
 
