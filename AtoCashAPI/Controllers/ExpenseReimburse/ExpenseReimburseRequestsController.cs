@@ -377,8 +377,8 @@ namespace AtoCashAPI.Controllers
 
                 // expenseReimbRequest.Id = expenseReimbRequestDTO.Id;
                 expenseReimbRequest.ExpenseReportTitle = expenseReimbRequestDTO.ExpenseReportTitle;
-                expenseReimbRequest.BusinessTypeId = expenseReimbRequestDTO.BusinessTypeId;
-                expenseReimbRequest.BusinessUnitId = expenseReimbRequestDTO.BusinessUnitId;
+                //expenseReimbRequest.BusinessTypeId = expenseReimbRequestDTO.BusinessTypeId;
+                //expenseReimbRequest.BusinessUnitId = expenseReimbRequestDTO.BusinessUnitId;
                 expenseReimbRequest.EmployeeId = expenseReimbRequestDTO.EmployeeId;
                 expenseReimbRequest.CurrencyTypeId = expenseReimbRequestDTO.CurrencyTypeId;
                 expenseReimbRequest.TotalClaimAmount = expenseReimbRequestDTO.TotalClaimAmount; //Initially Zero but will be updated after all subclaimes added as per the request

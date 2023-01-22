@@ -353,8 +353,8 @@ namespace AtoCashAPI.Controllers.CashAdvance
             //Step -2 change the claim approval status tracker records
             var claims = await _context.CashAdvanceStatusTrackers.Where(c => c.CashAdvanceRequestId == CashAdvanceRequestDto.Id).ToListAsync();
             bool IsFirstEmail = true;
-            int? newBusinesTypeId = CashAdvanceRequest.BusinessTypeId;
-            int? newBusinesUnitId = CashAdvanceRequest.BusinessUnitId;
+           // int? newBusinesTypeId = CashAdvanceRequest.BusinessTypeId;
+           // int? newBusinesUnitId = CashAdvanceRequest.BusinessUnitId;
             int? newProjId = CashAdvanceRequestDto.ProjectId;
             int? newSubProjId = CashAdvanceRequestDto.SubProjectId;
             int? newWorkTaskId = CashAdvanceRequestDto.WorkTaskId;
@@ -362,8 +362,8 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
             foreach (CashAdvanceStatusTracker claim in claims)
             {
-                claim.BusinessTypeId = newBusinesTypeId;
-                claim.BusinessUnitId = newBusinesUnitId;
+              //  claim.BusinessTypeId = newBusinesTypeId;
+              //  claim.BusinessUnitId = newBusinesUnitId;
                 claim.ProjectId = newProjId;
                 claim.SubProjectId = newSubProjId;
                 claim.WorkTaskId = newWorkTaskId;
@@ -417,8 +417,8 @@ namespace AtoCashAPI.Controllers.CashAdvance
             //Step-3 change the Disbursements and Claims Master record
 
             var disburseMasterRecord = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == CashAdvanceRequestDto.Id && d.RequestTypeId == (int)ERequestType.CashAdvance).FirstOrDefault();
-            disburseMasterRecord.BusinessTypeId = newBusinesTypeId;
-            disburseMasterRecord.BusinessUnitId = newBusinesUnitId;
+           // disburseMasterRecord.BusinessTypeId = newBusinesTypeId;
+            //disburseMasterRecord.BusinessUnitId = newBusinesUnitId;
             disburseMasterRecord.ProjectId = newProjId;
             disburseMasterRecord.SubProjectId = newSubProjId;
             disburseMasterRecord.WorkTaskId = newWorkTaskId;

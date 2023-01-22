@@ -321,8 +321,8 @@ namespace AtoCashAPI.Controllers
             }
             else
             {
-                travelApprovalRequest.BusinessTypeId = travelApprovalRequestDTO.BusinessTypeId;
-                travelApprovalRequest.BusinessUnitId = travelApprovalRequestDTO.BusinessUnitId;
+               // travelApprovalRequest.BusinessTypeId = travelApprovalRequestDTO.BusinessTypeId;
+               // travelApprovalRequest.BusinessUnitId = travelApprovalRequestDTO.BusinessUnitId;
                
             }
 
@@ -349,8 +349,8 @@ namespace AtoCashAPI.Controllers
                 }
                 else
                 {
-                    travelStatusItem.BusinessTypeId = travelApprovalRequestDTO.BusinessTypeId;
-                    travelStatusItem.BusinessUnitId = travelApprovalRequestDTO.BusinessUnitId;
+                   // travelStatusItem.BusinessTypeId = travelApprovalRequestDTO.BusinessTypeId;
+                   // travelStatusItem.BusinessUnitId = travelApprovalRequestDTO.BusinessUnitId;
 
                 }
                   travelStatusItem.RequestDate = DateTime.UtcNow;
