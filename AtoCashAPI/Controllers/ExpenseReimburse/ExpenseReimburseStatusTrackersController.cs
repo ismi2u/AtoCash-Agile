@@ -575,9 +575,12 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                                     MailText = MailText.Replace("{RequestNumber}", qExpReimRequestId.ToString());
                                     builder.HtmlBody = MailText;
 
-                                    var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                                    EmailDto emailDto = new EmailDto();
+                                    emailDto.To = approverMailAddress;
+                                    emailDto.Subject = subject;
+                                    emailDto.Body = builder.HtmlBody;
 
-                                    await _emailSender.SendEmailAsync(messagemail);
+                                    await _emailSender.SendEmailAsync(emailDto);
                                     _logger.LogInformation("Email sent to " + approver.GetFullName());
 
                                     break;

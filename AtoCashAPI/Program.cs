@@ -1,6 +1,7 @@
+global using EmailService;
+
 using AtoCashAPI.Authentication;
 using AtoCashAPI.Data;
-using EmailService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.Configuration;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,7 @@ builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AtoCashDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddAuthentication(options =>
             {
@@ -56,7 +59,7 @@ builder.Services.AddCors(options =>
                ));
 
 //email service
-builder.Services.AddSingleton(builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+builder.Services.AddSingleton(builder.Configuration.GetSection("EmailConfiguration").Get<EmailDto>());
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 //for file upload from Angular Form
@@ -98,7 +101,9 @@ app.UseStaticFiles(new StaticFileOptions
     //RequestPath = Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + "Reportdocs"
 });
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection();//https for cors
+
+
 app.UseCors("myCorsPolicy");
 
 app.UseEndpoints(endpoints =>

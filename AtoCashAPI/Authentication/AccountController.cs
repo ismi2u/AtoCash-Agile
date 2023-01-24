@@ -26,14 +26,18 @@ namespace AtoCashAPI.Authentication
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IEmailSender _emailSender;
         private readonly AtoCashDbContext context;
+        private readonly ILogger<AccountController> _logger;
 
 
-        public AccountController(IEmailSender emailSender, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AtoCashDbContext context)
+        public AccountController(IEmailSender emailSender, UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger,
+            AtoCashDbContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
             _emailSender = emailSender;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -262,13 +266,19 @@ namespace AtoCashAPI.Authentication
                     token = token.Replace("+", "^^^");
                     var receiverEmail = model.email;
                     string subject = "Password Reset Link";
-                    string content = "Please click the below Password Reset Link to reset your password:" + Environment.NewLine +
+                    string body = "Please click the below Password Reset Link to reset your password:" + Environment.NewLine +
                                         "https://AtoCashAPI.netlify.app/change-password?token=" + token + "&email=" + model.email;
 
                     //"<a href=\"https://AtoCashAPI.netlify.app/change-password?token=" + token + "&email=" + model.email + "\">";
-                    var messagemail = new Message(new string[] { receiverEmail }, subject, content);
 
-                    await _emailSender.SendEmailAsync(messagemail);
+                    EmailDto emailDto = new EmailDto();
+                    emailDto.To = receiverEmail;
+                    emailDto.Subject = subject;
+                    emailDto.Body = body;
+
+
+                    await _emailSender.SendEmailAsync(emailDto);
+                    _logger.LogInformation("ForgotPassword: " + receiverEmail + " Reset Email Sent with token");
 
                 }
 
@@ -297,10 +307,14 @@ namespace AtoCashAPI.Authentication
                     {
                         var receiverEmail = model.email;
                         string subject = "Password Changed";
-                        string content = "Your new Password is:" + model.Password;
-                        var messagemail = new Message(new string[] { receiverEmail }, subject, content);
+                        string body = "Your new Password is:" + model.Password;
 
-                        await _emailSender.SendEmailAsync(messagemail);
+                        EmailDto emailDto = new EmailDto();
+                        emailDto.To = receiverEmail;
+                        emailDto.Subject = subject;
+                        emailDto.Body = body;
+
+                        await _emailSender.SendEmailAsync(emailDto);
                         return Ok(new RespStatus { Status = "Success", Message = "Your Password has been reset!" });
                     }
 

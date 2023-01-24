@@ -385,9 +385,12 @@ namespace AtoCashAPI.Controllers
                     MailText = MailText.Replace("{RequestNumber}", travelreq.Id.ToString());
                     builder.HtmlBody = MailText;
 
-                    var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                    EmailDto emailDto = new EmailDto();
+                    emailDto.To = approverMailAddress;
+                    emailDto.Subject = subject;
+                    emailDto.Body = builder.HtmlBody;
 
-                    await _emailSender.SendEmailAsync(messagemail);
+                    await _emailSender.SendEmailAsync(emailDto);
                     _logger.LogInformation("Travel Request update Email Sent");
 
                     IsFirstEmail = false;
@@ -687,12 +690,15 @@ namespace AtoCashAPI.Controllers
                 MailText = MailText.Replace("{RequestNumber}", travelreq.Id.ToString());
                 builder.HtmlBody = MailText;
 
-                var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                EmailDto emailDto = new EmailDto();
+                emailDto.To = approverMailAddress;
+                emailDto.Subject = subject;
+                emailDto.Body = builder.HtmlBody;
 
-                await _emailSender.SendEmailAsync(messagemail);
+                await _emailSender.SendEmailAsync(emailDto);
                 #endregion
 
-                _logger.LogInformation(approver.GetFullName() + " Email Sent");
+                _logger.LogInformation("Travel Request approver " + approver.GetFullName() + " Email Sent");
 
                 //await _context.SaveChangesAsync();
 
@@ -979,10 +985,13 @@ namespace AtoCashAPI.Controllers
                             MailText = MailText.Replace("{RequestNumber}", travelreq.Id.ToString());
                             builder.HtmlBody = MailText;
 
-                            var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                            EmailDto emailDto = new EmailDto();
+                            emailDto.To = approverMailAddress;
+                            emailDto.Subject = subject;
+                            emailDto.Body = builder.HtmlBody;
 
-                            await _emailSender.SendEmailAsync(messagemail);
-                            _logger.LogInformation(approver.GetFullName() + " Email Sent");
+                            await _emailSender.SendEmailAsync(emailDto);
+                            _logger.LogInformation("Travel Request approver " + approver.GetFullName() + " Email Sent");
                         }
                         isFirstApprover = false;
 

@@ -387,9 +387,12 @@ namespace AtoCashAPI.Controllers
                 MailText = MailText.Replace("{RequestNumber}", requestId.ToString());
                 builder.HtmlBody = MailText;
 
-                var messagemail = new Message(new string[] { requesterMailAddress }, subject, builder.HtmlBody);
+                EmailDto emailDto = new EmailDto();
+                emailDto.To = requesterMailAddress;
+                emailDto.Subject = subject;
+                emailDto.Body = builder.HtmlBody;
 
-                await _emailSender.SendEmailAsync(messagemail);
+                await _emailSender.SendEmailAsync(emailDto);
                 _logger.LogInformation(requester.GetFullName() + " Settlement Email Sent");
 
 

@@ -415,9 +415,12 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     MailText = MailText.Replace("{RequestNumber}", CashAdvancereq.Id.ToString());
                     builder.HtmlBody = MailText;
 
-                    var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                    EmailDto emailDto = new EmailDto();
+                    emailDto.To = approverMailAddress;
+                    emailDto.Subject = subject;
+                    emailDto.Body = builder.HtmlBody;
 
-                    await _emailSender.SendEmailAsync(messagemail);
+                    await _emailSender.SendEmailAsync(emailDto);
                     _logger.LogInformation(approver.GetFullName() + " Email Sent");
 
                     IsFirstEmail = false;
@@ -468,7 +471,11 @@ namespace AtoCashAPI.Controllers.CashAdvance
                 return Conflict(new RespStatus { Status = "Failure", Message = "CashAdvance Request invalid!" });
             }
 
-
+            if (CashAdvanceRequestDto.CashAdvanceAmount <= 0 )
+            {
+                _logger.LogError("PostCashAdvanceRequestDto - Invalid Cash Advance Amount " + CashAdvanceRequestDto.CashAdvanceAmount );
+                return Conflict(new RespStatus { Status = "Failure", Message = "Invalid Cash Advance Amount " + CashAdvanceRequestDto.CashAdvanceAmount });
+            }
 
             /*!!=========================================
                Check Eligibility for Cash Disbursement
@@ -815,9 +822,13 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     MailText = MailText.Replace("{RequestNumber}", CashAdvancereq.Id.ToString());
                     builder.HtmlBody = MailText;
 
-                    var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                    EmailDto emailDto = new EmailDto();
+                    emailDto.To = approverMailAddress;
+                    emailDto.Subject = subject;
+                    emailDto.Body = builder.HtmlBody;
+                    
 
-                    await _emailSender.SendEmailAsync(messagemail);
+                     await _emailSender.SendEmailAsync(emailDto);
                     _logger.LogInformation("Project: CashAdvance Email Sent");
                     #endregion
                 }
@@ -1163,9 +1174,12 @@ namespace AtoCashAPI.Controllers.CashAdvance
                             MailText = MailText.Replace("{RequestNumber}", CashAdvancereq.Id.ToString());
                             builder.HtmlBody = MailText;
 
-                            var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                            EmailDto emailDto = new EmailDto();
+                            emailDto.To = approverMailAddress;
+                            emailDto.Subject = subject;
+                            emailDto.Body = builder.HtmlBody;
 
-                            await _emailSender.SendEmailAsync(messagemail);
+                            await _emailSender.SendEmailAsync(emailDto);
                             _logger.LogInformation(approver.GetFullName() + " Email Sent");
 
                         }

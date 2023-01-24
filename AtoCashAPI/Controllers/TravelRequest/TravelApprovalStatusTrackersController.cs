@@ -303,11 +303,15 @@ namespace AtoCashAPI.Controllers
                                     MailText = MailText.Replace("{RequestNumber}", travelreq.Id.ToString());
                                     builder.HtmlBody = MailText;
 
-                                    var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                                    EmailDto emailDto = new EmailDto();
+                                    emailDto.To = approverMailAddress;
+                                    emailDto.Subject = subject;
+                                    emailDto.Body = builder.HtmlBody;
 
-                                    await _emailSender.SendEmailAsync(messagemail);
+                                    await _emailSender.SendEmailAsync(emailDto);
 
                                     break;
+                                    _logger.LogInformation("Travel Request modified/Updated : approver " + approver.GetFullName() + "Email Sent");
 
                                 }
                             }

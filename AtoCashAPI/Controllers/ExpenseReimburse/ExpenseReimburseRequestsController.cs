@@ -958,10 +958,13 @@ namespace AtoCashAPI.Controllers
                             MailText = MailText.Replace("{RequestNumber}", expenseReimburseRequest.Id.ToString());
                             builder.HtmlBody = MailText;
 
-                            var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                            EmailDto emailDto = new EmailDto();
+                            emailDto.To = approverMailAddress;
+                            emailDto.Subject = subject;
+                            emailDto.Body = builder.HtmlBody;
 
-                            await _emailSender.SendEmailAsync(messagemail);
-                            _logger.LogInformation(approver.GetFullName() + "Email Sent");
+                            await _emailSender.SendEmailAsync(emailDto);
+                            _logger.LogInformation("Exp Request approver " + approver.GetFullName() + "Email Sent");
                         }
                         isFirstApprover = false;
 
@@ -1319,9 +1322,12 @@ namespace AtoCashAPI.Controllers
                     MailText = MailText.Replace("{RequestNumber}", expenseReimburseRequest.Id.ToString());
                     builder.HtmlBody = MailText;
 
-                    var messagemail = new Message(new string[] { approverMailAddress }, subject, builder.HtmlBody);
+                    EmailDto emailDto = new EmailDto();
+                    emailDto.To = approverMailAddress;
+                    emailDto.Subject = subject;
+                    emailDto.Body = builder.HtmlBody;
 
-                    await _emailSender.SendEmailAsync(messagemail);
+                    await _emailSender.SendEmailAsync(emailDto);
 
                     _logger.LogInformation(approver.GetFullName() + "Email Sent");
 
