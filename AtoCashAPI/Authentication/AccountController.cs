@@ -263,22 +263,46 @@ namespace AtoCashAPI.Authentication
                     //var passwordResetlink= Url.Action("ResetPassword", "Account", new { email = model.email, token = token, Request.Scheme });
 
                     //return Ok(passwordResetLink);
+
+
+
                     token = token.Replace("+", "^^^");
+
+
+
+
+
                     var receiverEmail = model.email;
                     string subject = "Password Reset Link";
-                    string body = "Please click the below Password Reset Link to reset your password:" + Environment.NewLine +
-                                        "https://fw.atocash.com/change-password?token=" + token + "&email=" + model.email;
+                    string txtdata = "https://fw.atocash.com/change-password?token=" + token + "&email=" + model.email;
 
                     //"<a href=\"https://fw.atocash.com/change-password?token=" + token + "&email=" + model.email + "\">";
+
+               
+
+
+                    //  string[] paths = { Directory.GetCurrentDirectory(),
+                    string[] paths = { Directory.GetCurrentDirectory(), "PasswordReset.html" };
+                    string FilePath = Path.Combine(paths);
+                    _logger.LogInformation("Email template path " + FilePath);
+                    StreamReader str = new StreamReader(FilePath);
+                    string MailText = str.ReadToEnd();
+                    str.Close();
+
+                    var builder = new MimeKit.BodyBuilder();
+
+                    MailText = MailText.Replace("{PasswordReset}", txtdata);
+                
+                    builder.HtmlBody = MailText;
 
                     EmailDto emailDto = new EmailDto();
                     emailDto.To = receiverEmail;
                     emailDto.Subject = subject;
-                    emailDto.Body = body;
+                    emailDto.Body = builder.HtmlBody;
 
 
                     await _emailSender.SendEmailAsync(emailDto);
-                    _logger.LogInformation("ForgotPassword: " + receiverEmail + " Reset Email Sent with token");
+                    _logger.LogInformation("ForgotPassword: " + receiverEmail + "Password Reset Email Sent with token");
 
                 }
 
