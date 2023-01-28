@@ -31,9 +31,11 @@ var _loggerconf = new LoggerConfiguration()
 
 builder.Logging.AddSerilog(_loggerconf);
 
+
+//FUCOAzurePostgresSQLServer
 //AzureCloudGmailServer
 //PostgreSQLInLocalAppInContainer
-builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("FUCOAzurePostgresSQLServer")));
+builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLInLocalAppInContainer")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AtoCashDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);

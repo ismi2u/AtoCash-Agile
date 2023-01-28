@@ -305,8 +305,8 @@ namespace AtoCashAPI.Controllers
                                     var builder = new MimeKit.BodyBuilder();
 
                                     MailText = MailText.Replace("{Requester}", emp.GetFullName());
-                                    MailText = MailText.Replace("{ApproverName}", approver.GetFullName());
-                                    MailText = MailText.Replace("{Request}", travelreq.TravelStartDate.ToString() + " - " + travelreq.TravelEndDate.ToString() + " (Purpose): " + travelreq.TravelPurpose.ToString());
+                                    MailText = MailText.Replace("{ApproverName}", approver.GetFullName()); //
+                                    MailText = MailText.Replace("{Request}", travelreq.TravelStartDate.Value.ToShortDateString() + " - " + travelreq.TravelEndDate.Value.ToShortDateString() + " (Purpose): " + travelreq.TravelPurpose.ToString());
                                     MailText = MailText.Replace("{RequestNumber}", travelreq.Id.ToString());
                                     builder.HtmlBody = MailText;
 
@@ -388,18 +388,41 @@ namespace AtoCashAPI.Controllers
                         travelApprovalrequest.Comments = bRejectMessage ? travelApprovalStatusTrackerDTO.Comments : "Approved";
                         _context.Update(travelApprovalrequest);
 
-                        //Travel request hence no claims master to be updated
-                        /*////DisbursementAndClaimsMaster update the record to Approved (ApprovalStatusId
-                        //int? disbAndClaimItemId = _context.DisbursementsAndClaimsMasters.Where(d => d.BlendedRequestId == claimitem.CashAdvanceRequestId).FirstOrDefault().Id;
-                        //var disbAndClaimItem = await _context.DisbursementsAndClaimsMasters.FindAsync(disbAndClaimItemId);
 
-                        //disbAndClaimItem.ApprovalStatusId = bRejectMessage ? (int)EApprovalStatus.Rejected : (int)EApprovalStatus.Approved;
-                        //disbAndClaimItem.ClaimAmount = CashAdvanceReq.CashAdvanceAmount;
-                        //disbAndClaimItem.AmountToWallet = 0;
-                        //disbAndClaimItem.AmountToCredit = bRejectMessage ? 0 : CashAdvanceReq.CashAdvanceAmount;
-                        //disbAndClaimItem.IsSettledAmountCredited = false;
-                        //_context.DisbursementsAndClaimsMasters.Update(disbAndClaimItem);
-                        //_context.Update(disbAndClaimItem);*/
+                        var requester = await _context.Employees.FindAsync(travelApprovalrequest.EmployeeId);
+
+                        _logger.LogInformation(requester.GetFullName() + " Travel Request Approved - Email Start");
+
+                        string[] paths = { Directory.GetCurrentDirectory(), "TravelApproved.html" };
+                        string FilePath = Path.Combine(paths);
+                        _logger.LogInformation("Email template path " + FilePath);
+                        StreamReader str = new StreamReader(FilePath);
+                        string MailText = str.ReadToEnd();
+                        str.Close();
+
+                        var requestId = travelApprovalrequest.Id;
+
+                        string subject = "Travel Request #" + requestId + "is approved " ;
+
+                        var domain = _config.GetSection("FrontendDomain").Value;
+                        MailText = MailText.Replace("{FrontendDomain}", domain);
+
+                        var builder = new MimeKit.BodyBuilder();
+
+                        MailText = MailText.Replace("{Requester}", requester.GetFullName());
+                        MailText = MailText.Replace("{RequestNumber}", requestId.ToString());
+                        builder.HtmlBody = MailText;
+
+                        EmailDto emailDto = new EmailDto();
+                        emailDto.To = requester.Email;
+                        emailDto.Subject = subject;
+                        emailDto.Body = builder.HtmlBody;
+
+                        await _emailSender.SendEmailAsync(emailDto);
+                        _logger.LogInformation(requester.GetFullName() + "Your Travel Request Approved - Email Sent");
+
+
+
 
                     }
 

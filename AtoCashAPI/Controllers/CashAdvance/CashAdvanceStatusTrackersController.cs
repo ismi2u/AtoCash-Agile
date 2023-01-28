@@ -216,6 +216,49 @@ namespace AtoCashAPI.Controllers
                                     claimitem.ApprovalStatusTypeId = (int)EApprovalStatus.Pending;
                                 }
 
+
+
+                                int? jobrole_id = claimitem.JobRoleId;
+
+                                var apprEmpId = _context.EmployeeExtendedInfos.Where(e => e.JobRoleId == jobrole_id && e.ApprovalGroupId == apprGroupId).FirstOrDefault().EmployeeId;
+
+                                var approver = await _context.Employees.FindAsync(apprEmpId);
+
+
+
+                                string[] paths = { Directory.GetCurrentDirectory(), "CashAdvanceApprNotificationEmail.html" };
+                                string FilePath = Path.Combine(paths);
+                                _logger.LogInformation("Email template path " + FilePath);
+                                StreamReader str = new StreamReader(FilePath);
+                                string MailText = str.ReadToEnd();
+                                str.Close();
+
+                                var approverMailAddress = approver.Email;
+                                string subject = "CashAdvance Request Approval " + CashAdvanceStatusTracker.CashAdvanceRequestId.ToString();
+                                Employee emp = await _context.Employees.FindAsync(CashAdvanceStatusTracker.EmployeeId);
+                                var CashAdvancereq = _context.CashAdvanceRequests.Find(CashAdvanceStatusTracker.CashAdvanceRequestId);
+
+                                var domain = _config.GetSection("FrontendDomain").Value;
+                                MailText = MailText.Replace("{FrontendDomain}", domain);
+
+                                var builder = new MimeKit.BodyBuilder();
+
+                                MailText = MailText.Replace("{Requester}", emp.GetFullName());
+                                MailText = MailText.Replace("{ApproverName}", approver.GetFullName());
+                                MailText = MailText.Replace("{Currency}", _context.CurrencyTypes.Find(emp.CurrencyTypeId).CurrencyCode);
+                                MailText = MailText.Replace("{RequestedAmount}", CashAdvancereq.CashAdvanceAmount.ToString());
+                                MailText = MailText.Replace("{RequestNumber}", CashAdvancereq.Id.ToString());
+                                builder.HtmlBody = MailText;
+
+
+                                EmailDto emailDto = new EmailDto();
+                                emailDto.To = approverMailAddress;
+                                emailDto.Subject = subject;
+                                emailDto.Body = builder.HtmlBody;
+
+                                await _emailSender.SendEmailAsync(emailDto);
+
+
                             }
                             else
                             {

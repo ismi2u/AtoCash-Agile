@@ -1160,10 +1160,11 @@ namespace AtoCashAPI.Controllers
                     travelItemDTO.EmployeeId = travel.EmployeeId;
                     travelItemDTO.EmployeeName = _context.Employees.Find(travel.EmployeeId).GetFullName();
 
-
-
+                    travelItemDTO.TravelStartDate = travel.TravelStartDate;
+                    travelItemDTO.TravelEndDate = travel.TravelEndDate;
+                    travelItemDTO.TravelPurpose = travel.TravelPurpose;
                     travelItemDTO.BusinessTypeId = travel.BusinessTypeId;
-                    travelItemDTO.BusinessType = travelItemDTO.BusinessTypeId != null ? _context.BusinessTypes.Find(travel.BusinessTypeId).BusinessTypeName : null;
+                    travelItemDTO.BusinessType = travel.BusinessTypeId != null ? _context.BusinessTypes.Find(travel.BusinessTypeId).BusinessTypeName : null;
                     travelItemDTO.BusinessUnitId = travel.BusinessUnitId;
                     travelItemDTO.BusinessUnit = travel.BusinessUnitId != null ? _context.BusinessUnits.Find(travel.BusinessUnitId).GetBusinessUnitName() : null;
 
@@ -1290,8 +1291,10 @@ namespace AtoCashAPI.Controllers
                     travelItemDTO.TravelStartDate = travel.TravelStartDate;
                     travelItemDTO.TravelEndDate = travel.TravelEndDate;
                     travelItemDTO.TravelPurpose = travel.TravelPurpose;
+                    travelItemDTO.BusinessTypeId = travel.BusinessTypeId;
+                    travelItemDTO.BusinessType = travel.BusinessTypeId != null ? _context.BusinessTypes.Find(travel.BusinessTypeId).BusinessTypeName : null;
                     travelItemDTO.BusinessUnitId = travel.BusinessUnitId;
-                    travelItemDTO.BusinessUnit = _context.BusinessUnits.Find(travel.BusinessUnit).GetBusinessUnitName();
+                    travelItemDTO.BusinessUnit = travel.BusinessUnitId != null ? _context.BusinessUnits.Find(travel.BusinessUnitId).GetBusinessUnitName(): null;
 
                     travelItemDTO.ProjectId = travel.ProjectId;
                     travelItemDTO.ProjectName = travel.ProjectId != null ? _context.Projects.Find(travel.ProjectId).ProjectName : null;

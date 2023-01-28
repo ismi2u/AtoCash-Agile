@@ -111,6 +111,10 @@ namespace AtoCashAPI.Controllers
                 return Conflict(new RespStatus { Status = "Failure", Message = "Disburese Id invalid!" });
             }
 
+            //AdjustCurBalanceAndCashOnHandWhileDisplaying(id);
+            
+            disbursementsAndClaimsMaster = await _context.DisbursementsAndClaimsMasters.FindAsync(id);
+
             DisbursementsAndClaimsMasterDTO disbursementsAndClaimsMasterDTO = new();
 
             disbursementsAndClaimsMasterDTO.Id = disbursementsAndClaimsMaster.Id;
@@ -133,8 +137,11 @@ namespace AtoCashAPI.Controllers
             disbursementsAndClaimsMasterDTO.CurrencyType = _context.CurrencyTypes.Find(disbursementsAndClaimsMaster.CurrencyTypeId).CurrencyCode;
             disbursementsAndClaimsMasterDTO.RequestDate = disbursementsAndClaimsMaster.RecordDate; //ToShortDateString();
             disbursementsAndClaimsMasterDTO.ClaimAmount = disbursementsAndClaimsMaster.ClaimAmount;
-            disbursementsAndClaimsMasterDTO.AmountToWallet = disbursementsAndClaimsMaster.AmountToWallet;
+
             disbursementsAndClaimsMasterDTO.AmountToCredit = disbursementsAndClaimsMaster.AmountToCredit;
+            disbursementsAndClaimsMasterDTO.AmountToWallet = disbursementsAndClaimsMaster.AmountToWallet;
+
+
             disbursementsAndClaimsMasterDTO.IsSettledAmountCredited = disbursementsAndClaimsMaster.IsSettledAmountCredited ?? false;
             disbursementsAndClaimsMasterDTO.SettledDate = disbursementsAndClaimsMaster.SettledDate != null ? disbursementsAndClaimsMaster.SettledDate.Value.ToShortDateString() : string.Empty;
             disbursementsAndClaimsMasterDTO.SettlementComment = disbursementsAndClaimsMaster.SettlementComment;
@@ -144,9 +151,6 @@ namespace AtoCashAPI.Controllers
             disbursementsAndClaimsMasterDTO.CostCenterId = disbursementsAndClaimsMaster.CostCenterId;
             disbursementsAndClaimsMasterDTO.ApprovalStatusId = disbursementsAndClaimsMaster.ApprovalStatusId;
             disbursementsAndClaimsMasterDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(disbursementsAndClaimsMaster.ApprovalStatusId).Status;
-
-
-
 
             return Ok(disbursementsAndClaimsMasterDTO);
         }
@@ -330,7 +334,7 @@ namespace AtoCashAPI.Controllers
                 else
                 {
 
-                    empCashAdvanceBal.CashOnHand = (empCashAdvanceBal.CashOnHand - CreditToWallet) >= 0 ? empCashAdvanceBal.CashOnHand - CreditToWallet : 0;
+                    empCashAdvanceBal.CashOnHand =  empCashAdvanceBal.CashOnHand - CreditToWallet; // this can go on negative due to adjustments
                     empCashAdvanceBal.CurBalance = (empCashAdvanceBal.CurBalance + (disbursementsAndClaimsMaster.AmountToWallet ?? 0)) < RoleMaxLimit ? (empCashAdvanceBal.CurBalance + (disbursementsAndClaimsMaster.AmountToWallet ?? 0)) : RoleMaxLimit;
 
                     //curbalance cannot be more than the RoleMax lime for cash requests
@@ -390,7 +394,9 @@ namespace AtoCashAPI.Controllers
 
                 MailText = MailText.Replace("{Requester}", requester.GetFullName());
                 MailText = MailText.Replace("{Currency}", _context.CurrencyTypes.Find(requester.CurrencyTypeId).CurrencyCode);
-                MailText = MailText.Replace("{RequestedAmount}", disbursementsAndClaimsMaster.AmountToWallet.ToString() + " + " + disbursementsAndClaimsMaster.AmountToCredit.ToString());
+                MailText = MailText.Replace("{RequestedAmount}", disbursementsAndClaimsMaster.ClaimAmount.ToString());
+                MailText = MailText.Replace("{AdjustedAmount}", disbursementsAndClaimsMaster.AmountToWallet.ToString());
+                MailText = MailText.Replace("{BankCredit}", disbursementsAndClaimsMaster.AmountToCredit.ToString());
                 MailText = MailText.Replace("{RequestNumber}", requestId.ToString());
                 builder.HtmlBody = MailText;
 
@@ -408,7 +414,62 @@ namespace AtoCashAPI.Controllers
             return Ok(new RespStatus { Status = "Success", Message = "Accounts Payable Entry Updated!" });
         }
 
+        //Find the current pettycash balance of employee to find CASH-ON-HAND
+        //if cashonhand is Zero, and still wallet balance is to be credited to the account then 
+        //adjust it with the bank credit (bank credit + wallet credit.
+        // scenario -1 cashonhand is = 0
+        //scnearion 2 cashonhand is !=0 but less than wallet credit (which lead to -ve cashonhand.
+        //scenario 3 cashon hand is greater than wallet credit (best case scenario)
 
 
+        private async void AdjustCurBalanceAndCashOnHandWhileDisplaying( int disbClaimId)
+        {
+            using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
+            {
+                DisbursementsAndClaimsMaster disbursementsAndClaimsMaster = _context.DisbursementsAndClaimsMasters.Find(disbClaimId);
+
+                EmpCurrentCashAdvanceBalance empCurCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(e => e.EmployeeId == disbursementsAndClaimsMaster.EmployeeId).FirstOrDefault();
+                var currentCashOnHand = empCurCashAdvanceBalance.CashOnHand;
+
+                double? adjustedAmount = 0;
+
+                if (currentCashOnHand == 0 || currentCashOnHand < disbursementsAndClaimsMaster.AmountToWallet)
+                {
+                    adjustedAmount = disbursementsAndClaimsMaster.AmountToCredit + disbursementsAndClaimsMaster.AmountToWallet - currentCashOnHand;
+
+
+
+                    disbursementsAndClaimsMaster.AmountToCredit = adjustedAmount;
+                    disbursementsAndClaimsMaster.AmountToWallet = 0;
+
+
+
+                }
+                else if (currentCashOnHand > 0 && disbursementsAndClaimsMaster.AmountToWallet == 0
+                                                && disbursementsAndClaimsMaster.AmountToCredit > currentCashOnHand)
+                {
+                    adjustedAmount = disbursementsAndClaimsMaster.AmountToCredit - currentCashOnHand;
+
+                    disbursementsAndClaimsMaster.AmountToCredit = adjustedAmount;
+                    disbursementsAndClaimsMaster.AmountToWallet = currentCashOnHand;
+
+                    empCurCashAdvanceBalance.CashOnHand = 0;
+                    empCurCashAdvanceBalance.CurBalance = empCurCashAdvanceBalance.CurBalance + currentCashOnHand;
+                    empCurCashAdvanceBalance.UpdatedOn = DateTime.UtcNow;
+
+                }
+
+
+                empCurCashAdvanceBalance.CashOnHand = 0;
+                empCurCashAdvanceBalance.CurBalance = empCurCashAdvanceBalance.CurBalance + currentCashOnHand;
+                empCurCashAdvanceBalance.UpdatedOn = DateTime.UtcNow;
+
+                _context.EmpCurrentCashAdvanceBalances.Update(empCurCashAdvanceBalance);
+                _context.DisbursementsAndClaimsMasters.Update(disbursementsAndClaimsMaster);
+                _context.SaveChanges();
+                AtoCashDbContextTransaction.Commit();
+            }
+
+        }
     }
 }

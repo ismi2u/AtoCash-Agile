@@ -1,5 +1,7 @@
 INSERT INTO public."Locations"("Id", "LocationName", "City", "Latitude", "Longitude", "LocationDesc", "StatusTypeId")
 	VALUES (101, 'Riyadh', 'Riyadh', null, null, 'Riyadh City', 1);
+	
+SELECT pg_catalog.setval('public."Locations_Id_seq"', 101, true);
 
 INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1001, '20001', 'Sign Anas In Malek', 1);
 INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1002, '20002', 'Sign-AL Takhasusi', 1);
@@ -205,6 +207,7 @@ INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "Stat
 INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1202, 'SUC', 'SUC', 1);
 INSERT INTO public."CostCenters"("Id", "CostCenterCode", "CostCenterDesc", "StatusTypeId") VALUES (1203, 'TRN', 'TRN', 1);
 
+SELECT pg_catalog.setval('public."CostCenters_Id_seq"', 1203, true);
 
 
 
@@ -306,6 +309,16 @@ INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedge
 INSERT INTO public."GeneralLedger"("Id", "GeneralLedgerAccountNo", "GeneralLedgerAccountName", "StatusTypeId")  VALUES (600094, '6215104000005', 'Internet - G&A', 1);
 
 
+SELECT pg_catalog.setval('public."GeneralLedger_Id_seq"', 600094, true);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -315,9 +328,16 @@ INSERT INTO public."ExpenseCategories"("Id", "ExpenseCategoryName", "ExpenseCate
 INSERT INTO public."ExpenseCategories"("Id", "ExpenseCategoryName", "ExpenseCategoryDesc", "StatusTypeId") VALUES (102, 'Department', 'Department Category',  1);
 INSERT INTO public."ExpenseCategories"("Id", "ExpenseCategoryName", "ExpenseCategoryDesc", "StatusTypeId") VALUES (103, 'Inventory', 'Inventory Category',  1);
 
-
+SELECT pg_catalog.setval('public."ExpenseCategories_Id_seq"', 103, true);
 
 --------
+
+
+
+
+
+
+
 INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1001, 'Baladia Renewal', 'Baladia Renewal', 101, 600001, 1);
 INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1002, 'Beverages Standard Cost', 'Beverages Standard Cost', 101, 600002, 1);
 INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1003, 'Business Travel Ticket', 'Business Travel Ticket', 101, 600003, 1);
@@ -414,6 +434,10 @@ INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "E
 INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1092, 'Repair and Maintenance -Vehicles- G&A', 'Repair and Maintenance -Vehicles- G&A', 102, 600092, 1);
 INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1093, 'Notary Attestation, Registration and Other Administrative Fees', 'Notary Attestation, Registration and Other Administrative Fees', 102, 600093, 1);
 INSERT INTO public."ExpenseTypes"("Id", "ExpenseTypeName", "ExpenseTypeDesc", "ExpenseCategoryId", "GeneralLedgerId", "StatusTypeId") VALUES (1094, 'Internet - G&A', 'Internet - G&A', 102, 600094, 1);
+
+
+SELECT pg_catalog.setval('public."ExpenseTypes_Id_seq"', 1094, true);
+
 ---
 
 INSERT INTO public."BusinessTypes"(	"Id", "BusinessTypeName", "BusinessTypeDesc", "StatusTypeId")
@@ -422,6 +446,9 @@ INSERT INTO public."BusinessTypes"(	"Id", "BusinessTypeName", "BusinessTypeDesc"
 	VALUES (1002, 'Department Business', 'Departments', 1);
 INSERT INTO public."BusinessTypes"(	"Id", "BusinessTypeName", "BusinessTypeDesc", "StatusTypeId")
 	VALUES (1003, 'Inventory Business', 'Inventory management Business', 1);
+	
+	
+	SELECT pg_catalog.setval('public."BusinessTypes_Id_seq"', 1003, true);
 ----
 
 
@@ -632,19 +659,10 @@ INSERT INTO public."BusinessUnits"("Id", "BusinessTypeId", "BusinessUnitCode", "
 INSERT INTO public."BusinessUnits"("Id", "BusinessTypeId", "BusinessUnitCode", "BusinessUnitName", "CostCenterId", "BusinessDesc",  "LocationId", "StatusTypeId") VALUES (1202, 1002, 'SUC', 'Supply Chain', 1202, 'Supply Chain',101, 1);
 INSERT INTO public."BusinessUnits"("Id", "BusinessTypeId", "BusinessUnitCode", "BusinessUnitName", "CostCenterId", "BusinessDesc",  "LocationId", "StatusTypeId") VALUES (1203, 1002, 'TRN', 'Training', 1203, 'Training',101, 1);
 
-
-
-
-
-
-
-
-SELECT pg_catalog.setval('public."BusinessTypes_Id_seq"', 1003, true);
 SELECT pg_catalog.setval('public."BusinessUnits_Id_seq"', 1203, true);
-SELECT pg_catalog.setval('public."CostCenters_Id_seq"', 1204, true);
-SELECT pg_catalog.setval('public."ExpenseCategories_Id_seq"', 103, true);
-SELECT pg_catalog.setval('public."GeneralLedger_Id_seq"', 600094, true);
-SELECT pg_catalog.setval('public."ExpenseTypes_Id_seq"', 1094, true);
-SELECT pg_catalog.setval('public."Locations_Id_seq"', 101, true);
+
+
+
+
 
 

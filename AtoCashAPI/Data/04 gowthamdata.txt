@@ -1,0 +1,122 @@
+INSERT INTO public."Locations" VALUES (102, 'Jeddah', 'Jeddah', NULL, NULL, 'Jeddah City', 1);
+SELECT pg_catalog.setval('public."Locations_Id_seq"', 102, true);
+
+INSERT INTO public."ApprovalGroups" VALUES (301, 'Riyadh-store-approval-group', 'Riyadh-store-approval-group');
+INSERT INTO public."ApprovalGroups" VALUES (302, 'Riyadh-Department-approval-group', 'Riyadh-Department-approval-group');
+INSERT INTO public."ApprovalGroups" VALUES (303, 'One-level-approval-group', 'One-level-approval-group');
+INSERT INTO public."ApprovalGroups" VALUES (304, 'Two-level-approval-group', 'Two-level-approval-group');
+
+SELECT pg_catalog.setval('public."ApprovalGroups_Id_seq"', 304, true);
+
+
+--
+INSERT INTO public."JobRoles" VALUES (602, 'STOR-ROLE-EMP', 'Store employee ', 15000);
+INSERT INTO public."JobRoles" VALUES (603, 'STOR-ROLE-MGR', 'Store-Manager', 20000);
+INSERT INTO public."JobRoles" VALUES (604, 'STOR-FIN-MGR', 'Store Finance Manager', 20000);
+INSERT INTO public."JobRoles" VALUES (605, 'DEP-ROLE-EMP', 'Department base employee', 15000);
+INSERT INTO public."JobRoles" VALUES (606, 'DEP-ROLE-MGR', 'Department-Manager', 20000);
+INSERT INTO public."JobRoles" VALUES (607, 'DEP-FIN_MGR', 'Department-finance Manager', 20000);
+INSERT INTO public."JobRoles" VALUES (609, 'Two-level-Employee', 'Two-level-Employee', 15000);
+INSERT INTO public."JobRoles" VALUES (608, 'One-level', 'Store employee ', 20000);
+INSERT INTO public."JobRoles" VALUES (610, 'Two-level-Manager', 'Two-level-Manager', 20000);
+
+SELECT pg_catalog.setval('public."JobRoles_Id_seq"', 610, true);
+
+--
+
+
+INSERT INTO public."ApprovalRoleMaps" VALUES (3002, 304, 602, 1);
+INSERT INTO public."ApprovalRoleMaps" VALUES (3003, 304, 603, 2);
+INSERT INTO public."ApprovalRoleMaps" VALUES (3004, 304, 604, 3);
+
+SELECT pg_catalog.setval('public."ApprovalRoleMaps_Id_seq"', 3010, true);
+
+
+
+---
+
+
+
+
+INSERT INTO public."Employees" VALUES (40003, 'Sign', NULL, 'Malik', '78542595', '5643105595', '5643105595', '3456780912351595', '6754595', '78651595', '89231595', 'Saudi', '1997-01-15 12:20:02.98+00', '2019-01-16 12:20:16.028+00', 'male', 'atocash.11000@gmail.com', '7449335595', 2001, 1, 1, 100);
+INSERT INTO public."Employees" VALUES (40004, 'Asif', NULL, 'Ibrahim', '78542662', '5643105662', '5643105662', '3456780912351662', '6754662', '78651662', '89231662', 'Saudi', '1994-02-16 12:21:52.366+00', '2014-04-19 11:22:13.186+00', 'male', 'atocash.ibrahim@gmail.com', '7449335662', 2001, 1, 1, 100);
+INSERT INTO public."Employees" VALUES (40005, 'Rakan', NULL, 'Alyabes', '78542772', '5643105772', '5643105772', '3456780912351772', '6754772', '78651772', '89231772', 'Saudi', '1993-04-10 11:24:00.614+00', '2013-01-24 12:24:17.389+00', 'male', 'atocash.11002@gmail.com', '7449335772', 2001, 1, 1, 100);
+INSERT INTO public."Employees" VALUES (40006, 'Mohammed', NULL, 'Walid', '78542882', '5643105882', '5643105882', '3456780912351882', '6754882', '78651882', '89231882', 'Saudi', '1997-01-16 12:26:05.336+00', '2007-01-25 12:26:18.385+00', 'male', 'atocash.walid@gmail.com', '74493351882', 2001, 1, 1, 100);
+
+SELECT pg_catalog.setval('public."Employees_Id_seq"', 40006, true);
+
+---
+
+--first one is already present in previous scripts
+
+INSERT INTO public."AspNetUsers" VALUES ('98f86662-1312-40f5-addd-38fa4d56c7ab', 40006, 'atocash.walid@gmail.com', 'ATOCASH.WALID@GMAIL.COM', 'atocash.walid@gmail.com', 'ATOCASH.WALID@GMAIL.COM', false, 'AQAAAAEAACcQAAAAEJuYlRKbsV8Pd6+QLVZd9IIhIAgcBPfUZJvEdaDRsxKmd1xPH0W0n2MczrAJxCyRBA==', 'XGM5A6REZ6DRE2AY2QBWUKVQ6OHEHONX', '9aaf30f8-79a0-4172-951e-119db9afe354', NULL, false, false, NULL, true, 0);
+
+INSERT INTO public."AspNetUsers" VALUES ('cc1704ef-a5fe-478b-9b1f-eb1319d1d973', 40003, 'atocash.11000@gmail.com', 'ATOCASH.11000@GMAIL.COM', 'atocash.11000@gmail.com', 'ATOCASH.11000@GMAIL.COM', false, 'AQAAAAEAACcQAAAAEIFptnC/34qyU7X2hHS7hVpYhZTgr8qKRhBrlWazfxWKNTeGrFURQRtZuSKx1YtgSg==', 'YKJCJJ27Y722TTQWJMUFPPXX6NPOQ2KS', 'e45ed1cf-570b-41a4-b6d4-64858abbd2b8', NULL, false, false, NULL, true, 0);
+
+INSERT INTO public."AspNetUsers" VALUES ('efaa03e3-302b-4ca4-87a9-afe4359506ed', 40004, 'atocash.ibrahim@gmail.com', 'ATOCASH.IBRAHIM@GMAIL.COM', 'atocash.ibrahim@gmail.com', 'ATOCASH.IBRAHIM@GMAIL.COM', false, 'AQAAAAEAACcQAAAAEIhBhNsJTAbWu9getAidufkYG+RaDenCvn360+CHwB9qHVS0nGFulDBsowe5UbR4gw==', '6DGXADVIM46ABPUO6E6EBIYV4FNRPKDC', '307891ff-c48c-4c8f-8201-e1fe1a68ac8d', NULL, false, false, NULL, true, 0);
+
+INSERT INTO public."AspNetUsers" VALUES ('6566ddca-26bb-45ac-a8e0-943136c64015', 40005, 'atocash.11002@gmail.com', 'ATOCASH.11002@GMAIL.COM', 'atocash.11002@gmail.com', 'ATOCASH.11002@GMAIL.COM', false, 'AQAAAAEAACcQAAAAEJLfwzgfjUdkpA4YjPbByeSBpYm10dyIKJlJ5ZK24Z789ZTdLkGqCUMYeHD6kwsfRA==', '325KR4QLMKVYYGFNXMNH6X4EMY737Y7Q', 'dae54dbd-4ba0-4e79-874f-9ff928b6d76e', NULL, false, false, NULL, true, 0);
+---
+
+
+
+
+--first one is already present in previous scripts
+INSERT INTO public."AspNetUserRoles" VALUES ('d57cc679-f137-4eaf-bc55-339687ca8d89', '2abfbara-dc89-4f3f-adaa-6c136358e9b0');
+INSERT INTO public."AspNetUserRoles" VALUES ('cc1704ef-a5fe-478b-9b1f-eb1319d1d973', 'user2af3-dc89-4f3f-adaa-6c136358user');
+INSERT INTO public."AspNetUserRoles" VALUES ('efaa03e3-302b-4ca4-87a9-afe4359506ed', 'user2af3-dc89-4f3f-adaa-6c136358user');
+INSERT INTO public."AspNetUserRoles" VALUES ('efaa03e3-302b-4ca4-87a9-afe4359506ed', '2abftera-dc89-4f3f-adaa-6c136358e9b0');
+INSERT INTO public."AspNetUserRoles" VALUES ('efaa03e3-302b-4ca4-87a9-afe4359506ed', '2abfsaud-dc89-4f3f-adaa-6c136358e9b0');
+INSERT INTO public."AspNetUserRoles" VALUES ('6566ddca-26bb-45ac-a8e0-943136c64015', 'user2af3-dc89-4f3f-adaa-6c136358user');
+INSERT INTO public."AspNetUserRoles" VALUES ('98f86662-1312-40f5-addd-38fa4d56c7ab', 'user2af3-dc89-4f3f-adaa-6c136358user');
+INSERT INTO public."AspNetUserRoles" VALUES ('98f86662-1312-40f5-addd-38fa4d56c7ab', '2abfsaud-dc89-4f3f-adaa-6c136358e9b0');
+INSERT INTO public."AspNetUserRoles" VALUES ('98f86662-1312-40f5-addd-38fa4d56c7ab', '2abfbara-dc89-4f3f-adaa-6c136358e9b0');
+
+
+
+-------
+
+
+----
+
+
+INSERT INTO public."EmpCurrentCashAdvanceBalances" VALUES (106, 40006, 20000, '20,000.00;20,000.00', 20000, 0, '2023-01-28 12:33:09.480116+00');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" VALUES (104, 40004, 20000, '20,000.00;20,000.00', 20000, 0, '2023-01-28 12:38:47.878827+00');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" VALUES (105, 40005, 15000, '15,000.00;15,000.00', 15000, 0, '2023-01-28 13:21:14.676641+00');
+INSERT INTO public."EmpCurrentCashAdvanceBalances" VALUES (103, 40003, 15000, '15,000.00', 9000, 0, '2023-01-28 14:02:29.031965+00');
+
+SELECT pg_catalog.setval('public."EmpCurrentCashAdvanceBalances_Id_seq"', 106, true);
+
+---
+
+----
+
+
+INSERT INTO public."ExpenseCategories" VALUES (104, 'One-level-expense-category', 'One-level-expense-category', 1);
+INSERT INTO public."ExpenseCategories" VALUES (105, 'Two-level-Expense-category', 'Two-level-Expense-category', 1);
+
+SELECT pg_catalog.setval('public."ExpenseCategories_Id_seq"', 105, true);
+---
+
+
+INSERT INTO public."ExpenseTypes" VALUES (1095, 'One level type', 'One level type', 104, 600095, 1);
+INSERT INTO public."ExpenseTypes" VALUES (1096, 'Two level type', 'Two level type', 105, 600096, 1);
+
+SELECT pg_catalog.setval('public."ExpenseTypes_Id_seq"', 1096, true);
+
+--
+
+
+INSERT INTO public."GeneralLedger" VALUES (600095, '7788992390', 'One level type', 1);
+INSERT INTO public."GeneralLedger" VALUES (600096, '8899556677', 'Two level type', 1);
+
+SELECT pg_catalog.setval('public."GeneralLedger_Id_seq"', 600096, true);
+
+--
+
+
+
+
+INSERT INTO public."Vendors" VALUES (2, 'STC', 'Riyadh', 'STC', 1);
+
+SELECT pg_catalog.setval('public."Vendors_Id_seq"', 2, true);

@@ -68,6 +68,18 @@
                                     </p>
 
                                 </td>
+								<td align="center" style="background-color: #5e0961; height: 50px;">
+                                    <p style="font-weight: bolder; font-size: 16px; letter-spacing: 0.025em; color: burlywood; ">
+                                        Adjusted Amount*
+                                    </p>
+
+                                </td>
+								<td align="center" style="background-color: #5e0961; height: 50px;">
+                                    <p style="font-weight: bolder; font-size: 16px; letter-spacing: 0.025em; color: burlywood; ">
+                                        Bank Credit**
+                                    </p>
+
+                                </td>
                             </tr>
 
                             <tr>
@@ -92,6 +104,24 @@
 
                                     </p>
                                 </td>
+								<td align="center" style="background-color: #9061ab; height: 50px; ">
+                                    <p style="font-weight: bold; font-size: 12px; letter-spacing: 0.025em; color: antiquewhite; ">
+                                        {AdjustedAmount}
+                                    </p>
+                                    <p style="color:white;
+												font-weight:bold;">
+
+                                    </p>
+                                </td>
+								<td align="center" style="background-color: #9061ab; height: 50px; ">
+                                    <p style="font-weight: bold; font-size: 12px; letter-spacing: 0.025em; color: antiquewhite; ">
+                                        {BankCredit}
+                                    </p>
+                                    <p style="color:white;
+												font-weight:bold;">
+
+                                    </p>
+                                </td>
                             </tr>
                             <tr><td><br /></td></tr>
                         </tbody>
@@ -107,8 +137,13 @@
 						border-bottom: 2px solid #08179c;
 						background-color: white;">
 
-                    <h2 style="text-align: left;
-							align-items: center;">
+                    <h4 style="text-align: left;
+							align-items: center;"> <p style="font-weight: bolder; font-size: 10px; letter-spacing: 0.025em; color: #08179c; ">
+                            * Adjusted Amount - This amount is adjusted against the Cash Advance amount taken by you.<br/><br/>
+							** Bank Credit  - This Amount is credited to your registered Bank Account.
+                        </p>
+						</h4>
+						<h2>
                         <p style="font-weight: bolder; font-size: 16px; letter-spacing: 0.025em; color: #08179c; ">
                             To raise the request please Login to {FrontendDomain} alternately you can also login using IOS or Android App.
                         </p>
@@ -120,7 +155,7 @@
                         Business and Financial Code of conduct applies to this approval process.
                     </p>
                     <p>
-                        <a href="https://www.AtoCash.com"
+                        <a href="https://www.{FrontendDomain}"
                            style="text-decoration: none; color: #5e0961; border: 2px solid #d216d9; padding: 10px 30px; font-weight: bold; ">
                             Login to {FrontendDomain}
                         </a>

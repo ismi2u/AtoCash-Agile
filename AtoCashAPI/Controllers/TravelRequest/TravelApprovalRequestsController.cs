@@ -390,7 +390,7 @@ namespace AtoCashAPI.Controllers
 
                     MailText = MailText.Replace("{Requester}", emp.GetFullName());
                     MailText = MailText.Replace("{ApproverName}", approver.GetFullName());
-                    MailText = MailText.Replace("{Request}", travelreq.TravelStartDate.ToString() + " - " + travelreq.TravelEndDate.ToString() + " (Purpose): " + travelreq.TravelPurpose.ToString());
+                    MailText = MailText.Replace("{Request}", travelreq.TravelStartDate.Value.ToShortDateString() + " - " + travelreq.TravelEndDate.Value.ToShortDateString() + " (Purpose): " + travelreq.TravelPurpose.ToString());
                     MailText = MailText.Replace("{RequestNumber}", travelreq.Id.ToString());
                     builder.HtmlBody = MailText;
 
@@ -698,7 +698,7 @@ namespace AtoCashAPI.Controllers
 
                 MailText = MailText.Replace("{Requester}", emp.GetFullName());
                 MailText = MailText.Replace("{ApproverName}", approver.GetFullName());
-                MailText = MailText.Replace("{Request}", travelreq.TravelStartDate.ToString() + " - " + travelreq.TravelEndDate.ToString() + " (Purpose): " + travelreq.TravelPurpose.ToString());
+                MailText = MailText.Replace("{Request}", travelreq.TravelStartDate.Value.ToShortDateString() + " - " + travelreq.TravelEndDate.Value.ToShortDateString() + " (Purpose): " + travelreq.TravelPurpose.ToString());
                 MailText = MailText.Replace("{RequestNumber}", travelreq.Id.ToString());
                 builder.HtmlBody = MailText;
 
@@ -996,7 +996,7 @@ namespace AtoCashAPI.Controllers
 
                             MailText = MailText.Replace("{Requester}", emp.GetFullName());
                             MailText = MailText.Replace("{ApproverName}", approver.GetFullName());
-                            MailText = MailText.Replace("{Request}", travelreq.TravelStartDate.ToString() + " - " + travelreq.TravelEndDate.ToString() + " (Purpose): " + travelreq.TravelPurpose.ToString());
+                            MailText = MailText.Replace("{Request}", travelreq.TravelStartDate.Value.ToShortDateString() + " - " + travelreq.TravelEndDate.Value.ToShortDateString() + " (Purpose): " + travelreq.TravelPurpose.ToString());
                             MailText = MailText.Replace("{RequestNumber}", travelreq.Id.ToString());
                             builder.HtmlBody = MailText;
 
