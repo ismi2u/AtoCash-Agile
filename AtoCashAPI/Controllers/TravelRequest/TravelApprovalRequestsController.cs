@@ -25,11 +25,17 @@ namespace AtoCashAPI.Controllers
         private readonly AtoCashDbContext _context;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<TravelApprovalRequestsController> _logger;
-        public TravelApprovalRequestsController(AtoCashDbContext context, IEmailSender emailSender, ILogger<TravelApprovalRequestsController> logger)
+        private readonly IConfiguration _config;
+
+        public TravelApprovalRequestsController(AtoCashDbContext context, 
+            IEmailSender emailSender, 
+            ILogger<TravelApprovalRequestsController> logger,
+             IConfiguration config)
         {
             this._context = context;
             this._emailSender = emailSender;
             _logger = logger;
+            _config = config;
         }
 
 
@@ -377,6 +383,9 @@ namespace AtoCashAPI.Controllers
                     Employee emp = await _context.Employees.FindAsync(travelApprovalRequestDTO.EmployeeId);
                     var travelreq = _context.TravelApprovalRequests.Find(travelApprovalRequestDTO.Id);
 
+                    var domain = _config.GetSection("FrontendDomain").Value;
+                    MailText = MailText.Replace("{FrontendDomain}", domain);
+
                     var builder = new MimeKit.BodyBuilder();
 
                     MailText = MailText.Replace("{Requester}", emp.GetFullName());
@@ -682,6 +691,9 @@ namespace AtoCashAPI.Controllers
                 Employee emp = await _context.Employees.FindAsync(travelApprovalRequestDTO.EmployeeId);
                 var travelreq = _context.TravelApprovalRequests.Find(travelApprovalRequestDTO.Id);
 
+                var domain = _config.GetSection("FrontendDomain").Value;
+                MailText = MailText.Replace("{FrontendDomain}", domain);
+
                 var builder = new MimeKit.BodyBuilder();
 
                 MailText = MailText.Replace("{Requester}", emp.GetFullName());
@@ -976,6 +988,9 @@ namespace AtoCashAPI.Controllers
                             string subject = "Travel Approval Request No# " + travelApprovalRequestDto.Id.ToString();
                             Employee emp = await _context.Employees.FindAsync(travelApprovalRequestDto.EmployeeId);
                             var travelreq = _context.TravelApprovalRequests.Find(travelApprovalRequestDto.Id);
+
+                            var domain = _config.GetSection("FrontendDomain").Value;
+                            MailText = MailText.Replace("{FrontendDomain}", domain);
 
                             var builder = new MimeKit.BodyBuilder();
 

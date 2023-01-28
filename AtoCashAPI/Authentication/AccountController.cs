@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Mail;
@@ -27,17 +28,20 @@ namespace AtoCashAPI.Authentication
         private readonly IEmailSender _emailSender;
         private readonly AtoCashDbContext context;
         private readonly ILogger<AccountController> _logger;
+        private readonly IConfiguration _config;
 
 
         public AccountController(IEmailSender emailSender, UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger,
-            AtoCashDbContext context)
+            AtoCashDbContext context,
+             IConfiguration config)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
             _emailSender = emailSender;
             _logger = logger;
+            _config = config;
         }
 
         [HttpGet]
@@ -229,6 +233,7 @@ namespace AtoCashAPI.Authentication
                      signingCredentials: signingcredentials
                     );
 
+                _logger.LogInformation("Employee " + empid + " loggedin at " + DateTime.UtcNow);
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
@@ -268,17 +273,47 @@ namespace AtoCashAPI.Authentication
 
                     token = token.Replace("+", "^^^");
 
+                  
+
+
+                    ////get password ResetURL from environment variable to send password reset email
+                    //string? PasswordResetRedirectDomain = Environment.GetEnvironmentVariable("PasswordResetDomain");
+
+                    //if(! String.IsNullOrEmpty(PasswordResetRedirectDomain))
+                    //{
+                    //    redirectDomain = PasswordResetRedirectDomain;
+
+                    //}
+                    //else
+                    //{
+
+                    //    if (domain == "foodunitco.com" || domain == "signsa.com" || domain == "foodunitco.onmicrosoft.com"
+                    //        || domain == "2eat.com.sa" || domain == "2eat.sa" || domain == "alzadalyawmi.com"
+                    //        || domain == "estilo.sa" || domain == "foodunit.uk" || domain == "dhyoof.com"
+                    //        || domain == "janburger.com" || domain == "luluatnajd.com" || domain == "shawarma-plus.com"
+                    //        || domain == "shawarmaplus.sa" || domain == "signsa.com" || domain == "tameesa.com"
+                    //        || domain == "tameesa.com.sa" || domain == "thouq.sa" || domain == "tameesa.com" || domain == "gmail.com"
+                    //        )
+                    //    {
+                    //        redirectDomain = "fw";
+                    //    }
+                    //    else
+                    //    {
+                    //        redirectDomain = domain.Split('.')[0];
+                    //    }
+
+
+                    //    //console.log('redirectDomain=='+redirectDomain);
+
+                    //    domain = "https://" + redirectDomain + ".atocash.com/change-password?token=";
+                    //}
 
 
 
 
-                    var receiverEmail = model.email;
-                    string subject = "Password Reset Link";
-                    string txtdata = "https://fw.atocash.com/change-password?token=" + token + "&email=" + model.email;
+                   
 
-                    //"<a href=\"https://fw.atocash.com/change-password?token=" + token + "&email=" + model.email + "\">";
-
-               
+         
 
 
                     //  string[] paths = { Directory.GetCurrentDirectory(),
@@ -289,9 +324,15 @@ namespace AtoCashAPI.Authentication
                     string MailText = str.ReadToEnd();
                     str.Close();
 
-                    var builder = new MimeKit.BodyBuilder();
+                    var domain = _config.GetSection("FrontendDomain").Value;
+                    MailText = MailText.Replace("{FrontendDomain}", domain);
 
-                    MailText = MailText.Replace("{PasswordReset}", txtdata);
+                    var builder = new MimeKit.BodyBuilder();
+                    var receiverEmail = model.email;
+                    string subject = "Password Reset Link";
+                    string txtdata = "https://" + domain + "/change-password?token=" + token + "&email=" + model.email;
+
+                    MailText = MailText.Replace("{PasswordResetUrl}", txtdata);
                 
                     builder.HtmlBody = MailText;
 
@@ -339,6 +380,7 @@ namespace AtoCashAPI.Authentication
                         emailDto.Body = body;
 
                         await _emailSender.SendEmailAsync(emailDto);
+                        _logger.LogInformation("Password Reset: " + receiverEmail + "Password has been Reset");
                         return Ok(new RespStatus { Status = "Success", Message = "Your Password has been reset!" });
                     }
 

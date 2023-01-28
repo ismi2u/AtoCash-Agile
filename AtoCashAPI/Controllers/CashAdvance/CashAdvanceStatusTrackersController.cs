@@ -25,15 +25,18 @@ namespace AtoCashAPI.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger<CashAdvanceStatusTrackersController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _config;
 
         public CashAdvanceStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender,
                                                         ILogger<CashAdvanceStatusTrackersController> logger,
-                                                        UserManager<ApplicationUser> userManager)
+                                                        UserManager<ApplicationUser> userManager,
+                                                        IConfiguration config)
         {
             _userManager = userManager;
             _context = context;
             _emailSender = emailSender;
             _logger = logger;
+            _config = config;
         }
 
         // GET: api/CashAdvanceStatusTrackers
@@ -282,6 +285,9 @@ namespace AtoCashAPI.Controllers
                                     string subject = "CashAdvance Request Approval " + CashAdvanceStatusTracker.CashAdvanceRequestId.ToString();
                                     Employee emp = await _context.Employees.FindAsync(CashAdvanceStatusTracker.EmployeeId);
                                     var CashAdvancereq = _context.CashAdvanceRequests.Find(CashAdvanceStatusTracker.CashAdvanceRequestId);
+
+                                    var domain = _config.GetSection("FrontendDomain").Value;
+                                    MailText = MailText.Replace("{FrontendDomain}", domain);
 
                                     var builder = new MimeKit.BodyBuilder();
 

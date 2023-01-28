@@ -25,12 +25,16 @@ namespace AtoCashAPI.Controllers.CashAdvance
         private readonly AtoCashDbContext _context;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<CashAdvanceRequestsController> _logger;
+        private readonly IConfiguration _config;
 
-        public CashAdvanceRequestsController(AtoCashDbContext context, IEmailSender emailSender, ILogger<CashAdvanceRequestsController> logger)
+        public CashAdvanceRequestsController(AtoCashDbContext context, IEmailSender emailSender,
+            ILogger<CashAdvanceRequestsController> logger,
+            IConfiguration config)
         {
             this._context = context;
             this._emailSender = emailSender;
             _logger = logger;
+            _config = config;
         }
 
 
@@ -405,6 +409,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
 
 
+
+                    var domain = _config.GetSection("FrontendDomain").Value;
+                    MailText = MailText.Replace("{FrontendDomain}", domain);
 
                     var builder = new MimeKit.BodyBuilder();
 
@@ -813,6 +820,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     Employee emp = _context.Employees.Find(CashAdvanceRequestDto.EmployeeId);
                     var CashAdvancereq = _context.CashAdvanceRequests.Find(CashAdvanceRequestDto.Id);
 
+                    var domain = _config.GetSection("FrontendDomain").Value;
+                    MailText = MailText.Replace("{FrontendDomain}", domain);
+
                     var builder = new MimeKit.BodyBuilder();
 
                     MailText = MailText.Replace("{Requester}", emp.GetFullName());
@@ -1164,6 +1174,9 @@ namespace AtoCashAPI.Controllers.CashAdvance
                             string subject = "CashAdvance Request Approval " + CashAdvanceRequestDto.Id.ToString();
                             Employee emp = _context.Employees.Find(CashAdvanceRequestDto.EmployeeId);
                             var CashAdvancereq = _context.CashAdvanceRequests.Find(CashAdvanceRequestDto.Id);
+
+                            var domain = _config.GetSection("FrontendDomain").Value;
+                            MailText = MailText.Replace("{FrontendDomain}", domain);
 
                             var builder = new MimeKit.BodyBuilder();
 

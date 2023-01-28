@@ -30,16 +30,18 @@ namespace AtoCashAPI.Controllers
         private readonly IWebHostEnvironment hostingEnvironment;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExpenseReimburseRequestsController> _logger;
-
+        private readonly IConfiguration _config;
         public ExpenseReimburseRequestsController(AtoCashDbContext context,
                                                 IWebHostEnvironment hostEnv,
                                                 IEmailSender emailSender,
-                                                ILogger<ExpenseReimburseRequestsController> logger)
+                                                ILogger<ExpenseReimburseRequestsController> logger,
+                                                 IConfiguration config)
         {
             _context = context;
             hostingEnvironment = hostEnv;
             _emailSender = emailSender;
             _logger = logger;
+            _config = config;
         }
 
         // GET: api/ExpenseReimburseRequests
@@ -948,6 +950,9 @@ namespace AtoCashAPI.Controllers
                             var approverMailAddress = approver.Email;
                             string subject = expenseReimburseRequest.ExpenseReportTitle + " - #" + expenseReimburseRequest.Id.ToString();
                             Employee emp = _context.Employees.Find(expenseReimburseRequestDto.EmployeeId);
+                            
+                            var domain = _config.GetSection("FrontendDomain").Value;
+                            MailText = MailText.Replace("{FrontendDomain}", domain);
 
                             var builder = new MimeKit.BodyBuilder();
 
@@ -1312,6 +1317,9 @@ namespace AtoCashAPI.Controllers
                     var approverMailAddress = approver.Email;
                     string subject = expenseReimburseRequest.ExpenseReportTitle + " - #" + expenseReimburseRequest.Id.ToString();
                     Employee emp = _context.Employees.Find(expenseReimburseRequestDto.EmployeeId);
+
+                    var domain = _config.GetSection("FrontendDomain").Value;
+                    MailText = MailText.Replace("{FrontendDomain}", domain);
 
                     var builder = new MimeKit.BodyBuilder();
 

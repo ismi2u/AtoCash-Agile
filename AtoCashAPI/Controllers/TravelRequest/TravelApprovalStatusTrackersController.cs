@@ -25,16 +25,19 @@ namespace AtoCashAPI.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger<TravelApprovalStatusTrackersController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _config;
 
 
         public TravelApprovalStatusTrackersController(AtoCashDbContext context, IEmailSender emailSender,
                                                         ILogger<TravelApprovalStatusTrackersController> logger,
-                                                         UserManager<ApplicationUser> userManager)
+                                                         UserManager<ApplicationUser> userManager,
+                                                         IConfiguration config)
         {
             _userManager = userManager;
             _context = context;
             _emailSender = emailSender;
             _logger = logger;
+            _config = config;
         }
 
 
@@ -295,6 +298,10 @@ namespace AtoCashAPI.Controllers
                                     Employee emp = await _context.Employees.FindAsync(travelApprovalStatusTracker.EmployeeId);
                                     var travelreq = _context.TravelApprovalRequests.Find(travelApprovalStatusTracker.TravelApprovalRequestId);
                                     //var travelreqStatusTracker = _context.TravelApprovalStatusTrackers.Find(travelApprovalStatusTracker.Id);
+                                    
+                                    var domain = _config.GetSection("FrontendDomain").Value;
+                                    MailText = MailText.Replace("{FrontendDomain}", domain);
+
                                     var builder = new MimeKit.BodyBuilder();
 
                                     MailText = MailText.Replace("{Requester}", emp.GetFullName());

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Configuration;
 using System.Text;
 
@@ -20,6 +21,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+//serilog
+var _loggerconf = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.File("AtoCash-.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Logging.AddSerilog(_loggerconf);
 
 //AzureCloudGmailServer
 //PostgreSQLInLocalAppInContainer

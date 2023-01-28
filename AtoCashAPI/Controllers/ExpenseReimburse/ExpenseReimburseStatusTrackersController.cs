@@ -25,16 +25,19 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExpenseReimburseStatusTrackersController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _config;
 
         public ExpenseReimburseStatusTrackersController(AtoCashDbContext context,
                                                         IEmailSender emailSender,
                                                         ILogger<ExpenseReimburseStatusTrackersController> logger,
-                                                        UserManager<ApplicationUser> userManager)
+                                                        UserManager<ApplicationUser> userManager,
+                                                         IConfiguration config)
         {
             _userManager = userManager;
             _context = context;
             _emailSender = emailSender;
             _logger = logger;
+            _config = config;
         }
 
         // GET: api/ExpenseReimburseStatusTrackers
@@ -565,6 +568,9 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                                     string subject = expReimReqt.ExpenseReportTitle + " - #" + expenseReimburseStatusTracker.ExpenseReimburseRequest.Id.ToString();
                                     Employee emp = _context.Employees.Find(expenseReimburseStatusTracker.EmployeeId);
 
+
+                                    var domain = _config.GetSection("FrontendDomain").Value;
+                                    MailText = MailText.Replace("{FrontendDomain}", domain);
 
                                     var builder = new MimeKit.BodyBuilder();
 

@@ -28,12 +28,16 @@ namespace AtoCashAPI.Controllers
         private readonly AtoCashDbContext _context;
         private readonly ILogger<DisbursementsAndClaimsMastersController> _logger;
         private readonly IEmailSender _emailSender;
-
-        public DisbursementsAndClaimsMastersController(AtoCashDbContext context, ILogger<DisbursementsAndClaimsMastersController> logger, IEmailSender emailSender)
+        private readonly IConfiguration _config;
+        public DisbursementsAndClaimsMastersController(AtoCashDbContext context, 
+            ILogger<DisbursementsAndClaimsMastersController> logger, 
+            IEmailSender emailSender,
+            IConfiguration config)
         {
             _context = context;
             _logger = logger;
             _emailSender = emailSender;
+            _config = config;
         }
 
         // GET: api/DisbursementsAndClaimsMasters/
@@ -378,6 +382,9 @@ namespace AtoCashAPI.Controllers
                 var requestId = disbursementsAndClaimsMaster.BlendedRequestId;
 
                 string subject = "Claim request is processed and settled for Request No: " + requestId;
+
+                var domain = _config.GetSection("FrontendDomain").Value;
+                MailText = MailText.Replace("{FrontendDomain}", domain);
 
                 var builder = new MimeKit.BodyBuilder();
 

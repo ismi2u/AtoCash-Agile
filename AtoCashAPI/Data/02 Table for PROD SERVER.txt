@@ -6,8 +6,8 @@ INSERT INTO public."StatusTypes" VALUES (2, 'Inactive');
 SELECT pg_catalog.setval('public."StatusTypes_Id_seq"', 2, true);
 
 
-INSERT INTO public."CurrencyTypes" VALUES (1, 'SAR', 'Saudi Riyal', 'SAUDI', 1);
-SELECT pg_catalog.setval('public."CurrencyTypes_Id_seq"', 1, true);
+INSERT INTO public."CurrencyTypes" VALUES (100, 'SAR', 'Saudi Riyal', 'SAUDI', 1);
+SELECT pg_catalog.setval('public."CurrencyTypes_Id_seq"', 100, true);
 
 INSERT INTO public."EmploymentTypes" VALUES (1, 'FULL-TIME-EMP', 'Full Time Employee');
 INSERT INTO public."EmploymentTypes" VALUES (2, 'PART-TIME-EMP', 'Part Time Employee');
@@ -44,9 +44,26 @@ SELECT pg_catalog.setval('public."ExpenseTypes_Id_seq"', 6000, true);
 SELECT pg_catalog.setval('public."BusinessTypes_Id_seq"', 1000, true);
 SELECT pg_catalog.setval('public."BusinessUnits_Id_seq"', 100, true);
 SELECT pg_catalog.setval('public."JobRoles_Id_seq"', 600, true);
+
+SELECT pg_catalog.setval('public."ApprovalGroups_Id_seq"', 300, true);
+SELECT pg_catalog.setval('public."CashAdvanceRequests_Id_seq"', 600, true);
+SELECT pg_catalog.setval('public."CashAdvanceStatusTrackers_Id_seq"', 3000, true);
+SELECT pg_catalog.setval('public."DisbursementsAndClaimsMasters_Id_seq"', 5000, true);
+SELECT pg_catalog.setval('public."EmployeeExtendedInfos_Id_seq"', 3000, true);
+SELECT pg_catalog.setval('public."ExpenseReimburseRequests_Id_seq"', 200, true);
+SELECT pg_catalog.setval('public."ExpenseReimburseStatusTrackers_Id_seq"', 2000, true);
+SELECT pg_catalog.setval('public."ExpenseSubClaims_Id_seq"', 500, true);
+SELECT pg_catalog.setval('public."Locations_Id_seq"', 100, true);
+SELECT pg_catalog.setval('public."ProjectManagements_Id_seq"', 100, true);
+SELECT pg_catalog.setval('public."Projects_Id_seq"', 1000, true);
+SELECT pg_catalog.setval('public."SubProjects_Id_seq"', 200, true);
+SELECT pg_catalog.setval('public."WorkTasks_Id_seq"', 300, true);
+SELECT pg_catalog.setval('public."TravelApprovalRequests_Id_seq"', 200, true);
+SELECT pg_catalog.setval('public."TravelApprovalStatusTrackers_Id_seq"', 200, true);
+SELECT pg_catalog.setval('public."ApprovalRoleMaps_Id_seq"', 3000, true);
 ----------
 
-INSERT INTO public."Employees"(	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId") VALUES (40001, 'Almutaz', NULL, 'Mahd', 'E-4109', '235453565636', 'AD1400080001001234567890', '3453564667678854', '3249094', 'ZT445666', '343423123532423', 'Saudi', '2021-09-08 11:33:30.165', '2022-09-27 11:34:43.152', 'male', 'a.mahd@foodunitco.com', '8297333325', 2001, 1,1,1);
+INSERT INTO public."Employees"(	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId") VALUES (40001, 'Atocash', NULL, 'eslam', 'E-4109', '235453565636', 'AD1400080001001234567890', '3453564667678854', '3249094', 'ZT445666', '343423123532423', 'Saudi', '2021-09-08 11:33:30.165', '2022-09-27 11:34:43.152', 'male', 'a.mahd@foodunitco.com', '8297333325', 2001, 1,1,100);
 
 SELECT pg_catalog.setval('public."Employees_Id_seq"', 40001, true);
 
