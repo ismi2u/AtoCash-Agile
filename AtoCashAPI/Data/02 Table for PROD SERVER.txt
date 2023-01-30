@@ -63,7 +63,7 @@ SELECT pg_catalog.setval('public."TravelApprovalStatusTrackers_Id_seq"', 200, tr
 SELECT pg_catalog.setval('public."ApprovalRoleMaps_Id_seq"', 3000, true);
 ----------
 
-INSERT INTO public."Employees"(	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId") VALUES (40001, 'Atocash', NULL, 'eslam', 'E-4109', '235453565636', 'AD1400080001001234567890', '3453564667678854', '3249094', 'ZT445666', '343423123532423', 'Saudi', '2021-09-08 11:33:30.165', '2022-09-27 11:34:43.152', 'male', 'a.mahd@foodunitco.com', '8297333325', 2001, 1,1,100);
+INSERT INTO public."Employees"(	"Id", "FirstName", "MiddleName", "LastName", "EmpCode", "BankAccount", "IBAN", "BankCardNo", "NationalID", "PassportNo", "TaxNumber", "Nationality", "DOB", "DOJ", "Gender", "Email", "MobileNumber", "BankId", "EmploymentTypeId", "StatusTypeId", "CurrencyTypeId") VALUES (40001, 'AlMutaz', NULL, 'AlMahd', 'E-4109', '235453565636', 'AD1400080001001234567890', '3453564667678854', '3249094', 'ZT445666', '343423123532423', 'Saudi', '2021-09-08 11:33:30.165', '2022-09-27 11:34:43.152', 'male', 'a.mahd@foodunitco.com', '8297333325', 2001, 1,1,100);
 
 SELECT pg_catalog.setval('public."Employees_Id_seq"', 40001, true);
 
