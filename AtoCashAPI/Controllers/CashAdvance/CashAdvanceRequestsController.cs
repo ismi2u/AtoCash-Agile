@@ -306,7 +306,7 @@ namespace AtoCashAPI.Controllers.CashAdvance
 
 
 
-            int ApprovedCount = _context.ExpenseReimburseStatusTrackers.Where(e => e.ExpenseReimburseRequestId == CashAdvanceRequest.Id && e.ApprovalStatusTypeId == (int)EApprovalStatus.Approved).Count();
+            int ApprovedCount = _context.CashAdvanceStatusTrackers.Where(e => e.CashAdvanceRequestId == CashAdvanceRequest.Id && e.ApprovalStatusTypeId == (int)EApprovalStatus.Approved).Count();
             if (ApprovedCount != 0)
             {
                 return Conflict(new RespStatus { Status = "Failure", Message = "CashAdvance Requests cant be Edited after Approval!" });
