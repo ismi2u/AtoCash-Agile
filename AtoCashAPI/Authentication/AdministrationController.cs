@@ -13,7 +13,7 @@ namespace AtoCashAPI.Authentication
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-  [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
+    [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr, User")]
     public class AdministrationController : ControllerBase
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -28,32 +28,32 @@ namespace AtoCashAPI.Authentication
         }
 
 
-        [HttpPost]
-        [ActionName("CreateRole")]
-        [Authorize(Roles = "AtominosAdmin, Admin")]
-        public async Task<IActionResult> CreateRole([FromBody] RoleModel model)
-        {
-            IdentityRole identityRole = new()
-            {
-                Name = model.RoleName
-            };
+        //[HttpPost]
+        //[ActionName("CreateRole")]
+        //[Authorize(Roles = "AtominosAdmin, Admin")]
+        //public async Task<IActionResult> CreateRole([FromBody] RoleModel model)
+        //{
+        //    IdentityRole identityRole = new()
+        //    {
+        //        Name = model.RoleName
+        //    };
 
-            IdentityResult result = await roleManager.CreateAsync(identityRole);
+        //    IdentityResult result = await roleManager.CreateAsync(identityRole);
 
-            if (result.Succeeded)
-            {
-                return Ok(new RespStatus { Status = "Success", Message = "New Role Created" });
-            }
+        //    if (result.Succeeded)
+        //    {
+        //        return Ok(new RespStatus { Status = "Success", Message = "New Role Created" });
+        //    }
 
-            RespStatus respStatus = new();
+        //    RespStatus respStatus = new();
 
-            foreach (IdentityError error in result.Errors)
-            {
-                respStatus.Message = respStatus.Message + error.Description + "\n";
-            }
+        //    foreach (IdentityError error in result.Errors)
+        //    {
+        //        respStatus.Message = respStatus.Message + error.Description + "\n";
+        //    }
 
-            return BadRequest(respStatus);
-        }
+        //    return BadRequest(respStatus);
+        //}
 
 
 
@@ -107,7 +107,7 @@ namespace AtoCashAPI.Authentication
         [ActionName("GetUsersByRoleId")]
         public async Task<IActionResult> GetUsersByRoleId(string id)
         {
-                string rolName = roleManager.Roles.Where(r => r.Id == id).FirstOrDefault().Name;
+            string rolName = roleManager.Roles.Where(r => r.Id == id).FirstOrDefault().Name;
 
             //  List<string> UserIds =  context.UserRoles.Where(r => r.RoleId == id).Select(b => b.UserId).Distinct().ToList();
 
@@ -115,7 +115,7 @@ namespace AtoCashAPI.Authentication
 
             var usersOfRole = await userManager.GetUsersInRoleAsync(rolName);
 
-            foreach( ApplicationUser user in usersOfRole)
+            foreach (ApplicationUser user in usersOfRole)
             {
                 UserByRole userByRole = new();
 
@@ -145,34 +145,34 @@ namespace AtoCashAPI.Authentication
             return Ok(role);
         }
 
-        [HttpDelete]
-        [ActionName("DeleteRole")]
-        [Authorize(Roles = "AtominosAdmin, Admin")]
-        public async Task<IActionResult> DeleteRole(string id)
-        {
-            var role = await roleManager.FindByIdAsync(id);
+        //[HttpDelete]
+        //[ActionName("DeleteRole")]
+        //[Authorize(Roles = "AtominosAdmin, Admin")]
+        //public async Task<IActionResult> DeleteRole(string id)
+        //{
+        //    var role = await roleManager.FindByIdAsync(id);
 
-            if (role == null)
-            {
-                return Conflict(new RespStatus { Status = "Failure", Message = "Role not Found" });
-            }
+        //    if (role == null)
+        //    {
+        //        return Conflict(new RespStatus { Status = "Failure", Message = "Role not Found" });
+        //    }
 
-            IdentityResult result = await roleManager.DeleteAsync(role);
+        //    IdentityResult result = await roleManager.DeleteAsync(role);
 
-            if (result.Succeeded)
-            {
-                return Ok(new RespStatus { Status = "Success", Message = "Role Deleted" });
-            }
+        //    if (result.Succeeded)
+        //    {
+        //        return Ok(new RespStatus { Status = "Success", Message = "Role Deleted" });
+        //    }
 
-            RespStatus respStatus = new();
+        //    RespStatus respStatus = new();
 
-            foreach (IdentityError error in result.Errors)
-            {
-                respStatus.Message = respStatus.Message + error.Description + "\n";
-            }
+        //    foreach (IdentityError error in result.Errors)
+        //    {
+        //        respStatus.Message = respStatus.Message + error.Description + "\n";
+        //    }
 
-            return NotFound(respStatus);
-        }
+        //    return NotFound(respStatus);
+        //}
 
         [HttpDelete]
         [ActionName("DeleteUser")]
@@ -290,8 +290,8 @@ namespace AtoCashAPI.Authentication
 
                 if (result.Succeeded)
                 {
-                        respStatus.Message = "Selected Roles assigned to User";
-                        respStatus.Status = "Success";
+                    respStatus.Message = "Selected Roles assigned to User";
+                    respStatus.Status = "Success";
                 }
                 else
                 {

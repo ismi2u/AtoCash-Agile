@@ -116,7 +116,7 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
             {
                 string claimApproverName = null;
 
-                if (statusTracker.ProjectId > 0)
+                if (statusTracker.ProjectId > 0 && statusTracker.ProjectId != null)
                 {
                     claimApproverName = _context.Employees.Where(e => e.Id == _context.Projects.Find(statusTracker.ProjectId).ProjectManagerId)
                         .Select(s => s.GetFullName()).FirstOrDefault();

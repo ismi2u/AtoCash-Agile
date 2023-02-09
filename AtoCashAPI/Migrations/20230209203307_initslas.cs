@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AtoCashAPI.Migrations
 {
-    public partial class deploy : Migration
+    public partial class initslas : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -191,8 +191,8 @@ namespace AtoCashAPI.Controllers
             {
                 return Conflict(new RespStatus { Status = "Failure", Message = "Location in use for Business Unit(s)" });
             }
-           
 
+          
             var Location = await _context.Locations.FindAsync(id);
             if (Location == null)
             {

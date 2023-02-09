@@ -104,7 +104,7 @@ namespace AtoCashAPI.Models
         public string? EmployeeName { get; set; }
         public int? TravelApprovalRequestId { get; set; }
 
-
+        
         public DateTime? TravelStartDate { get; set; }
 
         public DateTime? TravelEndDate { get; set; }

@@ -232,6 +232,11 @@ namespace AtoCashAPI.Controllers
                 return Conflict(new RespStatus { Status = "Failure", Message = "Approval Role Map Id invalid!" });
             }
 
+            if (_context.EmployeeExtendedInfos.Where(a => a.ApprovalGroupId == approvalRoleMap.ApprovalGroupId && a.JobRoleId == approvalRoleMap.JobRoleId).Any())
+            {
+                return Conflict(new RespStatus { Status = "Failure", Message = "Approval Role Map is in Use!" });
+            }
+
             _context.ApprovalRoleMaps.Remove(approvalRoleMap);
             await _context.SaveChangesAsync();
 

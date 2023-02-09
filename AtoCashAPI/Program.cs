@@ -35,7 +35,7 @@ builder.Logging.AddSerilog(_loggerconf);
 //FUCOAzurePostgresSQLServer
 //AzureCloudGmailServer
 //PostgreSQLInLocalAppInContainer
-builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("AzureCloudGmailServer")));
+builder.Services.AddDbContextPool<AtoCashDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("GoogleCloudAtominosServer")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AtoCashDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
