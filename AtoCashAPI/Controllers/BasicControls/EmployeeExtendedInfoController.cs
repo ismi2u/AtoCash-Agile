@@ -132,13 +132,13 @@ namespace AtoCashAPI.Controllers.BasicControls
                 return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id is invalid" });
             }
 
-            bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(t => t.EmployeeId == id && t.ApprovalStatusTypeId != (int)EApprovalStatus.Approved).Any();
-            bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(t => t.EmployeeId == id && t.ApprovalStatusTypeId != (int)EApprovalStatus.Approved).Any();
-            bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(t => t.EmployeeId == id && t.ApprovalStatusTypeId != (int)EApprovalStatus.Approved ).Any();
+            bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(t => t.EmployeeId == id).Any();
+            bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(t => t.EmployeeId == id ).Any();
+            bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(t => t.EmployeeId == id ).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "Can't modify Employee Ext. Info - unapproved requests are in process!" });
+                return Conflict(new RespStatus { Status = "Failure", Message = "Employee Ext. Info modification is not allowed!" });
             }
 
             using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
