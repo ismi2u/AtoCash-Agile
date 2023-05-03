@@ -89,5 +89,6 @@ namespace AtoCashAPI.Data
         public DbSet<FileDocument> FileDocuments { get; set; }
         public DbSet<CurrencyType> CurrencyTypes { get; set; }
 
+        public DbSet<AccountPayableMapping> AccountPayableMappings { get; set; }
     }
 }

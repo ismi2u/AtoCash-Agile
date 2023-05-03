@@ -35,16 +35,14 @@ namespace AtoCashAPI.Models
 
     public class AccountsPayableSearchModel
     {
-
         public bool? IsAccountSettled { get; set; }
         public DateTime? SettledAccountsFrom { get; set; }
         public DateTime? SettledAccountsTo { get; set; }
-
-   
+        public int? LoggedEmpId { get; set; }
     }
 
 
-   
+
 
 
 

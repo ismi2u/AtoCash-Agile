@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
@@ -31,7 +33,7 @@ namespace AtoCashAPI.Authentication
         private readonly IConfiguration _config;
 
 
-        public AccountController(IEmailSender emailSender, UserManager<ApplicationUser> userManager, 
+        public AccountController(IEmailSender emailSender, UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager, ILogger<AccountController> logger,
             AtoCashDbContext context,
              IConfiguration config)
@@ -61,6 +63,7 @@ namespace AtoCashAPI.Authentication
                 return Conflict(new RespStatus { Status = "Failure", Message = "User not found!" });
             }
 
+            token = token.Replace("^^^","+");
             var result = await userManager.ConfirmEmailAsync(user, token);
 
             if (result.Succeeded)
@@ -68,7 +71,7 @@ namespace AtoCashAPI.Authentication
                 return Ok(new RespStatus { Status = "Success", Message = "Thank you for confirming Email!" });
             }
 
-            return Conflict(new RespStatus { Status = "Failure", Message = "Email nor confirmed!" });
+            return Conflict(new RespStatus { Status = "Failure", Message = "Email not confirmed!" });
 
         }
 
@@ -76,7 +79,7 @@ namespace AtoCashAPI.Authentication
         // GET: api/<AccountController>
         [HttpPost]
         [ActionName("Register")]
-          [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
+        [Authorize(Roles = "AtominosAdmin, Admin, Manager, Finmgr")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             //check if employee-id is already registered
@@ -116,32 +119,96 @@ namespace AtoCashAPI.Authentication
                 PasswordHash = model.Password
             };
 
-            IdentityResult result = await userManager.CreateAsync(user, model.Password);
-
-
             RespStatus respStatus = new();
 
-            if (result.Succeeded)
+            try
             {
-                //Assigning a User Role to the Registered user
-                result = await userManager.AddToRoleAsync(user, "User");
+                IdentityResult result = await userManager.CreateAsync(user, model.Password);
+
+                
 
                 if (result.Succeeded)
                 {
-                    respStatus.Message = "User Registered and User Access Role added to Employee!";
-                    respStatus.Status = "Success";
+                    try
+                    {
+
+
+                        // Send Mail ID confirmation email
+
+                        string[] paths = { Directory.GetCurrentDirectory(), "ConfirmEmail.html" };
+                        string FilePath = Path.Combine(paths);
+                        _logger.LogInformation("Email template path " + FilePath);
+                        StreamReader str = new StreamReader(FilePath);
+                        string MailText = str.ReadToEnd();
+                        str.Close();
+
+                        var domain = _config.GetSection("FrontendDomain").Value;
+                        MailText = MailText.Replace("{Domain}", domain);
+
+                        var builder = new MimeKit.BodyBuilder();
+                        var receiverEmail = model.Email;
+                        string subject = "AtoTax: Confirm your Email Id";
+
+                        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                        token = token.Replace("+", "^^^");
+                        string txtdata = "http://" + domain + "/confirm-email?token=" + token + "&email=" + model.Email;
+
+                        MailText = MailText.Replace("{FrontendDomain}", domain);
+                        MailText = MailText.Replace("{ConfirmEmailUrl}", txtdata);
+
+
+                        builder.HtmlBody = MailText;
+
+                        EmailDto emailDto = new EmailDto();
+                        emailDto.To = receiverEmail;
+                        emailDto.Subject = subject;
+                        emailDto.Body = builder.HtmlBody;
+
+                        await _emailSender.SendEmailAsync(emailDto);
+                        _logger.LogInformation("Confirm Email: " + receiverEmail + " Mail ID Confirmation Email Sent for the user!");
+
+
+
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        respStatus.Message = "Email confirmation mail not sent";
+                        respStatus.Status = "Failure";
+                    }
+
+
+
+
+                    //Assigning a User Role to the Registered user
+                    result = await userManager.AddToRoleAsync(user, "User");
+
+                    if (result.Succeeded)
+                    {
+                        respStatus.Message = "User Registered and User Access Role added to Employee!";
+                        respStatus.Status = "Success";
+                    }
+                    else
+                    {
+                        respStatus.Message = "User Registered but User Access Role not added to Employee!";
+                        respStatus.Status = "Failure";
+                    }
                 }
                 else
                 {
-                    respStatus.Message = "User Registered but User Access Role not added to Employee!";
+                    respStatus.Message = "User Name should be Unique!";
                     respStatus.Status = "Failure";
                 }
+
             }
-            else
+            catch (Exception ex)
             {
-                respStatus.Message = "User Name should be Unique!";
-                respStatus.Status = "Failure";
+
+                throw ex;
             }
+
+            
 
             return Ok(respStatus);
         }
@@ -195,9 +262,9 @@ namespace AtoCashAPI.Authentication
                 var empid = user.EmployeeId;
                 int currencyId = 0;
                 string currencyCode = "";
-                string empFirstName ="";
+                string empFirstName = "";
                 string empLastName = "";
-                string empEmail ="";
+                string empEmail = "";
 
                 var employee = await context.Employees.FindAsync(empid);
 
@@ -209,7 +276,7 @@ namespace AtoCashAPI.Authentication
                     currencyId = employee.CurrencyTypeId ?? 0;
                     currencyCode = context.CurrencyTypes.Find(currencyId).CurrencyCode;
                 }
-                
+
 
                 //add claims
                 var claims = new List<Claim> {
@@ -238,7 +305,7 @@ namespace AtoCashAPI.Authentication
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
 
-                return Ok(new { Token = tokenString, Role = userroles, FirstName = empFirstName, LastName = empLastName, EmpId = empid.ToString(), Email = empEmail,  currencyCode, currencyId });
+                return Ok(new { Token = tokenString, Role = userroles, FirstName = empFirstName, LastName = empLastName, EmpId = empid.ToString(), Email = empEmail, currencyCode, currencyId });
             }
 
             return Unauthorized(new RespStatus { Status = "Failure", Message = "Username or Password Incorrect" });
@@ -258,6 +325,11 @@ namespace AtoCashAPI.Authentication
             {
                 var user = await userManager.FindByEmailAsync(model.email);
 
+
+                if (user == null)
+                {
+                    return Ok(new RespStatus { Status = "Failure", Message = "User Not found!" });
+                }
                 //bool isUserConfirmed = await userManager.IsEmailConfirmedAsync(user);
                 //if (user != null && isUserConfirmed)
 
@@ -273,7 +345,7 @@ namespace AtoCashAPI.Authentication
 
                     token = token.Replace("+", "^^^");
 
-                  
+
 
 
                     ////get password ResetURL from environment variable to send password reset email
@@ -311,9 +383,9 @@ namespace AtoCashAPI.Authentication
 
 
 
-                   
 
-         
+
+
 
 
                     //  string[] paths = { Directory.GetCurrentDirectory(),
@@ -333,7 +405,7 @@ namespace AtoCashAPI.Authentication
                     string txtdata = "https://" + domain + "/change-password?token=" + token + "&email=" + model.email;
 
                     MailText = MailText.Replace("{PasswordResetUrl}", txtdata);
-                
+
                     builder.HtmlBody = MailText;
 
                     EmailDto emailDto = new EmailDto();

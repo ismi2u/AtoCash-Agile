@@ -30,6 +30,7 @@ namespace AtoCashAPI.Controllers
         private readonly IWebHostEnvironment hostingEnvironment;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<ReportsController> _logger;
 
         public ReportsController(AtoCashDbContext context, IWebHostEnvironment hostEnv, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
@@ -1449,6 +1450,12 @@ namespace AtoCashAPI.Controllers
         public async Task<ActionResult<IEnumerable<DisbursementsAndClaimsMasterDTO>>> AccountsPayableReport(AccountsPayableSearchModel searchModel)
         {
 
+            /* Get Assigned Approval Group / Employee Id -> to Account Payable */
+            int? empid = searchModel.LoggedEmpId;
+            if (empid == null || empid == 0)
+            {
+                return Conflict(new RespStatus() { Status = "Failure", Message = "Employee Id not valid" });
+            }
 
             List<DisbursementsAndClaimsMaster> result = new();
             List<DisbursementsAndClaimsMasterDTO> ListDisbursementsAndClaimsMasterDTO = new();
@@ -1469,6 +1476,43 @@ namespace AtoCashAPI.Controllers
                 predicate = predicate.And(x => x.RecordDate <= searchModel.SettledAccountsTo);
 
             predicate = predicate.And(x => x.ApprovalStatusId == (int)EApprovalStatus.Approved);
+
+            //if Admin then show all unsettled items or else based on the Approval Group mapped to Acc. Payable show that group's disbursement.
+            string empEmailId = _context.Employees.Find(empid).Email;
+            var user = await userManager.FindByEmailAsync(empEmailId);
+            bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
+            List<int> employeeIds = new List<int>();
+
+            if (!isAdmin)
+            {
+                //Get  Approval Group Ids from Logged 'Account Payable Employee Id'
+                try
+                {
+                    var approvalGroupIds = _context.AccountPayableMappings.Where(p => p.EmployeeId == empid).ToList();
+                    foreach (AccountPayableMapping AppGrpId in approvalGroupIds)
+                    {
+
+
+                        var employeeExtendedInfo = _context.EmployeeExtendedInfos.Where(e => e.ApprovalGroupId == AppGrpId.ApprovalGroupId).FirstOrDefault();
+                        if (employeeExtendedInfo != null)
+                        {
+                            employeeIds.Add(employeeExtendedInfo.EmployeeId);
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Account Payable: Load Disbursment Data");
+                    return Ok(new RespStatus { Status = "Failure", Message = "Some problem getting Approval Groups" });
+                }
+            }
+
+            if (employeeIds.Count > 0)
+            {
+                predicate = predicate.And(x => employeeIds.Contains(x.EmployeeId));
+            }
+
 
             if (predicate.IsStarted)
             {
