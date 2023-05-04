@@ -8,10 +8,17 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY . ./
-COPY ["AtoCashAPI/CashAdvanceApprNotificationEmail.html", "./"]
-COPY ["AtoCashAPI/ClaimApprovedandSettled.html", "./"]
-COPY ["AtoCashAPI/ExpApprNotificationEmail.html", "./"]
-COPY ["AtoCashAPI/TravelApprNotificationEmail.html", "./"]
+#COPY ["AtoCashAPI/CashAdvanceApprNotificationEmail.html", "./"]
+#COPY ["AtoCashAPI/ClaimApprovedandSettled.html", "./"]
+#COPY ["AtoCashAPI/ExpApprNotificationEmail.html", "./"]
+#COPY ["AtoCashAPI/TravelApprNotificationEmail.html", "./"]
+
+COPY ["AtoCashAPI/CashAdvanceApprNotificationEmail.html", "AtoCashAPI/"]
+COPY ["AtoCashAPI/ClaimApprovedandSettled.html", "AtoCashAPI/"]
+COPY ["AtoCashAPI/ExpApprNotificationEmail.html", "AtoCashAPI/"]
+COPY ["AtoCashAPI/ConfirmEmail.html", "AtoCashAPI/"]
+COPY ["AtoCashAPI/TravelApprNotificationEmail.html", "AtoCashAPI/"]
+
 
 COPY ["AtoCashAPI/AtoCashAPI.csproj", "AtoCashAPI/"]
 RUN dotnet restore "AtoCashAPI/AtoCashAPI.csproj"

@@ -16,8 +16,8 @@ namespace AtoCashAPI.Models
 
         [Required]
         [ForeignKey("Id")]
-        public virtual ApprovalGroup? ApprovalGroup { get; set; }
-        public int ApprovalGroupId { get; set; }
+        public virtual BusinessUnit? BusinessUnit { get; set; }
+        public int BusinessUnitId { get; set; }
 
         [Required]
         [ForeignKey("EmployeeId")]
@@ -32,8 +32,8 @@ namespace AtoCashAPI.Models
     {
         public int Id { get; set; }
 
-        public int ApprovalGroupId { get; set; }
-        public string? ApprovalGroup { get; set; }
+        public int BusinessUnitId { get; set; }
+        public string? BusinessUnit { get; set; }
 
         public int EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
@@ -41,7 +41,7 @@ namespace AtoCashAPI.Models
         
     }
 
-    public class GetEmployeesForApprovalGroup
+    public class GetEmployeesForBusinessUnit
     {
         public int EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
@@ -51,7 +51,7 @@ namespace AtoCashAPI.Models
 
     public class AddEmployeesToAccountPayableMapping
     {
-        public int ApprovalGroupId { get; set; }
+        public int BusinessUnitId { get; set; }
         public List<int>? EmployeeIds { get; set; }
 
     }
@@ -59,13 +59,13 @@ namespace AtoCashAPI.Models
     public class AccountPayableMappingVM
     {
         public int Id { get; set; }
-        public string? ApprovalGroupCode { get; set; }
+        public string? BusinessUnit { get; set; }
 
     }
 
-    public class AddEmployeesToApprovalGroup
+    public class AddEmployeesToBusinessUnit
     {
-        public int ApprovalGroupId { get; set; }
+        public int BusinessUnitId { get; set; }
         public List<int>? EmployeeIds { get; set; }
     }
 
@@ -74,8 +74,6 @@ namespace AtoCashAPI.Models
     {
         public string? UserId { get; set; }
         public string? UserFullName { get; set; }
-        public new string? BusinessUnit { get; set; }
-        public new string? JobRoles { get; set; }
         public new string? StatusType { get; set; }
         public string? AccessRole { get; set; }
     }

@@ -30,21 +30,21 @@ namespace AtoCashAPI.Controllers
         }
 
         [HttpPost]
-        [ActionName("AddEmployeesToApprovalGroup")]
-        public async Task<ActionResult> AddEmployeesToApprovalGroup(AddEmployeesToApprovalGroup model)
+        [ActionName("AddEmployeesToBusinessUnit")]
+        public async Task<ActionResult> AddEmployeesToBusinessUnit(AddEmployeesToBusinessUnit model)
         {
 
-            int appgrpId = model.ApprovalGroupId;
-            var approvalGroup = _context.ApprovalGroups.Find(appgrpId);
+            int businessUnitId = model.BusinessUnitId;
+            var businessUnit = _context.BusinessUnits.Find(businessUnitId);
 
-            if (appgrpId == 0 || approvalGroup == null)
+            if (businessUnitId == 0 || businessUnit == null)
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "Approval Group is Invalid" });
+                return Conflict(new RespStatus { Status = "Failure", Message = "Business Unit is Invalid" });
             }
 
             //remove previous entries.
-            List<AccountPayableMapping> AppGroupItems = await _context.AccountPayableMappings.Where(p => p.ApprovalGroupId == appgrpId).ToListAsync();
-            _context.AccountPayableMappings.RemoveRange(AppGroupItems);
+            List<AccountPayableMapping> BusinessUnits = await _context.AccountPayableMappings.Where(p => p.BusinessUnitId == businessUnitId).ToListAsync();
+            _context.AccountPayableMappings.RemoveRange(BusinessUnits);
 
 
             //add new entries
@@ -52,13 +52,13 @@ namespace AtoCashAPI.Controllers
             {
                 AccountPayableMapping AccountPayableMapping = new();
                 AccountPayableMapping.EmployeeId = empid;
-                AccountPayableMapping.ApprovalGroupId = appgrpId;
+                AccountPayableMapping.BusinessUnitId = businessUnitId;
 
                 _context.AccountPayableMappings.Add(AccountPayableMapping);
             }
 
             await _context.SaveChangesAsync();
-            return Ok(new RespStatus { Status = "Success", Message = "Approval Group assigned to Account Payable!" });
+            return Ok(new RespStatus { Status = "Success", Message = "Business Unit assigned to Account Payable!" });
 
         }
 
@@ -66,10 +66,10 @@ namespace AtoCashAPI.Controllers
         
 
         [HttpGet("{id}")]
-        [ActionName("GetEmployeesByApprovalGroupId")]
-        public async Task<ActionResult<List<GetEmployeesForApprovalGroup>>> GetEmployeesByAccountPayableMappingId(int id)
+        [ActionName("GetEmployeesByBusinessUnitId")]
+        public async Task<ActionResult<List<GetEmployeesForBusinessUnit>>> GetEmployeesByBusinessUnitId(int id)
         {
-            List<GetEmployeesForApprovalGroup> ListApprovalGroupEmployees = new();
+            List<GetEmployeesForBusinessUnit> ListBusinessUnitpEmployees = new();
 
             /* Get Employee Having Account Payable Roles Only Start */
             var rolName = "AccPayable";
@@ -82,17 +82,17 @@ namespace AtoCashAPI.Controllers
                 
                 if (emp != null)
                 {
-                    GetEmployeesForApprovalGroup AppGrpEmployee = new(); 
-                    
-                    AppGrpEmployee.EmployeeId = emp.Id;
-                    AppGrpEmployee.EmployeeName = _context.Employees.Find(emp.Id).GetFullName();
-                    AppGrpEmployee.isAssigned = _context.AccountPayableMappings.Where(p => p.EmployeeId == emp.Id && p.ApprovalGroupId == id).Any();
-                    ListApprovalGroupEmployees.Add(AppGrpEmployee);
+                    GetEmployeesForBusinessUnit BusinessUnitEmployee = new();
+
+                    BusinessUnitEmployee.EmployeeId = emp.Id;
+                    BusinessUnitEmployee.EmployeeName = _context.Employees.Find(emp.Id).GetFullName();
+                    BusinessUnitEmployee.isAssigned = _context.AccountPayableMappings.Where(p => p.EmployeeId == emp.Id && p.BusinessUnitId == id).Any();
+                    ListBusinessUnitpEmployees.Add(BusinessUnitEmployee);
                 }
                  
             }          
 
-            return Ok(ListApprovalGroupEmployees);
+            return Ok(ListBusinessUnitpEmployees);
             //var allEmployees = await _context.Employees.ToListAsync();
 
             /* Get Employee Having Account Payable Roles Only End */

@@ -46,17 +46,21 @@ namespace AtoCashAPI.Authentication
             _config = config;
         }
 
-        [HttpGet]
+        [HttpPost]
         [ActionName("ConfirmEmail")]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userid, string token)
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailVM model)
         {
+            var userid= await userManager.FindByEmailAsync(model.email);
+            var token = model.Token;
+
+
             if (userid == null || token == null)
             {
                 return Conflict(new RespStatus { Status = "Failure", Message = "userid or token is invalid" });
             }
 
-            var user = await userManager.FindByIdAsync(userid);
+            var user = await userManager.FindByEmailAsync(model.email);
 
             if (user == null)
             {
@@ -147,7 +151,7 @@ namespace AtoCashAPI.Authentication
 
                         var builder = new MimeKit.BodyBuilder();
                         var receiverEmail = model.Email;
-                        string subject = "AtoTax: Confirm your Email Id";
+                        string subject = "AtoCash: Confirm your Email Id";
 
                         var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                         token = token.Replace("+", "^^^");
@@ -222,6 +226,13 @@ namespace AtoCashAPI.Authentication
             //Creating a IdentityUser object
 
             var user = await userManager.FindByEmailAsync(model.Email);
+
+            //Check User's Email is Confirmed or Not
+            var isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
+            if (!isEmailConfirmed)
+            {
+                return Unauthorized(new RespStatus { Status = "Failure", Message = "Email Address is not yet confirmed" });
+            }
 
             if (user == null)
             {
