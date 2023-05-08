@@ -30,21 +30,21 @@ namespace AtoCashAPI.Controllers
         }
 
         [HttpPost]
-        [ActionName("AddEmployeesToBusinessUnit")]
-        public async Task<ActionResult> AddEmployeesToBusinessUnit(AddEmployeesToBusinessUnit model)
+        [ActionName("AddEmployeesToCostCenter")]
+        public async Task<ActionResult> AddEmployeesToCostCenter(AddEmployeesToCostCenter model)
         {
 
-            int businessUnitId = model.BusinessUnitId;
-            var businessUnit = _context.BusinessUnits.Find(businessUnitId);
+            int costCenterId = model.CostCenterId;
+            var costCenterCode = _context.CostCenters.Find(costCenterId);
 
-            if (businessUnitId == 0 || businessUnit == null)
+            if (costCenterCode == null)
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "Business Unit is Invalid" });
+                return Conflict(new RespStatus { Status = "Failure", Message = "Cost Center is Invalid" });
             }
 
             //remove previous entries.
-            List<AccountPayableMapping> BusinessUnits = await _context.AccountPayableMappings.Where(p => p.BusinessUnitId == businessUnitId).ToListAsync();
-            _context.AccountPayableMappings.RemoveRange(BusinessUnits);
+            List<AccountPayableMapping> CostCenters = await _context.AccountPayableMappings.Where(p => p.CostCenterId == costCenterId).ToListAsync();
+            _context.AccountPayableMappings.RemoveRange(CostCenters);
 
 
             //add new entries
@@ -52,13 +52,13 @@ namespace AtoCashAPI.Controllers
             {
                 AccountPayableMapping AccountPayableMapping = new();
                 AccountPayableMapping.EmployeeId = empid;
-                AccountPayableMapping.BusinessUnitId = businessUnitId;
+                AccountPayableMapping.CostCenterId = costCenterId;
 
                 _context.AccountPayableMappings.Add(AccountPayableMapping);
             }
 
             await _context.SaveChangesAsync();
-            return Ok(new RespStatus { Status = "Success", Message = "Business Unit assigned to Account Payable!" });
+            return Ok(new RespStatus { Status = "Success", Message = "Cost Center assigned to Account Payable!" });
 
         }
 
@@ -66,10 +66,10 @@ namespace AtoCashAPI.Controllers
         
 
         [HttpGet("{id}")]
-        [ActionName("GetEmployeesByBusinessUnitId")]
-        public async Task<ActionResult<List<GetEmployeesForBusinessUnit>>> GetEmployeesByBusinessUnitId(int id)
+        [ActionName("GetEmployeesByCostCenterId")]
+        public async Task<ActionResult<List<GetEmployeesForCostCenter>>> GetEmployeesByCostCenterId(int id)
         {
-            List<GetEmployeesForBusinessUnit> ListBusinessUnitpEmployees = new();
+            List<GetEmployeesForCostCenter> ListCostCenterpEmployees = new();
 
             /* Get Employee Having Account Payable Roles Only Start */
             var rolName = "AccPayable";
@@ -82,17 +82,17 @@ namespace AtoCashAPI.Controllers
                 
                 if (emp != null)
                 {
-                    GetEmployeesForBusinessUnit BusinessUnitEmployee = new();
+                    GetEmployeesForCostCenter CostCenterEmployee = new();
 
-                    BusinessUnitEmployee.EmployeeId = emp.Id;
-                    BusinessUnitEmployee.EmployeeName = _context.Employees.Find(emp.Id).GetFullName();
-                    BusinessUnitEmployee.isAssigned = _context.AccountPayableMappings.Where(p => p.EmployeeId == emp.Id && p.BusinessUnitId == id).Any();
-                    ListBusinessUnitpEmployees.Add(BusinessUnitEmployee);
+                    CostCenterEmployee.EmployeeId = emp.Id;
+                    CostCenterEmployee.EmployeeName = _context.Employees.Find(emp.Id).GetFullName();
+                    CostCenterEmployee.isAssigned = _context.AccountPayableMappings.Where(p => p.EmployeeId == emp.Id && p.CostCenterId == id).Any();
+                    ListCostCenterpEmployees.Add(CostCenterEmployee);
                 }
                  
             }          
 
-            return Ok(ListBusinessUnitpEmployees);
+            return Ok(ListCostCenterpEmployees);
             //var allEmployees = await _context.Employees.ToListAsync();
 
             /* Get Employee Having Account Payable Roles Only End */

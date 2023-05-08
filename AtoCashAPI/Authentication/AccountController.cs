@@ -51,30 +51,40 @@ namespace AtoCashAPI.Authentication
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailVM model)
         {
+            _logger.LogInformation("Email Id from ConfirmEmail Url " + model.email); 
             var userid= await userManager.FindByEmailAsync(model.email);
+            _logger.LogInformation("UserId using Email id " + userid);
+
+            _logger.LogInformation("Token from ConfirmEmail Url " + model.Token);
             var token = model.Token;
 
 
             if (userid == null || token == null)
             {
+                _logger.LogInformation("userid or token null, hence exit "); 
                 return Conflict(new RespStatus { Status = "Failure", Message = "userid or token is invalid" });
             }
 
             var user = await userManager.FindByEmailAsync(model.email);
+            _logger.LogInformation("user using Email id " + userid);
+
 
             if (user == null)
             {
+                _logger.LogInformation("user null, hence exit "); 
                 return Conflict(new RespStatus { Status = "Failure", Message = "User not found!" });
             }
 
             token = token.Replace("^^^","+");
             var result = await userManager.ConfirmEmailAsync(user, token);
-
+            _logger.LogInformation("Result from ConfirmEmailAsync with values user , token. User= "+ user +" and token= "+token);
+            _logger.LogInformation("Result is"+ result.Succeeded);
             if (result.Succeeded)
             {
                 return Ok(new RespStatus { Status = "Success", Message = "Thank you for confirming Email!" });
             }
 
+            _logger.LogInformation("Last Return");
             return Conflict(new RespStatus { Status = "Failure", Message = "Email not confirmed!" });
 
         }
@@ -227,13 +237,6 @@ namespace AtoCashAPI.Authentication
 
             var user = await userManager.FindByEmailAsync(model.Email);
 
-            //Check User's Email is Confirmed or Not
-            var isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
-            if (!isEmailConfirmed)
-            {
-                return Unauthorized(new RespStatus { Status = "Failure", Message = "Email Address is not yet confirmed" });
-            }
-
             if (user == null)
             {
                 return Unauthorized(new RespStatus { Status = "Failure", Message = "Username or Password Incorrect" });
@@ -241,6 +244,13 @@ namespace AtoCashAPI.Authentication
 
             if (user.EmployeeId != 0)
             {
+                //Check User's Email is Confirmed or Not
+                var isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
+                if (!isEmailConfirmed)
+                {
+                    return Unauthorized(new RespStatus { Status = "Failure", Message = "Email Address is not yet confirmed" });
+                }
+                
                 var emp = context.Employees.Find(user.EmployeeId);
 
                 if (emp == null)

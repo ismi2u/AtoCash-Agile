@@ -1401,17 +1401,17 @@ namespace AtoCashAPI.Controllers
             string empEmailId = _context.Employees.Find(empid).Email;
             var user = await userManager.FindByEmailAsync(empEmailId);
             bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
-            List<int> businessUnits = new List<int>();
+            List<int> costCenters = new List<int>();
 
             if (!isAdmin)
             {
                 //Get  Approval Group Ids from Logged 'Account Payable Employee Id'
                 try
                 {
-                    var businessUnitIds = _context.AccountPayableMappings.Where(p => p.EmployeeId == empid).ToList();
-                    foreach (AccountPayableMapping bussUnitId in businessUnitIds)
+                    var costCenterIds = _context.AccountPayableMappings.Where(p => p.EmployeeId == empid).ToList();
+                    foreach (AccountPayableMapping costCenter in costCenterIds)
                     {
-                        businessUnits.Add(bussUnitId.BusinessUnitId);
+                        costCenters.Add(costCenter.CostCenterId);
                     }
                 }
                 catch (Exception ex)
@@ -1421,9 +1421,9 @@ namespace AtoCashAPI.Controllers
                 }
             }
 
-            if (businessUnits.Count > 0)
+            if (costCenters.Count > 0)
             {
-                predicate = predicate.And(x => businessUnits.Contains((int)x.BusinessUnitId));
+                predicate = predicate.And(x => costCenters.Contains((int)x.CostCenterId));
             }
 
 
@@ -1472,6 +1472,7 @@ namespace AtoCashAPI.Controllers
                 disbursementsAndClaimsMasterDTO.SettlementBankCard = disbursementsAndClaimsMaster.SettlementBankCard;
                 disbursementsAndClaimsMasterDTO.AdditionalData = disbursementsAndClaimsMaster.AdditionalData;
                 disbursementsAndClaimsMasterDTO.CostCenterId = disbursementsAndClaimsMaster.CostCenterId;
+                disbursementsAndClaimsMasterDTO.CostCenter = _context.CostCenters.Find(disbursementsAndClaimsMaster.CostCenterId).GetCostCentre();
                 disbursementsAndClaimsMasterDTO.ApprovalStatusId = disbursementsAndClaimsMaster.ApprovalStatusId;
                 disbursementsAndClaimsMasterDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(disbursementsAndClaimsMaster.ApprovalStatusId).Status;
 
@@ -1488,6 +1489,13 @@ namespace AtoCashAPI.Controllers
         [ActionName("AccountsPayableReport")]
         public async Task<ActionResult<IEnumerable<DisbursementsAndClaimsMasterDTO>>> AccountsPayableReport(AccountsPayableSearchModel searchModel)
         {
+
+            /* Get Assigned Approval Group / Employee Id -> to Account Payable */
+            int? empid = searchModel.LoggedEmpId;
+            if (empid == null || empid == 0)
+            {
+                return Conflict(new RespStatus() { Status = "Failure", Message = "Employee Id not valid" });
+            }
 
             List<DisbursementsAndClaimsMaster> result = new();
             List<DisbursementsAndClaimsMasterDTO> ListDisbursementsAndClaimsMasterDTO = new();
@@ -1509,7 +1517,36 @@ namespace AtoCashAPI.Controllers
 
             predicate = predicate.And(x => x.ApprovalStatusId == (int)EApprovalStatus.Approved);
 
-           
+            //if Admin then show all unsettled items or else based on the Approval Group mapped to Acc. Payable show that group's disbursement.
+            string empEmailId = _context.Employees.Find(empid).Email;
+            var user = await userManager.FindByEmailAsync(empEmailId);
+            bool isAdmin = await userManager.IsInRoleAsync(user, "Admin");
+            List<int> costCenters = new List<int>();
+
+            if (!isAdmin)
+            {
+                //Get  Approval Group Ids from Logged 'Account Payable Employee Id'
+                try
+                {
+                    var costCenterIds = _context.AccountPayableMappings.Where(p => p.EmployeeId == empid).ToList();
+                    foreach (AccountPayableMapping costCenter in costCenterIds)
+                    {
+                        costCenters.Add(costCenter.CostCenterId);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Account Payable: Load Disbursment Data");
+                    return Ok(new RespStatus { Status = "Failure", Message = "Some problem getting Business Units" });
+                }
+            }
+
+            if (costCenters.Count > 0)
+            {
+                predicate = predicate.And(x => costCenters.Contains((int)x.CostCenterId));
+            }
+
+
             if (predicate.IsStarted)
             {
                 result = _context.DisbursementsAndClaimsMasters.Where(predicate).OrderByDescending(x => x.RecordDate).ToList();
@@ -1554,6 +1591,7 @@ namespace AtoCashAPI.Controllers
                 disbursementsAndClaimsMasterDTO.SettlementBankCard = disbursementsAndClaimsMaster.SettlementBankCard;
                 disbursementsAndClaimsMasterDTO.AdditionalData = disbursementsAndClaimsMaster.AdditionalData;
                 disbursementsAndClaimsMasterDTO.CostCenterId = disbursementsAndClaimsMaster.CostCenterId;
+                disbursementsAndClaimsMasterDTO.CostCenter = _context.CostCenters.Find(disbursementsAndClaimsMaster.CostCenterId).GetCostCentre();
                 disbursementsAndClaimsMasterDTO.ApprovalStatusId = disbursementsAndClaimsMaster.ApprovalStatusId;
                 disbursementsAndClaimsMasterDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(disbursementsAndClaimsMaster.ApprovalStatusId).Status;
 

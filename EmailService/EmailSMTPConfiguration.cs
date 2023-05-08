@@ -27,15 +27,15 @@ namespace EmailService
         //public string UserName { get; set; } = "atocash.eslam@gmail.com";
         //public string Password { get; set; } = "T3stingLife7";
 
-        public string From { get; set; } = "pearlie.schroeder@ethereal.email";
-        public string DisplayName { get; set; } = "AtoCash";
-        public string SmtpServer { get; set; } = "smtp.ethereal.email";
-        public int Port { get; set; } = 587;
-        public bool StartTLS { get; set; } = true;
-        public string UserName { get; set; } = "pearlie.schroeder@ethereal.email";
-        public string Password { get; set; } = "21t9rrAwXmYhNrAESG";
+        //public string From { get; set; } = "pearlie.schroeder@ethereal.email";
+        //public string DisplayName { get; set; } = "AtoCash";
+        //public string SmtpServer { get; set; } = "smtp.ethereal.email";
+        //public int Port { get; set; } = 587;
+        //public bool StartTLS { get; set; } = true;
+        //public string UserName { get; set; } = "pearlie.schroeder@ethereal.email";
+        //public string Password { get; set; } = "21t9rrAwXmYhNrAESG";
 
-
+      
 
     }
 }

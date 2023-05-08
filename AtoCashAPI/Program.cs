@@ -71,7 +71,7 @@ builder.Services.AddCors(options =>
                ));
 
 //email service
-builder.Services.AddSingleton(builder.Configuration.GetSection("EmailConfiguration").Get<EmailDto>());
+//builder.Services.AddSingleton(builder.Configuration.GetSection("EmailConfiguration").Get<EmailDto>());
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 //for file upload from Angular Form

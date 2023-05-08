@@ -16,8 +16,8 @@ namespace AtoCashAPI.Models
 
         [Required]
         [ForeignKey("Id")]
-        public virtual BusinessUnit? BusinessUnit { get; set; }
-        public int BusinessUnitId { get; set; }
+        public virtual CostCenter? CostCenter { get; set; }
+        public int CostCenterId { get; set; }
 
         [Required]
         [ForeignKey("EmployeeId")]
@@ -32,8 +32,9 @@ namespace AtoCashAPI.Models
     {
         public int Id { get; set; }
 
-        public int BusinessUnitId { get; set; }
-        public string? BusinessUnit { get; set; }
+        public int CostCenterId { get; set; }
+        public string? CostCenterCode { get; set; }
+        public string? CostCenterDesc { get; set; }
 
         public int EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
@@ -41,7 +42,7 @@ namespace AtoCashAPI.Models
         
     }
 
-    public class GetEmployeesForBusinessUnit
+    public class GetEmployeesForCostCenter
     {
         public int EmployeeId { get; set; }
         public string? EmployeeName { get; set; }
@@ -51,7 +52,7 @@ namespace AtoCashAPI.Models
 
     public class AddEmployeesToAccountPayableMapping
     {
-        public int BusinessUnitId { get; set; }
+        public int CostCenterId { get; set; }
         public List<int>? EmployeeIds { get; set; }
 
     }
@@ -59,13 +60,14 @@ namespace AtoCashAPI.Models
     public class AccountPayableMappingVM
     {
         public int Id { get; set; }
-        public string? BusinessUnit { get; set; }
+        public string? CostCenterCode { get; set; }
+        public string? CostCenterDesc { get; set; }
 
     }
 
-    public class AddEmployeesToBusinessUnit
+    public class AddEmployeesToCostCenter
     {
-        public int BusinessUnitId { get; set; }
+        public int CostCenterId { get; set; }
         public List<int>? EmployeeIds { get; set; }
     }
 
