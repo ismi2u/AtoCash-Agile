@@ -132,61 +132,114 @@ namespace AtoCashAPI.Controllers.BasicControls
                 return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id is invalid" });
             }
 
-            bool blnUsedInTravelReq = _context.TravelApprovalRequests.Where(t => t.EmployeeId == id).Any();
-            bool blnUsedInCashAdvReq = _context.CashAdvanceRequests.Where(t => t.EmployeeId == id ).Any();
-            bool blnUsedInExpeReimReq = _context.ExpenseReimburseRequests.Where(t => t.EmployeeId == id ).Any();
+            /*This Extended Employee Info Id whose Approval Group Id is availabe in either of these tables
+            i.e Travel Request OR Cash Advance OR Expense Reimbursement Table
+            then Shouldn't change Employee Extended Info except its STATUS. Incase User Change any value, then already raised request 
+            throughs error */
+
+            var employeeExtendedInfoExisting = await _context.EmployeeExtendedInfos.FindAsync(id);
+
+            bool blnUsedInTravelReq = _context.TravelApprovalStatusTrackers.Where(t => t.ApprovalGroupId == employeeExtendedInfoExisting.ApprovalGroupId).Any();
+            bool blnUsedInCashAdvReq = _context.CashAdvanceStatusTrackers.Where(t => t.ApprovalGroupId == employeeExtendedInfoExisting.ApprovalGroupId).Any();
+            bool blnUsedInExpeReimReq = _context.ExpenseReimburseStatusTrackers.Where(t => t.ApprovalGroupId == employeeExtendedInfoExisting.ApprovalGroupId).Any();
 
             if (blnUsedInTravelReq || blnUsedInCashAdvReq || blnUsedInExpeReimReq)
             {
-                return Conflict(new RespStatus { Status = "Failure", Message = "Employee Ext. Info modification is not allowed!" });
-            }
-
-            using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
-            {
-
-                var empExtendedInfo = await _context.EmployeeExtendedInfos.FindAsync(id);
-
-                if (empExtendedInfo == null)
+                if (employeeExtendedInfoExisting == null)
                 {
                     return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id object is null" });
                 }
+
+                if (employeeExtendedInfoExisting.StatusTypeId == employeeExtendedInfoDTO.StatusTypeId)
+                {
+                    return Conflict(new RespStatus { Status = "Failure", Message = "Employee Ext. Info modification is not allowed!" });
+
+                }
                 else
                 {
-                    try
+                    using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
                     {
-                        empExtendedInfo.BusinessTypeId = employeeExtendedInfoDTO.BusinessTypeId;
-                        empExtendedInfo.BusinessUnitId = employeeExtendedInfoDTO.BusinessUnitId;
-                        empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
-                        empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
-                        empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
-                        empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
+                        var empExtendedInfo = await _context.EmployeeExtendedInfos.FindAsync(id);
+                        if (empExtendedInfo == null)
+                        {
+                            return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id object is null" });
+                        }
+                        else
+                        {
+                            try
+                            {
+                                empExtendedInfo.BusinessTypeId = employeeExtendedInfoExisting.BusinessTypeId;
+                                empExtendedInfo.BusinessUnitId = employeeExtendedInfoExisting.BusinessUnitId;
+                                empExtendedInfo.EmployeeId = employeeExtendedInfoExisting.EmployeeId;
+                                empExtendedInfo.JobRoleId = employeeExtendedInfoExisting.JobRoleId;
+                                empExtendedInfo.ApprovalGroupId = employeeExtendedInfoExisting.ApprovalGroupId;
+                                empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
 
-                        EmpCurrentCashAdvanceBalance currentEmpCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
+                                _context.EmployeeExtendedInfos.Update(empExtendedInfo);
 
-                        double oldJobRoleLimit = _context.JobRoles.Find(empExtendedInfo.JobRoleId).MaxCashAdvanceAllowed ?? 0;
-                        double NewJobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxCashAdvanceAllowed ?? 0;
-
-                        string strCashAdvanceLimits = currentEmpCashAdvanceBalance.AllCashAdvanceLimits;
-
-                        currentEmpCashAdvanceBalance.AllCashAdvanceLimits = RemoveStringMaxLimits(strCashAdvanceLimits, oldJobRoleLimit); //REMOVE OLD LIMIT
-                        currentEmpCashAdvanceBalance.AllCashAdvanceLimits = AddStringMaxLimits(strCashAdvanceLimits, NewJobRoleLimit); // ADD NEW LIMIT
-                        currentEmpCashAdvanceBalance.MaxCashAdvanceLimit = GetMaxFromStringDoubles(currentEmpCashAdvanceBalance.AllCashAdvanceLimits);
-
-                        _context.EmpCurrentCashAdvanceBalances.Update(currentEmpCashAdvanceBalance);
-
-                        _context.EmployeeExtendedInfos.Update(empExtendedInfo);
-
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo cannot be updated!" });
+                                await _context.SaveChangesAsync();
+                            }
+                            catch (DbUpdateConcurrencyException)
+                            {
+                                return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo cannot be updated!" });
+                            }
+                            await AtoCashDbContextTransaction.CommitAsync();
+                        }
+                        return Ok(new RespStatus { Status = "Success", Message = "EmployeeExtendedInfo Records Updated!" });
                     }
                 }
-
-                await AtoCashDbContextTransaction.CommitAsync();
             }
-            return Ok(new RespStatus { Status = "Success", Message = "EmployeeExtendedInfo Records Updated!" });
+            else
+            {
+                using (var AtoCashDbContextTransaction = _context.Database.BeginTransaction())
+                {
+
+                    var empExtendedInfo = await _context.EmployeeExtendedInfos.FindAsync(id);
+
+                    if (empExtendedInfo == null)
+                    {
+                        return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo Id object is null" });
+                    }
+                    else
+                    {
+                        try
+                        {
+                            empExtendedInfo.BusinessTypeId = employeeExtendedInfoDTO.BusinessTypeId;
+                            empExtendedInfo.BusinessUnitId = employeeExtendedInfoDTO.BusinessUnitId;
+                            empExtendedInfo.EmployeeId = employeeExtendedInfoDTO.EmployeeId;
+                            empExtendedInfo.JobRoleId = employeeExtendedInfoDTO.JobRoleId;
+                            empExtendedInfo.ApprovalGroupId = employeeExtendedInfoDTO.ApprovalGroupId;
+                            empExtendedInfo.StatusTypeId = employeeExtendedInfoDTO.StatusTypeId;
+
+                            EmpCurrentCashAdvanceBalance currentEmpCashAdvanceBalance = _context.EmpCurrentCashAdvanceBalances.Where(b => b.EmployeeId == employeeExtendedInfoDTO.EmployeeId).FirstOrDefault();
+
+                            double oldJobRoleLimit = _context.JobRoles.Find(empExtendedInfo.JobRoleId).MaxCashAdvanceAllowed ?? 0;
+                            double NewJobRoleLimit = _context.JobRoles.Find(employeeExtendedInfoDTO.JobRoleId).MaxCashAdvanceAllowed ?? 0;
+
+                            string strCashAdvanceLimits = currentEmpCashAdvanceBalance.AllCashAdvanceLimits;
+
+                            currentEmpCashAdvanceBalance.AllCashAdvanceLimits = RemoveStringMaxLimits(strCashAdvanceLimits, oldJobRoleLimit); //REMOVE OLD LIMIT
+                            currentEmpCashAdvanceBalance.AllCashAdvanceLimits = AddStringMaxLimits(strCashAdvanceLimits, NewJobRoleLimit); // ADD NEW LIMIT
+                            currentEmpCashAdvanceBalance.MaxCashAdvanceLimit = GetMaxFromStringDoubles(currentEmpCashAdvanceBalance.AllCashAdvanceLimits);
+
+                            _context.EmpCurrentCashAdvanceBalances.Update(currentEmpCashAdvanceBalance);
+
+                            _context.EmployeeExtendedInfos.Update(empExtendedInfo);
+
+                            await _context.SaveChangesAsync();
+                        }
+                        catch (DbUpdateConcurrencyException)
+                        {
+                            return Conflict(new RespStatus { Status = "Failure", Message = "EmployeeExtendedInfo cannot be updated!" });
+                        }
+                    }
+
+                    await AtoCashDbContextTransaction.CommitAsync();
+                }
+                return Ok(new RespStatus { Status = "Success", Message = "EmployeeExtendedInfo Records Updated!" });
+            }
+
+            
         }
 
 

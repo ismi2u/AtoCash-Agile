@@ -178,8 +178,16 @@ namespace AtoCashAPI.Authentication
                         emailDto.Subject = subject;
                         emailDto.Body = builder.HtmlBody;
 
-                        await _emailSender.SendEmailAsync(emailDto);
-                        _logger.LogInformation("Confirm Email: " + receiverEmail + " Mail ID Confirmation Email Sent for the user!");
+                        try
+                        {
+                            await _emailSender.SendEmailAsync(emailDto);
+                            _logger.LogInformation("Confirm Email: " + receiverEmail + " Mail ID Confirmation Email Sent for the user!");
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogInformation("Confirmation Email Couldn't be able to sent due to "+ ex);
+                        }
+
 
 
 
@@ -366,9 +374,6 @@ namespace AtoCashAPI.Authentication
 
                     token = token.Replace("+", "^^^");
 
-
-
-
                     ////get password ResetURL from environment variable to send password reset email
                     //string? PasswordResetRedirectDomain = Environment.GetEnvironmentVariable("PasswordResetDomain");
 
@@ -401,14 +406,6 @@ namespace AtoCashAPI.Authentication
                     //    domain = "https://" + redirectDomain + ".atocash.com/change-password?token=";
                     //}
 
-
-
-
-
-
-
-
-
                     //  string[] paths = { Directory.GetCurrentDirectory(),
                     string[] paths = { Directory.GetCurrentDirectory(), "PasswordReset.html" };
                     string FilePath = Path.Combine(paths);
@@ -434,9 +431,16 @@ namespace AtoCashAPI.Authentication
                     emailDto.Subject = subject;
                     emailDto.Body = builder.HtmlBody;
 
+                    try
+                    {
+                        await _emailSender.SendEmailAsync(emailDto);
+                        _logger.LogInformation("ForgotPassword: " + receiverEmail + "Password Reset Email Sent with token");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogInformation("Password Reset Email Couldn't be Sent due to " + ex);
+                    }
 
-                    await _emailSender.SendEmailAsync(emailDto);
-                    _logger.LogInformation("ForgotPassword: " + receiverEmail + "Password Reset Email Sent with token");
 
                 }
 
@@ -472,8 +476,16 @@ namespace AtoCashAPI.Authentication
                         emailDto.Subject = subject;
                         emailDto.Body = body;
 
-                        await _emailSender.SendEmailAsync(emailDto);
-                        _logger.LogInformation("Password Reset: " + receiverEmail + "Password has been Reset");
+                        try
+                        {
+                            await _emailSender.SendEmailAsync(emailDto);
+                            _logger.LogInformation("Password Reset: " + receiverEmail + "Password has been Reset");
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogInformation("Password Reset Confirmation Email Couldn't be sent due to " + ex);
+                        }
+
                         return Ok(new RespStatus { Status = "Success", Message = "Your Password has been reset!" });
                     }
 

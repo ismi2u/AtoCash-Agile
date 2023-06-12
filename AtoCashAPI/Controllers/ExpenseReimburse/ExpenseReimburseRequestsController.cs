@@ -968,8 +968,21 @@ namespace AtoCashAPI.Controllers
                             emailDto.Subject = subject;
                             emailDto.Body = builder.HtmlBody;
 
-                            await _emailSender.SendEmailAsync(emailDto);
-                            _logger.LogInformation("Exp Request approver " + approver.GetFullName() + "Email Sent");
+                            
+                            try
+                            {
+                                await _emailSender.SendEmailAsync(emailDto);
+                                _logger.LogInformation("Exp Request approver " + approver.GetFullName() + "Email Sent");
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogInformation("Expense Request Approve Email Couldn't be Sent due to " + ex);
+                                returnIntAndResponseString.IntReturn = 1;
+                                returnIntAndResponseString.StrResponse = "Expense Request failed due to sent Email error";
+                                return returnIntAndResponseString;
+
+                            }
+
                         }
                         isFirstApprover = false;
 
@@ -1335,9 +1348,21 @@ namespace AtoCashAPI.Controllers
                     emailDto.Subject = subject;
                     emailDto.Body = builder.HtmlBody;
 
-                    await _emailSender.SendEmailAsync(emailDto);
+                    
 
-                    _logger.LogInformation(approver.GetFullName() + "Email Sent");
+                    try
+                    {
+                        await _emailSender.SendEmailAsync(emailDto);
+                        _logger.LogInformation("Exp Request approver " + approver.GetFullName() + "Email Sent");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogInformation("Expense Request Approve Email Couldn't be Sent due to " + ex);
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Expense Request creation failed due to sent Email error";
+                        return returnIntAndResponseString;
+
+                    }
 
 
                     //repeat for each approver

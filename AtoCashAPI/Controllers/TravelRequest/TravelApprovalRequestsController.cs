@@ -399,8 +399,18 @@ namespace AtoCashAPI.Controllers
                     emailDto.Subject = subject;
                     emailDto.Body = builder.HtmlBody;
 
-                    await _emailSender.SendEmailAsync(emailDto);
-                    _logger.LogInformation("Travel Request update Email Sent");
+                    
+                    try
+                    {
+                        await _emailSender.SendEmailAsync(emailDto);
+                        _logger.LogInformation("Travel Request update Email Sent");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogInformation("Travel Request update Email Couldn't be Sent due to " + ex);
+                        return Conflict(new RespStatus() { Status = "Failure", Message = "Travel Request update failed due to sent Email error" });
+                    }
+
 
                     IsFirstEmail = false;
                 }
@@ -707,10 +717,23 @@ namespace AtoCashAPI.Controllers
                 emailDto.Subject = subject;
                 emailDto.Body = builder.HtmlBody;
 
-                await _emailSender.SendEmailAsync(emailDto);
+                try
+                {
+                      await _emailSender.SendEmailAsync(emailDto);
+                    _logger.LogInformation("Travel Request approver " + approver.GetFullName() + " Email Sent");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogInformation("Travel Request Approve Email Couldn't be Sent due to " + ex);
+                    returnIntAndResponseString.IntReturn = 1;
+                    returnIntAndResponseString.StrResponse = "Travel Request creation failed due to sent Email error";
+                    return returnIntAndResponseString;
+                }
+
+
                 #endregion
 
-                _logger.LogInformation("Travel Request approver " + approver.GetFullName() + " Email Sent");
+
 
                 //await _context.SaveChangesAsync();
 

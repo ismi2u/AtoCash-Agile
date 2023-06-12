@@ -586,8 +586,17 @@ namespace AtoCashAPI.Controllers.ExpenseReimburse
                                     emailDto.Subject = subject;
                                     emailDto.Body = builder.HtmlBody;
 
-                                    await _emailSender.SendEmailAsync(emailDto);
-                                    _logger.LogInformation("Email sent to " + approver.GetFullName());
+                                   
+                                    try
+                                    {
+                                        await _emailSender.SendEmailAsync(emailDto);
+                                        _logger.LogInformation("Email sent to " + approver.GetFullName());
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        _logger.LogInformation("Expense Request Approve Email Couldn't be Sent due to " + ex);
+                                        return Conflict(new RespStatus() { Status = "Failure", Message = "Expense Request Approval failed due to sent Email error" });
+                                    }
 
                                     break;
 

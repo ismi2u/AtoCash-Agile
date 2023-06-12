@@ -13,11 +13,11 @@ COPY . ./
 #COPY ["AtoCashAPI/ExpApprNotificationEmail.html", "./"]
 #COPY ["AtoCashAPI/TravelApprNotificationEmail.html", "./"]
 
-COPY ["AtoCashAPI/CashAdvanceApprNotificationEmail.html", "AtoCashAPI/"]
-COPY ["AtoCashAPI/ClaimApprovedandSettled.html", "AtoCashAPI/"]
-COPY ["AtoCashAPI/ExpApprNotificationEmail.html", "AtoCashAPI/"]
-COPY ["AtoCashAPI/ConfirmEmail.html", "AtoCashAPI/"]
-COPY ["AtoCashAPI/TravelApprNotificationEmail.html", "AtoCashAPI/"]
+COPY ["../AtoCashAPI/CashAdvanceApprNotificationEmail.html", "AtoCashAPI/"]
+COPY ["../AtoCashAPI/ClaimApprovedandSettled.html", "AtoCashAPI/"]
+COPY ["../AtoCashAPI/ExpApprNotificationEmail.html", "AtoCashAPI/"]
+COPY ["../AtoCashAPI/ConfirmEmail.html", "AtoCashAPI/"]
+COPY ["../AtoCashAPI/TravelApprNotificationEmail.html", "AtoCashAPI/"]
 
 
 COPY ["AtoCashAPI/AtoCashAPI.csproj", "AtoCashAPI/"]

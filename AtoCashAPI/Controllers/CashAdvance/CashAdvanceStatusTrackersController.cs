@@ -256,9 +256,17 @@ namespace AtoCashAPI.Controllers
                                 emailDto.Subject = subject;
                                 emailDto.Body = builder.HtmlBody;
 
-                                await _emailSender.SendEmailAsync(emailDto);
+                                try
+                                {
+                                    await _emailSender.SendEmailAsync(emailDto);
+                                    _logger.LogInformation(approver.GetFullName() + "Cash Advance Request Approve Email Sent");
+                                }
+                                catch (Exception ex)
+                                {
+                                    _logger.LogInformation("Cash Advance Request Approve Email Couldn't be Sent due to " + ex);
+                                    return Conflict(new RespStatus() { Status = "Failure", Message = "Cash Advance Request Approve failed due to sent Email error" });
 
-
+                                }
                             }
                             else
                             {
@@ -347,7 +355,18 @@ namespace AtoCashAPI.Controllers
                                     emailDto.Subject = subject;
                                     emailDto.Body = builder.HtmlBody;
 
-                                    await _emailSender.SendEmailAsync(emailDto);
+                                    
+                                    try
+                                    {
+                                        await _emailSender.SendEmailAsync(emailDto);
+                                        _logger.LogInformation(approver.GetFullName() + "Cash Advance Request Approve Email Sent");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        _logger.LogInformation("Cash Advance Request Approve Email Couldn't be Sent due to " + ex);
+                                        return Conflict(new RespStatus() { Status = "Failure", Message = "Cash Advance Request Approve failed due to sent Email error" });
+
+                                    }
 
                                     break;
 

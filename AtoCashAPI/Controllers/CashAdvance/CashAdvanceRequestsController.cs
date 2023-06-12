@@ -427,8 +427,19 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     emailDto.Subject = subject;
                     emailDto.Body = builder.HtmlBody;
 
-                    await _emailSender.SendEmailAsync(emailDto);
-                    _logger.LogInformation(approver.GetFullName() + " Email Sent");
+                    try
+                    {
+                        await _emailSender.SendEmailAsync(emailDto);
+                        _logger.LogInformation(approver.GetFullName() + " Email Sent");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogInformation("Email Couldn't be Sent due to " + ex);
+                        return Conflict(new RespStatus() { Status = "Failure", Message = "Cash Advance update failed due to sent Email error" });
+
+                    }
+
+
 
                     IsFirstEmail = false;
                 }
@@ -836,10 +847,19 @@ namespace AtoCashAPI.Controllers.CashAdvance
                     emailDto.To = approverMailAddress;
                     emailDto.Subject = subject;
                     emailDto.Body = builder.HtmlBody;
+                    try
+                    {
+                        await _emailSender.SendEmailAsync(emailDto);
+                        _logger.LogInformation("Project: Cash Advance Email Sent");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogInformation("Email Couldn't be Sent due to " + ex);
+                        returnIntAndResponseString.IntReturn = 1;
+                        returnIntAndResponseString.StrResponse = "Cash Advance creation failed due to sent Email error";
+                        return returnIntAndResponseString;
+                    }
                     
-
-                     await _emailSender.SendEmailAsync(emailDto);
-                    _logger.LogInformation("Project: CashAdvance Email Sent");
                     #endregion
                 }
 
@@ -1192,8 +1212,19 @@ namespace AtoCashAPI.Controllers.CashAdvance
                             emailDto.Subject = subject;
                             emailDto.Body = builder.HtmlBody;
 
-                            await _emailSender.SendEmailAsync(emailDto);
-                            _logger.LogInformation(approver.GetFullName() + " Email Sent");
+                            try
+                            {
+                                await _emailSender.SendEmailAsync(emailDto);
+                                _logger.LogInformation(approver.GetFullName() + " Email Sent");
+                            } 
+                            catch(Exception ex)
+                            {
+                                _logger.LogInformation("Email Couldn't be Sent due to " + ex);
+                                returnIntAndResponseString.IntReturn = 1;
+                                returnIntAndResponseString.StrResponse = "Cash Advance creation failed due to sent Email error";
+                                return returnIntAndResponseString;
+                            }
+                           
 
                         }
 
