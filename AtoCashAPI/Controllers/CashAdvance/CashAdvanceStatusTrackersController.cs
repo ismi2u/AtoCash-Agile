@@ -579,6 +579,7 @@ namespace AtoCashAPI.Controllers
                 ListCashAdvanceStatusTrackers.AddRange(_context.CashAdvanceStatusTrackers.Where(r => r.JobRoleId == empExtInfo.JobRoleId
                                                                                                          && r.ApprovalGroupId == empExtInfo.ApprovalGroupId
                                                                                                          && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending
+                                                                                                         && r.BusinessUnitId == empExtInfo.BusinessUnitId 
                                                                                                          && r.ProjManagerId == null).ToList());
             }
             //for Project based approval status trackers
@@ -649,6 +650,7 @@ namespace AtoCashAPI.Controllers
                 ListCashAdvanceStatusTrackers.AddRange(_context.CashAdvanceStatusTrackers.Where(r => r.JobRoleId == empExtInfo.JobRoleId
                                                                                                          && r.ApprovalGroupId == empExtInfo.ApprovalGroupId
                                                                                                          && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending
+                                                                                                         && r.BusinessUnitId == empExtInfo.BusinessUnitId
                                                                                                          && r.ProjManagerId == null).ToList());
             }
             //for Project based approval status trackers

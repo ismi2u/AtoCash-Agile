@@ -488,6 +488,7 @@ namespace AtoCashAPI.Controllers
                 ListTravelApprovalStatusTrackers.AddRange(_context.TravelApprovalStatusTrackers.Where(r => r.JobRoleId == empExtInfo.JobRoleId
                                                                                                          && r.ApprovalGroupId == empExtInfo.ApprovalGroupId
                                                                                                          && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending
+                                                                                                         && r.BusinessUnitId == empExtInfo.BusinessUnitId 
                                                                                                          && r.ProjManagerId == null).ToList());
             }
             //for Project based approval status trackers
@@ -558,6 +559,7 @@ namespace AtoCashAPI.Controllers
                 //get the RoleID of the Employee (Approver)
                 int? jobroleid = empExtInfo.JobRoleId;
                 int? apprGroupId = empExtInfo.ApprovalGroupId;
+                int? businessUnitId = empExtInfo.BusinessUnitId;
 
                 if (jobroleid == 0)
                 {
@@ -567,7 +569,7 @@ namespace AtoCashAPI.Controllers
 
                 var travelApprovalStatusTrackers = _context.TravelApprovalStatusTrackers
                                .Where(r =>
-                                   (r.JobRoleId == jobroleid && r.ApprovalGroupId == apprGroupId && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending && r.ProjManagerId == null)
+                                   (r.JobRoleId == jobroleid && r.ApprovalGroupId == apprGroupId && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending && r.BusinessUnitId  == businessUnitId && r.ProjManagerId == null)
                                    || (r.ProjManagerId == id && r.ApprovalStatusTypeId == (int)EApprovalStatus.Pending)).ToList();
 
                 CountOfApprovalsPending = CountOfApprovalsPending + travelApprovalStatusTrackers.Count;
