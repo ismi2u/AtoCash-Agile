@@ -124,7 +124,7 @@ namespace AtoCashAPI.Models
 
         public string? EmployeeName { get; set; }
         public int? EmployeeId { get; set; }
-
+        public string? EmployeeCode { get; set; }
 
         public int? ExpenseReimburseRequestId { get; set; }
         public int? ExpenseCategoryId { get; set; }
@@ -171,11 +171,12 @@ namespace AtoCashAPI.Models
 
         public int? GeneralLedgerId { get; set; }
         public string? GeneralLedger { get; set; }
-
+        public string? GeneralLedgerAccountNo { get; set; }
 
         public int? BusinessTypeId { get; set; }
         public string? BusinessType { get; set; }
         public int? BusinessUnitId { get; set; }
+        public string? BusinessUnitCode { get; set; }
         public string? BusinessUnit { get; set; }
 
 
@@ -190,11 +191,15 @@ namespace AtoCashAPI.Models
 
         public int? CostCenterId { get; set; }
         public string? CostCenter { get; set; }
+        public string? CostCenterCode { get; set; }
         public string? ApprovalStatusType { get; set; }
         public int? ApprovalStatusTypeId { get; set; }
 
 
         public DateTime? ApproverActionDate { get; set; }
+
+        public string? PostingDate { get; set; }
+        public string? ApproverId { get; set; }
 
     }
 }

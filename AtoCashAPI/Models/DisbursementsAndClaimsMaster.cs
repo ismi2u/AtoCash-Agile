@@ -94,7 +94,7 @@ namespace AtoCashAPI.Models
         public ApprovalStatusType? ApprovalStatusType { get; set; }
         public int? ApprovalStatusId { get; set; }
 
-
+        public DateTime? PostingDate { get; set; }
 
     }
 
@@ -151,9 +151,11 @@ namespace AtoCashAPI.Models
     {
 
         public int Id { get; set; }
-        public int? EmployeeId { get; set; }
 
+        public int? EmployeeId { get; set; }
+        public string? EmployeeCode { get; set; }
         public string? EmployeeName { get; set; }
+
         public int? BlendedRequestId { get; set; }
 
         public int? RequestTypeId { get; set; }
@@ -164,6 +166,7 @@ namespace AtoCashAPI.Models
 
 
         public int? BusinessUnitId { get; set; }
+        public string? BusinessUnitCode { get; set; }
         public string? BusinessUnit{ get; set; }
 
  
@@ -198,12 +201,19 @@ namespace AtoCashAPI.Models
 
 
         public int? CostCenterId { get; set; }
+        public string? CostCenterCode { get; set; }
         public string? CostCenter { get; set; }
+
         public int? ApprovalStatusId { get; set; }
 
         public string? ApprovalStatusType { get; set; }
 
         public string? RequestTitleDescription { get; set; }
 
+        public DateTime? PostingDate { get; set; }
+
+        public string? PostingDateforXL { get; set; }
+
+        public string? ApproverId { get; set; }
     }
 }

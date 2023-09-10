@@ -139,7 +139,7 @@ namespace AtoCashAPI.Authentication
             {
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
-                
+                var MailSentMessage = "";
 
                 if (result.Succeeded)
                 {
@@ -178,6 +178,8 @@ namespace AtoCashAPI.Authentication
                         emailDto.Subject = subject;
                         emailDto.Body = builder.HtmlBody;
 
+                        
+
                         try
                         {
                             await _emailSender.SendEmailAsync(emailDto);
@@ -186,6 +188,8 @@ namespace AtoCashAPI.Authentication
                         catch (Exception ex)
                         {
                             _logger.LogInformation("Confirmation Email Couldn't be able to sent due to "+ ex);
+                            MailSentMessage = " Confirmation Email Couldn't be able to sent.";
+
                         }
 
 
@@ -208,7 +212,7 @@ namespace AtoCashAPI.Authentication
 
                     if (result.Succeeded)
                     {
-                        respStatus.Message = "User Registered and User Access Role added to Employee!";
+                        respStatus.Message = "User Registered and User Access Role added to Employee! "+ MailSentMessage;
                         respStatus.Status = "Success";
                     }
                     else

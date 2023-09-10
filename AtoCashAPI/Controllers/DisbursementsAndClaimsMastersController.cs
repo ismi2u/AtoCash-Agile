@@ -84,7 +84,7 @@ namespace AtoCashAPI.Controllers
                 disbursementsAndClaimsMasterDTO.CostCenterId = disbursementsAndClaimsMaster.CostCenterId;
                 disbursementsAndClaimsMasterDTO.ApprovalStatusId = disbursementsAndClaimsMaster.ApprovalStatusId;
                 disbursementsAndClaimsMasterDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(disbursementsAndClaimsMaster.ApprovalStatusId).Status;
-
+                disbursementsAndClaimsMasterDTO.PostingDate = disbursementsAndClaimsMaster.PostingDate != null ? disbursementsAndClaimsMaster.PostingDate  : null;
 
                 ListDisbursementsAndClaimsMasterDTO.Add(disbursementsAndClaimsMasterDTO);
 
@@ -151,7 +151,7 @@ namespace AtoCashAPI.Controllers
             disbursementsAndClaimsMasterDTO.CostCenterId = disbursementsAndClaimsMaster.CostCenterId;
             disbursementsAndClaimsMasterDTO.ApprovalStatusId = disbursementsAndClaimsMaster.ApprovalStatusId;
             disbursementsAndClaimsMasterDTO.ApprovalStatusType = _context.ApprovalStatusTypes.Find(disbursementsAndClaimsMaster.ApprovalStatusId).Status;
-
+            disbursementsAndClaimsMasterDTO.PostingDate = disbursementsAndClaimsMaster.PostingDate != null ? disbursementsAndClaimsMaster.PostingDate : null;
             return Ok(disbursementsAndClaimsMasterDTO);
         }
 
@@ -354,7 +354,7 @@ namespace AtoCashAPI.Controllers
                 disbursementsAndClaimsMaster.SettlementAccount = disbursementsAndClaimsMasterDTO.SettlementAccount;
                 disbursementsAndClaimsMaster.SettlementBankCard = disbursementsAndClaimsMasterDTO.SettlementBankCard;
                 disbursementsAndClaimsMaster.AdditionalData = disbursementsAndClaimsMasterDTO.AdditionalData;
-
+                disbursementsAndClaimsMaster.PostingDate = disbursementsAndClaimsMasterDTO.PostingDate; 
                 _context.DisbursementsAndClaimsMasters.Update(disbursementsAndClaimsMaster);
                 //_context.Entry(disbursementsAndClaimsMasterDTO).State = EntityState.Modified;
                 try
@@ -405,8 +405,20 @@ namespace AtoCashAPI.Controllers
                 emailDto.Subject = subject;
                 emailDto.Body = builder.HtmlBody;
 
-                await _emailSender.SendEmailAsync(emailDto);
-                _logger.LogInformation(requester.GetFullName() + " Settlement Email Sent");
+                try
+                {
+                    await _emailSender.SendEmailAsync(emailDto);
+                    _logger.LogInformation(requester.GetFullName() + " Settlement Email Sent");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogInformation("Email Couldn't be Sent due to " + ex);
+                    return Conflict(new RespStatus() { Status = "Failure", Message = "Accounts Payable Entry not updated due to sent Email error" });
+
+                }
+
+               
+                
 
 
                 await AtoCashDbContextTransaction.CommitAsync();

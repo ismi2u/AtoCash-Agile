@@ -1183,7 +1183,7 @@ namespace AtoCashAPI.Controllers
 
                     expenseSubClaim.Tax = expenseSubClaimDto.Tax;
                     expenseSubClaim.TaxAmount = expenseSubClaimDto.TaxAmount;
-                    expenseSubClaim.VendorId = expenseSubClaimDto.VendorId;
+                    expenseSubClaim.VendorId = expenseSubClaimDto.VendorId == 0 ? null : expenseSubClaimDto.VendorId;
                     expenseSubClaim.AdditionalVendor = expenseSubClaimDto.VendorId == null ? expenseSubClaim.AdditionalVendor : String.Empty;
                     expenseSubClaim.Location = expenseSubClaimDto.Location;
 
